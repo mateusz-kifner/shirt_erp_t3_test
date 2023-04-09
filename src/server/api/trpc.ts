@@ -14,11 +14,13 @@
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+// import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+// import { IronSession, getIronSession } from "iron-session";
 
-import { prisma } from "~/server/db";
+// import { prisma } from "~/server/db";
+// import * as trpc from "@trpc/server";
 
-type CreateContextOptions = Record<string, never>;
+// type CreateContextOptions = Record<string, never>;
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -30,11 +32,15 @@ type CreateContextOptions = Record<string, never>;
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-  return {
-    prisma,
-  };
-};
+// const createTRPCContext = async (opts: CreateContextOptions) => {
+//   const session = await getIronSession(opts.req, opts.res, sessionOptions);
+
+//   return {
+//     prisma,
+//     session,
+//   };
+// };
+// export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>;
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -42,9 +48,9 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
-};
+// export const createTRPCContext = (opts: CreateNextContextOptions) => {
+//   return createInnerTRPCContext(opts);
+// };
 
 /**
  * 2. INITIALIZATION
@@ -56,8 +62,9 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { Context } from "./context";
 
-const t = initTRPC.context<typeof createTRPCContext>().create({
+const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
