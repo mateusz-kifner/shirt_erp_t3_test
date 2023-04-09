@@ -7,6 +7,20 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model User {
+    id            Int       @id @default(autoincrement())
+    name          String?
+    username      String?   @unique
+    email         String?   @unique
+    emailVerified DateTime?
+    password      String?
+    image         String?
+    // accounts      Account[]
+    // sessions      Session[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+}
+
 model addition_expense_items {
     id    Int     @id @default(autoincrement())
     name  String? @db.VarChar(255)
@@ -59,7 +73,6 @@ model clients_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "clients_unique")
     @@index([component_type], map: "clients_component_type_index")
-    @@index([entity_id], map: "clients_entity_fk")
     @@index([field], map: "clients_field_index")
 }
 
@@ -130,7 +143,6 @@ model expenses_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "expenses_unique")
     @@index([component_type], map: "expenses_component_type_index")
-    @@index([entity_id], map: "expenses_entity_fk")
     @@index([field], map: "expenses_field_index")
 }
 
@@ -142,7 +154,6 @@ model expenses_user_links {
     expenses      expenses? @relation(fields: [expense_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "expenses_user_links_fk")
 
     @@unique([expense_id, user_id], map: "expenses_user_links_unique")
-    @@index([expense_id], map: "expenses_user_links_fk")
     @@index([user_id], map: "expenses_user_links_inv_fk")
     @@index([expense_order], map: "expenses_user_links_order_inv_fk")
 }
@@ -187,7 +198,6 @@ model files_folder_links {
     files      files? @relation(fields: [file_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "files_folder_links_fk")
 
     @@unique([file_id, folder_id], map: "files_folder_links_unique")
-    @@index([file_id], map: "files_folder_links_fk")
     @@index([folder_id], map: "files_folder_links_inv_fk")
     @@index([file_order], map: "files_folder_links_order_inv_fk")
 }
@@ -200,8 +210,6 @@ model files_related_morphs {
     field        String? @db.VarChar(255)
     order        Float?
     files        files?  @relation(fields: [file_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "files_related_morphs_fk")
-
-    @@index([file_id], map: "files_related_morphs_fk")
 }
 
 model futures {
@@ -228,7 +236,6 @@ model futures_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "futures_unique")
     @@index([component_type], map: "futures_component_type_index")
-    @@index([entity_id], map: "futures_entity_fk")
     @@index([field], map: "futures_field_index")
 }
 
@@ -269,7 +276,6 @@ model icons_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "icons_unique")
     @@index([component_type], map: "icons_component_type_index")
-    @@index([entity_id], map: "icons_entity_fk")
     @@index([field], map: "icons_field_index")
 }
 
@@ -325,8 +331,6 @@ model order_archives_client_links {
     clients             clients?        @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_client_links_inv_fk")
 
     @@unique([order_archive_id, client_id], map: "order_archives_client_links_unique")
-    @@index([order_archive_id], map: "order_archives_client_links_fk")
-    @@index([client_id], map: "order_archives_client_links_inv_fk")
     @@index([order_archive_order], map: "order_archives_client_links_order_inv_fk")
 }
 
@@ -341,7 +345,6 @@ model order_archives_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "order_archives_unique")
     @@index([component_type], map: "order_archives_component_type_index")
-    @@index([entity_id], map: "order_archives_entity_fk")
     @@index([field], map: "order_archives_field_index")
 }
 
@@ -355,8 +358,6 @@ model order_archives_email_messages_links {
     email_messages      email_messages? @relation(fields: [email_message_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_email_messages_links_inv_fk")
 
     @@unique([order_archive_id, email_message_id], map: "order_archives_email_messages_links_unique")
-    @@index([order_archive_id], map: "order_archives_email_messages_links_fk")
-    @@index([email_message_id], map: "order_archives_email_messages_links_inv_fk")
     @@index([email_message_order], map: "order_archives_email_messages_links_order_fk")
     @@index([order_archive_order], map: "order_archives_email_messages_links_order_inv_fk")
 }
@@ -370,8 +371,6 @@ model order_archives_products_links {
     products         products?       @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_products_links_inv_fk")
 
     @@unique([order_archive_id, product_id], map: "order_archives_products_links_unique")
-    @@index([order_archive_id], map: "order_archives_products_links_fk")
-    @@index([product_id], map: "order_archives_products_links_inv_fk")
     @@index([product_order], map: "order_archives_products_links_order_fk")
 }
 
@@ -413,8 +412,6 @@ model orders_client_links {
     clients     clients? @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_client_links_inv_fk")
 
     @@unique([order_id, client_id], map: "orders_client_links_unique")
-    @@index([order_id], map: "orders_client_links_fk")
-    @@index([client_id], map: "orders_client_links_inv_fk")
     @@index([order_order], map: "orders_client_links_order_inv_fk")
 }
 
@@ -429,7 +426,6 @@ model orders_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "orders_unique")
     @@index([component_type], map: "orders_component_type_index")
-    @@index([entity_id], map: "orders_entity_fk")
     @@index([field], map: "orders_field_index")
 }
 
@@ -443,8 +439,6 @@ model orders_email_messages_links {
     email_messages      email_messages? @relation(fields: [email_message_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_email_messages_links_inv_fk")
 
     @@unique([order_id, email_message_id], map: "orders_email_messages_links_unique")
-    @@index([order_id], map: "orders_email_messages_links_fk")
-    @@index([email_message_id], map: "orders_email_messages_links_inv_fk")
     @@index([email_message_order], map: "orders_email_messages_links_order_fk")
     @@index([order_order], map: "orders_email_messages_links_order_inv_fk")
 }
@@ -458,7 +452,6 @@ model orders_employees_links {
     orders      orders? @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_employees_links_fk")
 
     @@unique([order_id, user_id], map: "orders_employees_links_unique")
-    @@index([order_id], map: "orders_employees_links_fk")
     @@index([user_id], map: "orders_employees_links_inv_fk")
     @@index([user_order], map: "orders_employees_links_order_fk")
     @@index([order_order], map: "orders_employees_links_order_inv_fk")
@@ -473,8 +466,6 @@ model orders_products_links {
     products      products? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_products_links_inv_fk")
 
     @@unique([order_id, product_id], map: "orders_products_links_unique")
-    @@index([order_id], map: "orders_products_links_fk")
-    @@index([product_id], map: "orders_products_links_inv_fk")
     @@index([product_order], map: "orders_products_links_order_fk")
 }
 
@@ -502,7 +493,6 @@ model plugins_components {
 
     @@unique([entity_id, component_id, field, component_type], map: "plugins_unique")
     @@index([component_type], map: "plugins_component_type_index")
-    @@index([entity_id], map: "plugins_entity_fk")
     @@index([field], map: "plugins_field_index")
 }
 
@@ -579,8 +569,6 @@ model type_products_product_links {
     products       products?      @relation(fields: [inv_product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "type_products_product_links_inv_fk")
 
     @@unique([product_id, inv_product_id], map: "type_products_product_links_unique")
-    @@index([product_id], map: "type_products_product_links_fk")
-    @@index([inv_product_id], map: "type_products_product_links_inv_fk")
 }
 
 model type_texts {

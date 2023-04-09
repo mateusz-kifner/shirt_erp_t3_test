@@ -2,6 +2,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { User } from "~/lib/session";
 import { TRPCError } from "@trpc/server";
+import { prisma } from "~/server/db";
 
 export const sessionRouter = createTRPCRouter({
   user: publicProcedure.query(async ({ ctx }) => {
@@ -41,12 +42,20 @@ export const sessionRouter = createTRPCRouter({
     .input(
       z.object({
         username: z.string(),
+        password: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { username } = input;
+      const { username, password } = input;
 
       try {
+        const user = await prisma.user.findFirst({
+          where: { username: username },
+        });
+        if (!user) {
+          return null;
+        }
+
         // const {
         //   data: { login, avatar_url },
         // } = await octokit.rest.users.getByUsername({ username });

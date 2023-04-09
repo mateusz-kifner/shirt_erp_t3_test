@@ -9,7 +9,7 @@ export default function Login() {
 
   const login = api.session.login.useMutation({
     onSuccess() {
-      router.push("/profile-sg");
+      router.push("/profile");
     },
     onError(err) {
       setErrorMsg(err.message);
@@ -23,7 +23,7 @@ export default function Login() {
       <div className="login">
         <button
           onClick={async function handleSubmit(event) {
-            login.mutate({ username: "testuser" });
+            login.mutate({ username: "testuser", password: "testuser" });
           }}
         >
           Login
@@ -54,7 +54,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   if (user) {
     return {
       redirect: {
-        destination: "/profile-sg",
+        destination: "/profile",
         permanent: false,
       },
     };
