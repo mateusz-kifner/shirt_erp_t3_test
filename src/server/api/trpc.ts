@@ -14,13 +14,22 @@
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
-// import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-// import { IronSession, getIronSession } from "iron-session";
 
-// import { prisma } from "~/server/db";
-// import * as trpc from "@trpc/server";
+import * as trpc from "@trpc/server";
+import * as trpcNext from "@trpc/server/adapters/next";
 
-// type CreateContextOptions = Record<string, never>;
+export async function createTRPCContext(
+  opts: trpcNext.CreateNextContextOptions
+) {
+  const session = await getIronSession(opts.req, opts.res, sessionOptions);
+
+  return {
+    prisma,
+    session,
+  };
+}
+
+export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>;
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -62,7 +71,9 @@
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { Context } from "./context";
+import { getIronSession } from "iron-session";
+import { prisma } from "../db";
+import { sessionOptions } from "~/lib/session";
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
