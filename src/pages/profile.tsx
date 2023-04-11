@@ -15,12 +15,8 @@ export default function SgProfile() {
       }
     },
   });
-  const eventQuery = api.session.event.useQuery(undefined, {
-    enabled: userQuery.data?.isLoggedIn,
-  });
 
   const user = userQuery.data;
-  const events = eventQuery.data;
 
   return (
     <div>
@@ -37,24 +33,11 @@ export default function SgProfile() {
       {user && (
         <>
           <p style={{ fontStyle: "italic" }}>
-            Public data, from{" "}
-            <a href={`https://github.com/${user.login}`}>
-              https://github.com/{user.login}
-            </a>
-            , reduced to `login` and `avatar_url`.
+            Public data, from , reduced to `login` and `avatar_url`.
           </p>
 
           <pre>{JSON.stringify(user, null, 2)}</pre>
         </>
-      )}
-
-      {events !== undefined && (
-        <p>
-          Number of GitHub events for user: <b>{events.length}</b>.{" "}
-          {events.length > 0 && (
-            <>{/* Last event type: <b>{events[0].type}</b> */}</>
-          )}
-        </p>
       )}
     </div>
   );
