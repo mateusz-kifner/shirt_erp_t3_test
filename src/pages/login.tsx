@@ -28,18 +28,6 @@ export default function Login() {
         >
           Login
         </button>
-        {/* <Form
-          errorMessage={errorMsg}
-          onSubmit={async function handleSubmit(event) {
-            event.preventDefault();
-
-            const body = {
-              username: event.currentTarget.username.value,
-            };
-
-            login.mutate({ username: body.username });
-          }}
-        /> */}
       </div>
     </div>
   );
@@ -49,9 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
 }) {
-  const user = req.session.user;
-
-  if (user) {
+  if (req.session.isLoggedIn) {
     return {
       redirect: {
         destination: "/profile",

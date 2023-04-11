@@ -1,12 +1,13 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
-import { User } from "~/lib/session";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "~/server/db";
+import bcrypt from "bcrypt";
+import _ from "lodash";
 
 export const sessionRouter = createTRPCRouter({
   user: publicProcedure.query(async ({ ctx }) => {
-    if (ctx.session.user) {
+    if (ctx.session.user && ctx.session.isLoggedIn) {
       return {
         ...ctx.session.user,
         isLoggedIn: true,
@@ -14,28 +15,8 @@ export const sessionRouter = createTRPCRouter({
     } else {
       return {
         isLoggedIn: false,
-        login: "",
-        avatarUrl: "",
+        user: null,
       };
-    }
-  }),
-  event: publicProcedure.query(async ({ ctx }) => {
-    const user = ctx.session.user;
-
-    if (!user || user.isLoggedIn === false) {
-      throw new TRPCError({
-        code: "UNAUTHORIZED",
-      });
-    }
-
-    try {
-      // const { data: events } =
-      //   await octokit.rest.activity.listPublicEventsForUser({
-      //     username: user.login,
-      //   });
-      // return events;
-    } catch (error) {
-      return [];
     }
   }),
   login: publicProcedure
@@ -52,19 +33,23 @@ export const sessionRouter = createTRPCRouter({
         const user = await prisma.user.findFirst({
           where: { username: username },
         });
-        if (!user) {
+        if (!user || !user.password) {
           return null;
         }
 
-        // const {
-        //   data: { login, avatar_url },
-        // } = await octokit.rest.users.getByUsername({ username });
+        const isValidPassword = await bcrypt.compare(password, user.password);
 
-        // const user = { isLoggedIn: true, login, avatarUrl: avatar_url } as User;
-        // ctx.session.user = user;
+        if (!isValidPassword) {
+          return null;
+        }
+        const sanitized_user = _.omit(user, ["password"]);
+        ctx.session.user = sanitized_user;
+        ctx.session.isLoggedIn = true;
         await ctx.session.save();
-        // return user;
-        return { username: "testuser_!!!!" };
+        return {
+          user: sanitized_user,
+          isLoggedIn: true,
+        };
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -74,6 +59,6 @@ export const sessionRouter = createTRPCRouter({
     }),
   logout: publicProcedure.mutation(async ({ ctx }) => {
     ctx.session.destroy();
-    return { isLoggedIn: false, login: "", avatarUrl: "" };
+    return { isLoggedIn: false, user: null };
   }),
 });
