@@ -36,7 +36,10 @@ export const getStaticPaths = () => {
 };
 
 const ssg = ({ input }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { data, isLoading } = api.example.hello.useQuery({ text: input });
+  const { data, isLoading } = api.example.hello.useQuery(
+    { text: input },
+    { refetchOnMount: false } // data is provided by getStaticProps, refresh is not needed
+  );
   if (!data) return <div>404</div>;
   if (isLoading) return <div>Loading...</div>;
   console.log(data);
