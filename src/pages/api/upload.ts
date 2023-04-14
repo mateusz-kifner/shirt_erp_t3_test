@@ -1,9 +1,25 @@
 import type { IncomingMessage, ServerResponse } from "http";
-import formidable from "formidable";
 import type { NextApiRequest, NextApiResponse } from "next";
+import formidable from "formidable";
 import fs from "fs";
 
-// // first we need to disable the default body parser
+import { Temporal } from "@js-temporal/polyfill";
+
+let nextUpdateUnixTime = 0;
+let currentFolderName = "temp";
+let form = new formidable.IncomingForm({
+  multiples: true,
+  uploadDir: "./uploads/" + currentFolderName,
+  keepExtensions: true,
+  maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
+  maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
+  maxFiles: 1024,
+  filename: function (name, ext, part, form) {
+    return name + ext;
+  },
+});
+
+// disable default body parser
 export const config = {
   api: {
     bodyParser: false,
@@ -14,43 +30,82 @@ export default async function Upload(
   req: IncomingMessage & NextApiRequest,
   res: ServerResponse & NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    res.status(405).end();
-    return;
-  }
-  const form = new formidable.IncomingForm({
-    multiples: true,
-    uploadDir: "./uploads",
-    keepExtensions: true,
-    maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
-    maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
-    filename: function (name, ext, part, form) {
-      return name + ext;
-    },
-  });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ message: "Failed to upload file" });
+  return new Promise((resolve) => {
+    if (req.method !== "POST") {
+      res.status(405).json({
+        status: "error",
+        errorCode: 405,
+        errorMessage: `Method ${req.method} not allowed`,
+      });
+      resolve({
+        status: "error",
+        errorCode: 405,
+        errorMessage: `Method ${req.method} not allowed`,
+      });
       return;
     }
-    const { file } = files;
-    if (file == undefined) {
-      res.status(500).json({ message: "Failed to upload file" });
-      return;
+    if (Date.now() > nextUpdateUnixTime) {
+      const now = Temporal.Now.plainDateISO();
+      const firstDayOfWeek = now.subtract({ days: now.dayOfWeek - 1 });
+      nextUpdateUnixTime = Date.now() + 3600000;
+      currentFolderName = firstDayOfWeek.toString();
+      if (!fs.existsSync("./uploads/" + currentFolderName)) {
+        fs.mkdirSync("./uploads/" + currentFolderName);
+      }
+      form = new formidable.IncomingForm({
+        multiples: true,
+        uploadDir: "./uploads/" + currentFolderName,
+        keepExtensions: true,
+        maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
+        maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
+        maxFiles: 1024,
+        filename: function (name, ext, part, form) {
+          return name + ext;
+        },
+      });
     }
-    if (Array.isArray(file)) {
-    } else {
-      const { originalFilename, filepath: tempFilePath } = file;
 
-      const ext = (originalFilename ?? "unknown.unknown").split(".").pop();
-      const id = originalFilename;
-      const filePath = `./uploads/${id}.${ext}`;
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        res.status(500).json({
+          status: "error",
+          errorCode: 500,
+          errorMessage: `Failed to upload file`,
+        });
+        resolve({
+          status: "error",
+          errorCode: 500,
+          errorMessage: `Failed to upload file`,
+        });
+        return;
+      }
+      const { file } = files;
+      if (file == undefined) {
+        res.status(500).json({
+          status: "error",
+          errorCode: 500,
+          errorMessage: `Failed to upload file`,
+        });
+        resolve({
+          status: "error",
+          errorCode: 500,
+          errorMessage: `Failed to upload file`,
+        });
+        return;
+      }
+      res
+        .status(201)
+        .json({ status: "success", message: "File uploaded successfully" });
 
-      fs.renameSync(tempFilePath, filePath);
-    }
-
-    res.status(201).json({ message: "File uploaded successfully" });
+      if (Array.isArray(file)) {
+      } else {
+        // const { originalFilename, filepath: tempFilePath } = file;
+        // const ext = (originalFilename ?? "unknown.unknown").split(".").pop();
+        // const id = originalFilename;
+        // const filePath = `./uploads/${id}.${ext}`;
+        // fs.renameSync(tempFilePath, filePath);
+      }
+      resolve(null);
+    });
   });
 }
