@@ -2,7 +2,6 @@
 import { Prisma } from "@prisma/client";
 import type { IronSessionOptions } from "iron-session";
 import { env } from "~/env.mjs";
-import { prisma } from "~/server/db";
 
 export const sessionOptions: IronSessionOptions = {
   password: env.SECRET_COOKIE_PASSWORD as string,

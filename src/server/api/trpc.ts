@@ -20,8 +20,12 @@ import * as trpcNext from "@trpc/server/adapters/next";
 
 export async function createTRPCContext(
   opts: trpcNext.CreateNextContextOptions
-) {
-  const session = await getIronSession(opts.req, opts.res, sessionOptions);
+): Promise<{ prisma: any; session: IronSession | null }> {
+  const session: IronSession = await getIronSession(
+    opts.req,
+    opts.res,
+    sessionOptions
+  );
 
   return {
     prisma,
@@ -71,7 +75,7 @@ export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>;
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { getIronSession } from "iron-session";
+import { IronSession, getIronSession } from "iron-session";
 import { prisma } from "../db";
 import { sessionOptions } from "~/lib/session";
 
@@ -115,7 +119,7 @@ export const publicProcedure = t.procedure;
 export const middleware = t.middleware;
 
 export const isAuthenticated = middleware(async ({ ctx, next }) => {
-  if (!ctx.session.isLoggedIn) {
+  if (!ctx.session?.isLoggedIn) {
     throw new trpc.TRPCError({
       code: "FORBIDDEN",
       message: "User not authenticated",

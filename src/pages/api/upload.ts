@@ -2,8 +2,11 @@ import type { IncomingMessage, ServerResponse } from "http";
 import type { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import fs from "fs";
-
 import { Temporal } from "@js-temporal/polyfill";
+
+/**
+ * Upload using multiform data, requires using name file
+ */
 
 let nextUpdateUnixTime = 0;
 let currentFolderName = "temp";
@@ -96,16 +99,25 @@ export default async function Upload(
       res
         .status(201)
         .json({ status: "success", message: "File uploaded successfully" });
+      console.log(files);
+      console.log(fields);
 
-      if (Array.isArray(file)) {
-      } else {
-        // const { originalFilename, filepath: tempFilePath } = file;
-        // const ext = (originalFilename ?? "unknown.unknown").split(".").pop();
-        // const id = originalFilename;
-        // const filePath = `./uploads/${id}.${ext}`;
-        // fs.renameSync(tempFilePath, filePath);
+      const fileArray = Array.isArray(file) ? file : [file];
+
+      for (let file of fileArray) {
       }
+
+      // const { originalFilename, filepath: tempFilePath } = file;
+      // const ext = (originalFilename ?? "unknown.unknown").split(".").pop();
+      // const id = originalFilename;
+      // const filePath = `./uploads/${id}.${ext}`;
+      // fs.renameSync(tempFilePath, filePath);
+
       resolve(null);
     });
   });
 }
+
+// function setMetadata(file:formidable.File[]){
+
+// }

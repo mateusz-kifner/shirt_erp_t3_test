@@ -7,7 +7,7 @@ import _ from "lodash";
 
 export const sessionRouter = createTRPCRouter({
   user: publicProcedure.query(async ({ ctx }) => {
-    if (ctx.session.user && ctx.session.isLoggedIn) {
+    if (ctx.session?.user && ctx.session.isLoggedIn) {
       return {
         ...ctx.session.user,
         isLoggedIn: true,
@@ -43,9 +43,11 @@ export const sessionRouter = createTRPCRouter({
           return null;
         }
         const sanitized_user = _.omit(user, ["password"]);
-        ctx.session.user = sanitized_user;
-        ctx.session.isLoggedIn = true;
-        await ctx.session.save();
+        if (ctx.session) {
+          ctx.session.user = sanitized_user;
+          ctx.session.isLoggedIn = true;
+          await ctx.session.save();
+        }
         return {
           user: sanitized_user,
           isLoggedIn: true,
@@ -58,7 +60,7 @@ export const sessionRouter = createTRPCRouter({
       }
     }),
   logout: publicProcedure.mutation(async ({ ctx }) => {
-    ctx.session.destroy();
+    if (ctx.session) ctx.session.destroy();
     return { isLoggedIn: false, user: null };
   }),
 });
