@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
 
 export const productRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: authenticatedProcedure.query(({ ctx }) => {
     return ctx.prisma.products.findMany();
   }),
-  getOne: publicProcedure
+  get: authenticatedProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.prisma.products.findUnique({ where: { id: input.id } });

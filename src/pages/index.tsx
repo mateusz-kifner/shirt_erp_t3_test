@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const session = api.session.user.useQuery();
+  const products = api.product.getAll.useQuery();
 
   return (
     <>
@@ -48,6 +49,7 @@ const Home: NextPage = () => {
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
           <p>{session && JSON.stringify(session.data, null, 2)}</p>
+          {products && JSON.stringify(products.data, null, 2)}
         </div>
       </main>
     </>

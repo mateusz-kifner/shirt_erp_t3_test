@@ -111,3 +111,16 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+export const middleware = t.middleware;
+
+export const isAuthenticated = middleware(async ({ ctx, next }) => {
+  if (!ctx.session.isLoggedIn) {
+    throw new trpc.TRPCError({
+      code: "FORBIDDEN",
+      message: "User not authenticated",
+    });
+  }
+  return next();
+});
+export const authenticatedProcedure = t.procedure.use(isAuthenticated);
