@@ -109,6 +109,8 @@ const t = initTRPC.context<Context>().create({
  */
 export const createTRPCRouter = t.router;
 
+export const middleware = t.middleware;
+
 /**
  * Public (unauthenticated) procedure
  *
@@ -117,8 +119,6 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
-
-export const middleware = t.middleware;
 
 export const isAuthenticated = middleware(async ({ ctx, next }) => {
   if (!ctx.session?.isLoggedIn) {
@@ -129,4 +129,39 @@ export const isAuthenticated = middleware(async ({ ctx, next }) => {
   }
   return next();
 });
+
 export const authenticatedProcedure = t.procedure.use(isAuthenticated);
+
+export const isPrivileged = middleware(async ({ ctx, path, type, next }) => {
+  if (!ctx?.session?.user) {
+    throw new trpc.TRPCError({
+      code: "FORBIDDEN",
+      message: "User not authenticated",
+    });
+  }
+  const user = await prisma.user.findFirst({
+    where: { id: ctx.session.user.id },
+    include: { userPermissions: true },
+  });
+  if (!user?.userPermissions) {
+    throw new trpc.TRPCError({
+      code: "FORBIDDEN",
+      message: "User doesn't have access privileges",
+    });
+  }
+
+  const apiPermission = `${type}::api.${path}`;
+  for (const permission of user?.userPermissions) {
+    if (permission.action === "super") return next();
+    if (permission.action === apiPermission) return next();
+  }
+
+  throw new trpc.TRPCError({
+    code: "FORBIDDEN",
+    message: "User doesn't have access privileges",
+  });
+});
+
+export const privilegedProcedure = t.procedure
+  .use(isAuthenticated)
+  .use(isPrivileged);
