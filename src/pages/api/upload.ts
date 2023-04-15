@@ -4,6 +4,7 @@ import formidable from "formidable";
 import fs from "fs";
 import { Temporal } from "@js-temporal/polyfill";
 import type IncomingForm from "formidable/Formidable";
+import HTTPError from "~/utils/HTTPError";
 
 /**
  * Upload using multiform data, requires using name file
@@ -24,14 +25,9 @@ export default async function Upload(
   req: IncomingMessage & NextApiRequest,
   res: ServerResponse & NextApiResponse
 ) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (req.method !== "POST") {
-      res.status(405).json({
-        status: "error",
-        errorCode: 405,
-        errorMessage: `Method ${req.method as string} not allowed`,
-      });
-      resolve(null);
+      reject(new HTTPError(405, `Method ${req.method as string} not allowed`));
       return;
     }
     if (Date.now() > nextUpdateUnixTime) {
@@ -46,7 +42,7 @@ export default async function Upload(
         multiples: true,
         uploadDir: "./uploads/" + currentFolderName,
         keepExtensions: true,
-        maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
+        maxFileSize: 1024, // 10Gb
         maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
         maxFiles: 1024,
         filename: function (name, ext, _part, _form) {
@@ -55,29 +51,17 @@ export default async function Upload(
       });
     }
 
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, (err: Error, fields, files) => {
       if (err) {
-        res.status(500).json({
-          status: "error",
-          errorCode: 500,
-          errorMessage: `Failed to upload file`,
-        });
-        resolve(null);
+        reject(new HTTPError(500, err?.message));
         return;
       }
       const { file } = files;
       if (file == undefined) {
-        res.status(500).json({
-          status: "error",
-          errorCode: 500,
-          errorMessage: `Failed to upload file`,
-        });
-        resolve(null);
+        reject(new HTTPError(500, "Failed to upload file"));
         return;
       }
-      res
-        .status(201)
-        .json({ status: "success", message: "File uploaded successfully" });
+
       console.log(files);
       console.log(fields);
 
@@ -95,7 +79,21 @@ export default async function Upload(
 
       resolve(null);
     });
-  });
+  })
+    .then(() => {
+      res.status(201).json({
+        status: "success",
+        statusCode: 201,
+        message: "Success: File uploaded successfully",
+      });
+    })
+    .catch((err: HTTPError) => {
+      res.status(500).json({
+        status: "error",
+        statusCode: err.statusCode,
+        message: err.name + ": " + err.message,
+      });
+    });
 }
 
 // function setMetadata(file:formidable.File[]){
