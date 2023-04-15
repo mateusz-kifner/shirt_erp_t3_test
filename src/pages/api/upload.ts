@@ -31,11 +31,7 @@ export default async function Upload(
         errorCode: 405,
         errorMessage: `Method ${req.method as string} not allowed`,
       });
-      resolve({
-        status: "error",
-        errorCode: 405,
-        errorMessage: `Method ${req.method as string} not allowed`,
-      });
+      resolve(null);
       return;
     }
     if (Date.now() > nextUpdateUnixTime) {
@@ -66,11 +62,7 @@ export default async function Upload(
           errorCode: 500,
           errorMessage: `Failed to upload file`,
         });
-        resolve({
-          status: "error",
-          errorCode: 500,
-          errorMessage: `Failed to upload file`,
-        });
+        resolve(null);
         return;
       }
       const { file } = files;
@@ -80,11 +72,7 @@ export default async function Upload(
           errorCode: 500,
           errorMessage: `Failed to upload file`,
         });
-        resolve({
-          status: "error",
-          errorCode: 500,
-          errorMessage: `Failed to upload file`,
-        });
+        resolve(null);
         return;
       }
       res
