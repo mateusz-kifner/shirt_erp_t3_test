@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import fs from "fs";
 import { Temporal } from "@js-temporal/polyfill";
+import type IncomingForm from "formidable/Formidable";
 
 /**
  * Upload using multiform data, requires using name file
@@ -10,17 +11,7 @@ import { Temporal } from "@js-temporal/polyfill";
 
 let nextUpdateUnixTime = 0;
 let currentFolderName = "temp";
-let form = new formidable.IncomingForm({
-  multiples: true,
-  uploadDir: "./uploads/" + currentFolderName,
-  keepExtensions: true,
-  maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
-  maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
-  maxFiles: 1024,
-  filename: function (name, ext, part, form) {
-    return name + ext;
-  },
-});
+let form: IncomingForm;
 
 // disable default body parser
 export const config = {
@@ -62,7 +53,7 @@ export default async function Upload(
         maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
         maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
         maxFiles: 1024,
-        filename: function (name, ext, part, form) {
+        filename: function (name, ext, _part, _form) {
           return name + ext;
         },
       });
@@ -104,8 +95,9 @@ export default async function Upload(
 
       const fileArray = Array.isArray(file) ? file : [file];
 
-      // for (let file of fileArray) {
-      // }
+      for (const file of fileArray) {
+        console.log(file.filepath, file.newFilename);
+      }
 
       // const { originalFilename, filepath: tempFilePath } = file;
       // const ext = (originalFilename ?? "unknown.unknown").split(".").pop();
