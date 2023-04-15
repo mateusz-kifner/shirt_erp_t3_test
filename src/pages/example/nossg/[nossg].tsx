@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { api } from "~/utils/api";
 
-const nossg = () => {
+const Nossg = () => {
   const router = useRouter();
   const { nossg } = router.query;
   const { data, isLoading } = api.example.hello.useQuery({
@@ -15,4 +15,4 @@ const nossg = () => {
   return <div>{data.greeting}</div>;
 };
 
-export default nossg;
+export default Nossg;

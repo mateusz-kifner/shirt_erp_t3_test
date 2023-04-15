@@ -35,9 +35,9 @@ export const getStaticPaths = () => {
   };
 };
 
-const ssg = ({ input }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Ssg = ({ input }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data, isLoading } = api.example.hello.useQuery(
-    { text: input },
+    { text: input as string },
     { refetchOnMount: false } // data is provided by getStaticProps, refresh is not needed
   );
   if (!data) return <div>404</div>;
@@ -46,4 +46,4 @@ const ssg = ({ input }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return <div>{data.greeting}</div>;
 };
 
-export default ssg;
+export default Ssg;

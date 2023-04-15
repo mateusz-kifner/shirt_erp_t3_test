@@ -11,7 +11,7 @@ export default function SgProfile() {
   const userQuery = api.session.user.useQuery(undefined, {
     onSuccess(data) {
       if (data.isLoggedIn === false) {
-        router.push("/login");
+        void router.push("/login");
       }
     },
   });
@@ -43,10 +43,7 @@ export default function SgProfile() {
   );
 }
 
-export const getServerSideProps = withIronSessionSsr(async function ({
-  req,
-  res,
-}) {
+export const getServerSideProps = withIronSessionSsr(function ({ req }) {
   const user = req.session.user;
 
   if (!user) {
@@ -61,5 +58,4 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   return {
     props: {},
   };
-},
-sessionOptions);
+}, sessionOptions);

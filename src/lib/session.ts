@@ -1,10 +1,10 @@
 // this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import type { IronSessionOptions } from "iron-session";
 import { env } from "~/env.mjs";
 
 export const sessionOptions: IronSessionOptions = {
-  password: env.SECRET_COOKIE_PASSWORD as string,
+  password: env.SECRET_COOKIE_PASSWORD,
   cookieName: "session_cookie",
   cookieOptions: {
     secure: env.NODE_ENV === "production",

@@ -16,11 +16,11 @@
  */
 
 import * as trpc from "@trpc/server";
-import * as trpcNext from "@trpc/server/adapters/next";
+import type * as trpcNext from "@trpc/server/adapters/next";
 
 export async function createTRPCContext(
   opts: trpcNext.CreateNextContextOptions
-): Promise<{ prisma: any; session: IronSession | null }> {
+): Promise<{ prisma: PrismaClient; session: IronSession | null }> {
   const session: IronSession = await getIronSession(
     opts.req,
     opts.res,
@@ -75,9 +75,11 @@ export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>;
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { IronSession, getIronSession } from "iron-session";
+import { getIronSession } from "iron-session";
+import type { IronSession } from "iron-session";
 import { prisma } from "../db";
 import { sessionOptions } from "~/lib/session";
+import type { PrismaClient } from "@prisma/client";
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,

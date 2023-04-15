@@ -38,12 +38,12 @@ export default async function Upload(
       res.status(405).json({
         status: "error",
         errorCode: 405,
-        errorMessage: `Method ${req.method} not allowed`,
+        errorMessage: `Method ${req.method as string} not allowed`,
       });
       resolve({
         status: "error",
         errorCode: 405,
-        errorMessage: `Method ${req.method} not allowed`,
+        errorMessage: `Method ${req.method as string} not allowed`,
       });
       return;
     }
@@ -104,8 +104,8 @@ export default async function Upload(
 
       const fileArray = Array.isArray(file) ? file : [file];
 
-      for (let file of fileArray) {
-      }
+      // for (let file of fileArray) {
+      // }
 
       // const { originalFilename, filepath: tempFilePath } = file;
       // const ext = (originalFilename ?? "unknown.unknown").split(".").pop();

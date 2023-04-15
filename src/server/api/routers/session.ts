@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import _ from "lodash";
 
 export const sessionRouter = createTRPCRouter({
-  user: publicProcedure.query(async ({ ctx }) => {
+  user: publicProcedure.query(({ ctx }) => {
     if (ctx.session?.user && ctx.session.isLoggedIn) {
       return {
         ...ctx.session.user,
@@ -59,7 +59,7 @@ export const sessionRouter = createTRPCRouter({
         });
       }
     }),
-  logout: publicProcedure.mutation(async ({ ctx }) => {
+  logout: publicProcedure.mutation(({ ctx }) => {
     if (ctx.session) ctx.session.destroy();
     return { isLoggedIn: false, user: null };
   }),
