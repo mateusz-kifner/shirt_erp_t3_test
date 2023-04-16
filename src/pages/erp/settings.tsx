@@ -1,33 +1,48 @@
+import { IconUser, IconUserCircle } from "@tabler/icons-react";
+import { withIronSessionSsr } from "iron-session/next";
 import React from "react";
+import { sessionOptions } from "~/lib/session";
+import { api } from "~/utils/api";
+
+export const getServerSideProps = withIronSessionSsr(function ({ req }) {
+  const user = req.session.user;
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}, sessionOptions);
 
 function Settings() {
+  const { data } = api.session.user.useQuery();
+
+  if (!data?.user) return null;
+  const user = data.user;
+
   return (
-    <div className="flex h-screen w-full flex-row items-center justify-center bg-gray-200 font-sans">
-      <div className="card mx-auto w-96 bg-white  shadow-xl hover:shadow">
+    <div className="flex w-full flex-row items-start justify-center pt-28 font-sans">
+      <div className="card mx-auto w-[40rem] bg-white  shadow-xl">
         {/* eslint-disable-next-line */}
-        <img
-          className="mx-auto -mt-20 w-32 rounded-full border-8 border-white"
-          src="https://avatars.githubusercontent.com/u/67946056?v=4"
-          alt=""
-        />
-        <div className="mt-2 text-center text-3xl font-medium">Ajo Alex</div>
-        <div className="mt-2 text-center text-sm font-light">@devpenzil</div>
-        <div className="text-center text-lg font-normal">Kerala</div>
+        <IconUserCircle className="mx-auto -mt-20 h-32 w-32 rounded-full border-8 border-white bg-gray-200 stroke-slate-900 " />
+        <div className="mt-2 text-center text-3xl font-medium">
+          {user?.name}
+        </div>
+        <div className="mt-2 text-center text-sm font-light">
+          @{user?.username}
+        </div>
         <div className="mt-2 px-6 text-center text-sm font-light">
-          <p>
-            Front end Developer, avid reader. Love to take a long walk, swim
-          </p>
+          {user?.email}
         </div>
         <hr className="mt-8" />
-        <div className="flex p-4">
-          <div className="w-1/2 text-center">
-            <span className="font-bold">1.8 k</span> Followers
-          </div>
-          <div className="w-0 border border-gray-300"></div>
-          <div className="w-1/2 text-center">
-            <span className="font-bold">2.0 k</span> Following
-          </div>
-        </div>
+        <div className="flex p-4"></div>
       </div>
     </div>
   );

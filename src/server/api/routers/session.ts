@@ -4,18 +4,19 @@ import { TRPCError } from "@trpc/server";
 import { prisma } from "~/server/db";
 import bcrypt from "bcrypt";
 import _ from "lodash";
+import { User } from "@prisma/client";
 
 export const sessionRouter = createTRPCRouter({
   user: publicProcedure.query(({ ctx }) => {
     if (ctx.session?.user && ctx.session.isLoggedIn) {
       return {
-        ...ctx.session.user,
+        user: ctx.session.user,
         isLoggedIn: true,
       };
     } else {
       return {
-        isLoggedIn: false,
         user: null,
+        isLoggedIn: false,
       };
     }
   }),

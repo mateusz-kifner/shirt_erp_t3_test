@@ -1,5 +1,5 @@
 // this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
-import type { Prisma } from "@prisma/client";
+import type { Prisma, User } from "@prisma/client";
 import type { IronSessionOptions } from "iron-session";
 import { env } from "~/env.mjs";
 
@@ -14,9 +14,7 @@ export const sessionOptions: IronSessionOptions = {
 // This is where we specify the typings of req.session.*
 declare module "iron-session" {
   interface IronSessionData {
-    user?: Prisma.UserGetPayload<{
-      select: { [K in keyof Prisma.UserSelect]: true };
-    }>;
+    user?: Omit<User, "password">;
     isLoggedIn: boolean;
   }
 }
