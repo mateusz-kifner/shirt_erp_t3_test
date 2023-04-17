@@ -6,7 +6,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   rightSection?: ReactNode;
 }
 
-function Button({ children, className, ...moreProps }: ButtonProps) {
+function Button(props: ButtonProps) {
+  const { children, leftSection, rightSection, className, ...moreProps } =
+    props;
   return (
     <button
       className={`border-1 inline-flex h-9 animate-pop items-center justify-center
@@ -19,7 +21,9 @@ function Button({ children, className, ...moreProps }: ButtonProps) {
             `}
       {...moreProps}
     >
+      {!!leftSection && leftSection}
       {children}
+      {!!rightSection && rightSection}
     </button>
   );
 }

@@ -1,4 +1,5 @@
 import {
+  IconBug,
   IconLogout,
   IconMoonStars,
   IconSun,
@@ -68,7 +69,10 @@ function Settings() {
         </div>
         <hr className="mt-8 dark:border-stone-600 " />
         <div className="flex flex-col gap-3 p-4 ">
-          <Button onClick={() => logout.mutate()} leftSection={<IconLogout />}>
+          <Button
+            onClick={() => logout.mutate()}
+            leftSection={<IconLogout />}
+          >
             {t.singout}
           </Button>
           <div className="flex items-center justify-stretch">
@@ -101,6 +105,12 @@ function Settings() {
                 {t.dark_skin}
               </>
             )}
+          </Button>
+          <Button
+            onClick={() => logout.mutate()}
+            leftSection={<IconBug size={18} />}
+          >
+            Debug
           </Button>
         </div>
       </div>
