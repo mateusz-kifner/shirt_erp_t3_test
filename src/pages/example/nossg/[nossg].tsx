@@ -12,7 +12,7 @@ const Nossg = () => {
   if (!data) return <div>404</div>;
   if (isLoading) return <div>Loading...</div>;
   console.log(data);
-  return <div>{data.greeting}</div>;
+  return <div>{data.message}</div>;
 };
 
 export default Nossg;

@@ -68,6 +68,11 @@
     jsbi "^4.1.0"
     tslib "^2.3.1"
 
+"@mantine/hooks@^6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-6.0.7.tgz#f97e259be97568588f544716f90f78e39a31eaa3"
+  integrity sha512-+Axk3hiSeqzSAtEqJR3C1PDW1YYl0ph4zBS8DAhFueXXtsjJOVRoGBbyc/gXovpjRM3llFtLqpwqxxbOJogx0g==
+
 "@mapbox/node-pre-gyp@^1.0.10":
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.10.tgz#8e6735ccebbb1581e5a7e652244cadc8a844d03c"

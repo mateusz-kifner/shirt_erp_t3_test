@@ -6,16 +6,20 @@ import {
   IconCategory,
   IconChartTreemap,
 } from "@tabler/icons-react";
-import useLocalStorageBool from "~/hooks/useLocalStorageBool";
 import { useRouter } from "next/router";
 import NavButton from "./NavButton";
+import { useLocalStorage } from "@mantine/hooks";
 
 function Navigation() {
   const router = useRouter();
-  const [debug] = useLocalStorageBool("debug");
-  const [navigationCollapsed, setNavigationCollapsed] = useLocalStorageBool(
-    "navigationCollapsed"
-  );
+  const [debug, setDebug] = useLocalStorage({
+    key: "debug",
+    defaultValue: false,
+  });
+  const [navigationCollapsed, setNavigationCollapsed] = useLocalStorage({
+    key: "navigationCollapsed",
+    defaultValue: false,
+  });
   const toggleNavigationCollapsed = () => {
     setNavigationCollapsed((val) => !val);
   };

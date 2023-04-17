@@ -1,3 +1,4 @@
+import { useLocalStorage } from "@mantine/hooks";
 import {
   IconBug,
   IconLogout,
@@ -7,9 +8,8 @@ import {
 } from "@tabler/icons-react";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "~/components/basic/Button";
-import useLocalStorageBool from "~/hooks/useLocalStorageBool";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
 import { api } from "~/utils/api";
@@ -52,7 +52,10 @@ function Settings() {
     },
   });
   const t = useTranslation();
-  const [debug, setDebug] = useLocalStorageBool("debug");
+  const [debug, setDebug] = useLocalStorage<boolean>({
+    key: "debug",
+    defaultValue: false,
+  });
 
   if (!data?.user) return null;
   const user = data.user;
@@ -82,10 +85,10 @@ function Settings() {
               className="border-1 inline-flex h-9 flex-grow animate-pop items-center
                 justify-center rounded-md bg-stone-800 
                 p-0 px-4 text-center font-semibold uppercase text-gray-200 no-underline
-                transition-all hover:bg-stone-950
-                active:hover:scale-95 active:hover:animate-none 
+                transition-all disabled:pointer-events-none
+                disabled:bg-stone-700 hover:bg-stone-950 
                 active:focus:scale-95 active:focus:animate-none
-                disabled:pointer-events-none disabled:bg-stone-700"
+                active:hover:scale-95 active:hover:animate-none"
             >
               <option value="pl">Polski</option>
               <option value="en">English</option>
