@@ -1,0 +1,89 @@
+{
+  "language": "language",
+  "delete": "delete",
+  "operation not reversible": "operation not reversible",
+  "add row top": "add row top",
+  "add row bottom": "add row bottom",
+  "add column left": "add column left",
+  "add column right": "add column right",
+  "remove column": "remove column",
+  "remove row": "remove row",
+  "cancel": "cancel",
+  "signin": "SignIn",
+  "singout": "SingOut",
+  "clients": {
+    "singular": "client",
+    "plural": "clients"
+  },
+  "products": {
+    "singular": "product",
+    "plural": "products"
+  },
+  "orders": {
+    "singular": "order",
+    "plural": "orders"
+  },
+  "email-messages": {
+    "singular": "email",
+    "plural": "emails"
+  },
+  "tasks": {
+    "singular": "task",
+    "plural": "tasks"
+  },
+  "expenses": {
+    "singular": "expense",
+    "plural": "expenses"
+  },
+  "logs": {
+    "singular": "log",
+    "plural": "logs"
+  },
+  "order archives": {
+    "singular": "archived order",
+    "plural": "archived orders"
+  },
+  "workstations": {
+    "singular": "workstation",
+    "plural": "workstations"
+  },
+  "procedures": {
+    "singular": "procedure",
+    "plural": "procedures"
+  },
+  "files": {
+    "singular": "file",
+    "plural": "files"
+  },
+  "settings": {
+    "singular": "setting",
+    "plural": "settings"
+  },
+  "users": {
+    "singular": "employee",
+    "plural": "employees"
+  },
+  "close": "close",
+  "clear": "clear",
+  "fullscreen": "fullscreen",
+  "sheet": "sheet",
+  "design": "design",
+  "add": "add",
+  "today": "today",
+  "planned": "planned",
+  "accepted": "accepted",
+  "in production": "in production",
+  "wrapped": "wrapped",
+  "sent": "sent",
+  "rejected": "rejected",
+  "archived": "archived",
+  "color": "color",
+  "item": "item",
+  "item color": "item color",
+  "background color": "background color",
+  "grid": "grid",
+  "uploading": "uploading",
+  "no data": "no data",
+  "archive": "archive",
+  "unarchive": "unarchive"
+}

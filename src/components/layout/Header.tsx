@@ -9,7 +9,7 @@ import Link from "next/link";
 const Header = () => {
   const navigationCollapsed = false;
   return (
-    <div className="flex h-14 items-center justify-between bg-stone-900 px-4">
+    <div className="flex h-14 items-center justify-between border-b-2 border-stone-500 bg-stone-900 px-4">
       <div className="flex h-full flex-nowrap items-center justify-between">
         {navigationCollapsed ? (
           // eslint-disable-next-line
@@ -31,34 +31,35 @@ const Header = () => {
       <div className="flex justify-end gap-3">
         <button
           className="border-1 inline-flex h-9 w-9
-              animate-pop items-center justify-center 
-              rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-              hover:bg-stone-950
-              active:hover:scale-95 active:hover:animate-none 
-              active:focus:scale-95 active:focus:animate-none"
+            animate-pop items-center justify-center 
+            rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
+            active:focus:scale-95 active:focus:animate-none
+            disabled:pointer-events-none disabled:bg-stone-700"
         >
           <IconSearch className="stroke-gray-200" />
         </button>
         <button
           className="border-1 inline-flex h-9 w-9
-              animate-pop items-center justify-center 
-              rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-              hover:bg-stone-950
-              active:hover:scale-95 active:hover:animate-none 
-              active:focus:scale-95 active:focus:animate-none
-              disabled:pointer-events-none disabled:bg-stone-700"
+            animate-pop items-center justify-center 
+            rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
+            active:focus:scale-95 active:focus:animate-none
+            disabled:pointer-events-none disabled:bg-stone-700"
           disabled
         >
           <IconMessage className="stroke-gray-200" />
         </button>
         <button
           className="border-1 inline-flex h-9 w-9
-              animate-pop items-center justify-center 
-              rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-              hover:bg-stone-950
-              active:hover:scale-95 active:hover:animate-none 
-              active:focus:scale-95 active:focus:animate-none
-              disabled:pointer-events-none disabled:bg-stone-700"
+            animate-pop items-center justify-center 
+            rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
+            active:focus:scale-95 active:focus:animate-none
+            disabled:pointer-events-none disabled:bg-stone-700"
           disabled
         >
           <IconBell className="stroke-gray-200" />
@@ -67,11 +68,12 @@ const Header = () => {
         <Link
           href={"/erp/settings"}
           className="border-1 inline-flex h-9 w-9
-          animate-pop items-center justify-center 
-          rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-          hover:bg-stone-950
-          active:hover:scale-95 active:hover:animate-none 
-          active:focus:scale-95 active:focus:animate-none"
+            animate-pop items-center justify-center 
+            rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
+            active:focus:scale-95 active:focus:animate-none
+            disabled:pointer-events-none disabled:bg-stone-700"
         >
           <IconSettings className="stroke-gray-200" />
         </Link>
