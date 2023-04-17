@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import navigationData from "../../navigationData";
 import {
   IconChevronRight,
@@ -20,28 +20,29 @@ function Navigation() {
     setNavigationCollapsed((val) => !val);
   };
 
-  return (
-    <div className="fixed left-0 top-14 flex w-64 flex-col">
-      <div className="scrollbar-thumb-blue scrollbar-thumb-rounded-full scrollbar-track-transparent scrollbar-w-2 overflow-y-auto">
-        <div className="min-h-[calc(100vh-3.5rem)] bg-white dark:bg-stone-900">
-          <div className="flex flex-col">
-            {navigationData.map(
-              (val) =>
-                (!val?.debug || debug) && (
-                  <NavButton
-                    {...val}
-                    key={"navbar_" + val.label}
-                    // onClick={(e: any) => {
-                    //   !biggerThanSM && toggleNavigationCollapsed()
-                    // }}
-                    // small={navigationCollapsed && biggerThanSM}
-                    active={val.entryName === router.pathname.split("/")[2]}
-                  />
-                )
-            )}
-          </div>
-          <div id="SpecialMenu" className="flex flex-col"></div>
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
+  return (
+    <div className="fixed left-0 top-14 flex h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)] w-64 flex-col bg-white  py-1 dark:bg-stone-900">
+      <div className="overflow-y-auto transition-all scrollbar  scrollbar-track-transparent scrollbar-thumb-blue-500 scrollbar-corner-transparent scrollbar-thumb-rounded-full scrollbar-w-2 ">
+        <div className="flex flex-col gap-2 p-3">
+          {navigationData.map(
+            (val) =>
+              (!val?.debug || debug) && (
+                <NavButton
+                  {...val}
+                  key={"navbar_" + val.label}
+                  // onClick={(e: any) => {
+                  //   !biggerThanSM && toggleNavigationCollapsed()
+                  // }}
+                  // small={navigationCollapsed && biggerThanSM}
+                  active={val.entryName === router.pathname.split("/")[2]}
+                />
+              )
+          )}
+        </div>
+        <div id="SpecialMenu" className="flex flex-col"></div>
+        {/* 
           <div className="flex">
             <button
               onClick={() => {
@@ -50,8 +51,7 @@ function Navigation() {
             >
               {navigationCollapsed ? <IconChevronRight /> : <IconChevronLeft />}
             </button>
-          </div>
-        </div>
+          </div> */}
       </div>
     </div>
   );

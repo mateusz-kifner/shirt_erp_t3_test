@@ -23,8 +23,7 @@ class DocumentWithColorMode extends Document {
 
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`
     const initialProps = await Document.getInitialProps(ctx);
-    if (ctx.req?.session?.user?.theme)
-      theme = ctx.req?.session?.user?.theme as number;
+    if (ctx.req?.session?.user?.theme) theme = ctx.req?.session?.user?.theme;
     return initialProps;
   }
 
@@ -32,7 +31,7 @@ class DocumentWithColorMode extends Document {
     return (
       <Html className={theme === 0 ? "light" : "dark"}>
         <Head />
-        <body>
+        <body className="bg-gray-200 dark:bg-stone-950">
           <Main />
           <NextScript />
         </body>

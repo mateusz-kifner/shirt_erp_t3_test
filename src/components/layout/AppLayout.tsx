@@ -12,7 +12,7 @@ function Layout({ children }: PropsWithChildren) {
     <div>
       <Header />
       <Navigation />
-      <main className="ml-64 mt-14 min-h-[calc(100vh-3.5rem)] bg-gray-200 dark:bg-stone-950 ">
+      <main className="ml-64 mt-14 min-h-[calc(100vh-3.5rem)]  ">
         {children}
       </main>
     </div>
