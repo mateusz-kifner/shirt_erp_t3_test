@@ -11,6 +11,8 @@
   "cancel": "Anuluj",
   "signin": "Zaloguj",
   "singout": "Wyloguj",
+  "light_skin": "Jasna skórka",
+  "dark_skin": "Ciemna skórka",
   "clients": {
     "singular": "klient",
     "plural": "klienci"
