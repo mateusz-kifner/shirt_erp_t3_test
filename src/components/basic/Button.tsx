@@ -11,7 +11,7 @@ function Button(props: ButtonProps) {
     props;
   return (
     <button
-      className={`border-1 inline-flex h-9 animate-pop items-center justify-center
+      className={`border-1 inline-flex h-10 animate-pop items-center justify-center
           gap-3 rounded-md bg-blue-600 stroke-gray-200 p-0 px-4 font-semibold uppercase
         text-gray-200 no-underline transition-all  hover:bg-blue-700 
           active:hover:scale-95  active:hover:animate-none 

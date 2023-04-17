@@ -9,6 +9,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import React from "react";
 import Button from "~/components/basic/Button";
+import { useSimpleLocalStorage } from "~/hooks/useSimpleLocalStorage";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
 import { api } from "~/utils/api";
@@ -32,7 +33,6 @@ export const getServerSideProps = withIronSessionSsr(function ({ req }) {
 
 function Settings() {
   const router = useRouter();
-
   const { locale } = router;
   const { data } = api.session.user.useQuery();
   const logout = api.session.logout.useMutation({
@@ -52,6 +52,7 @@ function Settings() {
     },
   });
   const t = useTranslation();
+  const [debug, setDebug] = useSimpleLocalStorage("debug", "false");
 
   if (!data?.user) return null;
   const user = data.user;
@@ -69,10 +70,7 @@ function Settings() {
         </div>
         <hr className="mt-8 dark:border-stone-600 " />
         <div className="flex flex-col gap-3 p-4 ">
-          <Button
-            onClick={() => logout.mutate()}
-            leftSection={<IconLogout />}
-          >
+          <Button onClick={() => logout.mutate()} leftSection={<IconLogout />}>
             {t.singout}
           </Button>
           <div className="flex items-center justify-stretch">
@@ -93,24 +91,19 @@ function Settings() {
               <option value="en">English</option>
             </select>
           </div>
-          <Button onClick={toggleTheme}>
-            {user?.theme === 1 ? (
-              <>
-                <IconSun size={18} />
-                {t.light_skin}
-              </>
-            ) : (
-              <>
-                <IconMoonStars size={18} />
-                {t.dark_skin}
-              </>
-            )}
+          <Button
+            onClick={toggleTheme}
+            leftSection={user?.theme === 1 ? <IconSun /> : <IconMoonStars />}
+          >
+            {user?.theme === 1 ? t.light_skin : t.dark_skin}
           </Button>
           <Button
-            onClick={() => logout.mutate()}
-            leftSection={<IconBug size={18} />}
+            onClick={() => {
+              setDebug((val) => (val === "false" ? "true" : "false"));
+            }}
+            leftSection={<IconBug />}
           >
-            Debug
+            Debug {debug === "true" ? "ON" : "OFF"}
           </Button>
         </div>
       </div>
