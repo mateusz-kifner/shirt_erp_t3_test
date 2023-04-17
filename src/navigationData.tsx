@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from "react";
+import type { ComponentType } from "react";
 import {
   IconChecklist,
   IconCrown,
@@ -12,7 +12,7 @@ import {
 
 const navigationData: {
   label: string;
-  Icon: ReactNode;
+  Icon: ComponentType<{ size: number; className: string }>;
   href: string;
   entryName: string;
   gradient?: { from: string; to: string; deg: number };
@@ -21,73 +21,73 @@ const navigationData: {
 }[] = [
   {
     label: "Zadania",
-    Icon: <IconChecklist size={32} />,
+    Icon: IconChecklist,
     href: "/erp/tasks",
     entryName: "tasks",
-    gradient: { from: "teal", to: "lime", deg: 105 },
+    gradient: { from: "#099268", to: "#66A80F", deg: 105 },
   },
   {
     label: "Zamówienia",
-    Icon: <IconCrown size={32} />,
+    Icon: IconCrown,
     href: "/erp/orders",
     entryName: "orders",
-    gradient: { from: "indigo", to: "cyan", deg: 105 },
+    gradient: { from: "#3B5BDB", to: "#0C8599", deg: 105 },
   },
   {
     label: "Produkty",
-    Icon: <IconShirt size={32} />,
+    Icon: IconShirt,
     href: "/erp/products",
     entryName: "products",
-    gradient: { from: "grape", to: "red", deg: 105 },
+    gradient: { from: "#9C36B5", to: "#E03131", deg: 105 },
   },
   {
     label: "Klienci",
-    Icon: <IconUser size={32} />,
+    Icon: IconUser,
     href: "/erp/clients",
     entryName: "clients",
-    gradient: { from: "orange", to: "gold", deg: 105 },
+    gradient: { from: "#E8590C", to: "#F08C00", deg: 105 },
   },
   {
     label: "Wydatki",
-    Icon: <IconShoppingCart size={32} />,
+    Icon: IconShoppingCart,
     href: "/erp/expenses",
     entryName: "expenses",
-    gradient: { from: "red", to: "orange", deg: 105 },
+    gradient: { from: "#E03131", to: "#E8590C", deg: 105 },
   },
   {
     label: "IconMaile",
-    Icon: <IconMail size={32} />,
+    Icon: IconMail,
     href: "/erp/email-messages",
     entryName: "email",
-    gradient: { from: "indigo", to: "teal", deg: 105 },
+    gradient: { from: "#3B5BDB", to: "#099268", deg: 105 },
   },
   {
     label: "Logi",
-    Icon: <IconBell size={32} />,
+    Icon: IconBell,
     href: "/erp/logs",
     entryName: "logs",
     debug: true,
   },
   {
     label: "Zamówienia archiwalne",
-    Icon: <IconBell size={32} />,
+    Icon: IconBell,
     href: "/erp/order-archives",
     entryName: "orders-archive",
     debug: true,
   },
   {
     label: "Pracownicy",
-    Icon: <IconBell size={32} />,
+    Icon: IconBell,
     href: "/erp/users",
     entryName: "users",
     debug: true,
   },
   {
     label: "Pliki",
-    Icon: <IconFile size={32} />,
+    Icon: IconFile,
     href: "/erp/files",
     entryName: "upload/files",
-    gradient: { from: "green", to: "lime", deg: 105 },
+    gradient: { from: "#2F9E44", to: "#66A80F", deg: 105 },
     debug: true,
   },
 ];
