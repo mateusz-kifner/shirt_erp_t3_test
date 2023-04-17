@@ -24,7 +24,6 @@ export const sessionRouter = createTRPCRouter({
           where: { username: ctx.session?.user?.username },
           data: { theme: input },
         });
-        console.log(user);
         ctx.session.user.theme = user.theme as number;
         await ctx.session.save();
         return true;
