@@ -9,7 +9,7 @@ import Link from "next/link";
 const Header = () => {
   const navigationCollapsed = false;
   return (
-    <div className="flex h-14 items-center justify-between border-b-[1px] border-stone-700 bg-stone-900 px-4">
+    <div className="fixed left-0 top-0 flex h-14 w-full items-center justify-between border-b-[1px] border-stone-700 bg-stone-900 px-4">
       <div className="flex h-full flex-nowrap items-center justify-between">
         {navigationCollapsed ? (
           // eslint-disable-next-line

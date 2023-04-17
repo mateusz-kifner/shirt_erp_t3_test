@@ -7,8 +7,8 @@ import {
   IconChartTreemap,
 } from "@tabler/icons-react";
 import useLocalStorageBool from "~/hooks/useLocalStorageBool";
-import NavButton from "./NavButton";
 import { useRouter } from "next/router";
+import NavButton from "./NavButton";
 
 function Navigation() {
   const router = useRouter();

@@ -9,7 +9,7 @@ interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   small?: boolean;
   label: string;
-  Icon: ComponentType<{ size: number; className: string }>;
+  Icon: ComponentType<{ size: number; className: string; id?: string }>;
   href: string;
   entryName: string;
   gradient?: { from: string; to: string; deg: number };
@@ -22,8 +22,8 @@ function NavButton(props: NavButtonProps) {
   const { label, href, Icon, gradient, color } = props;
   const uuid = useId();
   return (
-    <Link href={href}>
-      <svg width="32" height="32">
+    <Link href={href} id={uuid}>
+      <svg width="32" height="32" id={"outer" + uuid} key={"outer" + uuid}>
         <defs>
           <linearGradient id={"gradient_" + uuid}>
             <stop
@@ -44,7 +44,12 @@ function NavButton(props: NavButtonProps) {
                 height="100%"
                 className="fill-black"
               />
-              <Icon size={32} className="stroke-white" />
+              <Icon
+                size={32}
+                className="stroke-white"
+                key={"inner" + uuid}
+                id={"inner" + uuid}
+              />
             </g>
           </mask>
         </defs>
