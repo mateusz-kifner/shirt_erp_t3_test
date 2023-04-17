@@ -9,7 +9,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import React from "react";
 import Button from "~/components/basic/Button";
-import { useSimpleLocalStorage } from "~/hooks/useSimpleLocalStorage";
+import useLocalStorageBool from "~/hooks/useLocalStorageBool";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
 import { api } from "~/utils/api";
@@ -52,7 +52,7 @@ function Settings() {
     },
   });
   const t = useTranslation();
-  const [debug, setDebug] = useSimpleLocalStorage("debug", "false");
+  const [debug, setDebug] = useLocalStorageBool("debug");
 
   if (!data?.user) return null;
   const user = data.user;
@@ -99,11 +99,11 @@ function Settings() {
           </Button>
           <Button
             onClick={() => {
-              setDebug((val) => (val === "false" ? "true" : "false"));
+              setDebug((val) => !val);
             }}
             leftSection={<IconBug />}
           >
-            Debug {debug === "true" ? "ON" : "OFF"}
+            Debug {debug ? "ON" : "OFF"}
           </Button>
         </div>
       </div>
