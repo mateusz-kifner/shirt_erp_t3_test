@@ -33,7 +33,7 @@ function NavButton(props: NavButtonProps) {
          active
            ? "bg-opacity-10 dark:bg-opacity-10"
            : "bg-opacity-0 dark:bg-opacity-0"
-       }`}
+       } w-64`}
     >
       <div
         className="flex h-10 w-10 items-center justify-center rounded-full"
