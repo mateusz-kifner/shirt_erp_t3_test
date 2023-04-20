@@ -9,25 +9,38 @@ datasource db {
 }
 
 model User {
-    id              Int               @id @default(autoincrement())
+    id              Int              @id @default(autoincrement())
     name            String?
-    username        String?           @unique
-    email           String?           @unique
+    username        String?          @unique
+    email           String?          @unique
     emailVerified   DateTime?
     password        String?
     image           String?
-    theme           Int?              @default(0)
-    userPermissions UserPermissions[]
-    createdAt       DateTime          @default(now())
-    updatedAt       DateTime          @updatedAt
+    theme           Int?             @default(0)
+    userPermissions UserPermission[]
+    createdAt       DateTime         @default(now())
+    updatedAt       DateTime         @updatedAt
 }
 
-model UserPermissions {
+model UserPermission {
     id        Int      @id @default(autoincrement())
     action    String?  @db.VarChar(255)
     users     User[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model File {
+    id               Int      @id @default(autoincrement())
+    size             Int
+    filepath         String
+    originalFilename String?
+    newFilename      String?
+    mimetype         String?  @db.VarChar(40)
+    hash             String?  @db.VarChar(40)
+    token            String?  @db.VarChar(40)
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
 }
 
 model addition_expense_items {
@@ -165,60 +178,6 @@ model expenses_user_links {
     @@unique([expense_id, user_id], map: "expenses_user_links_unique")
     @@index([user_id], map: "expenses_user_links_inv_fk")
     @@index([expense_order], map: "expenses_user_links_order_inv_fk")
-}
-
-model files {
-    id                Int       @id @default(autoincrement())
-    name              String?   @db.VarChar(255)
-    alternative_text  String?   @db.VarChar(255)
-    caption           String?   @db.VarChar(255)
-    width             Int?
-    height            Int?
-    formats           Json?
-    hash              String?   @db.VarChar(255)
-    ext               String?   @db.VarChar(255)
-    mime              String?   @db.VarChar(255)
-    size              Decimal?  @db.Decimal(10, 2)
-    url               String?   @db.VarChar(255)
-    preview_url       String?   @db.VarChar(255)
-    provider          String?   @db.VarChar(255)
-    provider_metadata Json?
-    folder_path       String?   @db.VarChar(255)
-    public            Boolean?
-    token             String?   @db.VarChar(255)
-    created_at        DateTime? @db.Timestamp(6)
-    updated_at        DateTime? @db.Timestamp(6)
-    created_by_id     Int?
-    updated_by_id     Int?
-
-    files_folder_links   files_folder_links[]
-    files_related_morphs files_related_morphs[]
-
-    @@index([created_by_id], map: "files_created_by_id_fk")
-    @@index([updated_by_id], map: "files_updated_by_id_fk")
-    @@index([folder_path], map: "upload_files_folder_path_index")
-}
-
-model files_folder_links {
-    id         Int    @id @default(autoincrement())
-    file_id    Int?
-    folder_id  Int?
-    file_order Float?
-    files      files? @relation(fields: [file_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "files_folder_links_fk")
-
-    @@unique([file_id, folder_id], map: "files_folder_links_unique")
-    @@index([folder_id], map: "files_folder_links_inv_fk")
-    @@index([file_order], map: "files_folder_links_order_inv_fk")
-}
-
-model files_related_morphs {
-    id           Int     @id @default(autoincrement())
-    file_id      Int?
-    related_id   Int?
-    related_type String? @db.VarChar(255)
-    field        String? @db.VarChar(255)
-    order        Float?
-    files        files?  @relation(fields: [file_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "files_related_morphs_fk")
 }
 
 model futures {
