@@ -1,4 +1,3 @@
-import { useLocalStorage } from "@mantine/hooks";
 import {
   IconBug,
   IconLogout,

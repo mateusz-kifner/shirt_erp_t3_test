@@ -5,7 +5,7 @@ class DocumentWithColorMode extends Document {
     return (
       <Html>
         <Head />
-        <body className="bg-gray-200 dark:bg-stone-950">
+        <body className="preload bg-gray-200 dark:bg-stone-950">
           <Main />
           <NextScript />
         </body>

@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import navigationData from "../../navigationData";
-import {
-  IconChevronRight,
-  IconChevronLeft,
-  IconCategory,
-  IconChartTreemap,
-} from "@tabler/icons-react";
+import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import NavButton from "./NavButton";
-import { useLocalStorage } from "@mantine/hooks";
 import { useUserContext } from "~/context/userContext";
 
 function Navigation() {
