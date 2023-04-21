@@ -17,7 +17,7 @@ interface UserContextType {
 
 export const UserContext = createContext<UserContextType | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [debug, setDebug] = useLocalStorage<boolean>({
     key: "user-debug",
     defaultValue: false,
@@ -59,7 +59,7 @@ export function useUserContext(): UserContextType {
   const state = useContext(UserContext);
   if (!state) {
     throw new Error(
-      `ERROR: Auth reached logged-in-only component with null 'user' in context`
+      `ERROR: User reached logged-in-only component with null 'user' in context`
     );
   }
   return state;

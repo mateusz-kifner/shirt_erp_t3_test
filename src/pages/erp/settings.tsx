@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import React, { type ChangeEvent } from "react";
 import SuperJSON from "superjson";
 import Button from "~/components/basic/Button";
+import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
 import { appRouter } from "~/server/api/root";
@@ -64,10 +65,7 @@ function Settings() {
     },
   });
   const t = useTranslation();
-  const [debug, setDebug] = useLocalStorage<boolean>({
-    key: "debug",
-    defaultValue: false,
-  });
+  const { debug, toggleDebug } = useUserContext();
 
   if (!data?.user) return null;
   const user = data.user;
@@ -118,7 +116,7 @@ function Settings() {
           </Button>
           <Button
             onClick={() => {
-              setDebug((val) => !val);
+              toggleDebug();
             }}
             leftSection={<IconBug />}
           >

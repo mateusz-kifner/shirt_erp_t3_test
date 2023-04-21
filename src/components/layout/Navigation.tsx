@@ -9,20 +9,12 @@ import {
 import { useRouter } from "next/router";
 import NavButton from "./NavButton";
 import { useLocalStorage } from "@mantine/hooks";
+import { useUserContext } from "~/context/userContext";
 
 function Navigation() {
   const router = useRouter();
-  const [debug, setDebug] = useLocalStorage({
-    key: "debug",
-    defaultValue: false,
-  });
-  const [navigationCollapsed, setNavigationCollapsed] = useLocalStorage({
-    key: "navigationCollapsed",
-    defaultValue: false,
-  });
-  const toggleNavigationCollapsed = () => {
-    setNavigationCollapsed((val) => !val);
-  };
+  const { navigationCollapsed, toggleNavigationCollapsed, debug } =
+    useUserContext();
 
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
@@ -68,7 +60,5 @@ function Navigation() {
     </div>
   );
 }
-
-
 
 export default Navigation;
