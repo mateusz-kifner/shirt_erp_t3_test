@@ -6,15 +6,19 @@ import {
   IconSun,
   IconUserCircle,
 } from "@tabler/icons-react";
+import { createServerSideHelpers } from "@trpc/react-query/server";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
+import SuperJSON from "superjson";
 import Button from "~/components/basic/Button";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
+import { appRouter } from "~/server/api/root";
+import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
 
-export const getServerSideProps = withIronSessionSsr(function ({ req }) {
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   const user = req.session.user;
 
   if (!user) {
@@ -26,8 +30,16 @@ export const getServerSideProps = withIronSessionSsr(function ({ req }) {
     };
   }
 
+  const ssg = createServerSideHelpers({
+    router: appRouter,
+    ctx: { prisma, session: req.session },
+    transformer: SuperJSON,
+  });
+
+  await ssg.session.user.prefetch();
+
   return {
-    props: {},
+    props: { trpcState: ssg.dehydrate() },
   };
 }, sessionOptions);
 
@@ -66,7 +78,6 @@ function Settings() {
   return (
     <div className="flex w-full flex-row items-start justify-center pt-28 font-sans dark:text-gray-200">
       <div className="card mx-auto w-[36rem] bg-white shadow-xl dark:bg-stone-800">
-        {/* eslint-disable-next-line */}
         <IconUserCircle className="mx-auto -mt-20 h-32 w-32 rounded-full border-8 border-white bg-gray-200 stroke-slate-900 dark:border-stone-800  dark:bg-stone-800  dark:stroke-gray-200 " />
         <div className="mt-2 text-center text-3xl font-medium">
           {user?.name}

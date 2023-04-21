@@ -16,7 +16,7 @@ export const sessionRouter = createTRPCRouter({
       if (!ctx.session?.user?.username) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Session not vaild",
+          message: "Session not valid",
         });
       }
       try {

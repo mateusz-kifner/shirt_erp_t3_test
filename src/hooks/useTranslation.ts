@@ -1,28 +1,13 @@
 // import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import pl from "~/locales/pl.json";
-
-// TODO: allow changing locale
+import en from "~/locales/en.json";
 
 function useTranslation() {
-  // const router = useRouter();
-  // const locale = router.locale ?? "pl";
-  const locale = "pl"; // FORCE PL
+  const router = useRouter();
+  const locale = router.locale ?? "pl";
 
-  const [t, setT] = useState<typeof pl>(pl);
-  useEffect(() => {
-    if (locale !== "pl") {
-      async function loadTranslation() {
-        const translation = (await import(
-          `../locales/${locale}.json`
-        )) as typeof pl;
-        setT(translation);
-      }
-      void loadTranslation();
-    }
-  }, [locale]);
-
-  return t;
+  return (locale === "pl" ? pl : en) as typeof pl;
 }
 
 export default useTranslation;
