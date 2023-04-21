@@ -4,7 +4,7 @@
 
 html,
 body {
-  /* min-height: 100vh; */
+  @apply preload bg-gray-200 dark:bg-stone-950;
 }
 
 .preload * {

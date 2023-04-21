@@ -5,8 +5,9 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import AppLayout from "~/components/layout/AppLayout";
 import { UserContextProvider } from "~/context/userContext";
+import Head from "next/head";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const App: AppType = ({ Component, pageProps }) => {
   return (
     <UserContextProvider>
       <AppLayout>
@@ -16,4 +17,4 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   );
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(App);
