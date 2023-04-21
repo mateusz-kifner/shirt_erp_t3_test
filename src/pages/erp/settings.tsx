@@ -9,7 +9,7 @@ import {
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { type ChangeEvent } from "react";
 import SuperJSON from "superjson";
 import Button from "~/components/basic/Button";
 import useTranslation from "~/hooks/useTranslation";
@@ -75,6 +75,12 @@ function Settings() {
     changeTheme.mutate(user.theme === 0 ? 1 : 0);
   };
 
+  const changeLocale = (e: ChangeEvent<HTMLSelectElement>) => {
+    router.push("", "", { locale: e.target.value }).catch((e) => {
+      throw e;
+    });
+  };
+
   return (
     <div className="flex w-full flex-row items-start justify-center pt-28 font-sans dark:text-gray-200">
       <div className="card mx-auto w-[36rem] bg-white shadow-xl dark:bg-stone-800">
@@ -85,19 +91,18 @@ function Settings() {
         <hr className="mt-8 dark:border-stone-600 " />
         <div className="flex flex-col gap-3 p-4 ">
           <Button onClick={() => logout.mutate()} leftSection={<IconLogout />}>
-            {t.singout}
+            {t.sign_out}
           </Button>
           <div className="flex items-center justify-stretch">
             <span className="w-1/2">{t.language}</span>
             <select
               defaultValue={locale ?? "pl"}
-              // onChange={() => {}}
-              disabled
+              onChange={changeLocale}
               className="border-1 inline-flex h-9 flex-grow animate-pop items-center
-                justify-center rounded-md bg-stone-800 
+                justify-center rounded-md bg-stone-700 
                 p-0 px-4 text-center font-semibold uppercase text-gray-200 no-underline
                 transition-all disabled:pointer-events-none
-                disabled:bg-stone-700 hover:bg-stone-950 
+                disabled:bg-stone-700 hover:bg-stone-600
                 active:focus:scale-95 active:focus:animate-none
                 active:hover:scale-95 active:hover:animate-none"
             >
@@ -109,7 +114,7 @@ function Settings() {
             onClick={toggleTheme}
             leftSection={user?.theme === 1 ? <IconSun /> : <IconMoonStars />}
           >
-            {user?.theme === 1 ? t.light_skin : t.dark_skin}
+            {user?.theme === 1 ? t.light_theme : t.dark_theme}
           </Button>
           <Button
             onClick={() => {
