@@ -10,6 +10,8 @@ import {
 interface UserContextType {
   debug: boolean;
   navigationCollapsed: boolean;
+  theme: number;
+  toggleTheme: () => void;
   toggleNavigationCollapsed: () => void;
   setNavigationCollapsed: Dispatch<SetStateAction<boolean>>;
   toggleDebug: () => void;
@@ -27,6 +29,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       key: "user-navigation-collapsed",
       defaultValue: false,
     });
+  const [theme, setTheme] = useLocalStorage<number>({
+    key: "user-theme",
+    defaultValue: 0,
+  });
   // const [secondNavigation, setSecondNavigation] = useLocalStorage<boolean>({
   //   key: "user-navigation-second",
   //   defaultValue: false,
@@ -43,9 +49,11 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   return (
     <UserContext.Provider
       value={{
+        theme,
         debug,
         navigationCollapsed,
         toggleNavigationCollapsed: () => setNavigationCollapsed((val) => !val),
+        toggleTheme: () => setTheme((val) => (val === 0 ? 1 : 0)),
         setNavigationCollapsed,
         toggleDebug: () => setDebug((val) => !val),
       }}

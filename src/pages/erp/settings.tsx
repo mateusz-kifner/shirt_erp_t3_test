@@ -56,22 +56,11 @@ function Settings() {
       console.log(err.message);
     },
   });
-  const changeTheme = api.session.changeTheme.useMutation({
-    onSuccess() {
-      void router.reload();
-    },
-    onError(err) {
-      console.log(err.message);
-    },
-  });
   const t = useTranslation();
-  const { debug, toggleDebug } = useUserContext();
+  const { debug, toggleDebug, toggleTheme, theme } = useUserContext();
 
   if (!data?.user) return null;
   const user = data.user;
-  const toggleTheme = () => {
-    changeTheme.mutate(user.theme === 0 ? 1 : 0);
-  };
 
   const changeLocale = (e: ChangeEvent<HTMLSelectElement>) => {
     router.push("", "", { locale: e.target.value }).catch((e) => {
@@ -110,9 +99,9 @@ function Settings() {
           </div>
           <Button
             onClick={toggleTheme}
-            leftSection={user?.theme === 1 ? <IconSun /> : <IconMoonStars />}
+            leftSection={theme === 1 ? <IconSun /> : <IconMoonStars />}
           >
-            {user?.theme === 1 ? t.light_theme : t.dark_theme}
+            {theme === 1 ? t.light_theme : t.dark_theme}
           </Button>
           <Button
             onClick={() => {

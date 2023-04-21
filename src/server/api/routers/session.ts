@@ -10,30 +10,6 @@ import bcrypt from "bcrypt";
 import _ from "lodash";
 
 export const sessionRouter = createTRPCRouter({
-  changeTheme: authenticatedProcedure
-    .input(z.number().min(0).max(1).int())
-    .mutation(async ({ ctx, input }) => {
-      if (!ctx.session?.user?.username) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Session not valid",
-        });
-      }
-      try {
-        const user = await prisma.user.update({
-          where: { username: ctx.session?.user?.username },
-          data: { theme: input },
-        });
-        ctx.session.user.theme = user.theme as number;
-        await ctx.session.save();
-        return true;
-      } catch (error) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: (error as Error).message,
-        });
-      }
-    }),
   user: publicProcedure.query(({ ctx }) => {
     if (ctx.session?.user && ctx.session.isLoggedIn) {
       return {
