@@ -36,10 +36,10 @@ function Navigation() {
           )}
         </div>
       </div>
-      <div className=" flex w-full  flex-col items-center justify-center gap-2  p-2">
+      <div className=" relative flex  w-full flex-col items-center justify-center  gap-2 p-2">
         <div className="w-full border-t-[1px] border-stone-600"></div>
         <button
-          className="flex h-12 w-12 items-center justify-center rounded-full transition-all hover:bg-black hover:bg-opacity-25"
+          className=" flex h-12 w-12 items-center justify-center rounded-full transition-all before:absolute before:bottom-2 before:left-0 before:h-12 before:w-full  hover:bg-black hover:bg-opacity-25"
           onClick={() => {
             toggleNavigationCollapsed();
           }}

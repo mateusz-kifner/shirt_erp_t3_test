@@ -19,13 +19,13 @@ interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function NavButton(props: NavButtonProps) {
-  const { label, href, Icon, gradient, color, active } = props;
+  const { label, href, Icon, gradient, color, active, small } = props;
   const uuid = useId();
   return (
     <Link
       href={href}
       id={uuid}
-      className={` flex items-center gap-3 rounded-md bg-black 
+      className={`   bg-black 
       bg-opacity-0 p-2 transition-all disabled:pointer-events-none disabled:bg-stone-700 hover:bg-opacity-10
       active:focus:scale-95  active:focus:animate-none active:hover:scale-95 
       active:hover:animate-none dark:bg-white 
@@ -33,24 +33,26 @@ function NavButton(props: NavButtonProps) {
          active
            ? "bg-opacity-10 dark:bg-opacity-10"
            : "bg-opacity-0 dark:bg-opacity-0"
-       } w-64`}
+       } ${small ? "rounded-full" : "rounded-md"} overflow-hidden `}
     >
-      <div
-        className="flex h-10 w-10 items-center justify-center rounded-full"
-        style={{
-          background: `linear-gradient(${gradient?.deg ?? 0}deg, ${
-            gradient ? gradient.from : color ?? "#0C8599"
-          },${gradient ? gradient.to : color ?? "#0C8599"} )`,
-        }}
-      >
-        <Icon
-          size={32}
-          className="stroke-white"
-          key={"inner" + uuid}
-          id={"inner" + uuid}
-        />
+      <div className="flex w-64 items-center gap-3">
+        <div
+          className="flex h-10 w-10 items-center justify-center rounded-full"
+          style={{
+            background: `linear-gradient(${gradient?.deg ?? 0}deg, ${
+              gradient ? gradient.from : color ?? "#0C8599"
+            },${gradient ? gradient.to : color ?? "#0C8599"} )`,
+          }}
+        >
+          <Icon
+            size={32}
+            className="stroke-white"
+            key={"inner" + uuid}
+            id={"inner" + uuid}
+          />
+        </div>
+        {label}
       </div>
-      {label}
     </Link>
   );
 }

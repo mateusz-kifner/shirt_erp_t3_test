@@ -4,7 +4,7 @@
 
 html,
 body {
-  @apply preload bg-gray-200 dark:bg-stone-950;
+  @apply preload bg-gray-200 text-stone-950 dark:bg-stone-950 dark:text-stone-200;
 }
 
 .preload * {
