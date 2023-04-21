@@ -7,7 +7,6 @@ function Layout({ children }: PropsWithChildren) {
     // initialize theme (bypasses userContext, 10x faster)
     const theme = localStorage.getItem("user-theme");
     const htmlElement = document.querySelector("html") as HTMLHtmlElement;
-    htmlElement.classList.remove("light", "dark");
     htmlElement.classList.add(theme === "0" ? "light" : "dark");
 
     // enable transitions after page load

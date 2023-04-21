@@ -33,6 +33,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     key: "user-theme",
     defaultValue: 0,
   });
+
   // const [secondNavigation, setSecondNavigation] = useLocalStorage<boolean>({
   //   key: "user-navigation-second",
   //   defaultValue: false,
@@ -53,7 +54,12 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         debug,
         navigationCollapsed,
         toggleNavigationCollapsed: () => setNavigationCollapsed((val) => !val),
-        toggleTheme: () => setTheme((val) => (val === 0 ? 1 : 0)),
+        toggleTheme: () => {
+          setTheme((val) => (val === 0 ? 1 : 0));
+          const htmlElement = document.querySelector("html") as HTMLHtmlElement;
+          htmlElement.classList.remove("light", "dark");
+          htmlElement.classList.add(theme === 1 ? "light" : "dark");
+        },
         setNavigationCollapsed,
         toggleDebug: () => setDebug((val) => !val),
       }}
