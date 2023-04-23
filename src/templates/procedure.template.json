@@ -1,0 +1,35 @@
+{
+  "id": { "type": "id" },
+
+  "name": {
+    "type": "title",
+    "initialValue": "",
+    "required": true
+  },
+
+  "description": {
+    "label": "Opis",
+    "type": "text",
+    "initialValue": ""
+  },
+
+  "workstations": {
+    "label": "Stanowiska",
+    "type": "array",
+    "arrayType": "apiEntryId",
+    "entryName": "workstations",
+    "organizingHandle": "arrows"
+  },
+
+  "createdAt": {
+    "label": "Utworzono",
+    "type": "datetime",
+    "disabled": true
+  },
+
+  "updatedAt": {
+    "label": "Edytowano",
+    "type": "datetime",
+    "disabled": true
+  }
+}

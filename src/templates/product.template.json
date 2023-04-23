@@ -1,0 +1,75 @@
+{
+  "id": { "type": "id" },
+
+  "name": {
+    "type": "title",
+    "initialValue": "",
+    "required": true
+  },
+
+  "category": {
+    "label": "Kategoria",
+    "type": "enum",
+    "initialValue": "koszulka",
+    "enum_data": [
+      "koszulka",
+      "bluza",
+      "czapka",
+      "torba / worek",
+      "kamizelka",
+      "kubek",
+      "inne"
+    ]
+  },
+
+  "description": {
+    "label": "Opis",
+    "type": "richtext",
+    "initialValue": "",
+    "maxLength": 4095
+  },
+
+  "iconId": {
+    "label": "Ikona",
+    "type": "iconId",
+    "entryName": "productCategories"
+  },
+
+  "previewImages": {
+    "label": "Zdjęcia",
+    "type": "files",
+    "maxFileCount": 10
+  },
+
+  "variants": {
+    "type": "group",
+    "style": { "border": "none", "padding": 0, "flexWrap": "wrap" },
+    "template": {
+      "colors": {
+        "label": "Kolory",
+        "type": "array",
+        "arrayType": "color",
+        "style": { "minWidth": 220 }
+      },
+
+      "sizes": {
+        "label": "Rozmiary",
+        "type": "array",
+        "arrayType": "text",
+        "style": { "minWidth": 220 }
+      }
+    }
+  },
+
+  "createdAt": {
+    "label": "Utworzono",
+    "type": "datetime",
+    "disabled": true
+  },
+
+  "updatedAt": {
+    "label": "Edytowano",
+    "type": "datetime",
+    "disabled": true
+  }
+}

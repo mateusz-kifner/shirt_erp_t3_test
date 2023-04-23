@@ -1,0 +1,48 @@
+{
+  "id": { "type": "id" },
+
+  "name": {
+    "type": "title",
+    "initialValue": "",
+    "required": true
+  },
+
+  "price": {
+    "label": "Cena",
+    "type": "money"
+  },
+
+  "items": {
+    "label": "Produkty",
+    "type": "array",
+    "arrayType": "group",
+    "style": { "borderStyle": "none", "padding": "0" },
+    "template": {
+      "name": {
+        "type": "text"
+      },
+
+      "count": {
+        "type": "number",
+        "leftSection": "x",
+        "min": 0,
+        "initialValue": 1,
+
+        "increment": 1,
+        "fixed": 0
+      }
+    }
+  },
+
+  "createdAt": {
+    "label": "Utworzono",
+    "type": "datetime",
+    "disabled": true
+  },
+
+  "updatedAt": {
+    "label": "Edytowano",
+    "type": "datetime",
+    "disabled": true
+  }
+}
