@@ -12,7 +12,7 @@ function Button(props: ButtonProps) {
   return (
     <button
       className={`border-1 inline-flex h-10 animate-pop items-center justify-center
-          gap-3 rounded-md bg-blue-600 stroke-gray-200 p-0 px-4 font-semibold uppercase
+          gap-3 rounded-md bg-blue-600 stroke-gray-200 px-4 py-0 font-semibold uppercase
         text-gray-200 no-underline transition-all  disabled:pointer-events-none 
           disabled:bg-stone-700  hover:bg-blue-700 
           active:focus:scale-95 active:focus:animate-none 

@@ -14,7 +14,7 @@ function Navigation() {
 
   return (
     <div
-      className={`fixed left-0 top-14 flex h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)]  flex-col justify-between  bg-white px-3 py-1 transition-all dark:bg-stone-900 ${
+      className={`fixed left-0 top-14 flex h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)]  flex-col justify-between  border-r-[1px] border-stone-700 bg-white px-3 py-1 transition-all dark:bg-stone-900 ${
         navigationCollapsed ? "w-20" : "w-64"
       }`}
     >

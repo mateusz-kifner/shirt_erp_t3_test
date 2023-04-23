@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import {
   IconBug,
   IconLogout,
@@ -8,9 +9,10 @@ import {
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
-import React, { type ChangeEvent } from "react";
+import React, { useState, type ChangeEvent } from "react";
 import SuperJSON from "superjson";
 import Button from "~/components/basic/Button";
+import EditableText from "~/components/editable/EditableText";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
@@ -57,6 +59,8 @@ function Settings() {
   });
   const t = useTranslation();
   const { debug, toggleDebug, toggleTheme, theme } = useUserContext();
+  const [testFormOpen, setTestFormOpen] = useState<boolean>(false);
+  const [testValue, setTestValue] = useState<string | null>("");
 
   if (!data?.user) return null;
   const user = data.user;
@@ -110,6 +114,31 @@ function Settings() {
           >
             Debug {debug ? "ON" : "OFF"}
           </Button>
+          {debug && (
+            <Button
+              onClick={() => {
+                setTestFormOpen(true);
+              }}
+              leftSection={<IconBug />}
+            >
+              Open Test Form
+            </Button>
+          )}
+          {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+          <Dialog open={testFormOpen} onClose={() => {}}>
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+            <Dialog.Panel className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform overflow-hidden rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-stone-800">
+              <Button onClick={() => setTestFormOpen(false)}>Close</Button>
+              <EditableText
+                leftSection={<IconBug />}
+                rightSection={<IconBug />}
+                label={"Test text"}
+                value={testValue ?? undefined}
+                onSubmit={(value) => setTestValue(value)}
+              />
+            </Dialog.Panel>
+          </Dialog>
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ function NavButton(props: NavButtonProps) {
     <Link
       href={href}
       id={uuid}
-      className={`   bg-black 
+      className={`bg-black 
       bg-opacity-0 p-2 transition-all disabled:pointer-events-none disabled:bg-stone-700 hover:bg-opacity-10
       active:focus:scale-95  active:focus:animate-none active:hover:scale-95 
       active:hover:animate-none dark:bg-white 
@@ -33,7 +33,7 @@ function NavButton(props: NavButtonProps) {
          active
            ? "bg-opacity-10 dark:bg-opacity-10"
            : "bg-opacity-0 dark:bg-opacity-0"
-       } ${small ? "rounded-full" : "rounded-md"} overflow-hidden `}
+       } overflow-hidden rounded-full `}
     >
       <div className="flex w-64 items-center gap-3">
         <div
