@@ -2,13 +2,13 @@
 
 // import ApiEntryEditable from "../../../components/api/ApiEntryEditable";
 import { useRouter } from "next/router";
-import Workspace from "../../../components/layout/Workspace";
+// import Workspace from "../../../components/layout/Workspace";
 
 import { useState } from "react";
 import { IconList, IconNotebook } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
-import ClientAddModal from "~/page-components/erp/client/ClientAddModal";
-import ClientsList from "~/page-components/erp/client/ClientList";
+import ClientAddModal from "~/page-components/erp/clients/ClientAddModal";
+import ClientsList from "~/page-components/erp/clients/ClientList";
 
 const entryName = "clients";
 
@@ -23,25 +23,25 @@ const ClientsPage = () => {
     : router.query.id;
   return (
     <>
-      <Workspace
+      {/* <Workspace
         childrenLabels={
           id ? ["Lista klientów", "Właściwości"] : ["Lista klientów"]
         }
         childrenIcons={[IconList, IconNotebook]}
         defaultActive={id ? 1 : 0}
         defaultPinned={isMobile ? [] : id ? [0] : []}
-      >
-        <ClientsList
-          selectedId={id}
-          onAddElement={() => setOpenAddModal(true)}
-        />
-        {/* <ApiEntryEditable
+      > */}
+      <ClientsList
+        selectedId={id !== undefined ? parseInt(id) : null}
+        onAddElement={() => setOpenAddModal(true)}
+      />
+      {/* <ApiEntryEditable
           template={template}
           entryName={entryName}
           id={id}
           allowDelete
         /> */}
-      </Workspace>
+      {/* </Workspace> */}
       <ClientAddModal
         opened={openAddModal}
         onClose={(id?: number) => {
