@@ -6,6 +6,7 @@ import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
 import useTranslation from "~/hooks/useTranslation";
 import Button from "../basic/Button";
+import { showNotification } from "~/context/NotificationsContext";
 
 interface EditableTextProps extends EditableInput<string> {
   maxLength?: number;
@@ -113,10 +114,10 @@ const EditableText = (props: EditableTextProps) => {
             active:hover:scale-95 active:hover:animate-none"
               onClick={() => {
                 clipboard.copy(text);
-                // showNotification({
-                //   title: "Skopiowano do schowka",
-                //   message: text,
-                // })
+                showNotification({
+                  title: "Skopiowano do schowka",
+                  message: text,
+                });
               }}
               tabIndex={-1}
             >
