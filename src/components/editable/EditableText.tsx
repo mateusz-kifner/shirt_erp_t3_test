@@ -6,7 +6,7 @@ import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
 import useTranslation from "~/hooks/useTranslation";
 import Button from "../basic/Button";
-import { showNotification } from "~/context/NotificationsContext";
+import { showNotification } from "~/lib/notifications";
 
 interface EditableTextProps extends EditableInput<string> {
   maxLength?: number;

@@ -5,7 +5,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import AppLayout from "~/components/layout/AppLayout";
 import { UserContextProvider } from "~/context/userContext";
-import { Notifications } from "~/context/NotificationsContext";
+import { Notifications } from "~/lib/notifications";
 
 const App: AppType = ({ Component, pageProps }) => {
   return (
