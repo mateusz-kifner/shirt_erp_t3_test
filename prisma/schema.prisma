@@ -10,551 +10,254 @@ datasource db {
 
 model User {
     id              Int              @id @default(autoincrement())
-    name            String?
-    username        String?          @unique
-    email           String?          @unique
+    name            String?          @db.VarChar(255)
+    username        String           @unique @db.VarChar(255)
+    email           String?          @unique @db.VarChar(255)
     emailVerified   DateTime?
-    password        String?
-    image           String?
+    password        String           @db.VarChar(60)
+    image           String?          @db.VarChar(4096)
     userPermissions UserPermission[]
     createdAt       DateTime         @default(now())
     updatedAt       DateTime         @updatedAt
+    createdById     Int?
+    updatedById     Int?
 }
 
 model UserPermission {
-    id        Int      @id @default(autoincrement())
-    action    String?  @db.VarChar(255)
-    users     User[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          Int      @id @default(autoincrement())
+    action      String   @db.VarChar(255)
+    users       User[]
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById Int?
+    updatedById Int?
 }
 
 model File {
-    id               Int      @id @default(autoincrement())
+    id               Int        @id @default(autoincrement())
     size             Int
-    filepath         String
-    originalFilename String?
-    newFilename      String?
-    mimetype         String?  @db.VarChar(40)
-    hash             String?  @db.VarChar(40)
-    token            String?  @db.VarChar(40)
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @updatedAt
+    filepath         String     @db.VarChar(2048)
+    originalFilename String?    @db.VarChar(1024)
+    newFilename      String?    @db.VarChar(1024)
+    mimetype         String?    @db.VarChar(40)
+    hash             String?    @db.VarChar(40)
+    token            String?    @db.VarChar(40)
+    createdAt        DateTime   @default(now())
+    updatedAt        DateTime   @updatedAt
+    createdById      Int?
+    updatedById      Int?
+    TypeIcon         TypeIcon[]
 }
 
-model addition_expense_items {
-    id    Int     @id @default(autoincrement())
-    name  String? @db.VarChar(255)
-    count Int?
-}
-
-model addition_plugins {
-    id      Int      @id @default(autoincrement())
-    name    String?  @db.VarChar(255)
-    config  Json?
-    enabled Boolean?
-}
-
-model addition_product_data {
-    id   Int     @id @default(autoincrement())
-    size String? @db.VarChar(255)
-    cost Float?
-}
-
-model clients {
-    id            Int       @id @default(autoincrement())
-    username      String?   @db.VarChar(255)
-    firstname     String?   @db.VarChar(255)
-    lastname      String?   @db.VarChar(255)
-    email         String?   @db.VarChar(255)
-    phone_number  String?   @db.VarChar(255)
-    company_name  String?   @db.VarChar(255)
+model Client {
+    id            Int            @id @default(autoincrement())
+    username      String?        @db.VarChar(255)
+    firstname     String?        @db.VarChar(255)
+    lastname      String?        @db.VarChar(255)
+    email         String?        @db.VarChar(255)
+    phoneNumber   String?        @db.VarChar(255)
+    companyName   String?        @db.VarChar(255)
     notes         String?
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    clients_components          clients_components[]
-    order_archives_client_links order_archives_client_links[]
-    orders_client_links         orders_client_links[]
-
-    @@index([created_by_id], map: "clients_created_by_id_fk")
-    @@index([updated_by_id], map: "clients_updated_by_id_fk")
+    addressId     Int?
+    address       TypeAddress?   @relation(fields: [addressId], references: [id])
+    orders        Order[]
+    ordersArchive OrderArchive[]
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
+    createdById   Int?
+    updatedById   Int?
 }
 
-model clients_components {
-    id             Int      @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String?  @db.VarChar(255)
-    field          String?  @db.VarChar(255)
-    order          Float?
-    clients        clients? @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "clients_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "clients_unique")
-    @@index([component_type], map: "clients_component_type_index")
-    @@index([field], map: "clients_field_index")
-}
-
-model email_credentials {
-    id            Int       @id @default(autoincrement())
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-    host          String?   @db.VarChar(255)
-    port          Int?
-    user          String?   @db.VarChar(255)
-    password      String?   @db.VarChar(255)
-    secure        Boolean?
-
-    @@index([created_by_id], map: "email_credentials_created_by_id_fk")
-    @@index([updated_by_id], map: "email_credentials_updated_by_id_fk")
-}
-
-model email_messages {
-    id              Int       @id @default(autoincrement())
-    created_at      DateTime? @db.Timestamp(6)
-    updated_at      DateTime? @db.Timestamp(6)
-    created_by_id   Int?
-    updated_by_id   Int?
-    subject         String?   @db.VarChar(255)
-    from            String?   @db.VarChar(255)
-    to              String?   @db.VarChar(255)
-    date            DateTime? @db.Timestamp(6)
-    html            String?
-    text            String?
-    message_id      String?   @db.VarChar(255)
-    header_lines    Json?
-    text_as_html    String?
-    next_message_id Int?
-
-    order_archives_email_messages_links order_archives_email_messages_links[]
-    orders_email_messages_links         orders_email_messages_links[]
-
-    @@index([created_by_id], map: "email_messages_created_by_id_fk")
-    @@index([updated_by_id], map: "email_messages_updated_by_id_fk")
-}
-
-model expenses {
-    id            Int       @id @default(autoincrement())
-    name          String?   @db.VarChar(255)
-    price         Decimal?  @db.Decimal(10, 2)
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    expenses_components expenses_components[]
-    expenses_user_links expenses_user_links[]
-
-    @@index([created_by_id], map: "expenses_created_by_id_fk")
-    @@index([updated_by_id], map: "expenses_updated_by_id_fk")
-}
-
-model expenses_components {
-    id             Int       @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String?   @db.VarChar(255)
-    field          String?   @db.VarChar(255)
-    order          Float?
-    expenses       expenses? @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "expenses_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "expenses_unique")
-    @@index([component_type], map: "expenses_component_type_index")
-    @@index([field], map: "expenses_field_index")
-}
-
-model expenses_user_links {
-    id            Int       @id @default(autoincrement())
-    expense_id    Int?
-    user_id       Int?
-    expense_order Float?
-    expenses      expenses? @relation(fields: [expense_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "expenses_user_links_fk")
-
-    @@unique([expense_id, user_id], map: "expenses_user_links_unique")
-    @@index([user_id], map: "expenses_user_links_inv_fk")
-    @@index([expense_order], map: "expenses_user_links_order_inv_fk")
-}
-
-model futures {
-    id            Int       @id @default(autoincrement())
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    futures_components futures_components[]
-
-    @@index([created_by_id], map: "futures_created_by_id_fk")
-    @@index([updated_by_id], map: "futures_updated_by_id_fk")
-}
-
-model futures_components {
-    id             Int      @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String?  @db.VarChar(255)
-    field          String?  @db.VarChar(255)
-    order          Float?
-    futures        futures? @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "futures_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "futures_unique")
-    @@index([component_type], map: "futures_component_type_index")
-    @@index([field], map: "futures_field_index")
-}
-
-model globals {
-    id              Int       @id @default(autoincrement())
-    title           String?   @db.VarChar(255)
-    welcome_message String?
-    created_at      DateTime? @db.Timestamp(6)
-    updated_at      DateTime? @db.Timestamp(6)
-    created_by_id   Int?
-    updated_by_id   Int?
-
-    @@index([created_by_id], map: "globals_created_by_id_fk")
-    @@index([updated_by_id], map: "globals_updated_by_id_fk")
-}
-
-model icons {
-    id            Int       @id @default(autoincrement())
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    icons_components icons_components[]
-
-    @@index([created_by_id], map: "icons_created_by_id_fk")
-    @@index([updated_by_id], map: "icons_updated_by_id_fk")
-}
-
-model icons_components {
-    id             Int     @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String? @db.VarChar(255)
-    field          String? @db.VarChar(255)
-    order          Float?
-    icons          icons?  @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "icons_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "icons_unique")
-    @@index([component_type], map: "icons_component_type_index")
-    @@index([field], map: "icons_field_index")
-}
-
-model logs {
-    id            Int       @id @default(autoincrement())
-    message       String?   @db.VarChar(255)
-    type          String?   @db.VarChar(255)
-    user_id       String?   @db.VarChar(255)
-    data          String?
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    @@index([created_by_id], map: "logs_created_by_id_fk")
-    @@index([updated_by_id], map: "logs_updated_by_id_fk")
-}
-
-model order_archives {
-    id                  Int       @id @default(autoincrement())
-    name                String?   @db.VarChar(255)
-    status              String?   @db.VarChar(255)
-    notes               String?
-    price               String?   @db.VarChar(255)
-    is_price_paid       Boolean?
-    advance             String?   @db.VarChar(255)
-    is_advance_paid     Boolean?
-    date_of_completion  DateTime? @db.Date
-    tables              Json?
-    designs             Json?
-    email_messages_text Json?
-    created_at          DateTime? @db.Timestamp(6)
-    updated_at          DateTime? @db.Timestamp(6)
-    created_by_id       Int?
-    updated_by_id       Int?
-    work_time           Decimal?  @db.Decimal(10, 2)
-
-    order_archives_client_links         order_archives_client_links[]
-    order_archives_components           order_archives_components[]
-    order_archives_email_messages_links order_archives_email_messages_links[]
-    order_archives_products_links       order_archives_products_links[]
-
-    @@index([created_by_id], map: "order_archives_created_by_id_fk")
-    @@index([updated_by_id], map: "order_archives_updated_by_id_fk")
-}
-
-model order_archives_client_links {
-    id                  Int             @id @default(autoincrement())
-    order_archive_id    Int?
-    client_id           Int?
-    order_archive_order Float?
-    order_archives      order_archives? @relation(fields: [order_archive_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_client_links_fk")
-    clients             clients?        @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_client_links_inv_fk")
-
-    @@unique([order_archive_id, client_id], map: "order_archives_client_links_unique")
-    @@index([order_archive_order], map: "order_archives_client_links_order_inv_fk")
-}
-
-model order_archives_components {
-    id             Int             @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String?         @db.VarChar(255)
-    field          String?         @db.VarChar(255)
-    order          Float?
-    order_archives order_archives? @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "order_archives_unique")
-    @@index([component_type], map: "order_archives_component_type_index")
-    @@index([field], map: "order_archives_field_index")
-}
-
-model order_archives_email_messages_links {
-    id                  Int             @id @default(autoincrement())
-    order_archive_id    Int?
-    email_message_id    Int?
-    email_message_order Float?
-    order_archive_order Float?
-    order_archives      order_archives? @relation(fields: [order_archive_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_email_messages_links_fk")
-    email_messages      email_messages? @relation(fields: [email_message_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_email_messages_links_inv_fk")
-
-    @@unique([order_archive_id, email_message_id], map: "order_archives_email_messages_links_unique")
-    @@index([email_message_order], map: "order_archives_email_messages_links_order_fk")
-    @@index([order_archive_order], map: "order_archives_email_messages_links_order_inv_fk")
-}
-
-model order_archives_products_links {
-    id               Int             @id @default(autoincrement())
-    order_archive_id Int?
-    product_id       Int?
-    product_order    Float?
-    order_archives   order_archives? @relation(fields: [order_archive_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_products_links_fk")
-    products         products?       @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_archives_products_links_inv_fk")
-
-    @@unique([order_archive_id, product_id], map: "order_archives_products_links_unique")
-    @@index([product_order], map: "order_archives_products_links_order_fk")
-}
-
-model orders {
-    id                  Int       @id @default(autoincrement())
-    name                String?   @db.VarChar(255)
-    status              String?   @db.VarChar(255)
-    notes               String?
-    price               String?   @db.VarChar(255)
-    is_price_paid       Boolean?
-    advance             String?   @db.VarChar(255)
-    is_advance_paid     Boolean?
-    date_of_completion  DateTime? @db.Date
-    tables              Json?
-    designs             Json?
-    email_messages_text Json?
-    created_at          DateTime? @db.Timestamp(6)
-    updated_at          DateTime? @db.Timestamp(6)
-    created_by_id       Int?
-    updated_by_id       Int?
-    work_time           Decimal?  @db.Decimal(10, 2)
-
-    orders_client_links         orders_client_links[]
-    orders_components           orders_components[]
-    orders_email_messages_links orders_email_messages_links[]
-    orders_employees_links      orders_employees_links[]
-    orders_products_links       orders_products_links[]
-
-    @@index([created_by_id], map: "orders_created_by_id_fk")
-    @@index([updated_by_id], map: "orders_updated_by_id_fk")
-}
-
-model orders_client_links {
+model EmailCredential {
     id          Int      @id @default(autoincrement())
-    order_id    Int?
-    client_id   Int?
-    order_order Float?
-    orders      orders?  @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_client_links_fk")
-    clients     clients? @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_client_links_inv_fk")
-
-    @@unique([order_id, client_id], map: "orders_client_links_unique")
-    @@index([order_order], map: "orders_client_links_order_inv_fk")
+    host        String?  @db.VarChar(255)
+    port        Int?
+    user        String?  @db.VarChar(255)
+    password    String?  @db.VarChar(255)
+    secure      Boolean?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById Int?
+    updatedById Int?
 }
 
-model orders_components {
-    id             Int     @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String? @db.VarChar(255)
-    field          String? @db.VarChar(255)
-    order          Float?
-    orders         orders? @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "orders_unique")
-    @@index([component_type], map: "orders_component_type_index")
-    @@index([field], map: "orders_field_index")
-}
-
-model orders_email_messages_links {
-    id                  Int             @id @default(autoincrement())
-    order_id            Int?
-    email_message_id    Int?
-    email_message_order Float?
-    order_order         Float?
-    orders              orders?         @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_email_messages_links_fk")
-    email_messages      email_messages? @relation(fields: [email_message_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_email_messages_links_inv_fk")
-
-    @@unique([order_id, email_message_id], map: "orders_email_messages_links_unique")
-    @@index([email_message_order], map: "orders_email_messages_links_order_fk")
-    @@index([order_order], map: "orders_email_messages_links_order_inv_fk")
-}
-
-model orders_employees_links {
-    id          Int     @id @default(autoincrement())
-    order_id    Int?
-    user_id     Int?
-    user_order  Float?
-    order_order Float?
-    orders      orders? @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_employees_links_fk")
-
-    @@unique([order_id, user_id], map: "orders_employees_links_unique")
-    @@index([user_id], map: "orders_employees_links_inv_fk")
-    @@index([user_order], map: "orders_employees_links_order_fk")
-    @@index([order_order], map: "orders_employees_links_order_inv_fk")
-}
-
-model orders_products_links {
+model EmailMessage {
     id            Int       @id @default(autoincrement())
-    order_id      Int?
-    product_id    Int?
-    product_order Float?
-    orders        orders?   @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_products_links_fk")
-    products      products? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_products_links_inv_fk")
-
-    @@unique([order_id, product_id], map: "orders_products_links_unique")
-    @@index([product_order], map: "orders_products_links_order_fk")
+    subject       String?   @db.VarChar(255)
+    from          String?   @db.VarChar(255)
+    to            String?   @db.VarChar(255)
+    date          DateTime? @db.Timestamp(6)
+    html          String?
+    text          String?
+    messageId     String?   @db.VarChar(255)
+    headerLines   Json?
+    textAsHtml    String?
+    nextMessageId Int?
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+    createdById   Int?
+    updatedById   Int?
 }
 
-model plugins {
-    id            Int       @id @default(autoincrement())
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    plugins_components plugins_components[]
-
-    @@index([created_by_id], map: "plugins_created_by_id_fk")
-    @@index([updated_by_id], map: "plugins_updated_by_id_fk")
+model Expense {
+    id            Int      @id @default(autoincrement())
+    name          String?  @db.VarChar(255)
+    cost          Decimal? @db.Decimal(10, 2)
+    expensesCost  Int[]
+    expensesNames String[]
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    createdById   Int?
+    updatedById   Int?
 }
 
-model plugins_components {
+model Global {
     id             Int      @id @default(autoincrement())
-    entity_id      Int?
-    component_id   Int?
-    component_type String?  @db.VarChar(255)
-    field          String?  @db.VarChar(255)
-    order          Float?
-    plugins        plugins? @relation(fields: [entity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "plugins_entity_fk")
-
-    @@unique([entity_id, component_id, field, component_type], map: "plugins_unique")
-    @@index([component_type], map: "plugins_component_type_index")
-    @@index([field], map: "plugins_field_index")
+    title          String   @default("ShirtERP") @db.VarChar(255)
+    welcomeMessage String   @default("Witaj w systemie ShirtERP")
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    createdById    Int?
+    updatedById    Int?
 }
 
-model procedures {
-    id            Int       @id @default(autoincrement())
-    name          String?   @db.VarChar(255)
-    description   String?
-    workstations  Json?
-    created_at    DateTime? @db.Timestamp(6)
-    updated_at    DateTime? @db.Timestamp(6)
-    created_by_id Int?
-    updated_by_id Int?
-
-    @@index([created_by_id], map: "procedures_created_by_id_fk")
-    @@index([updated_by_id], map: "procedures_updated_by_id_fk")
+model Icons {
+    id          Int      @id @default(autoincrement())
+    nameOfSet   String   @db.VarChar(255)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById Int?
+    updatedById Int?
 }
 
-model products {
-    id                            Int                             @id @default(autoincrement())
-    name                          String?                         @db.VarChar(255)
-    category                      String?                         @db.VarChar(255)
-    description                   String?
-    icon_id                       Int?
-    variants                      Json?
-    created_at                    DateTime?                       @db.Timestamp(6)
-    updated_at                    DateTime?                       @db.Timestamp(6)
-    created_by_id                 Int?
-    updated_by_id                 Int?
-    order_archives_products_links order_archives_products_links[]
-    orders_products_links         orders_products_links[]
-
-    type_products_product_links type_products_product_links[]
-
-    @@index([created_by_id], map: "products_created_by_id_fk")
-    @@index([updated_by_id], map: "products_updated_by_id_fk")
+model Log {
+    id          Int      @id @default(autoincrement())
+    message     String?  @db.VarChar(255)
+    type        String?  @db.VarChar(255)
+    userId      Int?
+    data        String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById Int?
+    updatedById Int?
 }
 
-model type_addresses {
-    id               Int     @id @default(autoincrement())
-    street_name      String? @db.VarChar(255)
-    street_number    String? @db.VarChar(255)
-    apartment_number String? @db.VarChar(255)
-    second_line      String? @db.VarChar(255)
-    post_code        String? @db.VarChar(255)
-    city             String? @db.VarChar(255)
-    province         String? @db.VarChar(255)
-}
-
-model type_icons {
-    id   Int     @id @default(autoincrement())
-    name String? @db.VarChar(255)
-}
-
-model type_linked_lists {
-    id      Int  @id @default(autoincrement())
-    prev_id Int?
-    next_id Int?
-}
-
-model type_products {
-    id                          Int                           @id @default(autoincrement())
-    count                       Int?
-    size                        String?                       @db.VarChar(255)
-    notes                       String?                       @db.VarChar(255)
-    ready                       Boolean?
-    type_products_product_links type_products_product_links[]
-}
-
-model type_products_product_links {
-    id             Int            @id @default(autoincrement())
-    product_id     Int?
-    inv_product_id Int?
-    type_products  type_products? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "type_products_product_links_fk")
-    products       products?      @relation(fields: [inv_product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "type_products_product_links_inv_fk")
-
-    @@unique([product_id, inv_product_id], map: "type_products_product_links_unique")
-}
-
-model type_texts {
-    id   Int     @id @default(autoincrement())
-    text String? @db.VarChar(255)
-}
-
-model workstations {
+model OrderArchive {
     id                Int       @id @default(autoincrement())
     name              String?   @db.VarChar(255)
-    description       String?
-    icon_id           Int?
-    plugin_config     Json?
-    next_workstations Json?
-    created_at        DateTime? @db.Timestamp(6)
-    updated_at        DateTime? @db.Timestamp(6)
-    created_by_id     Int?
-    updated_by_id     Int?
+    status            String?   @db.VarChar(255)
+    notes             String?
+    price             String?   @db.VarChar(255)
+    isPricePaid       Boolean?
+    dateOfCompletion  DateTime? @db.Date
+    tables            Json?
+    designs           Json?
+    emailMessagesText Json?
+    createdAt         DateTime  @default(now())
+    updatedAt         DateTime  @updatedAt
+    createdById       Int?
+    updatedById       Int?
+    workTime          Decimal?  @db.Decimal(10, 2)
+    clients           Client?   @relation(fields: [clientsId], references: [id])
+    clientsId         Int?
+}
 
-    @@index([created_by_id], map: "workstations_created_by_id_fk")
-    @@index([updated_by_id], map: "workstations_updated_by_id_fk")
+model Order {
+    id                Int       @id @default(autoincrement())
+    name              String?   @db.VarChar(255)
+    status            String?   @db.VarChar(255)
+    notes             String?
+    price             String?   @db.VarChar(255)
+    isPricePaid       Boolean?
+    dateOfCompletion  DateTime? @db.Date
+    tables            Json?
+    designs           Json?
+    emailMessagesText Json?
+    workTime          Decimal?  @db.Decimal(10, 2)
+    client            Client?   @relation(fields: [clientId], references: [id])
+    clientId          Int?
+    createdAt         DateTime  @default(now())
+    updatedAt         DateTime  @updatedAt
+    createdById       Int?
+    updatedById       Int?
+}
+
+model Plugins {
+    id          Int      @id @default(autoincrement())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById Int?
+    updatedById Int?
+}
+
+model Procedure {
+    id           Int      @id @default(autoincrement())
+    name         String?  @db.VarChar(255)
+    description  String?
+    workstations Json?
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    createdById  Int?
+    updatedById  Int?
+}
+
+model Product {
+    id          Int      @id @default(autoincrement())
+    name        String?  @db.VarChar(255)
+    category    String?  @db.VarChar(255)
+    description String?
+    iconId      Int?
+    variants    Json?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById Int?
+    updatedById Int?
+}
+
+model Workstation {
+    id               Int      @id @default(autoincrement())
+    name             String?  @db.VarChar(255)
+    description      String?
+    iconId           Int?
+    pluginConfig     Json?
+    nextWorkstations Json?
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+    createdById      Int?
+    updatedById      Int?
+}
+
+// Types
+
+model TypeAddress {
+    id              Int      @id @default(autoincrement())
+    streetName      String?  @db.VarChar(255)
+    streetNumber    String?  @db.VarChar(255)
+    apartmentNumber String?  @db.VarChar(255)
+    secondLine      String?  @db.VarChar(255)
+    postCode        String?  @db.VarChar(255)
+    city            String?  @db.VarChar(255)
+    province        String?  @db.VarChar(255)
+    Clients         Client[]
+}
+
+model TypeIcon {
+    id     Int     @id @default(autoincrement())
+    name   String? @db.VarChar(255)
+    file   File?   @relation(fields: [fileId], references: [id])
+    fileId Int?
+}
+
+model TypeLinkedList {
+    id     Int  @id @default(autoincrement())
+    prevId Int?
+    nextId Int?
+}
+
+model TypeProduct {
+    id    Int      @id @default(autoincrement())
+    count Int?
+    size  String?  @db.VarChar(255)
+    notes String?  @db.VarChar(255)
+    ready Boolean?
 }

@@ -23,15 +23,17 @@ export const simpleColors = [
 ];
 
 export function getRandomColorByNumber(num?: number | null) {
-  return simpleColors[(num ?? 0) % simpleColors.length];
+  return simpleColors[(num ?? 0) % simpleColors.length] as string;
 }
 
 export function getRandomColorByString(str?: string | null) {
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  return simpleColors[Math.abs(simpleHash("" + str)) % simpleColors.length];
+  return simpleColors[
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    Math.abs(simpleHash("" + str)) % simpleColors.length
+  ] as string;
 }
 
 export function getColorByName(name: string) {
   const index = colorNamesValues.indexOf(toTitleCase(name));
-  return index !== -1 ? colorNamesKeys[index] : null;
+  return index !== -1 ? (colorNamesKeys[index] as string) : null;
 }
