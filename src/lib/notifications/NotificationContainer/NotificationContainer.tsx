@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { CSSProperties, useEffect, useRef } from "react";
 import getAutoClose from "./get-auto-close";
 import { type NotificationProps } from "../types";
 import Button from "~/components/basic/Button";
@@ -9,6 +9,7 @@ export interface NotificationContainerProps {
   onHide(id: string): void;
   autoClose: false | number;
   innerRef: React.ForwardedRef<HTMLDivElement>;
+  style?: CSSProperties;
 }
 
 export default function NotificationContainer({
@@ -16,6 +17,7 @@ export default function NotificationContainer({
   autoClose,
   onHide,
   innerRef,
+  style,
   ...others
 }: NotificationContainerProps) {
   const {
@@ -56,15 +58,14 @@ export default function NotificationContainer({
     <div
       className="flex w-64 max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow dark:bg-gray-800 dark:text-gray-400"
       role="alert"
+      style={style}
     >
       <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
         <IconBug />
         <span className="sr-only">Fire icon</span>
       </div>
       <div className="ml-3 text-sm font-normal">Set yourself free.</div>
-      <Button
-      // onClick={() => hideNotification(notification.id as string)}
-      >
+      <Button onClick={() => onHide(notification.id as string)}>
         <span className="sr-only">Close</span>
         <IconX />
       </Button>

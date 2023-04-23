@@ -11,6 +11,7 @@ import useNotificationsState from "./use-notifications-state";
 import NotificationContainer from "../NotificationContainer/NotificationContainer";
 import { Transition } from "@headlessui/react";
 import Portal from "~/components/Portal";
+import getNotificationStateStyles from "./get-notification-state-styles";
 
 const POSITIONS = [
   "top-left",
@@ -78,6 +79,8 @@ export const Notifications: React.FC<NotificationsProps> = ({
     cleanQueue,
   } = useNotificationsState({ limit });
 
+  const duration = transitionDuration;
+
   const positioning = (
     POSITIONS.includes(position) ? position : "bottom-right"
   ).split("-") as NotificationsPositioning;
@@ -116,14 +119,29 @@ export const Notifications: React.FC<NotificationsProps> = ({
         notification={notification}
         onHide={hideNotification}
         // className={""}
+        // style={{
+        //   ...getNotificationStateStyles({
+        //     positioning,
+        //     transitionDuration: duration,
+        //     maxHeight: notificationMaxHeight,
+        //   }),
+        // }}
         autoClose={autoClose}
       />
     </Transition>
   ));
-
+  console.log(getPositionStyles(positioning, "0.5rem"));
   return (
     <Portal>
-      <div className="flex flex-col">{items}</div>
+      <div
+        className="fixed"
+        style={{
+          maxWidth: containerWidth,
+          ...getPositionStyles(positioning, "0.5rem"),
+        }}
+      >
+        {items}
+      </div>
     </Portal>
   );
 };

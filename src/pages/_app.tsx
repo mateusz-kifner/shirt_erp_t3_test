@@ -10,10 +10,10 @@ import { Notifications } from "~/lib/notifications";
 const App: AppType = ({ Component, pageProps }) => {
   return (
     <UserContextProvider>
+      <Notifications />
       <AppLayout>
         <Component {...pageProps} />
       </AppLayout>
-      <Notifications />
     </UserContextProvider>
   );
 };
