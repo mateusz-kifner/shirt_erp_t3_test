@@ -9,3 +9,5 @@ export {
 } from "./events";
 export type { NotificationProps } from "./types";
 export type { NotificationsProps } from "./Notifications/Notifications";
+
+// based on @mantine/notifications MIT

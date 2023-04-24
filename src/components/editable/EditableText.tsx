@@ -5,7 +5,6 @@ import { IconCopy } from "@tabler/icons-react";
 import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
 import useTranslation from "~/hooks/useTranslation";
-import Button from "../basic/Button";
 import { showNotification } from "~/lib/notifications";
 
 interface EditableTextProps extends EditableInput<string> {
@@ -103,28 +102,30 @@ const EditableText = (props: EditableTextProps) => {
           text-sm
           dark:text-gray-400"
         >
-          {label}{" "}
-          {text.length > 0 && (
-            <button
-              className="border-1 inline-flex animate-pop items-center justify-center
+          <div className="flex items-center py-1">
+            {label}{" "}
+            {text.length > 0 && (
+              <button
+                className="border-1 inline-flex animate-pop items-center justify-center
             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
           text-gray-200 no-underline transition-all  
-          hover:bg-blue-700
+          hover:bg-black hover:bg-opacity-30
             active:focus:scale-95 active:focus:animate-none 
             active:hover:scale-95 active:hover:animate-none"
-              onClick={() => {
-                clipboard.copy(text);
-                showNotification({
-                  title: "Skopiowano do schowka",
-                  message: text,
-                  icon: <IconCopy />,
-                });
-              }}
-              tabIndex={-1}
-            >
-              <IconCopy size={16} />
-            </button>
-          )}
+                onClick={() => {
+                  clipboard.copy(text);
+                  showNotification({
+                    title: "Skopiowano do schowka",
+                    message: text,
+                    icon: <IconCopy />,
+                  });
+                }}
+                tabIndex={-1}
+              >
+                <IconCopy size={16} />
+              </button>
+            )}
+          </div>
         </label>
       )}
       <div className="relative flex">
@@ -168,12 +169,13 @@ const EditableText = (props: EditableTextProps) => {
           outline-none
           read-only:bg-transparent 
           read-only:outline-none 
-          focus:border-sky-700
+          focus:border-sky-600
           dark:border-stone-600
-          dark:bg-stone-800 
-          dark:outline-none 
+          dark:bg-stone-800
+          dark:outline-none
           dark:read-only:bg-transparent 
-          dark:read-only:outline-none
+          dark:read-only:outline-none 
+          dark:focus:border-sky-600 
           ${className ?? ""}`}
           style={{
             paddingLeft: `calc(${leftSectionWidth}px + 0.5rem)`,
