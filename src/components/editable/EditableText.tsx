@@ -117,6 +117,7 @@ const EditableText = (props: EditableTextProps) => {
                 showNotification({
                   title: "Skopiowano do schowka",
                   message: text,
+                  icon: <IconCopy />,
                 });
               }}
               tabIndex={-1}

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useReducedMotion, useForceUpdate, useDidUpdate } from "@mantine/hooks";
+import { useForceUpdate, useDidUpdate, useReducedMotion } from "@mantine/hooks";
 import { type NotificationsPositioning } from "../types";
 import {
   notifications as GlobalNotifications,
@@ -9,9 +9,7 @@ import {
 import getPositionStyles from "./get-position-styles";
 import useNotificationsState from "./use-notifications-state";
 import NotificationContainer from "../NotificationContainer/NotificationContainer";
-import { Transition } from "@headlessui/react";
 import Portal from "~/components/Portal";
-import getNotificationStateStyles from "./get-notification-state-styles";
 
 const POSITIONS = [
   "top-left",
@@ -39,7 +37,16 @@ export interface NotificationsProps
   autoClose?: number | false;
 
   /** Notification transitions duration, 0 to turn transitions off */
-  transitionDuration?: number;
+  transitionDuration?:
+    | "duration-0"
+    | "duration-75"
+    | "duration-100"
+    | "duration-150"
+    | "duration-200"
+    | "duration-300"
+    | "duration-500"
+    | "duration-700"
+    | "duration-1000";
 
   /** Notification width, cannot exceed 100% */
   containerWidth?: number | string;
@@ -58,7 +65,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
   className,
   position = "bottom-right",
   autoClose = 4000,
-  transitionDuration = 250,
+  transitionDuration = "duration-200",
   containerWidth = 1616,
   notificationMaxHeight = 800,
   limit = 5,
@@ -78,8 +85,8 @@ export const Notifications: React.FC<NotificationsProps> = ({
     clean,
     cleanQueue,
   } = useNotificationsState({ limit });
-
-  const duration = transitionDuration;
+  const reduceMotion = useReducedMotion();
+  const duration = reduceMotion ? "duration-0" : transitionDuration;
 
   const positioning = (
     POSITIONS.includes(position) ? position : "bottom-right"
@@ -101,40 +108,22 @@ export const Notifications: React.FC<NotificationsProps> = ({
   });
 
   const items = notifications.map((notification) => (
-    <Transition
+    <NotificationContainer
       key={notification.id}
-      show={true}
-      enter="transition-opacity duration-75"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity duration-150"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-    >
-      <NotificationContainer
-        innerRef={(node) => {
-          // @ts-ignore
-          refs.current[notification.id] = node;
-        }}
-        notification={notification}
-        onHide={hideNotification}
-        // className={""}
-        // style={{
-        //   ...getNotificationStateStyles({
-        //     positioning,
-        //     transitionDuration: duration,
-        //     maxHeight: notificationMaxHeight,
-        //   }),
-        // }}
-        autoClose={autoClose}
-      />
-    </Transition>
+      innerRef={(node) => {
+        // @ts-ignore
+        refs.current[notification.id] = node;
+      }}
+      notification={notification}
+      onHide={hideNotification}
+      autoClose={autoClose}
+    />
   ));
-  console.log(getPositionStyles(positioning, "0.5rem"));
+
   return (
     <Portal>
       <div
-        className="fixed"
+        className="fixed flex flex-col gap-2 transition-all ease-in-out"
         style={{
           maxWidth: containerWidth,
           ...getPositionStyles(positioning, "0.5rem"),
