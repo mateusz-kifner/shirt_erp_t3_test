@@ -1,8 +1,11 @@
 import React, { useEffect, type PropsWithChildren } from "react";
 import Header from "./Header";
 import Navigation from "./Navigation";
+import { useUserContext } from "~/context/userContext";
 
 function Layout({ children }: PropsWithChildren) {
+  const { navigationCollapsed } = useUserContext();
+
   useEffect(() => {
     // initialize theme (bypasses userContext, 10x faster)
     const theme = localStorage.getItem("user-theme");
@@ -22,7 +25,13 @@ function Layout({ children }: PropsWithChildren) {
     <div>
       <Header />
       <Navigation />
-      <main className="ml-64 mt-14 min-h-[calc(100vh-3.5rem)]">{children}</main>
+      <main
+        className={`${
+          navigationCollapsed ? "ml-20" : "ml-64"
+        } mt-14 min-h-[calc(100vh-3.5rem)] transition-all`}
+      >
+        {children}
+      </main>
     </div>
   );
 }

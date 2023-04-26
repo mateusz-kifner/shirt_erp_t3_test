@@ -14,7 +14,7 @@ function Navigation() {
 
   return (
     <div
-      className={`fixed left-0 top-14 flex h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)]  flex-col justify-between  border-r-[1px] border-stone-700 bg-white px-3 py-1 transition-all dark:bg-stone-900 ${
+      className={`fixed left-0 top-14 flex h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)]  flex-col justify-between  border-r-[1px] border-stone-400 bg-white  px-3 py-1 transition-all dark:border-stone-600 dark:bg-stone-900 ${
         navigationCollapsed ? "w-20" : "w-64"
       }`}
     >
@@ -37,7 +37,7 @@ function Navigation() {
         </div>
       </div>
       <div className=" relative flex  w-full flex-col items-center justify-center  gap-2 p-2">
-        <div className="w-full border-t-[1px] border-stone-600"></div>
+        <div className="w-full border-t-[1px] border-stone-400 dark:border-stone-600"></div>
         <button
           className=" flex h-12 w-12 items-center justify-center rounded-full transition-all before:absolute before:bottom-2 before:left-0 before:h-12 before:w-full  hover:bg-black hover:bg-opacity-25"
           onClick={() => {
@@ -45,9 +45,9 @@ function Navigation() {
           }}
         >
           {navigationCollapsed ? (
-            <IconChevronRight className="dark:stroke-gray-200" />
+            <IconChevronRight className="stroke-stone-600 dark:stroke-gray-200" />
           ) : (
-            <IconChevronLeft className="dark:stroke-gray-200" />
+            <IconChevronLeft className="stroke-stone-600 dark:stroke-gray-200" />
           )}
         </button>
       </div>
