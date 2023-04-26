@@ -11,12 +11,12 @@ function Button(props: ButtonProps) {
     props;
   return (
     <button
-      className={`border-1 inline-flex h-10 animate-pop items-center justify-center
-          gap-3 rounded-md bg-blue-600 stroke-gray-200 px-4 py-0 font-semibold uppercase
-        text-gray-200 no-underline transition-all  disabled:pointer-events-none 
-          disabled:bg-stone-700  hover:bg-blue-700 
-          active:focus:scale-95 active:focus:animate-none 
-          active:hover:scale-95 active:hover:animate-none 
+      className={`border-1 inline-flex h-10 animate-pop select-none items-center
+          justify-center gap-3 rounded-md bg-blue-600 stroke-gray-200 px-4 py-0 font-semibold
+        uppercase text-gray-200 no-underline  transition-all 
+          disabled:pointer-events-none  disabled:bg-stone-700 
+          hover:bg-blue-700 active:focus:scale-95 
+          active:focus:animate-none active:hover:scale-95 active:hover:animate-none	
           ${className ?? ""}
             `}
       {...moreProps}

@@ -13,55 +13,55 @@
   "sign_out": "Wyloguj",
   "light_theme": "Jasna skórka",
   "dark_theme": "Ciemna skórka",
-  "clients": {
+  "client": {
     "singular": "klient",
     "plural": "klienci"
   },
-  "products": {
+  "product": {
     "singular": "produkt",
     "plural": "produkty"
   },
-  "orders": {
+  "order": {
     "singular": "zamówienie",
     "plural": "zamówienia"
   },
-  "email-messages": {
+  "email-message": {
     "singular": "email",
     "plural": "emalie"
   },
-  "tasks": {
+  "task": {
     "singular": "zadanie",
     "plural": "zadania"
   },
-  "expenses": {
+  "expense": {
     "singular": "wydatek",
     "plural": "wydatki"
   },
-  "logs": {
+  "log": {
     "singular": "log",
     "plural": "logi"
   },
-  "order archives": {
+  "order archive": {
     "singular": "zamówienie archiwalne",
     "plural": "zamówienia archiwalne"
   },
-  "workstations": {
+  "workstation": {
     "singular": "stanowisko pracy",
     "plural": "stanowiska pracy"
   },
-  "procedures": {
+  "procedure": {
     "singular": "procedura",
     "plural": "procedury"
   },
-  "files": {
+  "file": {
     "singular": "plik",
     "plural": "pliki"
   },
-  "settings": {
+  "setting": {
     "singular": "ustawienie",
     "plural": "ustawienia"
   },
-  "users": {
+  "user": {
     "singular": "pracownik",
     "plural": "pracownicy"
   },

@@ -1,4 +1,4 @@
-import { ComponentType, CSSProperties } from "react";
+import type { ComponentType, CSSProperties } from "react";
 import NotImplemented from "../NotImplemented";
 import { useId } from "@mantine/hooks";
 
@@ -27,9 +27,134 @@ import {
   IconCash,
   IconNumbers,
 } from "@tabler/icons-react";
-import { useUserContext } from "~/context/userContext";
 import apiListItems from "./apiListItems";
+import { useUserContext } from "~/context/userContext";
 // import { makeDefaultListItem } from "../DefaultListItem"
+
+interface BaseTemplateType<TName, TValue = string> {
+  label: string;
+  type: TName;
+  initialValue?: TValue;
+  required?: boolean;
+  disabled?: boolean;
+  helpTooltip?: string;
+}
+
+type TemplateStringType = BaseTemplateType<"text" | "title" | "richtext"> & {
+  maxLength: number;
+};
+
+type TemplateDateType = BaseTemplateType<"datetime" | "date">;
+
+type TemplateNumberType = BaseTemplateType<"number", number> & {
+  min: number;
+  increment: number;
+  fixed: number;
+};
+
+type TemplateArrayType = BaseTemplateType<"array", any[]> & {
+  arrayType: "title" | "text" | "apiEntry" | "datetime" | "date";
+};
+
+type TemplateApiEntryType = BaseTemplateType<"apiEntry", any> & {
+  entryName: string;
+  linkEntry?: boolean;
+  allowClear?: boolean;
+  onSubmitTrigger?: (
+    key: string,
+    entryData: any, // Data of this entry
+    inputData: any, // Additional data
+    onSubmit: (key: string, value: any, data: any) => void
+  ) => void;
+};
+
+type TemplateAddressType = {
+  type: "address";
+  label: {
+    streetName: string;
+    streetNumber: string;
+    apartmentNumber: string;
+    secondLine: string;
+    city: string;
+    province: string;
+    postCode: string;
+    name: string;
+  };
+  initialValue: {
+    streetName: string;
+    streetNumber: string;
+    apartmentNumber: string;
+    secondLine: string;
+    city: string;
+    province: string;
+    postCode: string;
+  };
+  allowClear?: boolean;
+};
+
+type TemplateFilesType = BaseTemplateType<"files", any[]> & {
+  maxFileCount: number;
+};
+
+type TemplateEnumType = BaseTemplateType<"enum", string> & {
+  enum_data: string[];
+};
+
+type TemplateBooleanType = BaseTemplateType<"boolean", boolean> & {
+  children: { checked: string; unchecked: string };
+};
+
+type TemplateIdType = { type: "id" };
+
+type TemplateType =
+  | TemplateStringType
+  | TemplateNumberType
+  | TemplateDateType
+  | TemplateEnumType
+  | TemplateAddressType
+  | TemplateApiEntryType
+  | TemplateBooleanType
+  | TemplateApiEntryType
+  | TemplateArrayType
+  | TemplateFilesType
+  | TemplateIdType;
+
+type DataType =
+  | (TemplateStringType & { value: string })
+  | (TemplateNumberType & { value: number })
+  | (TemplateDateType & { value: string })
+  | (TemplateEnumType & { value: string })
+  | (TemplateAddressType & {
+      value: {
+        streetName: string;
+        streetNumber: string;
+        apartmentNumber: string;
+        secondLine: string;
+        city: string;
+        province: string;
+        postCode: string;
+      };
+    })
+  | (TemplateApiEntryType & { value: any })
+  | (TemplateBooleanType & { value: boolean })
+  | (TemplateArrayType & { value: any[] })
+  | (TemplateFilesType & { value: any[] });
+
+type TemplateSimpleTypePropertyType =
+  | "title"
+  | "text"
+  | "apiEntry"
+  | "datetime"
+  | "date"
+  | "richtext"
+  | "number"
+  | "enum"
+  | "files";
+
+type TemplateTypePropertyType = Extract<
+  TemplateSimpleTypePropertyType | "array" | "group",
+  string
+>;
 
 export type editableFields = {
   [key: string]: {
@@ -55,7 +180,7 @@ const editableFields: editableFields = {
   money: {
     component: EditableText,
     props: {
-      rightSection: <span>PLN</span>,
+      rightSection: <div className="pr-2">PLN</div>,
       leftSection: <IconCash size={18} />,
     },
   },
@@ -86,10 +211,14 @@ const editableFields: editableFields = {
     propsTransform: (props) => {
       const newProps = { ...props };
       if (props.entryName in apiListItems) {
-        // newProps["Element"] = apiListItems[props.entryName]?.ListItem
-        // newProps["copyProvider"] = apiListItems[props.entryName].copyProvider
+        newProps["Element"] =
+          apiListItems[props.entryName as keyof typeof apiListItems].ListItem;
+        newProps["copyProvider"] =
+          apiListItems[
+            props.entryName as keyof typeof apiListItems
+          ].copyProvider;
       } else {
-        // newProps["Element"] = makeDefaultListItem("name")
+        // newProps["Element"] = makeDefaultListItem("name");
       }
       return newProps;
     },
@@ -100,10 +229,14 @@ const editableFields: editableFields = {
     propsTransform: (props) => {
       const newProps = { ...props };
       if (props.entryName in apiListItems) {
-        // newProps["Element"] = apiListItems[props.entryName].ListItem
-        // newProps["copyProvider"] = apiListItems[props.entryName].copyProvider
+        newProps["Element"] =
+          apiListItems[props.entryName as keyof typeof apiListItems].ListItem;
+        newProps["copyProvider"] =
+          apiListItems[
+            props.entryName as keyof typeof apiListItems
+          ].copyProvider;
       } else {
-        // newProps["Element"] = makeDefaultListItem("name")
+        // newProps["Element"] = makeDefaultListItem("name");
       }
       return newProps;
     },
@@ -125,11 +258,11 @@ const editableFields: editableFields = {
     propsTransform: (props) => {
       const newProps = {
         ...props,
-        data: (props.value as object) ?? {},
-        // onSubmit: (key: string, value: any, data: any) => {
-        //   console.log("group submit", key, value, data);
-        //   props.onSubmit({ ...data, [key]: value });
-        // },
+        data: props.value ?? {},
+        onSubmit: (key: string, value: any, data: any) => {
+          console.log("group submit", key, value, data);
+          props.onSubmit({ ...data, [key]: value });
+        },
       };
 
       return newProps;
@@ -144,7 +277,7 @@ const editableFields: editableFields = {
         Element: Field,
         elementProps: {
           ...props,
-          type: props.arrayType as string,
+          type: props.arrayType,
         },
       };
       return newProps;
@@ -152,19 +285,20 @@ const editableFields: editableFields = {
   },
 };
 
-function Field(props: any) {
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  let newProps = { ...editableFields[props.type].props, ...props };
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  if (editableFields[props.type].propsTransform) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    newProps = editableFields[props.type]?.propsTransform?.(newProps);
+function Field(props: { [index: string]: any }) {
+  let newProps = {
+    ...editableFields[props.type as keyof typeof editableFields]!.props,
+    ...props,
+  };
+  if (
+    editableFields[props.type as keyof typeof editableFields]!.propsTransform
+  ) {
+    newProps =
+      editableFields[props.type as keyof typeof editableFields]!
+        .propsTransform!(newProps);
   }
-  //@ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  const Component = editableFields[props.type].component;
+  const Component =
+    editableFields[props.type as keyof typeof editableFields]!.component;
   return <Component {...newProps} />;
 }
 
@@ -192,12 +326,12 @@ function Editable({ template, data, onSubmit, disabled }: EditableProps) {
     <>
       {Object.keys(template).map((key) => {
         if (debug && key === "id")
-          return <span key={uuid + key}>ID: {data[key]}</span>;
+          return <div key={uuid + key}>ID: {data[key]}</div>;
 
         const onSubmitEntry = (value: any) => {
           onSubmit?.(key, value, data);
           onSubmit &&
-            template[key]?.onSubmitTrigger &&
+            template[key].onSubmitTrigger &&
             template[key].onSubmitTrigger(
               key,
               value,
@@ -213,19 +347,16 @@ function Editable({ template, data, onSubmit, disabled }: EditableProps) {
             <NotImplemented
               message={"Key doesn't have template"}
               object_key={key}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               value={data[key]}
               key={uuid + key}
             />
           );
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const component_type = template[key].type;
         if (component_type in editableFields) {
           return (
             <Field
               disabled={disabled}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               value={data[key]}
               object_key={key}
               {...template[key]}
@@ -239,9 +370,7 @@ function Editable({ template, data, onSubmit, disabled }: EditableProps) {
             <NotImplemented
               message={"Key has unknown type"}
               object_key={key}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               value={data[key]}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               template={template[key]}
               key={uuid + key}
             />

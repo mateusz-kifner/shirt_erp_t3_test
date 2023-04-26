@@ -5,8 +5,9 @@ import { IconCopy } from "@tabler/icons-react";
 import EditableEnum from "./EditableEnum";
 import EditableText from "./EditableText";
 import { isEqual } from "lodash";
-import EditableInput from "../../types/EditableInput";
+import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
+import { showNotification } from "~/lib/notifications";
 
 const provinces = [
   "dolnośląskie",
@@ -108,6 +109,7 @@ const EditableAddress = (props: EditableAddressProps) => {
   ]);
 
   const toString = () => {
+    if (!address) return null;
     return (
       (address?.streetName ? "ul. " + address?.streetName : "") +
       " " +
@@ -123,114 +125,109 @@ const EditableAddress = (props: EditableAddressProps) => {
   };
 
   return (
-    <Input.Wrapper
-      ref={ref}
-      label={
-        <>
-          {label?.name}
-          {
-            <ActionIcon
-              size="xs"
-              style={{
-                display: "inline-block",
-                transform: "translate(4px, 4px)",
-                marginRight: 4,
-              }}
-              onClick={() => {
-                const address_text = toString();
-                clipboard.copy(address_text);
-                showNotification({
-                  title: "Skopiowano do schowka",
-                  message: address_text,
-                });
-              }}
-              tabIndex={-1}
-            >
-              <IconCopy size={16} />
-            </ActionIcon>
-          }
-        </>
-      }
-      labelElement="div"
-      required={required}
+    <div
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
       onBlur={handleBlurForInnerElements(() => setFocus(false))}
+      ref={ref}
     >
-      {focus ? (
-        <Stack
-          style={{ position: "relative" }}
-          sx={[SxBorder, SxRadius]}
-          p="md"
-          tabIndex={999999999} // ensure that focus can be captured on element
-        >
+      <label>
+        {label?.name}
+        {
+          <button
+            className="border-1 inline-flex animate-pop items-center justify-center
+        gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
+      text-gray-200 no-underline transition-all  
+      hover:bg-black hover:bg-opacity-30
+        active:focus:scale-95 active:focus:animate-none 
+        active:hover:scale-95 active:hover:animate-none"
+            onClick={() => {
+              const addressStr = toString();
+              clipboard.copy(addressStr);
+              showNotification({
+                title: "Skopiowano do schowka",
+                message: addressStr,
+                icon: <IconCopy />,
+              });
+            }}
+            tabIndex={-1}
+          >
+            <IconCopy size={16} />
+          </button>
+        }
+      </label>
+
+      {/* {focus ? ( */}
+      <div
+        style={{ position: "relative" }}
+        className="flex flex-col gap-2"
+        tabIndex={999999999} // ensure that focus can be captured on element
+      >
+        <EditableText
+          label={label?.streetName ?? undefined}
+          value={value?.streetName ?? ""}
+          onSubmit={(value) =>
+            value !== null && setAddressField("streetName", value)
+          }
+        />
+        <div className="flex flex-grow gap-2">
           <EditableText
-            label={label?.streetName ?? undefined}
-            value={value?.streetName ?? ""}
+            label={label?.streetNumber ?? undefined}
+            value={value?.streetNumber ?? ""}
             onSubmit={(value) =>
-              value !== null && setAddressField("streetName", value)
+              value !== null && setAddressField("streetNumber", value)
             }
-          />
-          <Group grow={true}>
-            <EditableText
-              label={label?.streetNumber ?? undefined}
-              value={value?.streetNumber ?? ""}
-              onSubmit={(value) =>
-                value !== null && setAddressField("streetNumber", value)
-              }
-              style={{ flexGrow: 1 }}
-            />
-            <EditableText
-              label={label?.apartmentNumber ?? undefined}
-              value={value?.apartmentNumber ?? ""}
-              onSubmit={(value) =>
-                value !== null && setAddressField("apartmentNumber", value)
-              }
-              style={{ flexGrow: 1 }}
-            />
-          </Group>
-          <EditableText
-            label={label?.secondLine ?? undefined}
-            value={value?.secondLine ?? ""}
-            onSubmit={(value) =>
-              value !== null && setAddressField("secondLine", value)
-            }
+            style={{ flexGrow: 1 }}
           />
           <EditableText
-            label={label?.postCode ?? undefined}
-            value={value?.postCode ?? ""}
+            label={label?.apartmentNumber ?? undefined}
+            value={value?.apartmentNumber ?? ""}
             onSubmit={(value) =>
-              value !== null && setAddressField("postCode", value)
+              value !== null && setAddressField("apartmentNumber", value)
             }
+            style={{ flexGrow: 1 }}
           />
-          <EditableText
-            label={label?.city ?? undefined}
-            value={value?.city ?? ""}
-            onSubmit={(value) =>
-              value !== null && setAddressField("city", value)
-            }
-          />
-          <EditableEnum
-            label={label?.province ?? undefined}
-            value={value?.province ?? ""}
-            onSubmit={(value) =>
-              value !== null && setAddressField("province", value)
-            }
-            enum_data={provinces}
-          />
-        </Stack>
-      ) : (
-        <DisplayCell
-          icon={leftSection}
-          disabled={disabled}
-          hovered={hovered}
-          rightSection={rightSection}
-        >
-          {" "}
-          {toString()}
-        </DisplayCell>
-      )}
-    </Input.Wrapper>
+        </div>
+        <EditableText
+          label={label?.secondLine ?? undefined}
+          value={value?.secondLine ?? ""}
+          onSubmit={(value) =>
+            value !== null && setAddressField("secondLine", value)
+          }
+        />
+        <EditableText
+          label={label?.postCode ?? undefined}
+          value={value?.postCode ?? ""}
+          onSubmit={(value) =>
+            value !== null && setAddressField("postCode", value)
+          }
+        />
+        <EditableText
+          label={label?.city ?? undefined}
+          value={value?.city ?? ""}
+          onSubmit={(value) => value !== null && setAddressField("city", value)}
+        />
+        <EditableEnum
+          label={label?.province ?? undefined}
+          value={value?.province ?? ""}
+          onSubmit={(value) =>
+            value !== null && setAddressField("province", value)
+          }
+          enum_data={provinces}
+        />
+      </div>
+      {/* // ) : (
+      //   <DisplayCell
+      //     icon={leftSection}
+      //     disabled={disabled}
+      //     hovered={hovered}
+      //     rightSection={rightSection}
+      //   >
+      //     {" "}
+      //     {toString()}
+      //   </DisplayCell>
+      // )} */}
+    </div>
   );
 };
 

@@ -1,10 +1,9 @@
-import { useClipboard, useElementSize, useHover } from "@mantine/hooks";
+import { useClipboard, useElementSize } from "@mantine/hooks";
 import { useEffect, useState, type CSSProperties, useRef, useId } from "react";
 import preventLeave from "../../utils/preventLeave";
 import { IconCopy } from "@tabler/icons-react";
 import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
-import useTranslation from "~/hooks/useTranslation";
 import { showNotification } from "~/lib/notifications";
 
 interface EditableTextProps extends EditableInput<string> {
@@ -34,7 +33,7 @@ const EditableText = (props: EditableTextProps) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { ref: leftSectionRef, width: leftSectionWidth } = useElementSize();
   const { ref: rightSectionRef, width: rightSectionWidth } = useElementSize();
-  const t = useTranslation();
+  // const t = useTranslation();
   useEffect(() => {
     if (focus) {
       window.addEventListener("beforeunload", preventLeave);
@@ -65,19 +64,13 @@ const EditableText = (props: EditableTextProps) => {
     setText(new_value);
   }, [value]);
 
-  const onChangeTextarea = (e: React.ChangeEvent<any>) => {
+  const onChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (!(maxLength && e.target.value.length > maxLength)) {
-      setText(e.target.value as string);
-      // cancel()
+      setText(e.target.value);
     }
   };
 
-  const onKeyDownTextarea = (e: React.KeyboardEvent<any>) => {
-    // if (e.key == "Enter" && !e.shiftKey) {
-    //   (e.target as HTMLTextAreaElement).blur();
-    //   e.preventDefault();
-    //   return false;
-    // }
+  const onKeyDownTextarea = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (focus) {
       if (e.code === "Enter" && !e.shiftKey) {
         e.preventDefault();
@@ -90,11 +83,16 @@ const EditableText = (props: EditableTextProps) => {
   const setTextAreaHeight = (target: HTMLTextAreaElement) => {
     target.style.height = "0";
     console.log(target.scrollHeight);
-    target.style.height = Math.max(target.scrollHeight, 44) + "px";
+    target.style.height = `${Math.max(target.scrollHeight, 44)}px`;
   };
 
   return (
-    <div className="flex-grow">
+    <div
+      className="flex-grow"
+      onClick={() => !disabled && setFocus(true)}
+      onFocus={() => !disabled && setFocus(true)}
+      onBlur={handleBlurForInnerElements(() => setFocus(false))}
+    >
       {label && (
         <label
           htmlFor={"textarea_" + uuid}
@@ -210,49 +208,6 @@ const EditableText = (props: EditableTextProps) => {
       </div>
     </div>
   );
-
-  // (
-  //   <div
-  //     style={style}
-  //     ref={ref}
-  //     onClick={() => !disabled && setFocus(true)}
-  //     onFocus={() => !disabled && setFocus(true)}
-  //     onBlur={handleBlurForInnerElements(() => setFocus(false))}
-  //   >
-  //     <span>
-  //       {label && label.length > 0 ? (
-  //         <>
-  //           {label}
-  //           {text.length > 0 && (
-  //             <Button
-  //               onClick={() => {
-  //                 clipboard.copy(text);
-  //                 // showNotification({
-  //                 //   title: "Skopiowano do schowka",
-  //                 //   message: text,
-  //                 // });
-  //               }}
-  //               tabIndex={-1}
-  //             >
-  //               <IconCopy size={16} />
-  //             </Button>
-  //           )}
-  //         </>
-  //       ) : undefined}
-  //     </span>
-
-  //     <div style={{ position: "relative" }}>
-  //       <textarea
-  //         ref={textRef}
-  //         value={text}
-  //         onChange={onChangeTextarea}
-  //         onKeyDown={onKeyDownTextarea}
-  //         readOnly={!focus}
-  //         maxLength={maxLength ?? 255}
-  //       />
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default EditableText;

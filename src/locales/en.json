@@ -13,55 +13,55 @@
   "sign_out": "Sign Out",
   "light_theme": "Light theme",
   "dark_theme": "Dark theme",
-  "clients": {
+  "client": {
     "singular": "client",
     "plural": "clients"
   },
-  "products": {
+  "product": {
     "singular": "product",
     "plural": "products"
   },
-  "orders": {
+  "order": {
     "singular": "order",
     "plural": "orders"
   },
-  "email-messages": {
+  "email-message": {
     "singular": "email",
     "plural": "emails"
   },
-  "tasks": {
+  "task": {
     "singular": "task",
     "plural": "tasks"
   },
-  "expenses": {
+  "expense": {
     "singular": "expense",
     "plural": "expenses"
   },
-  "logs": {
+  "log": {
     "singular": "log",
     "plural": "logs"
   },
-  "order archives": {
+  "order archive": {
     "singular": "archived order",
     "plural": "archived orders"
   },
-  "workstations": {
+  "workstation": {
     "singular": "workstation",
     "plural": "workstations"
   },
-  "procedures": {
+  "procedure": {
     "singular": "procedure",
     "plural": "procedures"
   },
-  "files": {
+  "file": {
     "singular": "file",
     "plural": "files"
   },
-  "settings": {
+  "setting": {
     "singular": "setting",
     "plural": "settings"
   },
-  "users": {
+  "user": {
     "singular": "employee",
     "plural": "employees"
   },

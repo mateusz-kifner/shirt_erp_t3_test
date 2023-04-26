@@ -7,7 +7,7 @@ function useTranslation() {
   const router = useRouter();
   const locale = router.locale ?? "pl";
 
-  return (locale === "pl" ? pl : en) as typeof pl;
+  return locale === "pl" ? pl : en;
 }
 
 export default useTranslation;

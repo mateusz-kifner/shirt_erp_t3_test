@@ -12,6 +12,9 @@ import { useRouter } from "next/router";
 import React, { useState, type ChangeEvent } from "react";
 import SuperJSON from "superjson";
 import Button from "~/components/basic/Button";
+// import Editable from "~/components/editable/Editable";
+import EditableAddress from "~/components/editable/EditableAddress";
+import EditableEnum from "~/components/editable/EditableEnum";
 import EditableText from "~/components/editable/EditableText";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
@@ -19,6 +22,34 @@ import { sessionOptions } from "~/lib/session";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
+import template from "~/templates/test.template";
+import Tooltip from "~/components/basic/Tooltip";
+
+const testData = {
+  name: "string",
+  bool: true,
+  switch: false,
+  category: "option 1",
+  color: "#ff0000",
+  date: "2021-11-05T12:24:05.097Z",
+  datetime: "2021-11-05T12:24:05.097Z",
+  product: null,
+  client: null,
+  productComponent: null,
+  productComponents: [],
+  image: null,
+  file: null,
+  files: null,
+  workstations: null,
+  employee: null,
+  employees: null,
+  submit: null,
+
+  group: { name: "test", color: "#ff0000" },
+  group2: { name: "test", color: "#ff0000" },
+  group3: { name: {}, color: "#ff0000" },
+  group_of_arrays: { arrayText: [], arrayText2: [] },
+};
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   const user = req.session.user;
@@ -128,15 +159,13 @@ function Settings() {
           <Dialog open={testFormOpen} onClose={() => {}}>
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-            <Dialog.Panel className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform overflow-hidden rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-stone-800">
+            <Dialog.Panel className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform  rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-stone-800">
               <Button onClick={() => setTestFormOpen(false)}>Close</Button>
-              <EditableText
-                leftSection={<IconBug />}
-                rightSection={<IconBug />}
-                label={"Test text"}
-                value={testValue ?? undefined}
-                onSubmit={(value) => setTestValue(value)}
-              />
+              {/* <Editable template={template} data={testData} /> */}
+
+              <Tooltip tooltip={<span>TEst tooltip</span>}>
+                <Button onClick={() => setTestFormOpen(false)}>Close</Button>
+              </Tooltip>
             </Dialog.Panel>
           </Dialog>
         </div>

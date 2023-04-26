@@ -14,3 +14,81 @@ body {
   -o-transition: none !important;
   transition: none !important;
 }
+
+.tooltip {
+  position: relative;
+  max-width: fit-content;
+  overflow: hidden;
+}
+
+.tooltip:hover {
+  overflow: visible;
+}
+
+.tooltip:hover > .tooltip-text {
+  opacity: 1;
+}
+
+.tooltip > .tooltip-text {
+  z-index: 10;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  transition-delay: 0ms;
+}
+
+.tooltip:hover > .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+}
+
+.tooltip-delay-0:hover > .tooltip-text {
+  transition-delay: 0ms;
+}
+.tooltip-delay-75:hover > .tooltip-text {
+  transition-delay: 75ms;
+}
+.tooltip-delay-100:hover > .tooltip-text {
+  transition-delay: 100ms;
+}
+.tooltip-delay-150:hover > .tooltip-text {
+  transition-delay: 150ms;
+}
+.tooltip-delay-200:hover > .tooltip-text {
+  transition-delay: 200ms;
+}
+.tooltip-delay-300:hover > .tooltip-text {
+  transition-delay: 300ms;
+}
+.tooltip-delay-500:hover > .tooltip-text {
+  transition-delay: 500ms;
+}
+.tooltip-delay-700:hover > .tooltip-text {
+  transition-delay: 700ms;
+}
+.tooltip-delay-1000:hover > .tooltip-text {
+  transition-delay: 1000ms;
+}
+.tooltip-delay-1500:hover > .tooltip-text {
+  transition-delay: 1500ms;
+}
+.tooltip-delay-2000:hover > .tooltip-text {
+  transition-delay: 2000ms;
+}
+.tooltip-delay-2500:hover > .tooltip-text {
+  transition-delay: 2500ms;
+}
+.tooltip-delay-3000:hover > .tooltip-text {
+  transition-delay: 3000ms;
+}

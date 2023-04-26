@@ -31,10 +31,12 @@ const ClientsPage = () => {
         defaultActive={id ? 1 : 0}
         defaultPinned={isMobile ? [] : id ? [0] : []}
       > */}
-      <ClientsList
-        selectedId={id !== undefined ? parseInt(id) : null}
-        onAddElement={() => setOpenAddModal(true)}
-      />
+      <div className="bg-slate-500">
+        <ClientsList
+          selectedId={id !== undefined ? parseInt(id) : null}
+          onAddElement={() => setOpenAddModal(true)}
+        />
+      </div>
       {/* <ApiEntryEditable
           template={template}
           entryName={entryName}

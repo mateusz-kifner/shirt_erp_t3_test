@@ -1,7 +1,8 @@
 import { ComponentType } from "react";
 
 // List items imports
-// import ClientListItem from "~/page-components/erp/clients/ClientListItem"
+import ClientListItem from "~/page-components/erp/clients/ClientListItem";
+import { ClientType } from "~/schema/clientSchema";
 // import EmailMessageListItem from "~/page-components/erp/email-messages/EmailMessageListItem"
 // import OrderListItem from "~/page-components/erp/orders/OrderListItem"
 // import ProductListItem from "~/page-components/erp/products/ProductListItem"
@@ -17,15 +18,15 @@ export type apiListItems = {
   };
 };
 
-const apiListItems: apiListItems = {
-  // clients: {
-  //   ListItem: ClientListItem,
-  //   copyProvider: (value: any) =>
-  //     (value?.firstname && value.firstname?.length > 0) ||
-  //     (value?.lastname && value.lastname?.length > 0)
-  //       ? truncString(value.firstname + " " + value.lastname, 40)
-  //       : truncString(value?.username ? value.username : "", 40),
-  // },
+const apiListItems = {
+  clients: {
+    ListItem: ClientListItem,
+    copyProvider: (value: ClientType) =>
+      (value?.firstname && value.firstname?.length > 0) ||
+      (value?.lastname && value.lastname?.length > 0)
+        ? truncString(`${value.firstname ?? ""} ${value.lastname ?? ""}`, 40)
+        : truncString(value?.username ? value.username : "", 40),
+  },
   // products: {
   //   ListItem: ProductListItem,
   //   copyProvider: (value: any) =>
