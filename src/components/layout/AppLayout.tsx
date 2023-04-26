@@ -27,8 +27,8 @@ function Layout({ children }: PropsWithChildren) {
       <Navigation />
       <main
         className={`${
-          navigationCollapsed ? "ml-20" : "ml-64"
-        } mt-14 min-h-[calc(100vh-3.5rem)] transition-all`}
+          navigationCollapsed ? "pl-20" : "pl-64"
+        } min-h-screen pt-14 transition-all`}
       >
         {children}
       </main>

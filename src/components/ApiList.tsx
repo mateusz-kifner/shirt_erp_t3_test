@@ -62,6 +62,8 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
   const { data } = api[entryName as "client"].getAll.useQuery({
     sort: sortOrder,
   });
+
+  console.log(data);
   // const { data, meta, refetch, status } = useStrapiList<T[]>(
   //   entryName,
   //   page,
@@ -139,26 +141,11 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
               )}
             </ActionButton>
           </div>
-          {/* <Autocomplete
-            placeholder="Icon"
-            radius="xl"
-            // size="md"
-            icon={<Search />}
-            data={[]}
-            style={{ flexGrow: 1 }}
-            value={query}
-            onChange={(value) => {
-              setQuery(value)
-              console.log(value)
-            }}
-          /> */}
-          {/* <TextInput
+          <input
+            type="text"
             defaultValue={defaultSearch}
             onChange={(value) => setQuery(value.target.value)}
-            radius="xl"
-            icon={<IconSearch />}
-            style={{ flexGrow: 1 }}
-          /> */}
+          />
         </div>
       </div>
       <div className="flex flex-col">
@@ -185,14 +172,41 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
           listItemProps={listItemProps}
         />
       </div>
-      <div
-      // total={meta?.pagination?.pageCount ? meta.pagination.pageCount : 1}
-      // defaultValue={meta?.pagination?.page ? meta.pagination.page : 1}
-      // size="lg"
-      // radius="xl"
-      // position="center"
-      // onChange={setPage}
-      ></div>
+      <nav className="flex items-center justify-center space-x-2">
+        <a
+          className="inline-flex items-center gap-2 rounded-md p-4 text-gray-500 hover:text-blue-600"
+          href="#"
+        >
+          <span aria-hidden="true">«</span>
+          <span className="sr-only">Previous</span>
+        </a>
+        <a
+          className="inline-flex h-10 w-10 items-center rounded-full bg-blue-500 p-4 text-sm font-medium text-white"
+          href="#"
+          aria-current="page"
+        >
+          1
+        </a>
+        <a
+          className="inline-flex h-10 w-10 items-center rounded-full p-4 text-sm font-medium text-gray-500 hover:text-blue-600"
+          href="#"
+        >
+          2
+        </a>
+        <a
+          className="inline-flex h-10 w-10 items-center rounded-full p-4 text-sm font-medium text-gray-500 hover:text-blue-600"
+          href="#"
+        >
+          3
+        </a>
+        <a
+          className="inline-flex items-center gap-2 rounded-md p-4 text-gray-500 hover:text-blue-600"
+          href="#"
+        >
+          <span className="sr-only">Next</span>
+          <span aria-hidden="true">»</span>
+        </a>
+      </nav>
     </div>
   );
 };
