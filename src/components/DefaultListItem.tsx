@@ -23,39 +23,51 @@ export function DefaultListItem<T extends { id?: number | null }>({
   return (
     <button
       className={`
-            border-1
-            inline-flex
-            h-14
-            flex-grow
-            select-none
-            items-center
-            justify-center
-            gap-3 
-            rounded-sm  
-            stroke-gray-200 
-            px-2 
-            py-0 
-            text-gray-200 
-            transition-all 
-            disabled:pointer-events-none  
-            disabled:bg-stone-700 
-            hover:bg-black 
-            hover:bg-opacity-20
-            active:focus:scale-95
-            active:hover:scale-95 
-            dark:hover:bg-white 
-            dark:hover:bg-opacity-10 
-            ${
-              active
-                ? "bg-black bg-opacity-20 dark:bg-white dark:bg-opacity-10"
-                : ""
-            }`}
+        border-1
+        inline-flex
+        h-14
+        flex-grow
+        select-none
+        items-center
+        justify-center
+        gap-3 
+        rounded-sm  
+        stroke-gray-200 
+        px-2 
+        py-0 
+        text-gray-200 
+        outline-offset-2
+        transition-all 
+        focus-visible:outline-sky-600
+        disabled:pointer-events-none 
+        disabled:bg-stone-700 
+        hover:bg-black
+        hover:bg-opacity-10
+        active:focus:scale-95 
+        active:hover:scale-95 
+        dark:hover:bg-white
+        dark:hover:bg-opacity-10 
+        ${
+          active
+            ? "bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10"
+            : ""
+        }`}
       disabled={disabled}
       onClick={() => onChange?.(value)}
     >
       {value && (
         <div
-          className="flex h-10 w-10 select-none items-center justify-center rounded-full text-base font-bold text-stone-800 dark:text-stone-200"
+          className="
+            flex 
+            h-10 w-10 
+            select-none 
+            items-center 
+            justify-center 
+            rounded-full 
+            text-base 
+            font-bold 
+            text-stone-800 
+            dark:text-stone-200"
           style={{
             background: `radial-gradient(circle, transparent 58%, ${getRandomColorByNumber(
               value.id
