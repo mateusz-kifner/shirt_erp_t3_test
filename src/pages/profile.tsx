@@ -20,25 +20,9 @@ export default function SgProfile() {
 
   return (
     <div>
-      <h1>Your GitHub profile</h1>
-      <h2>
-        This page uses{" "}
-        <a href="https://nextjs.org/docs/basic-features/pages#static-generation-recommended">
-          Static Generation (SG)
-        </a>{" "}
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        and the <a href="/api/user">/api/user</a> route (using{" "}
-        <a href="https://github.com/vercel/swr">vercel/SWR</a>)
-      </h2>
-      {user && (
-        <>
-          <p style={{ fontStyle: "italic" }}>
-            Public data, from , reduced to `login` and `avatar_url`.
-          </p>
+      <h1>Your profile</h1>
 
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-        </>
-      )}
+      {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
     </div>
   );
 }

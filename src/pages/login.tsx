@@ -12,7 +12,7 @@ export default function Login() {
 
   const login = api.session.login.useMutation({
     onSuccess() {
-      void router.push("/profile");
+      void router.push("/task");
     },
     onError(err) {
       setErrorMsg(t.error_sign_in);
