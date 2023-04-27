@@ -10,7 +10,7 @@ export const addressSchema = z
     city: z.string().max(255).nullable().optional(),
     province: z.string().max(255).nullable().optional(),
   })
-  .nullable()
-  .optional();
+  .optional()
+  .nullable();
 
 export type AddressType = z.infer<typeof addressSchema>;

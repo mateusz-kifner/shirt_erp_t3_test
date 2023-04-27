@@ -10,11 +10,11 @@ function ActionButton(
   return (
     <button
       className={`inline-flex animate-pop items-center justify-center gap-3
- border  stroke-gray-200  font-semibold uppercase
-text-gray-200 no-underline transition-all  
-hover:bg-black hover:bg-opacity-30
-active:focus:scale-95 active:focus:animate-none 
-active:hover:scale-95 active:hover:animate-none ${className ?? ""}`}
+ border  stroke-gray-200 font-semibold uppercase  text-gray-200 no-underline
+transition-all hover:bg-black hover:bg-opacity-30  
+active:focus:scale-95 active:focus:animate-none
+active:hover:scale-95 active:hover:animate-none 
+ ${className ?? ""}`}
       {...moreProps}
     >
       {children}

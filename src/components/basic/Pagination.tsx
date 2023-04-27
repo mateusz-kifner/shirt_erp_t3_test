@@ -32,7 +32,7 @@ function Pagination({
       <button
         className={`inline-flex  h-9 w-9 items-center justify-center rounded-full ${
           active === 1
-            ? "text-gray-500"
+            ? "text-stone-500"
             : "text-blue-600 hover:bg-black hover:bg-opacity-20 hover:text-blue-600"
         }`}
         onClick={() => setPage(active - 1)}
@@ -47,7 +47,7 @@ function Pagination({
           return (
             <IconDots
               key={`${uuid}_${index}`}
-              className="text-gray-500"
+              className="text-stone-500 dark:text-stone-200"
               size={16}
             />
           );
@@ -59,7 +59,7 @@ function Pagination({
             className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-base font-medium  ${
               active === page
                 ? "bg-blue-500 text-white"
-                : "text-gray-500 hover:bg-black hover:bg-opacity-20 hover:text-blue-600"
+                : "text-stone-600 hover:bg-black hover:bg-opacity-20 hover:text-blue-600 dark:text-stone-300"
             }`}
             onClick={() => setPage(page)}
             aria-current={active === page ? "page" : undefined}
@@ -72,7 +72,7 @@ function Pagination({
       <button
         className={`inline-flex  h-9 w-9 items-center justify-center rounded-full  ${
           active === totalPages
-            ? "text-gray-500"
+            ? "text-stone-500"
             : "text-blue-600 hover:bg-black hover:bg-opacity-20 hover:text-blue-600"
         }`}
         onClick={() => setPage(active + 1)}

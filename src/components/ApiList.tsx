@@ -25,7 +25,8 @@ interface ApiListProps<T = any> {
   listItemProps?: { linkTo: (val: T) => string } | any;
   selectedId?: number | null;
   filterKeys?: string[];
-  exclude?: { [key: string]: string };
+  excludeKey?: string;
+  excludeValue?: string;
   onAddElement?: () => void;
   defaultSearch?: string;
   showAddButton?: boolean;
@@ -45,13 +46,16 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
     },
     listItemProps = {},
     selectedId,
-    filterKeys,
-    exclude,
+    filterKeys = [],
+    excludeKey,
+    excludeValue,
     onAddElement,
     defaultSearch,
     showAddButton,
     buttonSection,
   } = props;
+
+  const itemsPerPage = 10;
   const t = useTranslation();
   const [sortOrder, toggleSortOrder] = useToggle<"asc" | "desc">([
     "desc",
@@ -60,19 +64,20 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
   const [query, setQuery] = useState<string | undefined>(defaultSearch);
   const [debouncedQuery] = useDebouncedValue(query, 200);
   const [page, setPage] = useState<number>(1);
-  const { data, refetch } = api[entryName as "client"].getAll.useQuery({
+  const { data, refetch } = api[
+    entryName as "client"
+  ].searchWithPagination.useQuery({
     sort: sortOrder,
+    keys: filterKeys,
+    query: debouncedQuery,
+    excludeKey,
+    excludeValue,
+    currentPage: page,
+    itemsPerPage,
   });
 
-  console.log(data);
-  // const { data, meta, refetch, status } = useStrapiList<T[]>(
-  //   entryName,
-  //   page,
-  //   filterKeys,
-  //   debouncedQuery,
-  //   sortOrder,
-  //   { exclude }
-  // )
+  const items = data?.results;
+  const totalPages = Math.ceil((data?.totalItems ?? 1) / itemsPerPage);
 
   useEffect(() => {
     refetch().catch((e) => {
@@ -81,7 +86,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
   }, [selectedId]);
 
   return (
-    <div className="flex flex-col gap-2 p-2 text-stone-900 dark:text-stone-100">
+    <div className="flex flex-col gap-2 p-2 text-stone-900 dark:text-stone-100 ">
       <div className="flex flex-col gap-2">
         <div className="flex justify-between p-2">
           <h2 className="text-2xl font-bold">{label}</h2>
@@ -94,7 +99,9 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                   rounded-full
                 border-gray-400
                   p-1 
-                  text-gray-700"
+                  text-gray-700
+                  dark:border-stone-600
+                  dark:text-stone-400"
               onClick={() => {
                 // refetch()
                 onRefresh?.();
@@ -110,7 +117,10 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                     rounded-full                 
                     border-gray-400
                     p-1 
-                    text-gray-700"
+                    text-gray-700
+                    dark:border-stone-600
+                  dark:text-stone-400
+                  "
                 onClick={onAddElement}
               >
                 <IconPlus />
@@ -127,7 +137,10 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                   rounded-full
                   border-gray-400
                   p-1 
-                  text-gray-700"
+                  text-gray-700
+                  dark:border-stone-600
+                  dark:text-stone-400
+                  "
               onClick={() => toggleSortOrder()}
             >
               {sortOrder === "asc" ? (
@@ -179,14 +192,18 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
       </div>
       <div className="flex flex-grow flex-col px-2 py-4">
         <List<T>
-          data={data as T[]}
+          data={items as T[]}
           ListItem={ListItem}
           onChange={onChange}
           selectedId={selectedId}
           listItemProps={listItemProps}
         />
       </div>
-      <Pagination totalPages={999} initialPage={1} onPageChange={setPage} />
+      <Pagination
+        totalPages={totalPages}
+        initialPage={1}
+        onPageChange={setPage}
+      />
     </div>
   );
 };

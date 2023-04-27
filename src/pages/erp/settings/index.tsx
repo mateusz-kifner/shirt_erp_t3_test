@@ -92,6 +92,7 @@ function Settings() {
   const { debug, toggleDebug, toggleTheme, theme } = useUserContext();
   const [testFormOpen, setTestFormOpen] = useState<boolean>(false);
   const [testValue, setTestValue] = useState<string | null>("");
+  const { mutate } = api.client.create.useMutation();
 
   if (!data?.user) return null;
   const user = data.user;
@@ -146,14 +147,26 @@ function Settings() {
             Debug {debug ? "ON" : "OFF"}
           </Button>
           {debug && (
-            <Button
-              onClick={() => {
-                setTestFormOpen(true);
-              }}
-              leftSection={<IconBug />}
-            >
-              Open Test Form
-            </Button>
+            <>
+              <Button
+                onClick={() => {
+                  setTestFormOpen(true);
+                }}
+                leftSection={<IconBug />}
+              >
+                Open Test Form
+              </Button>
+              <Button
+                onClick={() => {
+                  for (let i = 0; i < 10; i++) {
+                    mutate({ username: "client" + i });
+                  }
+                }}
+                leftSection={<IconBug />}
+              >
+                Add 10 clients
+              </Button>
+            </>
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
           <Dialog open={testFormOpen} onClose={() => {}}>

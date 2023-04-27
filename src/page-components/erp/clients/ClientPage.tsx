@@ -31,7 +31,7 @@ const ClientsPage = () => {
         defaultActive={id ? 1 : 0}
         defaultPinned={isMobile ? [] : id ? [0] : []}
       > */}
-      <div className="m-8 w-[420px] rounded bg-white p-2 shadow-lg">
+      <div className="m-7 w-[420px] rounded bg-white p-2 shadow-lg dark:bg-stone-800">
         <ClientsList
           selectedId={id !== undefined ? parseInt(id) : null}
           onAddElement={() => setOpenAddModal(true)}
