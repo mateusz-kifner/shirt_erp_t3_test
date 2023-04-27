@@ -1,6 +1,10 @@
 import { useClipboard } from "@mantine/hooks";
 import { Fragment, useEffect, useId, useState } from "react";
-import { IconCheck, IconChevronDown, IconCopy } from "@tabler/icons-react";
+import {
+  IconArrowsMoveVertical,
+  IconCheck,
+  IconCopy,
+} from "@tabler/icons-react";
 import type EditableInput from "../../types/EditableInput";
 import useTranslation from "~/hooks/useTranslation";
 import { showNotification } from "~/lib/notifications";
@@ -108,7 +112,10 @@ const EditableEnum = ({
             >
               <span className="block truncate">{data}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <IconChevronDown className="h-5 w-5" aria-hidden="true" />
+                <IconArrowsMoveVertical
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                />
               </span>
             </Listbox.Button>
             <Transition

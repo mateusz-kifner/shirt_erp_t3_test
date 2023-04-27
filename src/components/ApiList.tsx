@@ -2,7 +2,6 @@ import { type ReactNode, useEffect, useState } from "react";
 import {
   IconPlus,
   IconRefresh,
-  IconSearch,
   IconSortAscending,
   IconSortDescending,
 } from "@tabler/icons-react";
@@ -12,6 +11,8 @@ import { useDebouncedValue, useToggle } from "@mantine/hooks";
 import ActionButton from "./basic/ActionButton";
 import List from "./List";
 import { api } from "~/utils/api";
+import useTranslation from "~/hooks/useTranslation";
+import Pagination from "./basic/Pagination";
 
 // import List from "../List"
 
@@ -51,7 +52,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
     showAddButton,
     buttonSection,
   } = props;
-  // const [{ x }, api] = useSpring(() => ({ x: 0 }))
+  const t = useTranslation();
   const [sortOrder, toggleSortOrder] = useToggle<"asc" | "desc">([
     "desc",
     "asc",
@@ -59,7 +60,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
   const [query, setQuery] = useState<string | undefined>(defaultSearch);
   const [debouncedQuery] = useDebouncedValue(query, 200);
   const [page, setPage] = useState<number>(1);
-  const { data } = api[entryName as "client"].getAll.useQuery({
+  const { data, refetch } = api[entryName as "client"].getAll.useQuery({
     sort: sortOrder,
   });
 
@@ -73,50 +74,27 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
   //   { exclude }
   // )
 
-  // const theme = useMantineTheme()
-  // const [y, setY] = useState(0)
-  // const bind = useGesture({
-  //   onDrag: (state) => {
-  //     setY(state.movement[1])
-  //   },
-  //   onDragEnd: (state) => {
-  //     if (state.movement[1] > 50) {
-  //       refetch()
-  //     }
-
-  //     setTimeout(() => {
-  //       setY(0)
-  //     })
-  //   },
-  // })
-  // const cont = useInRouterContext()
-  // const params = router.query
-  // const location = useLocation()
-  // console.log(params, location, cont)
-
-  // useEffect(() => {
-  //   console.log(id, location, cont)
-  //   // if (typeof params?.id === "string" && parseInt(params.id) > 0) setId(parseInt(params.id))
-  // }, [id, location])
-
   useEffect(() => {
-    // refetch()
+    refetch().catch((e) => {
+      throw e;
+    });
   }, [selectedId]);
 
-  const onChangeWithBlocking = (val: T) => {
-    // if (y < 10) {
-    onChange(val);
-    // }
-  };
-
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col">
-        <div className="flex ">
-          <h2>{label}</h2>
-          <div className="flex ">
+    <div className="flex flex-col gap-2 p-2 text-stone-900 dark:text-stone-100">
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between p-2">
+          <h2 className="text-2xl font-bold">{label}</h2>
+          <div className="flex gap-2">
             {!!buttonSection && buttonSection}
             <ActionButton
+              className="
+                  h-9
+                  w-9
+                  rounded-full
+                border-gray-400
+                  p-1 
+                  text-gray-700"
               onClick={() => {
                 // refetch()
                 onRefresh?.();
@@ -125,15 +103,33 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
               <IconRefresh />
             </ActionButton>
             {showAddButton && (
-              <ActionButton onClick={onAddElement}>
+              <ActionButton
+                className="
+                    h-9
+                    w-9
+                    rounded-full                 
+                    border-gray-400
+                    p-1 
+                    text-gray-700"
+                onClick={onAddElement}
+              >
                 <IconPlus />
               </ActionButton>
             )}
           </div>
         </div>
-        <div className="flex ">
+        <div className="flex gap-3 px-4">
           <div className="flex ">
-            <ActionButton onClick={() => toggleSortOrder()}>
+            <ActionButton
+              className="
+                  h-9
+                  w-9
+                  rounded-full
+                  border-gray-400
+                  p-1 
+                  text-gray-700"
+              onClick={() => toggleSortOrder()}
+            >
               {sortOrder === "asc" ? (
                 <IconSortAscending />
               ) : (
@@ -142,71 +138,55 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
             </ActionButton>
           </div>
           <input
+            className="
+                data-disabled:text-gray-500
+                dark:data-disabled:text-gray-500
+                data-disabled:bg-transparent 
+                dark:data-disabled:bg-transparent
+                h-9
+                max-h-screen
+                w-full
+                resize-none
+                gap-2 
+                overflow-hidden
+                whitespace-pre-line 
+                break-words
+                rounded-full
+                border
+                border-solid 
+                border-gray-400
+                bg-white
+                p-2
+                px-4
+                text-sm
+                leading-normal 
+                outline-none 
+                read-only:bg-transparent
+                read-only:outline-none
+                focus:border-sky-600
+                dark:border-stone-600
+                dark:bg-stone-800 
+                dark:outline-none 
+                dark:read-only:bg-transparent 
+                dark:read-only:outline-none
+                dark:focus:border-sky-600"
             type="text"
             defaultValue={defaultSearch}
             onChange={(value) => setQuery(value.target.value)}
+            placeholder={`${t.search}...`}
           />
         </div>
       </div>
-      <div className="flex flex-col">
-        <div
-        // style={{
-        //   height: y > 100 ? 100 : y,
-        //   overflow: "hidden",
-        //   position: "relative",
-        // }}
-        >
-          {/* <Loader
-            style={{
-              position: "absolute",
-              left: "50%",
-              transform: "translate(-50%,0)",
-            }}
-          /> */}
-        </div>
+      <div className="flex flex-grow flex-col px-2 py-4">
         <List<T>
           data={data as T[]}
           ListItem={ListItem}
-          onChange={onChangeWithBlocking}
+          onChange={onChange}
           selectedId={selectedId}
           listItemProps={listItemProps}
         />
       </div>
-      <nav className="flex items-center justify-center space-x-2">
-        <a
-          className="inline-flex items-center gap-2 rounded-md p-4 text-gray-500 hover:text-blue-600"
-          href="#"
-        >
-          <span aria-hidden="true">«</span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a
-          className="inline-flex h-10 w-10 items-center rounded-full bg-blue-500 p-4 text-sm font-medium text-white"
-          href="#"
-          aria-current="page"
-        >
-          1
-        </a>
-        <a
-          className="inline-flex h-10 w-10 items-center rounded-full p-4 text-sm font-medium text-gray-500 hover:text-blue-600"
-          href="#"
-        >
-          2
-        </a>
-        <a
-          className="inline-flex h-10 w-10 items-center rounded-full p-4 text-sm font-medium text-gray-500 hover:text-blue-600"
-          href="#"
-        >
-          3
-        </a>
-        <a
-          className="inline-flex items-center gap-2 rounded-md p-4 text-gray-500 hover:text-blue-600"
-          href="#"
-        >
-          <span className="sr-only">Next</span>
-          <span aria-hidden="true">»</span>
-        </a>
-      </nav>
+      <Pagination totalPages={999} initialPage={1} onPageChange={setPage} />
     </div>
   );
 };

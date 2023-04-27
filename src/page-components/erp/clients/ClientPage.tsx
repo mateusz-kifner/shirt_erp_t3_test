@@ -22,7 +22,7 @@ const ClientsPage = () => {
     ? router.query.id[0]
     : router.query.id;
   return (
-    <>
+    <div className="flex gap-4">
       {/* <Workspace
         childrenLabels={
           id ? ["Lista klientów", "Właściwości"] : ["Lista klientów"]
@@ -54,7 +54,7 @@ const ClientsPage = () => {
             });
         }}
       />
-    </>
+    </div>
   );
 };
 

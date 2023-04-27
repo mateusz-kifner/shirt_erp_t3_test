@@ -21,17 +21,16 @@ function List<T>(props: ListProps<T>) {
   const uuid = useId();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       {data &&
         data.map((val: any, index: number) => (
-          <div key={uuid + "_" + index}>
-            <ListItem
-              value={val}
-              onChange={onChange}
-              {...listItemProps}
-              active={val.id === selectedId}
-            />
-          </div>
+          <ListItem
+            key={uuid + "_" + index}
+            value={val}
+            onChange={onChange}
+            {...listItemProps}
+            active={val.id === selectedId}
+          />
         ))}
     </div>
   );
