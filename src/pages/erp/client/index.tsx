@@ -1,1 +1,1 @@
-export { default } from "~/page-components/erp/clients/ClientPage";
+export { default } from "~/page-components/erp/client/ClientPage";

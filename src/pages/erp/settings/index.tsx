@@ -24,6 +24,7 @@ import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
 import template from "~/templates/test.template";
 import Tooltip from "~/components/basic/Tooltip";
+import Modal from "~/components/basic/Modal";
 
 const testData = {
   name: "string",
@@ -169,18 +170,21 @@ function Settings() {
             </>
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-          <Dialog open={testFormOpen} onClose={() => {}}>
-            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-
-            <Dialog.Panel className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform  rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-stone-800">
-              <Button onClick={() => setTestFormOpen(false)}>Close</Button>
-              {/* <Editable template={template} data={testData} /> */}
-
-              <Tooltip tooltip={<span>TEst tooltip</span>}>
-                <Button onClick={() => setTestFormOpen(false)}>Close</Button>
-              </Tooltip>
-            </Dialog.Panel>
-          </Dialog>
+          <Modal
+            open={testFormOpen}
+            onClose={() => setTestFormOpen(false)}
+            title={"Text text"}
+          >
+            <Tooltip tooltip={<span>TEst tooltip</span>}>
+              <Button
+                onClick={() => {
+                  /**/
+                }}
+              >
+                Close
+              </Button>
+            </Tooltip>
+          </Modal>
         </div>
       </div>
     </div>

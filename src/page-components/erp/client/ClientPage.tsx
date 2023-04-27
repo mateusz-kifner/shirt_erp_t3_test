@@ -7,8 +7,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { IconList, IconNotebook } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
-import ClientAddModal from "~/page-components/erp/clients/ClientAddModal";
-import ClientsList from "~/page-components/erp/clients/ClientList";
+import ClientAddModal from "~/page-components/erp/client/ClientAddModal";
+import ClientsList from "~/page-components/erp/client/ClientList";
 
 const entryName = "clients";
 

@@ -1,7 +1,7 @@
 import { ComponentType } from "react";
 
 // List items imports
-import ClientListItem from "~/page-components/erp/clients/ClientListItem";
+import ClientListItem from "~/page-components/erp/client/ClientListItem";
 import { ClientType } from "~/schema/clientSchema";
 // import EmailMessageListItem from "~/page-components/erp/email-messages/EmailMessageListItem"
 // import OrderListItem from "~/page-components/erp/orders/OrderListItem"
