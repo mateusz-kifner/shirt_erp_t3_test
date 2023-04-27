@@ -88,5 +88,8 @@
   "no_data": "Brak danych",
   "archive": "Archiwizuj",
   "unarchive": "Odarchiwizuj",
-  "search": "Szukaj"
+  "search": "Szukaj",
+  "username": "Login",
+  "password": "Hasło",
+  "error_sign_in": "Niepoprawny login lub hasło!!!"
 }

@@ -38,13 +38,15 @@ export const sessionRouter = createTRPCRouter({
           where: { username: username },
         });
         if (!user || !user.password) {
-          return null;
+          throw new Error("Username or password is incorrect");
+          return;
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
 
         if (!isValidPassword) {
-          return null;
+          throw new Error("Username or password is incorrect");
+          return;
         }
         const sanitized_user = _.omit(user, ["password"]);
         if (ctx.session) {

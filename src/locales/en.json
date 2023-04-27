@@ -88,5 +88,8 @@
   "no_data": "No data",
   "archive": "Archive",
   "unarchive": "Unarchive",
-  "search": "Search"
+  "search": "Search",
+  "username": "Username",
+  "password": "Password",
+  "error_sign_in": "Username or password is incorrect!!!"
 }
