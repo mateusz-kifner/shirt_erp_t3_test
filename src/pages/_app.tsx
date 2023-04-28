@@ -1,6 +1,7 @@
 import { type AppType } from "next/app";
 
 import { api } from "~/utils/api";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "~/styles/globals.css";
 import AppLayout from "~/components/layout/AppLayout";
@@ -14,6 +15,7 @@ const App: AppType = ({ Component, pageProps }) => {
       <AppLayout>
         <Component {...pageProps} />
       </AppLayout>
+      <ReactQueryDevtools initialIsOpen={false} />
     </UserContextProvider>
   );
 };
