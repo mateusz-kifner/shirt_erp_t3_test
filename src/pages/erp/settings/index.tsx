@@ -25,6 +25,7 @@ import { api } from "~/utils/api";
 import template from "~/templates/test.template";
 import Tooltip from "~/components/basic/Tooltip";
 import Modal from "~/components/basic/Modal";
+import DisplayCell from "~/components/basic/DisplayCell";
 
 const testData = {
   name: "string",
@@ -175,15 +176,16 @@ function Settings() {
             onClose={() => setTestFormOpen(false)}
             title={"Text text"}
           >
-            <Tooltip tooltip={<span>TEst tooltip</span>}>
-              <Button
-                onClick={() => {
-                  /**/
-                }}
-              >
-                Close
-              </Button>
-            </Tooltip>
+            <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
+              test display cell
+            </DisplayCell>
+            <DisplayCell
+              rightSection={<IconBug />}
+              leftSection={<IconBug />}
+              disabled
+            >
+              test display cell
+            </DisplayCell>
           </Modal>
         </div>
       </div>

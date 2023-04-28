@@ -37,10 +37,14 @@ const Header = () => {
       </div>
       <div
         id="HeaderTabs"
-        className={`absolute left-0 top-0 h-14 w-full transition-all ${
-          navigationCollapsed ? "pl-20" : "pl-64"
+        className={`absolute left-0 top-0 h-14  transition-all ${
+          navigationCollapsed ? "ml-20" : "ml-64"
         }`}
-        style={{ paddingRight: `calc(${actionButtonsWidth}px + 1rem)` }}
+        style={{
+          width: `calc(100% - ${actionButtonsWidth}px - 1rem - ${
+            navigationCollapsed ? "5rem" : "16rem"
+          })`,
+        }}
       ></div>
       <div className="flex justify-end gap-3" ref={ref}>
         <button

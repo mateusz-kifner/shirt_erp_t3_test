@@ -8,6 +8,7 @@ import { isEqual } from "lodash";
 import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
 import { showNotification } from "~/lib/notifications";
+import DisplayCell from "../basic/DisplayCell";
 
 const provinces = [
   "dolnośląskie",
@@ -157,76 +158,77 @@ const EditableAddress = (props: EditableAddressProps) => {
         }
       </label>
 
-      {/* {focus ? ( */}
-      <div
-        style={{ position: "relative" }}
-        className="flex flex-col gap-2"
-        tabIndex={999999999} // ensure that focus can be captured on element
-      >
-        <EditableText
-          label={label?.streetName ?? undefined}
-          value={value?.streetName ?? ""}
-          onSubmit={(value) =>
-            value !== null && setAddressField("streetName", value)
-          }
-        />
-        <div className="flex flex-grow gap-2">
+      {focus ? (
+        <div
+          style={{ position: "relative" }}
+          className="flex flex-col gap-2"
+          tabIndex={999999999} // ensure that focus can be captured on element
+        >
           <EditableText
-            label={label?.streetNumber ?? undefined}
-            value={value?.streetNumber ?? ""}
+            label={label?.streetName ?? undefined}
+            value={value?.streetName ?? ""}
             onSubmit={(value) =>
-              value !== null && setAddressField("streetNumber", value)
+              value !== null && setAddressField("streetName", value)
             }
-            style={{ flexGrow: 1 }}
+          />
+          <div className="flex flex-grow gap-2">
+            <EditableText
+              label={label?.streetNumber ?? undefined}
+              value={value?.streetNumber ?? ""}
+              onSubmit={(value) =>
+                value !== null && setAddressField("streetNumber", value)
+              }
+              style={{ flexGrow: 1 }}
+            />
+            <EditableText
+              label={label?.apartmentNumber ?? undefined}
+              value={value?.apartmentNumber ?? ""}
+              onSubmit={(value) =>
+                value !== null && setAddressField("apartmentNumber", value)
+              }
+              style={{ flexGrow: 1 }}
+            />
+          </div>
+          <EditableText
+            label={label?.secondLine ?? undefined}
+            value={value?.secondLine ?? ""}
+            onSubmit={(value) =>
+              value !== null && setAddressField("secondLine", value)
+            }
           />
           <EditableText
-            label={label?.apartmentNumber ?? undefined}
-            value={value?.apartmentNumber ?? ""}
+            label={label?.postCode ?? undefined}
+            value={value?.postCode ?? ""}
             onSubmit={(value) =>
-              value !== null && setAddressField("apartmentNumber", value)
+              value !== null && setAddressField("postCode", value)
             }
-            style={{ flexGrow: 1 }}
+          />
+          <EditableText
+            label={label?.city ?? undefined}
+            value={value?.city ?? ""}
+            onSubmit={(value) =>
+              value !== null && setAddressField("city", value)
+            }
+          />
+          <EditableEnum
+            label={label?.province ?? undefined}
+            value={value?.province ?? ""}
+            onSubmit={(value) =>
+              value !== null && setAddressField("province", value)
+            }
+            enum_data={provinces}
           />
         </div>
-        <EditableText
-          label={label?.secondLine ?? undefined}
-          value={value?.secondLine ?? ""}
-          onSubmit={(value) =>
-            value !== null && setAddressField("secondLine", value)
-          }
-        />
-        <EditableText
-          label={label?.postCode ?? undefined}
-          value={value?.postCode ?? ""}
-          onSubmit={(value) =>
-            value !== null && setAddressField("postCode", value)
-          }
-        />
-        <EditableText
-          label={label?.city ?? undefined}
-          value={value?.city ?? ""}
-          onSubmit={(value) => value !== null && setAddressField("city", value)}
-        />
-        <EditableEnum
-          label={label?.province ?? undefined}
-          value={value?.province ?? ""}
-          onSubmit={(value) =>
-            value !== null && setAddressField("province", value)
-          }
-          enum_data={provinces}
-        />
-      </div>
-      {/* // ) : (
-      //   <DisplayCell
-      //     icon={leftSection}
-      //     disabled={disabled}
-      //     hovered={hovered}
-      //     rightSection={rightSection}
-      //   >
-      //     {" "}
-      //     {toString()}
-      //   </DisplayCell>
-      // )} */}
+      ) : (
+        <DisplayCell
+          leftSection={leftSection}
+          disabled={disabled}
+          rightSection={rightSection}
+        >
+          {" "}
+          {toString()}
+        </DisplayCell>
+      )}
     </div>
   );
 };
