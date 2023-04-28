@@ -4,6 +4,7 @@ interface DisplayCellProps extends ButtonHTMLAttributes<HTMLDivElement> {
   leftSection?: ReactNode;
   rightSection?: ReactNode;
   children: React.ReactNode;
+  focus?: boolean;
   disabled?: boolean;
 }
 
@@ -13,6 +14,7 @@ const DisplayCell = (props: DisplayCellProps) => {
     rightSection,
     children,
     disabled = false,
+    focus = false,
     className,
     ...moreProps
   } = props;
@@ -21,11 +23,9 @@ const DisplayCell = (props: DisplayCellProps) => {
       className={`
         relative
         flex
-        h-11 
-        max-h-screen
+        min-h-[2.75rem]
         w-full
         resize-none
-        items-center
         gap-2
         overflow-hidden 
         whitespace-pre-line
@@ -33,29 +33,48 @@ const DisplayCell = (props: DisplayCellProps) => {
         rounded
         border
         border-solid
-        border-gray-400
         bg-white
         p-2
         text-sm
         leading-normal
+        text-stone-800
         outline-none
         read-only:bg-transparent
-        read-only:outline-none
+        read-only:outline-none 
         focus:border-sky-600 
-        dark:border-stone-600 
+        
         dark:bg-stone-800
+        dark:text-stone-200
         dark:outline-none
-        dark:read-only:bg-transparent
-        dark:read-only:outline-none
-        dark:focus:border-sky-600 
-        [&>*]:stroke-gray-400 
-        [&>*]:dark:stroke-stone-600 
-      ${className ?? ""} ${disabled ? " bg-transparent text-gray-500" : ""}`}
+        dark:read-only:bg-transparent 
+        dark:read-only:outline-none 
+      dark:focus:border-sky-600 
+      ${className ?? ""} ${disabled ? " bg-transparent text-gray-500" : ""} 
+      ${
+        focus
+          ? "border-sky-600 dark:border-sky-600"
+          : "border-gray-400 dark:border-stone-600"
+      }
+      `}
       {...moreProps}
     >
-      {!!leftSection && leftSection}
-      <div className="flex-grow">{children}</div>
-      {!!rightSection && rightSection}
+      <div className="flex flex-grow gap-2">
+        <div
+          className="
+          text-gray-400 
+          dark:text-stone-600"
+        >
+          {!!leftSection && leftSection}
+        </div>
+        <div className="flex flex-grow items-center">{children}</div>
+      </div>
+      <div
+        className="
+        text-gray-400 
+        dark:text-stone-600"
+      >
+        {!!rightSection && rightSection}
+      </div>
     </div>
   );
 };

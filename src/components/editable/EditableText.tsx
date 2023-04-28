@@ -1,10 +1,11 @@
-import { useClipboard, useElementSize } from "@mantine/hooks";
+import { useClipboard } from "@mantine/hooks";
 import { useEffect, useState, type CSSProperties, useRef, useId } from "react";
 import preventLeave from "../../utils/preventLeave";
 import { IconCopy } from "@tabler/icons-react";
 import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
 import { showNotification } from "~/lib/notifications";
+import DisplayCell from "../basic/DisplayCell";
 
 interface EditableTextProps extends EditableInput<string> {
   maxLength?: number;
@@ -31,8 +32,6 @@ const EditableText = (props: EditableTextProps) => {
   const [focus, setFocus] = useState<boolean>(false);
   const clipboard = useClipboard();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const { ref: leftSectionRef, width: leftSectionWidth } = useElementSize();
-  const { ref: rightSectionRef, width: rightSectionWidth } = useElementSize();
   // const t = useTranslation();
   useEffect(() => {
     if (focus) {
@@ -98,7 +97,7 @@ const EditableText = (props: EditableTextProps) => {
           htmlFor={"textarea_" + uuid}
           className="
           text-sm
-          dark:text-gray-400"
+          dark:text-stone-300"
         >
           <div className="flex items-center py-1">
             {label}{" "}
@@ -126,18 +125,11 @@ const EditableText = (props: EditableTextProps) => {
           </div>
         </label>
       )}
-      <div className="relative flex">
-        <div
-          className="absolute
-          left-1
-          top-1/2
-          -translate-y-1/2
-          [&>*]:stroke-gray-400
-          [&>*]:dark:stroke-stone-600"
-          ref={leftSectionRef}
-        >
-          {!!leftSection && leftSection}
-        </div>
+      <DisplayCell
+        leftSection={leftSection}
+        rightSection={rightSection}
+        focus={focus}
+      >
         <textarea
           id={"textarea_" + uuid}
           required={required}
@@ -146,66 +138,37 @@ const EditableText = (props: EditableTextProps) => {
           className={`
           data-disabled:text-gray-500
           dark:data-disabled:text-gray-500
-          data-disabled:bg-transparent 
-          dark:data-disabled:bg-transparent
-          h-11
-          max-h-screen
+          -mb-3
+          -mt-2
           w-full
           resize-none
-          gap-2 
-          overflow-hidden
-          whitespace-pre-line 
+          overflow-hidden 
+          whitespace-pre-line
           break-words
-          rounded
-          border
-          border-solid
-          border-gray-400 
-          bg-white
-          p-2
+          bg-transparent
+          pb-3
+          pt-[0.625rem]
           text-sm
-          leading-normal
           outline-none
-          read-only:bg-transparent 
-          read-only:outline-none 
-          focus:border-sky-600
-          dark:border-stone-600
-          dark:bg-stone-800
-          dark:outline-none
-          dark:read-only:bg-transparent 
-          dark:read-only:outline-none 
-          dark:focus:border-sky-600 
+          focus-visible:border-transparent
+          focus-visible:outline-none
           ${className ?? ""}`}
           style={{
-            paddingLeft: `calc(${leftSectionWidth}px + 0.5rem)`,
-            paddingRight: `calc(${rightSectionWidth}px + 0.5rem)`,
-            paddingTop:
-              (textAreaRef.current?.scrollHeight ?? 0) < 44
-                ? "0.625rem"
-                : "0.5rem",
+            // paddingBottom:
+            //   (textAreaRef.current?.scrollHeight ?? 0) <= 44
+            //     ? undefined
+            //     : "0.5rem",
             ...style,
           }}
-          {...moreProps}
           value={text}
-          onFocus={() => window.addEventListener("beforeunload", preventLeave)}
-          onBlur={() =>
-            window.removeEventListener("beforeunload", preventLeave)
-          }
+          onFocus={() => !disabled && setFocus(true)}
+          onClick={() => !disabled && setFocus(true)}
           onChange={onChangeTextarea}
           onKeyDown={onKeyDownTextarea}
           onInput={(e) => setTextAreaHeight(e.target as HTMLTextAreaElement)}
+          {...moreProps}
         />
-        <div
-          className="absolute
-          right-1
-          top-1/2
-          -translate-y-1/2
-          [&>*]:stroke-gray-400
-          [&>*]:dark:stroke-stone-600"
-          ref={rightSectionRef}
-        >
-          {!!rightSection && rightSection}
-        </div>
-      </div>
+      </DisplayCell>
     </div>
   );
 };

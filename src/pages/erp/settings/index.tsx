@@ -186,6 +186,13 @@ function Settings() {
             >
               test display cell
             </DisplayCell>
+            <EditableText
+              label="test"
+              value={testValue ?? undefined}
+              onSubmit={setTestValue}
+              rightSection={<IconBug />}
+              leftSection={<IconBug />}
+            />
           </Modal>
         </div>
       </div>
