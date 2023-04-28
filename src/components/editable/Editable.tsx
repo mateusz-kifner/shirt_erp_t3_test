@@ -7,7 +7,7 @@ import EditableText from "./EditableText";
 import EditableRichText from "./EditableRichText";
 import EditableDateTime from "./EditableDateTime";
 import EditableDate from "./EditableDate";
-import EditableBool from "./EditableBool";
+import EditableSwitch from "./EditableSwitch";
 import EditableColor from "./EditableColor";
 import EditableEnum from "./EditableEnum";
 import EditableJSON from "./EditableJSON";
@@ -189,7 +189,7 @@ const editableFields: editableFields = {
     component: EditableDate,
     props: { leftSection: <IconCalendar size={18} /> },
   },
-  boolean: { component: EditableBool, props: {} },
+  switch: { component: EditableSwitch, props: {} },
   color: { component: EditableColor, props: {} },
   enum: { component: EditableEnum, props: {} },
   json: { component: EditableJSON, props: {} },
