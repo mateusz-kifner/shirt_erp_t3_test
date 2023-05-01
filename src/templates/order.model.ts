@@ -1,5 +1,5 @@
-import { ClientType } from "../types/ClientType"
-import { OrderType } from "../types/OrderType"
+import { ClientType } from "~/schema/clientSchema";
+import { OrderType } from "~/schema/orderSchema";
 
 const order_template = {
   id: { type: "id" },
@@ -66,14 +66,14 @@ const order_template = {
     ) => {
       if (
         data.address === null ||
-        (!data.address.streetName &&
-          !data.address.streetNumber &&
-          !data.address.apartmentNumber &&
-          !data.address.postCode &&
-          !data.address.city &&
-          !data.address.secondLine)
+        (!data?.address?.streetName &&
+          !data?.address?.streetNumber &&
+          !data?.address?.apartmentNumber &&
+          !data?.address?.postCode &&
+          !data?.address?.city &&
+          !data?.address?.secondLine)
       ) {
-        onSubmit?.("address", { ...client.address, id: undefined })
+        onSubmit?.("address", { ...client.address, id: undefined });
       }
     },
   },
@@ -136,6 +136,6 @@ const order_template = {
     type: "datetime",
     disabled: true,
   },
-}
+};
 
-export default order_template
+export default order_template;
