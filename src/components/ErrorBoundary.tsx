@@ -20,6 +20,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     showNotification({ title: "Error" + error.name, message: error.message });
+    console.log(error, errorInfo);
   }
 
   render() {

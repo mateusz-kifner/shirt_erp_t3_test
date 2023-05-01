@@ -157,7 +157,7 @@ const Workspace = ({
             <ErrorBoundary
               fallback={
                 <h1>
-                  Tab {childrenLabels[childIndex] ?? "[unknown]"} rendered as{" "}
+                  Tab {childrenLabels[childIndex] ?? "[unknown]"} rendered as
                   {childIndex} element crashed
                 </h1>
               }
