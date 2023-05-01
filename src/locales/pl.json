@@ -91,5 +91,6 @@
   "search": "Szukaj",
   "username": "Login",
   "password": "Hasło",
-  "error_sign_in": "Niepoprawny login lub hasło!!!"
+  "error_sign_in": "Niepoprawny login lub hasło!!!",
+  "copy_to_clipboard": "Kopiuj do schowka"
 }

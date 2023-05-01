@@ -91,5 +91,6 @@
   "search": "Search",
   "username": "Username",
   "password": "Password",
-  "error_sign_in": "Username or password is incorrect!!!"
+  "error_sign_in": "Username or password is incorrect!!!",
+  "copy_to_clipboard": "Copy to clipboard"
 }

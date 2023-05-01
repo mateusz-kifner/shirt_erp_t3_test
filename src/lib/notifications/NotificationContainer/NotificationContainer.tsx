@@ -2,7 +2,7 @@ import React, { type CSSProperties, useEffect, useRef, useState } from "react";
 import getAutoClose from "./get-auto-close";
 import { type NotificationProps } from "../types";
 import Button from "~/components/basic/Button";
-import { IconBug, IconX } from "@tabler/icons-react";
+import { IconBug, IconInfoCircle, IconX } from "@tabler/icons-react";
 import { Transition } from "@headlessui/react";
 
 export interface NotificationContainerProps {
@@ -92,7 +92,7 @@ export default function NotificationContainer({
       >
         <div className="flex w-80 flex-nowrap items-center justify-between gap-2 overflow-hidden">
           <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-            {icon}
+            {icon ?? <IconInfoCircle />}
           </div>
           <div className="flex-shrink flex-grow">
             <div className="whitespace-pre-wrap break-words text-left text-sm font-normal text-black dark:text-white">
