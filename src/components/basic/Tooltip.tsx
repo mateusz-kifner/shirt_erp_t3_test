@@ -28,10 +28,10 @@ function Tooltip({
     | "delay-3000";
   withPortal?: boolean;
 }) {
-  return (
-    <div className={`tooltip ${className ?? ""} tooltip-${delay}`}>
-      {children}
-      {withPortal ? (
+  if (withPortal) {
+    return (
+      <div className={`tooltip ${className ?? ""} tooltip-${delay}`}>
+        {children}
         <Portal>
           <div
             className={`tooltip-text bg-stone-200 text-stone-800 after:border-transparent after:border-t-stone-200 dark:bg-stone-800 dark:text-stone-200 dark:after:border-t-stone-800 ${
@@ -41,15 +41,21 @@ function Tooltip({
             {tooltip}
           </div>
         </Portal>
-      ) : (
-        <div
-          className={`tooltip-text bg-stone-200 text-stone-800 after:border-transparent after:border-t-stone-200 dark:bg-stone-800 dark:text-stone-200 dark:after:border-t-stone-800 ${
-            classNameTooltip ?? ""
-          }`}
-        >
-          {tooltip}
-        </div>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`tooltip ${className ?? ""} tooltip-${delay}`}>
+      {children}
+
+      <div
+        className={`tooltip-text bg-stone-200 text-stone-800 after:border-transparent after:border-t-stone-200 dark:bg-stone-800 dark:text-stone-200 dark:after:border-t-stone-800 ${
+          classNameTooltip ?? ""
+        }`}
+      >
+        {tooltip}
+      </div>
     </div>
   );
 }

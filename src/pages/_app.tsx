@@ -9,6 +9,7 @@ import { UserContextProvider } from "~/context/userContext";
 import { Notifications, showNotification } from "~/lib/notifications";
 import Logger from "js-logger";
 import { env } from "~/env.mjs";
+import { SSRProvider } from "react-aria";
 
 Logger.setHandler(function (messages, context) {
   const savedValue = localStorage.getItem("user-data");
@@ -49,13 +50,15 @@ Logger.setLevel(
 
 const App: AppType = ({ Component, pageProps }) => {
   return (
-    <UserContextProvider>
-      <Notifications />
-      <AppLayout>
-        <Component {...pageProps} />
-      </AppLayout>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </UserContextProvider>
+    <SSRProvider>
+      <UserContextProvider>
+        <Notifications />
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </UserContextProvider>
+    </SSRProvider>
   );
 };
 
