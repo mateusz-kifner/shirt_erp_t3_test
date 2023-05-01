@@ -1,132 +1,128 @@
-import { ActionIcon, ColorInput, Group, Input, Text } from "@mantine/core"
-import { useClickOutside, useClipboard, useHover } from "@mantine/hooks"
-import { showNotification } from "@mantine/notifications"
-import { useEffect, useState, CSSProperties, useMemo } from "react"
-import preventLeave from "../../utils/preventLeave"
-import { IconCopy, IconX } from "@tabler/icons-react"
-import { SxBorder, SxRadius } from "../../styles/basic"
-import colorNames from "../../models/color-names.json"
-import EditableInput from "../../types/EditableInput"
+import { useClickOutside, useClipboard, useHover } from "@mantine/hooks";
+import { useEffect, useState, CSSProperties, useMemo } from "react";
+import preventLeave from "../../utils/preventLeave";
+import { IconCopy, IconX } from "@tabler/icons-react";
+import EditableInput from "../../types/EditableInput";
 
-const colorNameKeys = Object.keys(colorNames)
+const colorNameKeys = Object.keys(colorNames);
 const colorNamesRGB = colorNameKeys.map((val) => [
   parseInt(val.substring(1, 3), 16),
   parseInt(val.substring(3, 5), 16),
   parseInt(val.substring(5, 7), 16),
-])
+]);
 
 export const getColorNameFromHex = (hex: string) => {
-  let name = "Nieznany"
+  let name = "Nieznany";
   if (colorNames[hex as keyof typeof colorNames] !== undefined) {
-    name = colorNames[hex as keyof typeof colorNames]
+    name = colorNames[hex as keyof typeof colorNames];
   } else {
-    let min = 100000.0
-    let min_index = -1
+    let min = 100000.0;
+    let min_index = -1;
 
-    const hex_r = parseInt(hex.substring(1, 3), 16)
-    const hex_g = parseInt(hex.substring(3, 5), 16)
-    const hex_b = parseInt(hex.substring(5, 7), 16)
+    const hex_r = parseInt(hex.substring(1, 3), 16);
+    const hex_g = parseInt(hex.substring(3, 5), 16);
+    const hex_b = parseInt(hex.substring(5, 7), 16);
 
     colorNamesRGB.forEach(([val_r, val_g, val_b], index) => {
       const weight = Math.sqrt(
         (val_r - hex_r) * (val_r - hex_r) +
           (val_g - hex_g) * (val_g - hex_g) +
           (val_b - hex_b) * (val_b - hex_b)
-      )
+      );
       if (min > weight) {
-        min = weight
-        min_index = index
+        min = weight;
+        min_index = index;
       }
-    })
+    });
 
     if (min_index !== -1) {
       name =
-        colorNames[colorNameKeys[min_index] as keyof typeof colorNames] + "*"
+        colorNames[colorNameKeys[min_index] as keyof typeof colorNames] + "*";
     }
   }
-  return name
-}
+  return name;
+};
 
 function convertTo6DigitColorCode(color: string) {
-  let hex = ""
+  let hex = "";
   if (color.length === 3 && color[0] !== "#") {
-    hex = "#" + color[0] + color[0] + color[1] + color[1] + color[2] + color[2]
+    hex = "#" + color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
   }
   if (color.length === 4 && color[0] === "#") {
-    hex = "#" + color[1] + color[1] + color[2] + color[2] + color[3] + color[3]
+    hex = "#" + color[1] + color[1] + color[2] + color[2] + color[3] + color[3];
   }
   if (color.length === 6 && color[0] !== "#") {
-    hex = "#" + color
+    hex = "#" + color;
   }
   if (color.length === 7 && color[0] === "#") {
-    hex = color
+    hex = color;
   }
-  return hex
+  return hex;
 }
 
 interface EditableColorProps extends EditableInput<string> {
-  style?: CSSProperties
+  style?: CSSProperties;
 }
 
 const EditableColor = (props: EditableColorProps) => {
   const { label, value, initialValue, onSubmit, disabled, required, style } =
-    props
+    props;
   const [color, setColor] = useState<string | null>(
     value ?? initialValue ?? null
-  )
-  const [focus, setFocus] = useState<boolean>(false)
-  const ref = useClickOutside(() => setFocus(false))
-  const clipboard = useClipboard()
-  const { hovered, ref: refHover } = useHover()
+  );
+  const [focus, setFocus] = useState<boolean>(false);
+  const ref = useClickOutside(() => setFocus(false));
+  const clipboard = useClipboard();
+  const { hovered, ref: refHover } = useHover();
 
   const colorName = useMemo(
     () => (color !== null ? getColorNameFromHex(color) : ""),
     [color]
-  )
+  );
 
   useEffect(() => {
     if (focus) {
-      window.addEventListener("beforeunload", preventLeave)
+      window.addEventListener("beforeunload", preventLeave);
     } else {
       if (color !== value) {
         if (!color || color === null) {
-          onSubmit?.(null)
-          setColor(null)
-          return
+          onSubmit?.(null);
+          setColor(null);
+          return;
         }
-        let hex = convertTo6DigitColorCode(color)
+        let hex = convertTo6DigitColorCode(color);
         if (!isNaN(parseInt(hex.substring(1), 16))) {
-          onSubmit?.(hex)
-          setColor(hex)
+          onSubmit?.(hex);
+          setColor(hex);
         }
       }
-      window.removeEventListener("beforeunload", preventLeave)
+      window.removeEventListener("beforeunload", preventLeave);
     }
     // eslint-disable-next-line
-  }, [focus])
+  }, [focus]);
 
   useEffect(() => {
     return () => {
-      window.removeEventListener("beforeunload", preventLeave)
-    }
-  }, [])
+      window.removeEventListener("beforeunload", preventLeave);
+    };
+  }, []);
 
   useEffect(() => {
     if (value) {
-      setColor(value)
+      setColor(value);
     } else {
-      setColor("")
+      setColor("");
     }
-  }, [value])
+  }, [value]);
 
   const onKeyDown = (e: React.KeyboardEvent<any>) => {
     if (focus) {
       if (e.code == "Enter" || e.code == "Escape") {
-        setFocus(false)
-        e.preventDefault()
+        setFocus(false);
+        e.preventDefault();
       }
     }
-  }
+  };
 
   return (
     <Input.Wrapper
@@ -142,11 +138,11 @@ const EditableColor = (props: EditableColorProps) => {
                   transform: "translate(4px, 4px)",
                 }}
                 onClick={() => {
-                  clipboard.copy(color)
+                  clipboard.copy(color);
                   showNotification({
                     title: "Skopiowano do schowka",
                     message: color,
-                  })
+                  });
                 }}
                 tabIndex={-1}
               >
@@ -235,7 +231,7 @@ const EditableColor = (props: EditableColorProps) => {
             ]}
             value={color ?? "#ffffff"}
             onChange={(new_hex) => {
-              setColor(new_hex)
+              setColor(new_hex);
             }}
             disabled={disabled}
             required={required}
@@ -297,7 +293,7 @@ const EditableColor = (props: EditableColorProps) => {
         )}
       </div>
     </Input.Wrapper>
-  )
-}
+  );
+};
 
-export default EditableColor
+export default EditableColor;
