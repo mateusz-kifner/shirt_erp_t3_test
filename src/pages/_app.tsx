@@ -43,7 +43,9 @@ Logger.setHandler(function (messages, context) {
   }
 });
 
-Logger.setLevel(env.NODE_ENV === "development" ? Logger.INFO : Logger.WARN);
+Logger.setLevel(
+  env.NEXT_PUBLIC_NODE_ENV === "development" ? Logger.INFO : Logger.WARN
+);
 
 const App: AppType = ({ Component, pageProps }) => {
   return (

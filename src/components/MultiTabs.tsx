@@ -65,27 +65,30 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         ? simpleColors[index % simpleColors.length]
         : undefined;
     return (
-      <Tooltip tooltip={<span>TEst tooltip</span>}>
+      <Tooltip tooltip={<span>TEst tooltip</span>} withPortal>
         <button
           className={`
             border-1 
             inline-flex
             h-10
+
             animate-pop 
             select-none 
             items-center 
             justify-center 
             gap-3
-            rounded-md
-            bg-blue-600
-            stroke-gray-200 
-            px-4 py-0 
-            font-semibold 
-            uppercase 
-            text-gray-200
+            
+            bg-blue-600 stroke-gray-200
+            px-4
+            py-0 
+            font-semibold uppercase 
+            text-gray-200 
             no-underline 
             outline-offset-4
-            transition-all  
+            transition-all 
+            first:rounded-tl-md
+            last:rounded-tr-md  
+            only:rounded-tr-md
             focus-visible:outline-sky-600 
             disabled:pointer-events-none 
             disabled:bg-stone-700 
@@ -149,7 +152,6 @@ const MultiTabs = (props: MultiTabsProps) => {
     childrenLabels,
     childrenIcons,
     rightSection,
-    leftSection,
     availableSpace,
   } = props;
   const { navigationCollapsed, setNavigationCollapsed } = useUserContext();
@@ -214,7 +216,6 @@ const MultiTabs = (props: MultiTabsProps) => {
     <Portal target="#HeaderTabs">
       <div className="flex h-14 items-end" ref={ref}>
         <div>
-          {!!leftSection && leftSection}
           {childrenLabels.map((label, index) => {
             const isPinned = pinned?.includes(index);
 
@@ -238,7 +239,13 @@ const MultiTabs = (props: MultiTabsProps) => {
                   //   return new_arr;
                   // })
                 }
-                rightSection={isPinned ? <IconPinned size={16} /> : undefined}
+                rightSection={
+                  !!rightSection ? (
+                    rightSection
+                  ) : isPinned ? (
+                    <IconPinned size={16} />
+                  ) : undefined
+                }
                 isActive={active === index || isPinned}
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 onClick={() => !isPinned && onActive(index)}
@@ -251,7 +258,6 @@ const MultiTabs = (props: MultiTabsProps) => {
               </Tab>
             );
           })}
-          {!!rightSection && rightSection}
         </div>
       </div>
     </Portal>
