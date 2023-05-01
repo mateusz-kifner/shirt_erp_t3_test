@@ -12,6 +12,7 @@ import { useUserContext } from "~/context/userContext";
 import useRQCache from "~/hooks/useRQCache";
 import useTranslation from "~/hooks/useTranslation";
 import MultiTabs from "./MultiTabs";
+import ErrorBoundary from "./ErrorBoundary";
 
 // import MultiTabs from "./MultiTabs"
 
@@ -153,8 +154,16 @@ const Workspace = ({
             childrenWrapperProps[childIndex] !== undefined
               ? childrenWrapperProps[childIndex]
               : { style: { flexGrow: 1 } })} */}
-
-            {child_array[childIndex]}
+            <ErrorBoundary
+              fallback={
+                <h1>
+                  Tab {childrenLabels[childIndex] ?? "[unknown]"} rendered as{" "}
+                  {childIndex} element crashed
+                </h1>
+              }
+            >
+              {child_array[childIndex]}
+            </ErrorBoundary>
           </div>
         ))}
     </div>

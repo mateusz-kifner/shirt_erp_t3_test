@@ -10,9 +10,12 @@ import { Notifications, showNotification } from "~/lib/notifications";
 import Logger from "js-logger";
 import { env } from "~/env.mjs";
 import { SSRProvider } from "react-aria";
+import ErrorBoundary from "~/components/ErrorBoundary";
+
+// TODO: refactor logger
 
 Logger.setHandler(function (messages, context) {
-  const savedValue = localStorage.getItem("user-data");
+  const savedValue = localStorage.getItem("user-data"); // TODO: log user id here
   console.log(messages[0]?.message ?? "Nieznany błąd", messages[0]);
   if (context.level === Logger.ERROR)
     showNotification({
@@ -54,7 +57,9 @@ const App: AppType = ({ Component, pageProps }) => {
       <UserContextProvider>
         <Notifications />
         <AppLayout>
-          <Component {...pageProps} />
+          <ErrorBoundary fallback={<h1>Application crashed</h1>}>
+            <Component {...pageProps} />
+          </ErrorBoundary>
         </AppLayout>
         <ReactQueryDevtools initialIsOpen={false} />
       </UserContextProvider>
