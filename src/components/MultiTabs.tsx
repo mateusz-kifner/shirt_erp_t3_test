@@ -68,17 +68,18 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
       <Tooltip tooltip={<span>TEst tooltip</span>} withPortal>
         <button
           className={`
-            border-1 
             inline-flex
             h-10
-
-            animate-pop 
             select-none 
-            items-center 
+            items-center
             justify-center 
-            gap-3
-            
-            bg-blue-600 stroke-gray-200
+            gap-3 
+            border-x 
+            border-t
+            border-solid
+            border-stone-700 
+            bg-stone-950
+            stroke-gray-200
             px-4
             py-0 
             font-semibold uppercase 
@@ -214,7 +215,7 @@ const MultiTabs = (props: MultiTabsProps) => {
 
   return (
     <Portal target="#HeaderTabs">
-      <div className="flex h-14 items-end" ref={ref}>
+      <div className="flex h-14 items-end px-4" ref={ref}>
         <div>
           {childrenLabels.map((label, index) => {
             const isPinned = pinned?.includes(index);

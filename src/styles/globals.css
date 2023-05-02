@@ -5,6 +5,8 @@
 html,
 body {
   @apply preload bg-gray-200 text-stone-950 dark:bg-stone-950 dark:text-stone-200;
+  scrollbar-width: auto;
+  scrollbar-color: #0284c7 transparent;
 }
 
 .preload * {
@@ -91,4 +93,34 @@ body {
 }
 .tooltip-delay-3000:hover > .tooltip-text {
   transition-delay: 3000ms;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  scrollbar-width: auto;
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar:hover {
+  width: auto;
+  height: auto;
+}
+
+body::-webkit-scrollbar {
+  background-color: #e5e7eb;
+}
+
+.dark body::-webkit-scrollbar {
+  background-color: #0c0a09;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a8a29e;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #44403c;
 }
