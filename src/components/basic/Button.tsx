@@ -1,16 +1,21 @@
-import React, { type ButtonHTMLAttributes, type ReactNode } from "react";
+import React, { type ReactNode } from "react";
+import { type AriaButtonProps, useButton } from "react-aria";
+import { useRef } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends AriaButtonProps {
   className?: string;
   leftSection?: ReactNode;
   rightSection?: ReactNode;
 }
 
 function Button(props: ButtonProps) {
-  const { children, leftSection, rightSection, className, ...moreProps } =
-    props;
+  const ref = useRef<HTMLButtonElement | null>(null);
+  const { buttonProps } = useButton(props, ref);
+  const { children, leftSection, rightSection, className } = props;
+
   return (
     <button
+      {...buttonProps}
       className={`
           border-1 
           inline-flex
@@ -30,17 +35,17 @@ function Button(props: ButtonProps) {
           no-underline 
           outline-offset-4
           transition-all  
-          focus-visible:outline-sky-600 
-          disabled:pointer-events-none 
-          disabled:bg-stone-700 
           hover:bg-blue-700 
+          focus-visible:outline-sky-600 
+          active:hover:scale-95 
+          active:hover:animate-none 
           active:focus:scale-95 
           active:focus:animate-none 
-          active:hover:scale-95 
-          active:hover:animate-none	
+          disabled:pointer-events-none 
+          disabled:bg-stone-700	
           ${className ?? ""}
             `}
-      {...moreProps}
+      ref={ref}
     >
       {!!leftSection && leftSection}
       {children}
