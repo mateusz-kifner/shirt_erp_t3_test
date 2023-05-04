@@ -9,9 +9,10 @@ import { UserContextProvider } from "~/context/userContext";
 import { Notifications, showNotification } from "~/lib/notifications";
 import Logger from "js-logger";
 import { env } from "~/env.mjs";
-import { SSRProvider } from "react-aria";
+import { I18nProvider, SSRProvider } from "react-aria";
 import ErrorBoundary from "~/components/ErrorBoundary";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 // TODO: refactor logger
 
@@ -53,20 +54,23 @@ Logger.setLevel(
 );
 
 const App: AppType = ({ Component, pageProps }) => {
+  const router = useRouter();
   return (
     <SSRProvider>
-      <UserContextProvider>
-        <Notifications />
-        <AppLayout>
-          <Head>
-            <title>ShirtERP</title>
-          </Head>
-          <ErrorBoundary fallback={<h1>Application crashed</h1>}>
-            <Component {...pageProps} />
-          </ErrorBoundary>
-        </AppLayout>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </UserContextProvider>
+      <I18nProvider locale={router.locale}>
+        <UserContextProvider>
+          <Notifications />
+          <AppLayout>
+            <Head>
+              <title>ShirtERP</title>
+            </Head>
+            <ErrorBoundary fallback={<h1>Application crashed</h1>}>
+              <Component {...pageProps} />
+            </ErrorBoundary>
+          </AppLayout>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </UserContextProvider>
+      </I18nProvider>
     </SSRProvider>
   );
 };
