@@ -26,6 +26,7 @@ import template from "~/templates/test.template";
 import Tooltip from "~/components/basic/Tooltip";
 import Modal from "~/components/basic/Modal";
 import DisplayCell from "~/components/basic/DisplayCell";
+import InputColor from "~/components/input/InputColor";
 
 const testData = {
   name: "string",
@@ -114,7 +115,7 @@ function Settings() {
         </div>
         <hr className="mt-8 dark:border-stone-600 " />
         <div className="flex flex-col gap-3 p-4 ">
-          <Button onClick={() => logout.mutate()} leftSection={<IconLogout />}>
+          <Button onPress={() => logout.mutate()} leftSection={<IconLogout />}>
             {t.sign_out}
           </Button>
           <div className="flex items-center justify-stretch">
@@ -125,23 +126,23 @@ function Settings() {
               className="border-1 inline-flex h-9 flex-grow animate-pop items-center
                 justify-center rounded-md bg-stone-700 
                 p-0 px-4 text-center font-semibold uppercase text-gray-200 no-underline
-                transition-all disabled:pointer-events-none
-                disabled:bg-stone-700 hover:bg-stone-600
+                transition-all hover:bg-stone-600
+                active:hover:scale-95 active:hover:animate-none
                 active:focus:scale-95 active:focus:animate-none
-                active:hover:scale-95 active:hover:animate-none"
+                disabled:pointer-events-none disabled:bg-stone-700"
             >
               <option value="pl">Polski</option>
               <option value="en">English</option>
             </select>
           </div>
           <Button
-            onClick={toggleTheme}
+            onPress={toggleTheme}
             leftSection={theme === 1 ? <IconSun /> : <IconMoonStars />}
           >
             {theme === 1 ? t.light_theme : t.dark_theme}
           </Button>
           <Button
-            onClick={() => {
+            onPress={() => {
               toggleDebug();
             }}
             leftSection={<IconBug />}
@@ -151,7 +152,7 @@ function Settings() {
           {debug && (
             <>
               <Button
-                onClick={() => {
+                onPress={() => {
                   setTestFormOpen(true);
                 }}
                 leftSection={<IconBug />}
@@ -159,7 +160,7 @@ function Settings() {
                 Open Test Form
               </Button>
               <Button
-                onClick={() => {
+                onPress={() => {
                   for (let i = 0; i < 10; i++) {
                     mutate({ username: "client" + i });
                   }
@@ -193,6 +194,7 @@ function Settings() {
               rightSection={<IconBug />}
               leftSection={<IconBug />}
             />
+            <InputColor />
           </Modal>
         </div>
       </div>

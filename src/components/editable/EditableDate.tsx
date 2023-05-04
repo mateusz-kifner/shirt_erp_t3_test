@@ -2,24 +2,33 @@ import {
   useClipboard,
   useDebouncedValue,
   useElementSize,
-  useMediaQuery,
 } from "@mantine/hooks";
-import { useEffect, useId, useRef, useState } from "react";
 import dayjs from "dayjs";
-import type EditableInput from "../../types/EditableInput";
-import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
-// import { handleFocusForInnerElements } from "../../utils/handleFocusForInnerElements"
 import Calendar from "react-calendar";
-import { IconCopy } from "@tabler/icons-react";
-import preventLeave from "../../utils/preventLeave";
-import useTranslation from "~/hooks/useTranslation";
+import {
+  type DetailedHTMLProps,
+  type InputHTMLAttributes,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
 import { showNotification } from "~/lib/notifications";
+import useTranslation from "~/hooks/useTranslation";
+import { IconCopy } from "@tabler/icons-react";
+import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
+import type EditableInput from "~/types/EditableInput";
+import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface EditableDateProps extends EditableInput<string> {}
+interface InputDateProps
+  extends DetailedHTMLProps<
+      Omit<InputHTMLAttributes<HTMLInputElement>, "onSubmit" | "value">,
+      HTMLInputElement
+    >,
+    EditableInput<string> {}
 
-const EditableDate = (props: EditableDateProps) => {
+const EditableDate = (props: InputDateProps) => {
   const {
     label,
     value,
@@ -32,86 +41,44 @@ const EditableDate = (props: EditableDateProps) => {
   } = props;
   const uuid = useId();
   const router = useRouter();
-  const [date, setDate] = useState<Date | null>(
-    value ? new Date(value) : initialValue ? new Date(initialValue) : null
-  );
-  const [focus, setFocus] = useState<boolean>(false);
   const clipboard = useClipboard();
-  const dateRef = useRef<HTMLInputElement>(null);
-  const isMobile = useMediaQuery(
-    "only screen and (hover: none) and (pointer: coarse)"
-  );
   const t = useTranslation();
   const dateFormat = router.locale === "pl" ? "DD.MM.YYYY" : "YYYY-MM-DD";
   const [opened, setOpened] = useState<boolean>(false);
+  const [date, setDate] = useState<Date | null>(
+    value ? new Date(value) : initialValue ? new Date(initialValue) : null
+  );
+  const [text, setText] = useState(dayjs(date).format("L").toString());
 
-  const [text, setText] = useState(date?.toString());
-
+  const [debouncedText, cancel] = useDebouncedValue(text, 300);
   const { ref: leftSectionRef, width: leftSectionWidth } = useElementSize();
   const { ref: rightSectionRef, width: rightSectionWidth } = useElementSize();
-  const textAreaRef = useRef<HTMLInputElement>(null);
+  const inputDateRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    if (focus) {
-      window.addEventListener("beforeunload", preventLeave);
-      // dateRef.current &&(dateRef.current.selectionStart = dateRef.current.value.length)
-      // dateRef.current && dateRef.current.focus()
-    } else {
-      const valueAsDate = value
-        ? new Date(value)
-        : initialValue
-        ? new Date(initialValue)
-        : null;
-      const dateAsString = dayjs(date).format("YYYY-MM-DD");
+    const newDate = dayjs(debouncedText, dateFormat, router.locale);
+    if (newDate.toString() != "Invalid Date") {
       if (
-        date !== null &&
-        dateAsString !== dayjs(valueAsDate).format("YYYY-MM-DD")
+        newDate.format("YYYY-MM-DD").toString() !=
+        dayjs(value).format("YYYY-MM-DD").toString()
       ) {
-        onSubmit?.(dateAsString);
-      } else if (date == null) {
-        onSubmit?.(null);
+        onSubmit?.(newDate.format("YYYY-MM-DD").toString());
       }
-      window.removeEventListener("beforeunload", preventLeave);
+      setError(false);
+    } else {
+      setError(true);
     }
-    // eslint-disable-next-line
-  }, [focus]);
-
-  useEffect(() => {
-    return () => {
-      window.removeEventListener("beforeunload", preventLeave);
-    };
-  }, []);
-
-  useEffect(() => {
-    const new_value = value ? dayjs(value).toDate() : null;
-    setDate(new_value);
-  }, [value]);
+  }, [debouncedText]);
 
   return (
-    <div
-      className="relative flex-grow"
-      // onFocus={handleFocusForInnerElements(() => setOpened(true))}
-      // onBlur={handleBlurForInnerElements(() => setOpened(false))}
-    >
-      {opened && (
-        <Calendar
-          className={"absolute left-0 top-full z-[120] mt-2 rounded"}
-          onChange={(date) =>
-            setText(
-              dayjs(date as Date)
-                .format("L")
-                .toString()
-            )
-          }
-          value={date}
-        />
-      )}
+    <div className="relative flex-grow">
       {label && (
         <label
           htmlFor={"inputDate_" + uuid}
           className="text-sm dark:text-gray-400"
         >
-          {label}
+          {label}{" "}
           {date && (
             <button
               className="btn btn-square mr-1 p-[2px]"
@@ -132,26 +99,47 @@ const EditableDate = (props: EditableDateProps) => {
         </label>
       )}
       <div
-        className="absolute left-1 top-1/2 -translate-y-1/2"
-        ref={leftSectionRef}
+        onFocus={handleFocusForInnerElements(() => setOpened(true))}
+        onBlur={handleBlurForInnerElements(() => setOpened(false))}
       >
-        {!!leftSection && leftSection}
-      </div>
-      <input
-        id={"inputDate_" + uuid}
-        ref={textAreaRef}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className={"display-cell w-full resize-none overflow-hidden"}
-        readOnly={disabled}
-        required={required}
-        onClick={() => setOpened(true)}
-      />
-      <div
-        className="absolute right-1 top-1/2 -translate-y-1/2"
-        ref={rightSectionRef}
-      >
-        {!!rightSection && rightSection}
+        {opened && !disabled && (
+          <Calendar
+            key={value}
+            className={"absolute left-0 top-full z-[120] mt-2 rounded"}
+            onChange={(date) => {
+              setText(
+                dayjs(date as Date)
+                  .format("L")
+                  .toString()
+              );
+            }}
+            value={date}
+          />
+        )}
+        <div
+          className="absolute left-1 top-1/2 -translate-y-1/2"
+          ref={leftSectionRef}
+        >
+          {!!leftSection && leftSection}
+        </div>
+        <input
+          id={"inputDate_" + uuid}
+          ref={inputDateRef}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className={`display-cell w-full resize-none overflow-hidden ${
+            error ? "outline-red-600 dark:outline-red-600" : ""
+          }`}
+          readOnly={disabled}
+          required={required}
+        />
+
+        <div
+          className="absolute right-1 top-1/2 -translate-y-1/2"
+          ref={rightSectionRef}
+        >
+          {!!rightSection && rightSection}
+        </div>
       </div>
     </div>
   );
