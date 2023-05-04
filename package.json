@@ -10,7 +10,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.14",
     "@js-temporal/polyfill": "^0.4.3",
     "@mantine/hooks": "^6.0.7",
     "@prisma/client": "^4.12.0",
@@ -31,7 +30,6 @@
     "next": "^13.3.0",
     "react": "18.2.0",
     "react-aria": "^3.24.0",
-    "react-calendar": "^4.2.1",
     "react-dom": "18.2.0",
     "superjson": "1.12.2",
     "zod": "^3.21.4"
