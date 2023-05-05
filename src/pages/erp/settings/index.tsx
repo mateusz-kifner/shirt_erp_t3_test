@@ -185,9 +185,9 @@ function Settings() {
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
           <Modal
-            defaultOpen={true}
-            // isOpen={testFormOpen}
-            // onOpenChange={(isOpen) => setTestFormOpen(isOpen)}
+            // defaultOpen={true}
+            isOpen={testFormOpen}
+            onClose={() => setTestFormOpen(false)}
             // title={"Text text"}
           >
             <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
