@@ -23,10 +23,10 @@ import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
 import template from "~/templates/test.template";
 import Tooltip from "~/components/basic/Tooltip";
-import Modal from "~/components/basic/Modal";
 import DisplayCell from "~/components/basic/DisplayCell";
 // import EditableColor from "~/components/editable/EditableColor";
 import InputColor from "~/components/input/InputColor";
+import Modal from "~/components/basic/Modal";
 
 const testData = {
   name: "string",
@@ -169,13 +169,26 @@ function Settings() {
               >
                 Add 10 clients
               </Button>
+              <Tooltip tooltip="test" position="left">
+                <Button>test</Button>
+              </Tooltip>
+              <Tooltip tooltip="test" position="right">
+                <Button>test</Button>
+              </Tooltip>
+              <Tooltip tooltip="test" position="top">
+                <Button>test</Button>
+              </Tooltip>
+              <Tooltip tooltip="test" position="bottom">
+                <Button>test</Button>
+              </Tooltip>
             </>
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
           <Modal
-            open={testFormOpen}
-            onClose={() => setTestFormOpen(false)}
-            title={"Text text"}
+            defaultOpen={true}
+            // isOpen={testFormOpen}
+            // onOpenChange={(isOpen) => setTestFormOpen(isOpen)}
+            // title={"Text text"}
           >
             <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
               test display cell

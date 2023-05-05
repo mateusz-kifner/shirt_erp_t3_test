@@ -1,53 +1,62 @@
-import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, type ReactNode } from "react";
-import ActionButton from "./ActionButton";
-import { IconX } from "@tabler/icons-react";
-import Portal from "../Portal";
+import { type ReactNode, useRef } from "react";
+import {
+  Overlay,
+  useModalOverlay,
+  type AriaModalOverlayProps,
+} from "react-aria";
+import {
+  type OverlayTriggerProps,
+  useOverlayTriggerState,
+} from "react-stately";
 
-interface ModalProps {
-  open: boolean;
-  onClose: () => void;
-  title?: ReactNode;
-  children?: ReactNode;
-}
+type ModalProps = AriaModalOverlayProps &
+  OverlayTriggerProps & {
+    children: ReactNode;
+  };
 
-function Modal({ open, onClose, title, children }: ModalProps) {
+function Modal(props: ModalProps) {
+  const {
+    children,
+    isDismissable = true,
+    isKeyboardDismissDisabled = false,
+  } = props;
+  const ref = useRef(null);
+  const state = useOverlayTriggerState(props);
+  const { modalProps, underlayProps } = useModalOverlay(
+    { isDismissable, isKeyboardDismissDisabled },
+    state,
+    ref
+  );
+
   return (
-    <Portal>
-      <Transition
-        show={open}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
-        as={Fragment}
+    <Overlay>
+      <div
+        style={{
+          position: "fixed",
+          zIndex: 100,
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          background: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        {...underlayProps}
       >
-        <Dialog
-          open={open}
-          onClose={onClose}
-          className="absolute left-0 top-0 h-screen w-screen"
+        <div
+          {...modalProps}
+          style={{
+            background: "black",
+            border: "1px solid gray",
+          }}
+          ref={ref}
         >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-
-          <Dialog.Panel className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform  rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-stone-800">
-            <div className="mb-2 flex items-center justify-between ">
-              {title}
-              <ActionButton
-                onClick={() => onClose()}
-                className=" h-8 w-8 rounded-md border-none border-transparent p-1 text-stone-800 dark:text-stone-200"
-              >
-                <IconX />
-                <span className="sr-only">Close</span>
-              </ActionButton>
-            </div>
-
-            {children}
-          </Dialog.Panel>
-        </Dialog>
-      </Transition>
-    </Portal>
+          {children}
+        </div>
+      </div>
+    </Overlay>
   );
 }
 

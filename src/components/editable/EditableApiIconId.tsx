@@ -3,7 +3,7 @@ import { IconX } from "@tabler/icons-react";
 // import { useIconsContext } from "../../context/iconsContext"w
 import type EditableInput from "../../types/EditableInput";
 import Button from "../basic/Button";
-import Modal from "../basic/Modal";
+import Modal from "../basic/Dialog";
 // import ApiIconSVG from "../api/ApiIconSVG"
 
 interface EditableApiIconIdProps extends EditableInput<number> {

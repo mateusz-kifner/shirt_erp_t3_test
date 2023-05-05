@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "~/lib/session";
 import useTranslation from "~/hooks/useTranslation";
-import Modal from "~/components/basic/Modal";
+import Modal from "~/components/basic/Dialog";
 
 export default function Login() {
   const router = useRouter();
@@ -138,14 +138,14 @@ export default function Login() {
               no-underline 
               outline-offset-4
               transition-all  
-              focus-visible:outline-sky-600 
-              disabled:pointer-events-none 
-              disabled:bg-stone-700 
               hover:bg-blue-700 
+              focus-visible:outline-sky-600 
+              active:hover:scale-95 
+              active:hover:animate-none 
               active:focus:scale-95 
               active:focus:animate-none 
-              active:hover:scale-95 
-              active:hover:animate-none`}
+              disabled:pointer-events-none 
+              disabled:bg-stone-700`}
             type="submit"
             value={t.sign_in}
           />
