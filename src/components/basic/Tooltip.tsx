@@ -12,10 +12,11 @@ interface TooltipProps extends AriaTooltipProps {
   tooltip: ReactNode;
   position?: "left" | "right" | "top" | "bottom";
   spacing?: number | string;
+  withinPortal?: boolean;
 }
 
 function Tooltip(props: TooltipProps) {
-  const { position = "top", spacing = 6 } = props;
+  const { position = "top", spacing = 6, withinPortal = false } = props;
   const ref = useRef(null);
   const { children, tooltip } = props;
   const state = useTooltipTriggerState(props);

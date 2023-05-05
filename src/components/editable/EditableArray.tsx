@@ -5,8 +5,8 @@ import type EditableInput from "../../types/EditableInput";
 import { IconDots, IconPlus, IconTrashX } from "@tabler/icons-react";
 import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 import Button from "../basic/Button";
-import { Menu } from "@headlessui/react";
 import ActionButton from "../basic/ActionButton";
+import { Item, Menu, MenuTrigger, Popover } from "react-aria-components";
 
 // fixme submit only on edit end
 
@@ -120,29 +120,38 @@ const EditableArray = (props: EditableArrayProps) => {
                   />
                 </div>
                 {!disabled && (
-                  <Menu>
-                    <Menu.Button>
-                      <ActionButton tabIndex={-1} className="rounded-xl">
-                        <IconDots size={14} />
-                      </ActionButton>
-                    </Menu.Button>
-
-                    <Menu.Items>
-                      <Menu.Item>
-                        <ActionButton
-                          tabIndex={-1}
-                          className="rounded-xl"
-                          onClick={() => {
+                  <MenuTrigger>
+                    <Button aria-label="Menu">
+                      <IconDots size={14} />
+                    </Button>
+                    <Popover>
+                      <Menu
+                        onAction={(key) => {
+                          if (key === "delete") {
                             handlers.remove(index);
-                            // setItems((val) => val.filter((_, i) => i !== index))
-                          }}
-                        >
+                          }
+                        }}
+                      >
+                        <Item id="delete">
                           <IconTrashX size={14} />
                           Delete
-                        </ActionButton>
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Menu>
+                        </Item>
+                      </Menu>
+                    </Popover>
+                  </MenuTrigger>
+                  // <Menu>
+                  //   <Menu.Button>
+                  //     <ActionButton tabIndex={-1} className="rounded-xl">
+
+                  //     </ActionButton>
+                  //   </Menu.Button>
+
+                  //   <Menu.Items>
+                  //     <Menu.Item>
+                  //
+                  //     </Menu.Item>
+                  //   </Menu.Items>
+                  // </Menu>
                 )}
               </div>
             );
@@ -152,12 +161,12 @@ const EditableArray = (props: EditableArrayProps) => {
         {!disabled && (
           <Button
             className="bg-sky-500"
-            onClick={
+            onPress={
               () => handlers.append(null)
               //  setItems((val) => [...val, null])
             }
-            disabled={maxCount ? maxCount <= items.length : undefined}
-            style={{ flexGrow: 1 }}
+            // disabled={maxCount ? maxCount <= items.length : undefined}
+            // style={{ flexGrow: 1 }}
           >
             <IconPlus />
           </Button>

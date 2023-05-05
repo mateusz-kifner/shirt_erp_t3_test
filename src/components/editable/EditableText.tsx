@@ -6,6 +6,8 @@ import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
 import { showNotification } from "~/lib/notifications";
 import DisplayCell from "../basic/DisplayCell";
+import InputLabel from "../input/InputLabel";
+import { useLabel, useTextField } from "react-aria";
 
 interface EditableTextProps extends EditableInput<string> {
   maxLength?: number;
@@ -30,8 +32,14 @@ const EditableText = (props: EditableTextProps) => {
   const uuid = useId();
   const [text, setText] = useState<string>(value ?? initialValue ?? "");
   const [focus, setFocus] = useState<boolean>(false);
-  const clipboard = useClipboard();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const { labelProps, inputProps } = useTextField(
+    {
+      ...props,
+      inputElementType: "textarea",
+    },
+    textAreaRef
+  );
   // const t = useTranslation();
   useEffect(() => {
     if (focus) {
@@ -92,46 +100,15 @@ const EditableText = (props: EditableTextProps) => {
       onFocus={() => !disabled && setFocus(true)}
       onBlur={handleBlurForInnerElements(() => setFocus(false))}
     >
-      {label && (
-        <label
-          htmlFor={"textarea_" + uuid}
-          className="
-          text-sm
-          dark:text-stone-300"
-        >
-          <div className="flex items-center py-1">
-            {label}{" "}
-            {text.length > 0 && (
-              <button
-                className="border-1 inline-flex animate-pop items-center justify-center
-            gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-          text-gray-200 no-underline transition-all  
-          hover:bg-black hover:bg-opacity-30
-            active:focus:scale-95 active:focus:animate-none 
-            active:hover:scale-95 active:hover:animate-none"
-                onClick={() => {
-                  clipboard.copy(text);
-                  showNotification({
-                    title: "Skopiowano do schowka",
-                    message: text,
-                    icon: <IconCopy />,
-                  });
-                }}
-                tabIndex={-1}
-              >
-                <IconCopy size={16} />
-              </button>
-            )}
-          </div>
-        </label>
-      )}
+      <InputLabel label={label} copyValue={text} {...labelProps} />
       <DisplayCell
         leftSection={leftSection}
         rightSection={rightSection}
         focus={focus}
       >
         <textarea
-          id={"textarea_" + uuid}
+          // id={"textarea_" + uuid}
+          {...inputProps}
           required={required}
           readOnly={disabled}
           ref={textAreaRef}

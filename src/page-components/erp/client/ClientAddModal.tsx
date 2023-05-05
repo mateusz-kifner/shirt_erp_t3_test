@@ -5,8 +5,8 @@ import { IconPlus } from "@tabler/icons-react";
 // import { ClientType } from "../../../types/ClientType";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import { Dialog } from "@headlessui/react";
 import Button from "~/components/basic/Button";
+import Modal from "~/components/basic/Modal";
 
 interface ClientAddModalProps {
   opened: boolean;
@@ -38,8 +38,8 @@ const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
   }, [opened]);
 
   return (
-    <Dialog open={opened} onClose={() => onClose()}>
-      <Dialog.Title>Utwórz nowego klienta</Dialog.Title>
+    <Modal isOpen={opened} onOpenChange={() => onClose()}>
+      <h3>Utwórz nowego klienta</h3>
       <div className="g-2 flex flex-col">
         {/* <EditableApiEntry
           label="Szablon"
@@ -61,7 +61,7 @@ const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
         /> */}
 
         <Button
-          onClick={() => {
+          onPress={() => {
             if (username.length == 0)
               return setError("Musisz podać nie pustą nazwę użytkownika");
             // const new_client = {
@@ -82,7 +82,7 @@ const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
         </Button>
         <div className="text-red-600">{error}</div>
       </div>
-    </Dialog>
+    </Modal>
   );
 };
 

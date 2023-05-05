@@ -8,7 +8,9 @@ import {
 import type EditableInput from "../../types/EditableInput";
 import useTranslation from "~/hooks/useTranslation";
 import { showNotification } from "~/lib/notifications";
-import { Listbox, Transition } from "@headlessui/react";
+import InputLabel from "../input/InputLabel";
+import { Item, Menu, MenuTrigger, Popover } from "react-aria-components";
+import Button from "../basic/Button";
 
 interface EditableEnumProps extends EditableInput<string> {
   enum_data: string[];
@@ -42,40 +44,24 @@ const EditableEnum = ({
 
   return (
     <div>
-      <label
-        htmlFor={"textarea_" + uuid}
-        className="
-    text-sm
-    dark:text-gray-400"
-      >
-        {label && label.length > 0 ? (
-          <>
-            {label}
-            <button
-              className="border-1 inline-flex animate-pop items-center justify-center
-            gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-          text-gray-200 no-underline transition-all  
-          hover:bg-black hover:bg-opacity-30
-            active:focus:scale-95 active:focus:animate-none 
-            active:hover:scale-95 active:hover:animate-none"
-              onClick={() => {
-                clipboard.copy(value);
-                showNotification({
-                  title: "Skopiowano do schowka",
-                  message: value,
-                  icon: <IconCopy />,
-                });
-              }}
-              tabIndex={-1}
-            >
-              <IconCopy size={16} />
-            </button>
-          </>
-        ) : undefined}
-      </label>
+      <InputLabel label={label} copyValue={value} />
+
       {/* <div style={{ position: "relative" }}> */}
       <div className="flex-grow">
-        <Listbox value={data} onChange={onChangeData}>
+        <MenuTrigger>
+          <Button aria-label="Menu">☰</Button>
+          <Popover>
+            <Menu onAction={alert}>
+              <Item id="open">Open</Item>
+              <Item id="rename">Rename…</Item>
+              <Item id="duplicate">Duplicate</Item>
+              <Item id="share">Share…</Item>
+              <Item id="delete">Delete…</Item>
+            </Menu>
+          </Popover>
+        </MenuTrigger>
+
+        {/* <Listbox value={data} onChange={onChangeData}>
           <div className="relative">
             <Listbox.Button
               className="data-disabled:text-gray-500
@@ -158,7 +144,7 @@ const EditableEnum = ({
               </Listbox.Options>
             </Transition>
           </div>
-        </Listbox>
+        </Listbox> */}
       </div>
     </div>
   );

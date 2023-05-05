@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "~/lib/session";
 import useTranslation from "~/hooks/useTranslation";
-import Modal from "~/components/basic/Dialog";
+import Modal from "~/components/basic/Modal";
 
 export default function Login() {
   const router = useRouter();
@@ -32,11 +32,9 @@ export default function Login() {
 
   return (
     <Modal
-      open={true}
-      onClose={() => {
-        /**/
-      }}
-      title={<h2 className="text-2xl">{t.sign_in}</h2>}
+      isOpen={true}
+
+      // title={<h2 className="text-2xl">{t.sign_in}</h2>}
     >
       <form onSubmit={handleLogin}>
         <div className="flex flex-col gap-4 px-2 pb-8 pt-2">

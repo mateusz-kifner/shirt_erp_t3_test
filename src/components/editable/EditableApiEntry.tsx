@@ -15,8 +15,8 @@ import EditableInput from "../../types/EditableInput";
 import useTranslation from "~/hooks/useTranslation";
 import { showNotification } from "~/lib/notifications";
 import Tooltip from "../basic/Tooltip";
-import { Dialog } from "@headlessui/react";
 import Button from "../basic/Button";
+import Modal from "../basic/Modal";
 
 interface EditableApiEntryProps extends EditableInput<any> {
   entryName: string;
@@ -84,8 +84,8 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
              gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
            text-gray-200 no-underline transition-all  
            hover:bg-black hover:bg-opacity-30
-             active:focus:scale-95 active:focus:animate-none 
-             active:hover:scale-95 active:hover:animate-none"
+             active:hover:scale-95 active:hover:animate-none 
+             active:focus:scale-95 active:focus:animate-none"
                   onClick={() => {
                     clipboard.copy(copyValue);
                     showNotification({
@@ -107,8 +107,8 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
              gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
            text-gray-200 no-underline transition-all  
            hover:bg-black hover:bg-opacity-30
-             active:focus:scale-95 active:focus:animate-none 
-             active:hover:scale-95 active:hover:animate-none"
+             active:hover:scale-95 active:hover:animate-none 
+             active:focus:scale-95 active:focus:animate-none"
                     tabIndex={-1}
                   >
                     <IconQuestionMark size={16} />
@@ -119,10 +119,10 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
           </div>
         ) : undefined}
       </label>
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Modal isOpen={open} onOpenChange={() => setOpen(false)}>
         {allowClear ? (
           <Button
-            onClick={() => {
+            onPress={() => {
               setOpen(false);
               onSubmit?.(null);
             }}
@@ -152,7 +152,7 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
             Entry Name not valid or element was not defined in mapping
           </div>
         )}
-      </Dialog>
+      </Modal>
       {entryName ? (
         <div
           key={uuid}
@@ -193,8 +193,8 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
              gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
            text-gray-200 no-underline transition-all  
            hover:bg-black hover:bg-opacity-30
-             active:focus:scale-95 active:focus:animate-none 
-             active:hover:scale-95 active:hover:animate-none"
+             active:hover:scale-95 active:hover:animate-none 
+             active:focus:scale-95 active:focus:animate-none"
                 tabIndex={-1}
               >
                 <IconExternalLink size={18} />

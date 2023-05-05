@@ -65,7 +65,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         ? simpleColors[index % simpleColors.length]
         : undefined;
     return (
-      <Tooltip tooltip={<span>TEst tooltip</span>} withPortal>
+      <Tooltip tooltip={<span>TEst tooltip</span>} withinPortal>
         <button
           className={`
             inline-flex
@@ -90,14 +90,14 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
             first:rounded-tl-md
             last:rounded-tr-md  
             only:rounded-tr-md
-            focus-visible:outline-sky-600 
-            disabled:pointer-events-none 
-            disabled:bg-stone-700 
             hover:bg-blue-700 
+            focus-visible:outline-sky-600 
+            active:hover:scale-95 
+            active:hover:animate-none 
             active:focus:scale-95 
             active:focus:animate-none 
-            active:hover:scale-95 
-            active:hover:animate-none	
+            disabled:pointer-events-none 
+            disabled:bg-stone-700	
             ${className ?? ""}
             `}
           ref={groupRef}
