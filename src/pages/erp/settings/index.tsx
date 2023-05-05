@@ -25,7 +25,8 @@ import template from "~/templates/test.template";
 import Tooltip from "~/components/basic/Tooltip";
 import Modal from "~/components/basic/Modal";
 import DisplayCell from "~/components/basic/DisplayCell";
-import EditableColor from "~/components/editable/EditableColor";
+// import EditableColor from "~/components/editable/EditableColor";
+import InputColor from "~/components/input/InputColor";
 
 const testData = {
   name: "string",
@@ -193,7 +194,8 @@ function Settings() {
               rightSection={<IconBug />}
               leftSection={<IconBug />}
             />
-            <EditableColor label="test color" value="#fff" />
+            {/* <EditableColor label="test color" value="#fff" /> */}
+            <InputColor />
           </Modal>
         </div>
       </div>

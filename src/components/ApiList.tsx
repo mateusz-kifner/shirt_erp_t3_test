@@ -102,7 +102,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                   text-gray-700
                   dark:border-stone-600
                   dark:text-stone-400"
-              onClick={() => {
+              onPress={() => {
                 // refetch()
                 onRefresh?.();
               }}
@@ -121,7 +121,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                     dark:border-stone-600
                   dark:text-stone-400
                   "
-                onClick={onAddElement}
+                onPress={onAddElement}
               >
                 <IconPlus />
               </ActionButton>
@@ -141,7 +141,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                   dark:border-stone-600
                   dark:text-stone-400
                   "
-              onClick={() => toggleSortOrder()}
+              onPress={() => toggleSortOrder()}
             >
               {sortOrder === "asc" ? (
                 <IconSortAscending />
