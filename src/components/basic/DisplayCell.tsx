@@ -1,6 +1,6 @@
-import React, { type ButtonHTMLAttributes, type ReactNode } from "react";
+import React, { type HTMLAttributes, type ReactNode } from "react";
 
-interface DisplayCellProps extends ButtonHTMLAttributes<HTMLDivElement> {
+interface DisplayCellProps extends HTMLAttributes<HTMLDivElement> {
   leftSection?: ReactNode;
   rightSection?: ReactNode;
   children: React.ReactNode;

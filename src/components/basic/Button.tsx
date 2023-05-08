@@ -1,4 +1,9 @@
-import React, { type ButtonHTMLAttributes, type ReactNode } from "react";
+import React, {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type ReactNode,
+  useImperativeHandle,
+} from "react";
 import { type AriaButtonProps, useButton } from "react-aria";
 import { useRef } from "react";
 
@@ -13,11 +18,13 @@ interface ButtonProps
   rightSection?: ReactNode;
 }
 
-function Button(props: ButtonProps) {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, outerRef) => {
   const ref = useRef<HTMLButtonElement | null>(null);
   const { buttonProps } = useButton(props, ref);
   const { children, leftSection, rightSection, className, ...moreProps } =
     props;
+
+  useImperativeHandle(outerRef, () => ref.current!);
 
   return (
     <button
@@ -59,6 +66,7 @@ function Button(props: ButtonProps) {
       {!!rightSection && rightSection}
     </button>
   );
-}
+});
 
+Button.displayName = "Button";
 export default Button;

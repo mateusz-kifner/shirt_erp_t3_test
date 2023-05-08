@@ -65,7 +65,11 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         ? simpleColors[index % simpleColors.length]
         : undefined;
     return (
-      <Tooltip tooltip={<span>TEst tooltip</span>} withinPortal>
+      <Tooltip
+        tooltip={<span>TEst tooltip</span>}
+        withinPortal
+        position="bottom"
+      >
         <button
           className={`
             inline-flex

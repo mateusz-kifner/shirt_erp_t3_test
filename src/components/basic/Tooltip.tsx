@@ -1,14 +1,59 @@
-import React, { type ReactNode, useRef } from "react";
+import React, {
+  type ReactNode,
+  useRef,
+  cloneElement,
+  type JSXElementConstructor,
+  type ReactElement,
+  CSSProperties,
+  MutableRefObject,
+} from "react";
 import {
   type AriaTooltipProps,
   mergeProps,
   useTooltipTrigger,
 } from "react-aria";
 import { useTooltipTriggerState } from "react-stately";
+import { OptionalPortal } from "../OptionalPortal";
 import getAbsolutePositionStyle from "~/utils/getAbsolutePositionStyle";
+import Portal from "../Portal";
+
+function getToolTipPosition(
+  rect: DOMRect | undefined,
+  position: "left" | "right" | "top" | "bottom",
+  spacing: number | string = 6
+) {
+  const style: CSSProperties = {};
+
+  if (rect === undefined) return style;
+
+  if (position === "left") {
+    style.left = `${rect.left}px`;
+    style.top = `${rect.top + rect.height / 2}px`;
+    style.marginRight = spacing;
+  }
+  if (position === "right") {
+    style.left = `${rect.left + rect.width}px`;
+    style.top = `${rect.top + rect.height / 2}px`;
+    style.marginLeft = spacing;
+  }
+
+  if (position === "top") {
+    style.left = `${rect.left + rect.width / 2}px`;
+    style.top = `${rect.top}px`;
+    style.marginBottom = spacing;
+  }
+
+  if (position === "bottom") {
+    style.left = `${rect.left + rect.width / 2}px`;
+    style.top = `${rect.top}px`;
+    style.marginTop = spacing;
+  }
+
+  return style;
+}
 
 interface TooltipProps extends AriaTooltipProps {
-  children: ReactNode;
+  children: ReactElement<any, string | JSXElementConstructor<any>>;
   tooltip: ReactNode;
   position?: "left" | "right" | "top" | "bottom";
   spacing?: number | string;
@@ -16,44 +61,99 @@ interface TooltipProps extends AriaTooltipProps {
 }
 
 function Tooltip(props: TooltipProps) {
-  const { position = "top", spacing = 6, withinPortal = false } = props;
-  const ref = useRef(null);
-  const { children, tooltip } = props;
-  const state = useTooltipTriggerState(props);
-  const { triggerProps, tooltipProps } = useTooltipTrigger(props, state, ref);
+  const {
+    children,
+    tooltip,
+    position = "top",
+    spacing = 6,
+    withinPortal = false,
+    ...moreProps
+  } = props;
+  const ref = useRef<HTMLElement | null>(null);
+  const state = useTooltipTriggerState(moreProps);
+  const { triggerProps, tooltipProps } = useTooltipTrigger(
+    moreProps,
+    state,
+    ref
+  );
+
+  const boundingBox = ref.current?.getBoundingClientRect();
+  console.log(boundingBox);
 
   // const { tooltipProps } = useTooltip(props, state);
 
+  if (withinPortal)
+    return (
+      <>
+        <Portal
+          className="pointer-events-none absolute"
+          style={{
+            top: boundingBox?.top,
+            left: boundingBox?.left,
+            width: boundingBox?.width,
+            height: boundingBox?.height,
+          }}
+        >
+          <div
+            className="
+              absolute
+              rounded
+              border 
+              border-solid
+              border-gray-500
+              bg-stone-200
+              p-2
+              px-3 
+              text-stone-800 
+              shadow-md 
+              transition-all 
+              dark:bg-stone-800
+              dark:text-stone-200
+              dark:after:border-t-stone-800"
+            style={{
+              maxWidth: 150,
+              opacity: state.isOpen ? 1 : 0,
+              display: state.isOpen ? "block" : "none",
+              ...getAbsolutePositionStyle(position, spacing),
+            }}
+            {...mergeProps(moreProps, tooltipProps)}
+          >
+            {tooltip}
+          </div>
+        </Portal>
+
+        {cloneElement(children, { ...triggerProps, ref: ref })}
+      </>
+    );
+
   return (
-    <div className="relative" {...triggerProps} ref={ref}>
+    <div
+      className="relative"
+      {...triggerProps}
+      ref={ref as MutableRefObject<HTMLDivElement | null>}
+    >
       <span
         className="
-            absolute
-            rounded
-            border 
-            border-solid
-            border-gray-500
-            bg-stone-200
-            p-2
-            px-3 
-            text-stone-800 
-            shadow-md 
-            transition-all 
-            dark:bg-stone-800
-            dark:text-stone-200
-            dark:after:border-t-stone-800"
+          absolute
+          rounded 
+          border
+          border-solid
+          border-gray-500
+          bg-stone-200
+          p-2 
+          px-3 
+          text-stone-800 
+          shadow-md 
+          transition-all
+          dark:bg-stone-800
+          dark:text-stone-200
+          dark:after:border-t-stone-800"
         style={{
           maxWidth: 150,
           opacity: state.isOpen ? 1 : 0,
           display: state.isOpen ? "block" : "none",
           ...getAbsolutePositionStyle(position, spacing),
         }}
-        // after:absolute
-        //     after:left-1/2
-        //     after:top-full
-        //     after:border-8
-        //     after:border-transparent
-        //     after:border-t-stone-200
         {...mergeProps(props, tooltipProps)}
       >
         {tooltip}

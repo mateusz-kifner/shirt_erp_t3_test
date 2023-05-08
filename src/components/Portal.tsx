@@ -5,7 +5,7 @@ import { useIsomorphicEffect } from "@mantine/hooks";
 
 // mantine portal helper component remixed
 
-interface PortalProps extends React.ComponentPropsWithoutRef<"div"> {
+export interface PortalProps extends React.ComponentPropsWithoutRef<"div"> {
   /** Portal children, for example, modal or popover */
   children: React.ReactNode;
 

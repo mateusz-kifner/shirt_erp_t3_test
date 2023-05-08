@@ -169,16 +169,16 @@ function Settings() {
               >
                 Add 10 clients
               </Button>
-              <Tooltip tooltip="test" position="left">
+              <Tooltip tooltip="test" position="left" withinPortal>
                 <Button>test</Button>
               </Tooltip>
-              <Tooltip tooltip="test" position="right">
+              <Tooltip tooltip="test" position="right" withinPortal>
                 <Button>test</Button>
               </Tooltip>
-              <Tooltip tooltip="test" position="top">
+              <Tooltip tooltip="test" position="top" withinPortal>
                 <Button>test</Button>
               </Tooltip>
-              <Tooltip tooltip="test" position="bottom">
+              <Tooltip tooltip="test" position="bottom" withinPortal>
                 <Button>test</Button>
               </Tooltip>
             </>
