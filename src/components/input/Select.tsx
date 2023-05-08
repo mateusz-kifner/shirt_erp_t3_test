@@ -8,7 +8,7 @@ interface SelectProps extends RadixSelect.SelectProps {
 }
 
 function Select(props: SelectProps) {
-  const { data } = props;
+  const { data, ...moreProps } = props;
   const t = useTranslation();
   const uuid = useId();
   let items;
@@ -37,7 +37,7 @@ function Select(props: SelectProps) {
   }
 
   return (
-    <RadixSelect.Root>
+    <RadixSelect.Root {...moreProps}>
       <RadixSelect.Trigger
         className=" border-1 
           inline-flex

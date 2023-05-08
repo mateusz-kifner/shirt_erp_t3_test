@@ -162,7 +162,7 @@ function Settings() {
               >
                 Open Test Form
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => {
                   for (let i = 0; i < 10; i++) {
                     mutate({ username: "client" + i });
@@ -171,7 +171,7 @@ function Settings() {
                 leftSection={<IconBug />}
               >
                 Add 10 clients
-              </Button>
+              </Button> */}
               <Tooltip tooltip="test" position="left" withinPortal>
                 <Button>test</Button>
               </Tooltip>
@@ -214,6 +214,8 @@ function Settings() {
             {/* <InputColor /> */}
             <Select data={["test", "test2", "test3"]} />
             <Select
+              defaultValue="pizza"
+              onValueChange={(value) => console.log(value)}
               data={{
                 food: ["apple", "pizza", "sandwich"],
                 drinks: ["tee", "cola", "water"],
