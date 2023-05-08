@@ -185,12 +185,12 @@ function Settings() {
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
           <Modal
-            // defaultOpen={true}
-            isOpen={testFormOpen}
+            open={testFormOpen}
             onClose={() => setTestFormOpen(false)}
-            // title={"Text text"}
+            title={"test test"}
+            description={"test2 test2"}
           >
-            <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
+            {/* <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
               test display cell
             </DisplayCell>
             <DisplayCell
@@ -206,9 +206,9 @@ function Settings() {
               onSubmit={setTestValue}
               rightSection={<IconBug />}
               leftSection={<IconBug />}
-            />
+            /> */}
             {/* <EditableColor label="test color" value="#fff" /> */}
-            <InputColor />
+            {/* <InputColor /> */}
           </Modal>
         </div>
       </div>

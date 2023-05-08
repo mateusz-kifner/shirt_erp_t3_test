@@ -1,59 +1,47 @@
-import React, {
-  type ReactNode,
-  useRef,
-  cloneElement,
-  type JSXElementConstructor,
-  type ReactElement,
-  CSSProperties,
-  MutableRefObject,
-} from "react";
-import {
-  type AriaTooltipProps,
-  mergeProps,
-  useTooltipTrigger,
-} from "react-aria";
-import { useTooltipTriggerState } from "react-stately";
-import { OptionalPortal } from "../OptionalPortal";
-import getAbsolutePositionStyle from "~/utils/getAbsolutePositionStyle";
-import Portal from "../Portal";
+import React, { type ReactNode } from "react";
+import * as RadixTooltip from "@radix-ui/react-tooltip";
 
-function getToolTipPosition(
-  rect: DOMRect | undefined,
-  position: "left" | "right" | "top" | "bottom",
-  spacing: number | string = 6
-) {
-  const style: CSSProperties = {};
+// import { OptionalPortal } from "../OptionalPortal";
+// import getAbsolutePositionStyle from "~/utils/getAbsolutePositionStyle";
+// import Portal from "../Portal";
 
-  if (rect === undefined) return style;
+// function getToolTipPosition(
+//   rect: DOMRect | undefined,
+//   position: "left" | "right" | "top" | "bottom",
+//   spacing: number | string = 6
+// ) {
+//   const style: CSSProperties = {};
 
-  if (position === "left") {
-    style.left = `${rect.left}px`;
-    style.top = `${rect.top + rect.height / 2}px`;
-    style.marginRight = spacing;
-  }
-  if (position === "right") {
-    style.left = `${rect.left + rect.width}px`;
-    style.top = `${rect.top + rect.height / 2}px`;
-    style.marginLeft = spacing;
-  }
+//   if (rect === undefined) return style;
 
-  if (position === "top") {
-    style.left = `${rect.left + rect.width / 2}px`;
-    style.top = `${rect.top}px`;
-    style.marginBottom = spacing;
-  }
+//   if (position === "left") {
+//     style.left = `${rect.left}px`;
+//     style.top = `${rect.top + rect.height / 2}px`;
+//     style.marginRight = spacing;
+//   }
+//   if (position === "right") {
+//     style.left = `${rect.left + rect.width}px`;
+//     style.top = `${rect.top + rect.height / 2}px`;
+//     style.marginLeft = spacing;
+//   }
 
-  if (position === "bottom") {
-    style.left = `${rect.left + rect.width / 2}px`;
-    style.top = `${rect.top}px`;
-    style.marginTop = spacing;
-  }
+//   if (position === "top") {
+//     style.left = `${rect.left + rect.width / 2}px`;
+//     style.top = `${rect.top}px`;
+//     style.marginBottom = spacing;
+//   }
 
-  return style;
-}
+//   if (position === "bottom") {
+//     style.left = `${rect.left + rect.width / 2}px`;
+//     style.top = `${rect.top}px`;
+//     style.marginTop = spacing;
+//   }
 
-interface TooltipProps extends AriaTooltipProps {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+//   return style;
+// }
+
+interface TooltipProps {
+  children: ReactNode;
   tooltip: ReactNode;
   position?: "left" | "right" | "top" | "bottom";
   spacing?: number | string;
@@ -61,108 +49,125 @@ interface TooltipProps extends AriaTooltipProps {
 }
 
 function Tooltip(props: TooltipProps) {
-  const {
-    children,
-    tooltip,
-    position = "top",
-    spacing = 6,
-    withinPortal = false,
-    ...moreProps
-  } = props;
-  const ref = useRef<HTMLElement | null>(null);
-  const state = useTooltipTriggerState(moreProps);
-  const { triggerProps, tooltipProps } = useTooltipTrigger(
-    moreProps,
-    state,
-    ref
-  );
-
-  const boundingBox = ref.current?.getBoundingClientRect();
-  console.log(boundingBox);
-
-  // const { tooltipProps } = useTooltip(props, state);
-
-  if (withinPortal)
-    return (
-      <>
-        <Portal
-          className="pointer-events-none absolute"
-          style={{
-            top: boundingBox?.top,
-            left: boundingBox?.left,
-            width: boundingBox?.width,
-            height: boundingBox?.height,
-          }}
-        >
-          <div
-            className="
-              absolute
-              rounded
-              border 
-              border-solid
-              border-gray-500
-              bg-stone-200
-              p-2
-              px-3 
-              text-stone-800 
-              shadow-md 
-              transition-all 
-              dark:bg-stone-800
-              dark:text-stone-200
-              dark:after:border-t-stone-800"
-            style={{
-              maxWidth: 150,
-              opacity: state.isOpen ? 1 : 0,
-              display: state.isOpen ? "block" : "none",
-              ...getAbsolutePositionStyle(position, spacing),
-            }}
-            {...mergeProps(moreProps, tooltipProps)}
-          >
-            {tooltip}
-          </div>
-        </Portal>
-
-        {cloneElement(children, { ...triggerProps, ref: ref })}
-      </>
-    );
-
+  const { tooltip } = props;
   return (
-    <div
-      className="relative"
-      {...triggerProps}
-      ref={ref as MutableRefObject<HTMLDivElement | null>}
-    >
-      <span
-        className="
-          absolute
-          rounded 
-          border
-          border-solid
-          border-gray-500
-          bg-stone-200
-          p-2 
-          px-3 
-          text-stone-800 
-          shadow-md 
-          transition-all
-          dark:bg-stone-800
-          dark:text-stone-200
-          dark:after:border-t-stone-800"
-        style={{
-          maxWidth: 150,
-          opacity: state.isOpen ? 1 : 0,
-          display: state.isOpen ? "block" : "none",
-          ...getAbsolutePositionStyle(position, spacing),
-        }}
-        {...mergeProps(props, tooltipProps)}
-      >
-        {tooltip}
-      </span>
-
-      {children}
-    </div>
+    <RadixTooltip.Provider>
+      <RadixTooltip.Root>
+        <RadixTooltip.Trigger asChild>{tooltip}</RadixTooltip.Trigger>
+        <RadixTooltip.Portal>
+          <RadixTooltip.Content className="TooltipContent" sideOffset={5}>
+            Add to library
+            <RadixTooltip.Arrow className="TooltipArrow" />
+          </RadixTooltip.Content>
+        </RadixTooltip.Portal>
+      </RadixTooltip.Root>
+    </RadixTooltip.Provider>
   );
 }
+
+// function Tooltip(props: TooltipProps) {
+//   const {
+//     children,
+//     tooltip,
+//     position = "top",
+//     spacing = 6,
+//     withinPortal = false,
+//     ...moreProps
+//   } = props;
+//   const ref = useRef<HTMLElement | null>(null);
+//   const state = useTooltipTriggerState(moreProps);
+//   const { triggerProps, tooltipProps } = useTooltipTrigger(
+//     moreProps,
+//     state,
+//     ref
+//   );
+
+//   const boundingBox = ref.current?.getBoundingClientRect();
+//   console.log(boundingBox);
+
+//   // const { tooltipProps } = useTooltip(props, state);
+
+//   if (withinPortal)
+//     return (
+//       <>
+//         <Portal
+//           className="pointer-events-none absolute"
+//           style={{
+//             top: boundingBox?.top,
+//             left: boundingBox?.left,
+//             width: boundingBox?.width,
+//             height: boundingBox?.height,
+//           }}
+//         >
+//           <div
+//             className="
+//               absolute
+//               rounded
+//               border
+//               border-solid
+//               border-gray-500
+//               bg-stone-200
+//               p-2
+//               px-3
+//               text-stone-800
+//               shadow-md
+//               transition-all
+//               dark:bg-stone-800
+//               dark:text-stone-200
+//               dark:after:border-t-stone-800"
+//             style={{
+//               maxWidth: 150,
+//               opacity: state.isOpen ? 1 : 0,
+//               display: state.isOpen ? "block" : "none",
+//               ...getAbsolutePositionStyle(position, spacing),
+//             }}
+//             {...mergeProps(moreProps, tooltipProps)}
+//           >
+//             {tooltip}
+//           </div>
+//         </Portal>
+
+//         {cloneElement(children, { ...triggerProps, ref: ref })}
+//       </>
+//     );
+
+//   return (
+//     <div
+//       className="relative"
+//       {...triggerProps}
+//       ref={ref as MutableRefObject<HTMLDivElement | null>}
+//     >
+//       <span
+//         className="
+//           absolute
+//           rounded
+//           border
+//           border-solid
+//           border-gray-500
+//           bg-stone-200
+//           p-2
+//           px-3
+//           text-stone-800
+//           shadow-md
+//           transition-all
+//           dark:bg-stone-800
+//           dark:text-stone-200
+//           dark:after:border-t-stone-800"
+//         style={{
+//           maxWidth: 150,
+//           opacity: state.isOpen ? 1 : 0,
+//           display: state.isOpen ? "block" : "none",
+//           ...getAbsolutePositionStyle(position, spacing),
+//         }}
+//         {...mergeProps(props, tooltipProps)}
+//       >
+//         {tooltip}
+//       </span>
+
+//       {children}
+//     </div>
+//   );
+// }
 
 // function TooltipButton(props) {
 //   let ref = React.useRef(null);
