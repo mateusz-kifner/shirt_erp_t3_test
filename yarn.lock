@@ -471,6 +471,22 @@
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-slot" "1.0.1"
 
+"@radix-ui/react-scroll-area@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-scroll-area/-/react-scroll-area-1.0.3.tgz#01bbc4df59a166e4a21051a40f017903a0ce7004"
+  integrity sha512-sBX9j8Q+0/jReNObEAveKIGXJtk3xUoSIx4cMKygGtO128QJyVDn01XNOFsyvihKDCTcu7SINzQ2jPAZEhIQtw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/number" "1.0.0"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-direction" "1.0.0"
+    "@radix-ui/react-presence" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.2"
+    "@radix-ui/react-use-callback-ref" "1.0.0"
+    "@radix-ui/react-use-layout-effect" "1.0.0"
+
 "@radix-ui/react-select@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-select/-/react-select-1.2.1.tgz#0c8fadc9a134709036add7c9c7c8581e17962040"
@@ -506,6 +522,20 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-compose-refs" "1.0.0"
+
+"@radix-ui/react-switch@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-switch/-/react-switch-1.0.2.tgz#e3d1b9fe18b6b1173aadc8b8e6efdc96a28a70f8"
+  integrity sha512-BcG/LKehxt36NXG0wPnoCitIfSMtU9Xo7BmythYA1PAMLtsMvW7kALfBzmduQoHTWcKr0AVcFyh0gChBUp9TiQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.2"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
+    "@radix-ui/react-use-previous" "1.0.0"
+    "@radix-ui/react-use-size" "1.0.0"
 
 "@radix-ui/react-tooltip@^1.0.5":
   version "1.0.5"
