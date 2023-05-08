@@ -27,6 +27,7 @@ import DisplayCell from "~/components/basic/DisplayCell";
 // import EditableColor from "~/components/editable/EditableColor";
 import InputColor from "~/components/input/InputColor";
 import Modal from "~/components/basic/Modal";
+import Select from "~/components/input/Select";
 
 const testData = {
   name: "string",
@@ -209,6 +210,7 @@ function Settings() {
             /> */}
             {/* <EditableColor label="test color" value="#fff" /> */}
             {/* <InputColor /> */}
+            <Select />
           </Modal>
         </div>
       </div>

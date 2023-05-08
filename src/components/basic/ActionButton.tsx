@@ -10,8 +10,9 @@ const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
         className={`
         inline-flex 
         animate-pop
-        items-center 
-        justify-center 
+        select-none 
+        items-center
+        justify-center
         gap-3 
         border 
         stroke-gray-200

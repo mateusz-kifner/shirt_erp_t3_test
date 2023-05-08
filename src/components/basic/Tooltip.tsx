@@ -49,14 +49,14 @@ interface TooltipProps {
 }
 
 function Tooltip(props: TooltipProps) {
-  const { tooltip } = props;
+  const { tooltip, children } = props;
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root>
         <RadixTooltip.Trigger asChild>{tooltip}</RadixTooltip.Trigger>
         <RadixTooltip.Portal>
           <RadixTooltip.Content className="TooltipContent" sideOffset={5}>
-            Add to library
+            {children}
             <RadixTooltip.Arrow className="TooltipArrow" />
           </RadixTooltip.Content>
         </RadixTooltip.Portal>
