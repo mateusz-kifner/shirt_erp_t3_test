@@ -1,29 +1,65 @@
-import React, { useRef, type ReactNode } from "react";
-// import ActionButton from "./ActionButton";
-// import { IconX } from "@tabler/icons-react";
-// import Portal from "../Portal";
-import { useDialog, type AriaDialogProps } from "react-aria";
+import * as RadixDialog from "@radix-ui/react-dialog";
+import { type ReactNode } from "react";
+import { IconX } from "@tabler/icons-react";
+import ActionButton from "./ActionButton";
 
-interface DialogProps extends AriaDialogProps {
-  title?: React.ReactNode;
-  children: React.ReactNode;
+interface DialogProps {
+  title?: ReactNode;
+  description?: ReactNode;
+  children: ReactNode;
+  dialogProps?: DialogProps;
+  trigger?: ReactNode;
 }
 
-function Dialog({ title, children, ...props }: DialogProps) {
-  const ref = useRef(null);
-  const { dialogProps, titleProps } = useDialog(props, ref);
-
+function Dialog(props: DialogProps) {
+  const { title, children, description, dialogProps, trigger } = props;
   return (
-    <div {...dialogProps} ref={ref} className="p-8">
-      {title && (
-        <h3 {...titleProps} className="mt-0">
-          {title}
-        </h3>
+    <RadixDialog.Root {...dialogProps}>
+      {!!trigger && (
+        <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>
       )}
-      {children}
-    </div>
+      <RadixDialog.Portal>
+        <RadixDialog.Overlay className="RadixDialogOverlay" />
+        <RadixDialog.Content className="RadixDialogContent">
+          {!!title && (
+            <RadixDialog.Title className="RadixDialogTitle">
+              {title}
+            </RadixDialog.Title>
+          )}
+          {!!description && (
+            <RadixDialog.Description className="RadixDialogDescription">
+              {description}
+            </RadixDialog.Description>
+          )}
+          {children}
+          <RadixDialog.Close asChild>
+            <ActionButton aria-label="Close">
+              <IconX />
+            </ActionButton>
+          </RadixDialog.Close>
+        </RadixDialog.Content>
+      </RadixDialog.Portal>
+    </RadixDialog.Root>
   );
 }
+
+export default Dialog;
+
+// function Dialog({ title, children, ...props }: DialogProps) {
+//   const ref = useRef(null);
+//   const { dialogProps, titleProps } = useDialog(props, ref);
+
+//   return (
+//     <div {...dialogProps} ref={ref} className="p-8">
+//       {title && (
+//         <h3 {...titleProps} className="mt-0">
+//           {title}
+//         </h3>
+//       )}
+//       {children}
+//     </div>
+//   );
+// }
 
 // interface ModalProps {
 //   open: boolean;
@@ -71,5 +107,3 @@ function Dialog({ title, children, ...props }: DialogProps) {
 //     </Portal>
 //   );
 // }
-
-export default Dialog;

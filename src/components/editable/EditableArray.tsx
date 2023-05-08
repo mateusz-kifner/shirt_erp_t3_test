@@ -161,7 +161,7 @@ const EditableArray = (props: EditableArrayProps) => {
         {!disabled && (
           <Button
             className="bg-sky-500"
-            onPress={
+            onClick={
               () => handlers.append(null)
               //  setItems((val) => [...val, null])
             }

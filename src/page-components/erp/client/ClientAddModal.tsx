@@ -61,7 +61,7 @@ const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
         /> */}
 
         <Button
-          onPress={() => {
+          onClick={() => {
             if (username.length == 0)
               return setError("Musisz podać nie pustą nazwę użytkownika");
             // const new_client = {

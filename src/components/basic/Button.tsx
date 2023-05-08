@@ -2,33 +2,20 @@ import React, {
   forwardRef,
   type ButtonHTMLAttributes,
   type ReactNode,
-  useImperativeHandle,
 } from "react";
-import { type AriaButtonProps, useButton } from "react-aria";
-import { useRef } from "react";
 
-interface ButtonProps
-  extends AriaButtonProps,
-    Omit<
-      ButtonHTMLAttributes<HTMLButtonElement>,
-      "onBlur" | "onFocus" | "onKeyDown" | "onKeyUp"
-    > {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   leftSection?: ReactNode;
   rightSection?: ReactNode;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, outerRef) => {
-  const ref = useRef<HTMLButtonElement | null>(null);
-  const { buttonProps } = useButton(props, ref);
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { children, leftSection, rightSection, className, ...moreProps } =
     props;
 
-  useImperativeHandle(outerRef, () => ref.current!);
-
   return (
     <button
-      {...buttonProps}
       className={`
           border-1 
           inline-flex

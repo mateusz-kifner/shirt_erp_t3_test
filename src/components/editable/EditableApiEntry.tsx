@@ -122,7 +122,7 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
       <Modal isOpen={open} onOpenChange={() => setOpen(false)}>
         {allowClear ? (
           <Button
-            onPress={() => {
+          onClick={() => {
               setOpen(false);
               onSubmit?.(null);
             }}

@@ -115,7 +115,7 @@ function Settings() {
         </div>
         <hr className="mt-8 dark:border-stone-600 " />
         <div className="flex flex-col gap-3 p-4 ">
-          <Button onPress={() => logout.mutate()} leftSection={<IconLogout />}>
+          <Button onClick={() => logout.mutate()} leftSection={<IconLogout />}>
             {t.sign_out}
           </Button>
           <div className="flex items-center justify-stretch">
@@ -136,13 +136,13 @@ function Settings() {
             </select>
           </div>
           <Button
-            onPress={toggleTheme}
+            onClick={toggleTheme}
             leftSection={theme === 1 ? <IconSun /> : <IconMoonStars />}
           >
             {theme === 1 ? t.light_theme : t.dark_theme}
           </Button>
           <Button
-            onPress={() => {
+            onClick={() => {
               toggleDebug();
             }}
             leftSection={<IconBug />}
@@ -152,7 +152,7 @@ function Settings() {
           {debug && (
             <>
               <Button
-                onPress={() => {
+                onClick={() => {
                   setTestFormOpen(true);
                 }}
                 leftSection={<IconBug />}
@@ -160,7 +160,7 @@ function Settings() {
                 Open Test Form
               </Button>
               <Button
-                onPress={() => {
+                onClick={() => {
                   for (let i = 0; i < 10; i++) {
                     mutate({ username: "client" + i });
                   }

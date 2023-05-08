@@ -1,23 +1,13 @@
-import React, { type ButtonHTMLAttributes, useRef } from "react";
-import { type AriaButtonProps, useButton } from "react-aria";
+import React, { type ButtonHTMLAttributes, forwardRef } from "react";
 
-interface ActionButtonProps
-  extends AriaButtonProps,
-    Omit<
-      ButtonHTMLAttributes<HTMLButtonElement>,
-      "onBlur" | "onFocus" | "onKeyDown" | "onKeyUp"
-    > {
-  className: string;
-}
+type ActionButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-function ActionButton(props: ActionButtonProps) {
-  const ref = useRef<HTMLButtonElement | null>(null);
-  const { buttonProps } = useButton(props, ref);
-  const { children, className, ...moreProps } = props;
-  return (
-    <button
-      {...buttonProps}
-      className={`
+const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
+  (props, ref) => {
+    const { children, className, ...moreProps } = props;
+    return (
+      <button
+        className={`
         inline-flex 
         animate-pop
         items-center 
@@ -38,12 +28,15 @@ function ActionButton(props: ActionButtonProps) {
         active:focus:scale-95 
         active:focus:animate-none 
         ${className ?? ""}`}
-      ref={ref}
-      {...moreProps}
-    >
-      {children}
-    </button>
-  );
-}
+        ref={ref}
+        {...moreProps}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+ActionButton.displayName = "ActionButton";
 
 export default ActionButton;
