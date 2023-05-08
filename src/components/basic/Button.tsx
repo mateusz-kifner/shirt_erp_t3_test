@@ -1,8 +1,13 @@
-import React, { type ReactNode } from "react";
+import React, { type ButtonHTMLAttributes, type ReactNode } from "react";
 import { type AriaButtonProps, useButton } from "react-aria";
 import { useRef } from "react";
 
-interface ButtonProps extends AriaButtonProps {
+interface ButtonProps
+  extends AriaButtonProps,
+    Omit<
+      ButtonHTMLAttributes<HTMLButtonElement>,
+      "onBlur" | "onFocus" | "onKeyDown" | "onKeyUp"
+    > {
   className?: string;
   leftSection?: ReactNode;
   rightSection?: ReactNode;
@@ -11,7 +16,8 @@ interface ButtonProps extends AriaButtonProps {
 function Button(props: ButtonProps) {
   const ref = useRef<HTMLButtonElement | null>(null);
   const { buttonProps } = useButton(props, ref);
-  const { children, leftSection, rightSection, className } = props;
+  const { children, leftSection, rightSection, className, ...moreProps } =
+    props;
 
   return (
     <button
@@ -45,6 +51,7 @@ function Button(props: ButtonProps) {
           disabled:bg-stone-700	
           ${className ?? ""}
             `}
+      {...moreProps}
       ref={ref}
     >
       {!!leftSection && leftSection}

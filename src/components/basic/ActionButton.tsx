@@ -1,14 +1,19 @@
-import React, { useRef } from "react";
+import React, { type ButtonHTMLAttributes, useRef } from "react";
 import { type AriaButtonProps, useButton } from "react-aria";
 
-interface ActionButtonProps extends AriaButtonProps {
+interface ActionButtonProps
+  extends AriaButtonProps,
+    Omit<
+      ButtonHTMLAttributes<HTMLButtonElement>,
+      "onBlur" | "onFocus" | "onKeyDown" | "onKeyUp"
+    > {
   className: string;
 }
 
 function ActionButton(props: ActionButtonProps) {
   const ref = useRef<HTMLButtonElement | null>(null);
   const { buttonProps } = useButton(props, ref);
-  const { children, className } = props;
+  const { children, className, ...moreProps } = props;
   return (
     <button
       {...buttonProps}
@@ -34,6 +39,7 @@ function ActionButton(props: ActionButtonProps) {
         active:focus:animate-none 
         ${className ?? ""}`}
       ref={ref}
+      {...moreProps}
     >
       {children}
     </button>
