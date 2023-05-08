@@ -28,6 +28,8 @@ import DisplayCell from "~/components/basic/DisplayCell";
 import InputColor from "~/components/input/InputColor";
 import Modal from "~/components/basic/Modal";
 import Select from "~/components/input/Select";
+import Switch from "~/components/input/Switch";
+import ScrollArea from "~/components/input/ScrollArea";
 
 const testData = {
   name: "string",
@@ -211,6 +213,59 @@ function Settings() {
             {/* <EditableColor label="test color" value="#fff" /> */}
             {/* <InputColor /> */}
             <Select />
+            <Switch />
+            <ScrollArea className="h-96">
+              <div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+                <div>test</div>
+              </div>
+            </ScrollArea>
           </Modal>
         </div>
       </div>
