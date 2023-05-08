@@ -212,7 +212,13 @@ function Settings() {
             /> */}
             {/* <EditableColor label="test color" value="#fff" /> */}
             {/* <InputColor /> */}
-            <Select />
+            <Select data={["test", "test2", "test3"]} />
+            <Select
+              data={{
+                food: ["apple", "pizza", "sandwich"],
+                drinks: ["tee", "cola", "water"],
+              }}
+            />
             <Switch />
             <ScrollArea className="h-96">
               <div>

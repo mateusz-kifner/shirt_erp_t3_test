@@ -1,21 +1,22 @@
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
-import React, { type ReactNode } from "react";
+import React, { type LabelHTMLAttributes, type ReactNode } from "react";
 import { showNotification } from "~/lib/notifications";
 
-interface InputLabelProps {
+interface InputLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label?: ReactNode;
   copyValue?: string;
 }
 
 function InputLabel(props: InputLabelProps) {
-  const { label, copyValue } = props;
+  const { label, copyValue, ...moreProps } = props;
   const clipboard = useClipboard();
   return label ? (
     <label
       className="
         text-sm
         dark:text-stone-300"
+      {...moreProps}
     >
       <div className="flex items-center py-1">
         {label}{" "}

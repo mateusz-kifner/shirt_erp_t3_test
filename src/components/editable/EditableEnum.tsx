@@ -1,15 +1,7 @@
-import { useClipboard } from "@mantine/hooks";
-import { Fragment, useEffect, useId, useState } from "react";
-import {
-  IconArrowsMoveVertical,
-  IconCheck,
-  IconCopy,
-} from "@tabler/icons-react";
+import { useEffect, useId, useState } from "react";
 import type EditableInput from "../../types/EditableInput";
 import useTranslation from "~/hooks/useTranslation";
-import { showNotification } from "~/lib/notifications";
 import InputLabel from "../input/InputLabel";
-import { Item, Menu, MenuTrigger, Popover } from "react-aria-components";
 import Button from "../basic/Button";
 
 interface EditableEnumProps extends EditableInput<string> {
@@ -27,7 +19,6 @@ const EditableEnum = ({
 }: EditableEnumProps) => {
   const uuid = useId();
   const [data, setData] = useState(value ?? initialValue ?? "");
-  const clipboard = useClipboard();
   const t = useTranslation();
 
   useEffect(() => {
@@ -48,18 +39,7 @@ const EditableEnum = ({
 
       {/* <div style={{ position: "relative" }}> */}
       <div className="flex-grow">
-        <MenuTrigger>
-          <Button aria-label="Menu">☰</Button>
-          <Popover>
-            <Menu onAction={alert}>
-              <Item id="open">Open</Item>
-              <Item id="rename">Rename…</Item>
-              <Item id="duplicate">Duplicate</Item>
-              <Item id="share">Share…</Item>
-              <Item id="delete">Delete…</Item>
-            </Menu>
-          </Popover>
-        </MenuTrigger>
+        
 
         {/* <Listbox value={data} onChange={onChangeData}>
           <div className="relative">

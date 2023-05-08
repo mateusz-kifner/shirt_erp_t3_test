@@ -1,8 +1,41 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useId } from "react";
 import * as RadixSelect from "@radix-ui/react-select";
 import { IconCheck, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import useTranslation from "~/hooks/useTranslation";
 
-function Select() {
+interface SelectProps extends RadixSelect.SelectProps {
+  data: string[] | { [key: string]: string[] };
+}
+
+function Select(props: SelectProps) {
+  const { data } = props;
+  const t = useTranslation();
+  const uuid = useId();
+  let items;
+  if (Array.isArray(data)) {
+    items = data.map((val, index) => (
+      <SelectItem value={val} key={`${uuid}_${index}`}>
+        {(t[val as keyof typeof t] as string | undefined) ?? val}
+      </SelectItem>
+    ));
+  } else {
+    items = Object.keys(data).map((key, keyIndex) => (
+      <>
+        {keyIndex !== 0 && (
+          <RadixSelect.Separator className="my-2 border-b border-solid border-b-stone-400 dark:border-b-stone-600" />
+        )}
+        <RadixSelect.Group key={`${uuid}_${keyIndex}`}>
+          <RadixSelect.Label>{key}</RadixSelect.Label>
+          {data[key]!.map((val, valIndex) => (
+            <SelectItem value={val} key={`${uuid}_${key}_${valIndex}`}>
+              {(t[val as keyof typeof t] as string | undefined) ?? val}
+            </SelectItem>
+          ))}
+        </RadixSelect.Group>
+      </>
+    ));
+  }
+
   return (
     <RadixSelect.Root>
       <RadixSelect.Trigger
@@ -18,8 +51,8 @@ function Select() {
           bg-stone-200
         stroke-gray-200
           px-4 
-          py-0 font-semibold 
-          uppercase 
+          py-0
+          font-semibold 
           text-gray-200 
           no-underline
           outline-offset-4 
@@ -46,43 +79,7 @@ function Select() {
             <IconChevronUp />
           </RadixSelect.ScrollUpButton>
           <RadixSelect.Viewport className="SelectViewport">
-            <RadixSelect.Group>
-              <RadixSelect.Label className="SelectLabel">
-                Fruits
-              </RadixSelect.Label>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </RadixSelect.Group>
-
-            <RadixSelect.Separator className="my-2 border-b border-solid border-b-stone-400 dark:border-b-stone-600" />
-
-            <RadixSelect.Group>
-              <RadixSelect.Label className="SelectLabel">
-                Vegetables
-              </RadixSelect.Label>
-              <SelectItem value="aubergine">Aubergine</SelectItem>
-              <SelectItem value="broccoli">Broccoli</SelectItem>
-              <SelectItem value="carrot" disabled>
-                Carrot
-              </SelectItem>
-              <SelectItem value="courgette">Courgette</SelectItem>
-              <SelectItem value="leek">Leek</SelectItem>
-            </RadixSelect.Group>
-
-            <RadixSelect.Separator className="SelectSeparator" />
-
-            <RadixSelect.Group>
-              <RadixSelect.Label className="SelectLabel">
-                Meat
-              </RadixSelect.Label>
-              <SelectItem value="beef">Beef</SelectItem>
-              <SelectItem value="chicken">Chicken</SelectItem>
-              <SelectItem value="lamb">Lamb</SelectItem>
-              <SelectItem value="pork">Pork</SelectItem>
-            </RadixSelect.Group>
+            {items}
           </RadixSelect.Viewport>
           <RadixSelect.ScrollDownButton className="SelectScrollButton">
             <IconChevronDown />
