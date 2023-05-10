@@ -30,6 +30,7 @@ import Modal from "~/components/basic/Modal";
 import Select from "~/components/input/Select";
 import Switch from "~/components/input/Switch";
 import ScrollArea from "~/components/input/ScrollArea";
+import Menu from "~/components/input/Menu";
 
 const testData = {
   name: "string",
@@ -184,6 +185,7 @@ function Settings() {
               <Tooltip tooltip="test" position="bottom" withinPortal>
                 <Button>test</Button>
               </Tooltip>
+              <Menu></Menu>
             </>
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}

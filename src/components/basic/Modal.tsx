@@ -3,6 +3,14 @@ import { type ReactNode } from "react";
 import { IconX } from "@tabler/icons-react";
 import ActionButton from "./ActionButton";
 
+// RadixDialog.DialogProps {
+//   children?: React.ReactNode;
+//   open?: boolean;
+//   defaultOpen?: boolean;
+//   onOpenChange?(open: boolean): void;
+//   modal?: boolean;
+// }
+
 interface ModalProps extends RadixDialog.DialogProps {
   title?: ReactNode;
   description?: ReactNode;
@@ -19,6 +27,7 @@ function Modal(props: ModalProps) {
     trigger,
     defaultOpen,
     modal,
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     onOpenChange,
     open,
     onClose,
