@@ -31,6 +31,7 @@ import Select from "~/components/input/Select";
 import Switch from "~/components/input/Switch";
 import ScrollArea from "~/components/input/ScrollArea";
 import Menu from "~/components/input/Menu";
+import Alert from "~/components/basic/Alert";
 
 const testData = {
   name: "string",
@@ -98,6 +99,7 @@ function Settings() {
   const t = useTranslation();
   const { debug, toggleDebug, toggleTheme, theme } = useUserContext();
   const [testFormOpen, setTestFormOpen] = useState<boolean>(false);
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [testValue, setTestValue] = useState<string | null>("");
   const { mutate } = api.client.create.useMutation();
 
@@ -224,7 +226,14 @@ function Settings() {
               }}
             />
             <Switch />
-            <ScrollArea className="h-96">
+            <Alert
+              trigger={<Button>Alert</Button>}
+              title="TestTitle"
+              description="test desc"
+            >
+              Content
+            </Alert>
+            <ScrollArea className="h-96 w-32">
               <div>
                 <div>test</div>
                 <div>test</div>
