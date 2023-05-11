@@ -106,8 +106,8 @@ function Settings() {
   if (!data?.user) return null;
   const user = data.user;
 
-  const changeLocale = (e: ChangeEvent<HTMLSelectElement>) => {
-    router.push("", "", { locale: e.target.value }).catch((e) => {
+  const changeLocale = (value: string) => {
+    router.push("", "", { locale: value }).catch((e) => {
       throw e;
     });
   };
@@ -126,20 +126,11 @@ function Settings() {
           </Button>
           <div className="flex items-center justify-stretch">
             <span className="w-1/2">{t.language}</span>
-            <select
+            <Select
+              data={["pl", "en"]}
               defaultValue={locale ?? "pl"}
-              onChange={changeLocale}
-              className="border-1 inline-flex h-9 flex-grow animate-pop items-center
-                justify-center rounded-md bg-stone-700 
-                p-0 px-4 text-center font-semibold uppercase text-gray-200 no-underline
-                transition-all hover:bg-stone-600
-                active:hover:scale-95 active:hover:animate-none
-                active:focus:scale-95 active:focus:animate-none
-                disabled:pointer-events-none disabled:bg-stone-700"
-            >
-              <option value="pl">Polski</option>
-              <option value="en">English</option>
-            </select>
+              onValueChange={changeLocale}
+            />
           </div>
           <Button
             onClick={toggleTheme}

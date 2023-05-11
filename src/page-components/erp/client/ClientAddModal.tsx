@@ -38,7 +38,7 @@ const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
   }, [opened]);
 
   return (
-    <Modal isOpen={opened} onOpenChange={() => onClose()}>
+    <Modal open={opened} onOpenChange={() => onClose()}>
       <h3>Utwórz nowego klienta</h3>
       <div className="g-2 flex flex-col">
         {/* <EditableApiEntry

@@ -7,7 +7,7 @@ const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
     const { children, className, ...moreProps } = props;
     return (
       <button
-        className={`.action-button ${className}`}
+        className={`action-button ${className ?? ""}`}
         ref={ref}
         {...moreProps}
       >

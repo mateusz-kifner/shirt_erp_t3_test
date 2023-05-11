@@ -92,5 +92,7 @@
   "username": "Login",
   "password": "Hasło",
   "error_sign_in": "Niepoprawny login lub hasło!!!",
-  "copy_to_clipboard": "Kopiuj do schowka"
+  "copy_to_clipboard": "Kopiuj do schowka",
+  "pl": "Polski",
+  "en": "English"
 }

@@ -1,17 +1,15 @@
 import React from "react";
 import * as RadixDropdownMenu from "@radix-ui/react-dropdown-menu";
 import { IconChevronRight, IconMenu2 } from "@tabler/icons-react";
+import ActionButton from "../basic/ActionButton";
 
 const Menu = () => {
   return (
     <RadixDropdownMenu.Root>
       <RadixDropdownMenu.Trigger asChild>
-        <button
-          className="text-violet11 inline-flex h-[35px] w-[35px] items-center justify-center rounded-full bg-stone-800 shadow-[0_2px_10px] shadow-stone-800 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-          aria-label="Customise options"
-        >
+        <ActionButton>
           <IconMenu2 />
-        </button>
+        </ActionButton>
       </RadixDropdownMenu.Trigger>
 
       <RadixDropdownMenu.Portal>

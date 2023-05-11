@@ -26,7 +26,7 @@ function Select(props: SelectProps) {
         )}
         <RadixSelect.Group key={`${uuid}_${keyIndex}`}>
           <RadixSelect.Label>{key}</RadixSelect.Label>
-          {data[key]!.map((val, valIndex) => (
+          {(data[key] as string[]).map((val, valIndex) => (
             <SelectItem value={val} key={`${uuid}_${key}_${valIndex}`}>
               {(t[val as keyof typeof t] as string | undefined) ?? val}
             </SelectItem>
@@ -39,34 +39,22 @@ function Select(props: SelectProps) {
   return (
     <RadixSelect.Root {...moreProps}>
       <RadixSelect.Trigger
-        className=" border-1 
-          inline-flex
-          h-10
-          animate-pop 
-          select-none 
-          items-center 
-          justify-center 
-          gap-3
-          rounded-md
-          bg-stone-200
-        stroke-gray-200
-          px-4 
-          py-0
-          font-semibold 
-          text-gray-200 
-          no-underline
-          outline-offset-4 
-          transition-all
-          hover:bg-stone-400  
-          focus-visible:outline-sky-600  
-          active:hover:scale-95 
-          active:hover:animate-none 
+        className="
+          inline-flex h-9 flex-grow animate-pop select-none items-center
+          justify-center gap-3 rounded-md 
+          border border-solid border-gray-600 bg-white stroke-gray-200 p-0  px-4 py-0 text-center font-semibold uppercase
+          text-stone-800 no-underline
+          outline-offset-4 transition-all hover:bg-black
+          hover:bg-opacity-20 focus-visible:outline-sky-600
+          active:hover:scale-95 active:hover:animate-none
           active:focus:scale-95 
-          active:focus:animate-none 
-          disabled:pointer-events-none 
-          disabled:bg-stone-700 
+          active:focus:animate-none
+          disabled:pointer-events-none
+          disabled:bg-stone-700
           dark:bg-stone-800 
-          dark:hover:bg-stone-600	"
+          dark:text-gray-200  
+          dark:hover:bg-stone-600 
+          "
       >
         <RadixSelect.Value placeholder="Select ..." />
         <RadixSelect.Icon className="">
@@ -74,7 +62,7 @@ function Select(props: SelectProps) {
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
       <RadixSelect.Portal>
-        <RadixSelect.Content className="rounded-xl bg-stone-200 p-3 shadow-xl dark:bg-stone-800">
+        <RadixSelect.Content className="w-full rounded-xl bg-stone-200 p-3 shadow-xl dark:bg-stone-800">
           <RadixSelect.ScrollUpButton className="">
             <IconChevronUp />
           </RadixSelect.ScrollUpButton>

@@ -92,5 +92,7 @@
   "username": "Username",
   "password": "Password",
   "error_sign_in": "Username or password is incorrect!!!",
-  "copy_to_clipboard": "Copy to clipboard"
+  "copy_to_clipboard": "Copy to clipboard",
+  "pl": "Polski",
+  "en": "English"
 }

@@ -15,7 +15,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     props;
 
   return (
-    <button className={`button ${className}`} {...moreProps} ref={ref}>
+    <button className={`button ${className ?? ""}`} {...moreProps} ref={ref}>
       {!!leftSection && leftSection}
       {children}
       {!!rightSection && rightSection}
