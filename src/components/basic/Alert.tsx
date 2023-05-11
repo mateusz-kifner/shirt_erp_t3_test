@@ -58,7 +58,12 @@ const Alert = (props: AlertProps) => {
           {children}
           <div className="mt-3 flex justify-end gap-4">
             <RadixAlertDialog.Cancel asChild>
-              <Button onClick={onCancel}>{cancelText ?? t.cancel}</Button>
+              <Button
+                className="border-4 border-blue-600 bg-transparent text-blue-600 hover:border-transparent hover:text-white"
+                onClick={onCancel}
+              >
+                {cancelText ?? t.cancel}
+              </Button>
             </RadixAlertDialog.Cancel>
             <RadixAlertDialog.Action asChild>
               <Button onClick={onOk}>{okText ?? "Ok"}</Button>
