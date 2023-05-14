@@ -32,7 +32,8 @@ export default function Login() {
 
   return (
     <Modal
-      isOpen={true}
+      open={true}
+      disableClose
 
       // title={<h2 className="text-2xl">{t.sign_in}</h2>}
     >

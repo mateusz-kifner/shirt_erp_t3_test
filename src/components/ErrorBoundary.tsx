@@ -19,17 +19,20 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    showNotification({ title: "Error" + error.name, message: error.message });
+    showNotification({
+      title: "BoundaryError" + error.name,
+      message: error.message,
+    });
     console.log(error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return this.props.fallback;
+      return <>{this.props.fallback}</>;
     }
 
-    return this.props.children;
+    return <>{this.props.children}</>;
   }
 }
 

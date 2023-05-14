@@ -29,9 +29,12 @@ const ClientListItem = (props: ClientListItemProps) => {
         (value?.email || value?.companyName ? " | " : "") +
         (value?.companyName ? truncString(value.companyName, 20) : "")
       }
-      avatarElement={`${value?.firstname?.[0] ?? ""}${
-        value?.lastname?.[0] ?? ""
-      }`}
+      avatarElement={
+        (value?.firstname && value.firstname.length > 0) ||
+        (value?.lastname && value.lastname.length > 0)
+          ? `${value?.firstname?.[0] ?? ""}${value?.lastname?.[0] ?? ""}`
+          : value.username?.substring(0, 2) ?? ""
+      }
       {...props}
     />
   );

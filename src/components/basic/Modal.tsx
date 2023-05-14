@@ -17,6 +17,7 @@ interface ModalProps extends RadixDialog.DialogProps {
   children: ReactNode;
   trigger?: ReactNode;
   onClose?: () => void;
+  disableClose?: boolean;
 }
 
 function Modal(props: ModalProps) {
@@ -31,6 +32,7 @@ function Modal(props: ModalProps) {
     onOpenChange,
     open,
     onClose,
+    disableClose = false,
   } = props;
   return (
     <RadixDialog.Root
@@ -55,14 +57,16 @@ function Modal(props: ModalProps) {
             </RadixDialog.Description>
           )}
           {children}
-          <RadixDialog.Close
-            asChild
-            className="absolute right-3 top-3 rounded-full p-1"
-          >
-            <ActionButton aria-label="Close">
-              <IconX />
-            </ActionButton>
-          </RadixDialog.Close>
+          {!disableClose && (
+            <RadixDialog.Close
+              asChild
+              className="absolute right-3 top-3 rounded-full p-1"
+            >
+              <ActionButton aria-label="Close">
+                <IconX />
+              </ActionButton>
+            </RadixDialog.Close>
+          )}
         </RadixDialog.Content>
       </RadixDialog.Portal>
     </RadixDialog.Root>

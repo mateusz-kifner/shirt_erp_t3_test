@@ -2,7 +2,6 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   useEffect,
-  type ComponentType,
   type ReactNode,
   type SyntheticEvent,
   useState,
@@ -12,10 +11,10 @@ import Tooltip from "./basic/Tooltip";
 import { useMergedRef, useResizeObserver } from "@mantine/hooks";
 import { simpleColors } from "~/utils/getRandomColor";
 import { omit } from "lodash";
-import { IconPinned } from "@tabler/icons-react";
+import { IconPinned, type TablerIconsProps } from "@tabler/icons-react";
 import { useUserContext } from "~/context/userContext";
-import useTranslation from "~/hooks/useTranslation";
 import Portal from "./Portal";
+import { type Icon as TablerIcon } from "@tabler/icons-react";
 
 export interface TabProps extends ComponentPropsWithoutRef<"button"> {
   /** Value that is used to connect Tab with associated panel */
@@ -28,7 +27,7 @@ export interface TabProps extends ComponentPropsWithoutRef<"button"> {
   rightSection?: React.ReactNode;
 
   /** Section of content displayed before label */
-  Icon?: React.ComponentType<any & { size?: number }>;
+  Icon?: TablerIcon;
 
   small?: boolean;
   setBigSize?: (size: number) => void;
@@ -64,6 +63,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
       index !== undefined
         ? simpleColors[index % simpleColors.length]
         : undefined;
+
     return (
       <Tooltip tooltip={!!small && children} withinPortal position="bottom">
         <button
@@ -78,31 +78,37 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
             border-t
             border-solid
             border-stone-700 
-            bg-stone-950
             stroke-gray-200
-            px-4
+            px-4 
             py-0 
-            font-semibold uppercase 
+            font-semibold 
             text-gray-200 
-            no-underline 
-            outline-offset-4
-            transition-all 
-            first:rounded-tl-md
-            last:rounded-tr-md  
-            only:rounded-tr-md
-            hover:bg-blue-700 
+            no-underline
+            outline-offset-4 
+            transition-all
+            first:rounded-tl 
+            first:border-r-0
+            last:rounded-tr
+            only:rounded-tr
+            only:border-r 
+            hover:bg-transparent 
             focus-visible:outline-sky-600 
             active:hover:scale-95 
             active:hover:animate-none 
             active:focus:scale-95 
             active:focus:animate-none 
-            disabled:pointer-events-none 
-            disabled:bg-stone-700	
+            disabled:pointer-events-none	
+            disabled:bg-stone-700
             ${className ?? ""}
+            ${isActive ? "bg-transparent" : "bg-stone-800"}
+            ${isActive ? "border-b-2" : "border-b"}
             `}
           ref={groupRef}
           onClick={onClick}
           onContextMenu={onContextMenu}
+          style={{
+            borderBottomColor: isActive ? color : undefined,
+          }}
           {...omit(props, [
             "isActive",
             "setBigSize",
@@ -114,7 +120,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         >
           {hasIcon &&
             (isActive && color ? (
-              <Icon size={16} stroke={color} />
+              <Icon size={16} color={color} />
             ) : (
               <Icon size={16} />
             ))}
@@ -136,7 +142,7 @@ interface MultiTabsProps {
   onPin: (pinned: number) => void;
 
   childrenLabels: string[];
-  childrenIcons: ComponentType<any & { size?: number }>[];
+  childrenIcons: TablerIcon[];
 
   leftSection?: ReactNode;
   rightSection?: ReactNode;
@@ -223,7 +229,7 @@ const MultiTabs = (props: MultiTabsProps) => {
             return (
               <Tab
                 index={index}
-                key={uuid + "_" + index + "_" + childrenLabelsKey}
+                key={`${uuid}_${index}_${childrenLabelsKey}`}
                 value={index}
                 Icon={
                   childrenIcons?.[index] ??

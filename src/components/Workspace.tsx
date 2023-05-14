@@ -13,6 +13,7 @@ import useRQCache from "~/hooks/useRQCache";
 import useTranslation from "~/hooks/useTranslation";
 import MultiTabs from "./MultiTabs";
 import ErrorBoundary from "./ErrorBoundary";
+import { type Icon as TablerIcon } from "@tabler/icons-react";
 
 // import MultiTabs from "./MultiTabs"
 
@@ -20,7 +21,7 @@ interface WorkspaceProps {
   cacheKey: string;
   childrenWrapperProps?: any[];
   childrenLabels?: string[];
-  childrenIcons?: ComponentType<any & { size?: number }>[];
+  childrenIcons?: TablerIcon[];
   children?: ReactNode;
   defaultActive?: number;
   defaultPinned?: number[];
@@ -130,7 +131,7 @@ const Workspace = ({
 
   return (
     <div
-      className="flex flex-nowrap items-start overflow-hidden p-4 sm:p-1"
+      className="flex flex-nowrap items-start gap-4 overflow-hidden p-1 sm:p-4"
       ref={ref}
     >
       <MultiTabs
@@ -148,7 +149,7 @@ const Workspace = ({
         activeTabs.map((childIndex, index) => (
           <div
             key={uuid + index}
-            className="m-7 w-[420px] rounded bg-white p-2 shadow-lg dark:bg-stone-800"
+            className="w-[420px] rounded bg-white p-2 shadow-lg dark:bg-stone-800"
           >
             {/* {...(childrenWrapperProps &&
             childrenWrapperProps[childIndex] !== undefined
