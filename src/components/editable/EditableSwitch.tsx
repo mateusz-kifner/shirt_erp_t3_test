@@ -1,20 +1,12 @@
 import { useHover } from "@mantine/hooks";
 import { useEffect, useRef, useState } from "react";
 import type EditableInput from "../../types/EditableInput";
-import { ToggleProps, useToggleState } from "react-stately";
-import {
-  AriaSwitchProps,
-  useFocusRing,
-  useSwitch,
-  VisuallyHidden,
-} from "react-aria";
+import Switch from "../basic/Switch";
+// import Switch from "../basic/Switch";
 
 // FIXME: respect disabled state
 
-interface EditableBoolProps
-  extends EditableInput<boolean>,
-    Omit<ToggleProps, "value">,
-    Omit<AriaSwitchProps, "value"> {
+interface EditableBoolProps extends EditableInput<boolean> {
   checkLabels: { checked: string; unchecked: string };
   stateLabels: { checked: string; unchecked: string };
   stateColors: { checked: string; unchecked: string };
@@ -35,15 +27,7 @@ const EditableBool = (props: EditableBoolProps) => {
     leftSection,
   } = props;
 
-  const state = useToggleState({ ...props, value: value ? "" : "" });
   const switchRef = useRef(null);
-  const { inputProps } = useSwitch(
-    { ...props, value: value ? "" : "" },
-    state,
-    switchRef
-  );
-  const { isFocusVisible, focusProps } = useFocusRing();
-
   const [bool, setBool] = useState<boolean>(value ?? initialValue ?? false);
   const [dirty, setDirty] = useState<boolean>(false);
   const { hovered, ref } = useHover();
@@ -70,15 +54,9 @@ const EditableBool = (props: EditableBoolProps) => {
       {!!leftSection && leftSection}
       <div>{label}</div>
       {active ? (
-        <input {...inputProps} {...focusProps} ref={switchRef} />
+        <Switch />
       ) : (
-        // <Switch
-        //   onChange={(newBool) => {
-        //     setDirty(true);
-        //     setBool(newBool);
-        //   }}
-        //   checked={bool}
-        // />
+        // <input {...inputProps} {...focusProps} ref={switchRef} />
         <div
           className={`relative rounded-md px-px py-[0.5em] font-bold after:absolute after:bottom-0 after:left-[10%] after:w-[80%] after:shadow ${
             bool ? "after:shadow-green-700" : "after:shadow-red-700"
