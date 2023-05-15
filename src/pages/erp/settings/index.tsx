@@ -27,10 +27,10 @@ import DisplayCell from "~/components/basic/DisplayCell";
 // import EditableColor from "~/components/editable/EditableColor";
 import InputColor from "~/components/input/InputColor";
 import Modal from "~/components/basic/Modal";
-import Select from "~/components/input/Select";
-import Switch from "~/components/input/Switch";
-import ScrollArea from "~/components/input/ScrollArea";
-import Menu from "~/components/input/Menu";
+import Select from "~/components/basic/Select";
+import Switch from "~/components/basic/Switch";
+import ScrollArea from "~/components/basic/ScrollArea";
+import Menu from "~/components/basic/Menu";
 import Alert from "~/components/basic/Alert";
 
 const testData = {

@@ -22,14 +22,14 @@ Logger.setHandler(function (messages, context) {
       title: "Błąd",
       message:
         messages[0]?.message ??
-        "Nieznany błąd: sprawdź szczegóły w logu servera",
+        "Nieznany błąd: sprawdź szczegóły w logu serwera",
     });
   if (context.level === Logger.WARN)
     showNotification({
       title: "Ostrzeżenie",
       message:
         messages[0]?.message ??
-        "Nieznany błąd: sprawdź szczegóły w logu servera",
+        "Nieznany błąd: sprawdź szczegóły w logu serwera",
     });
   if (typeof messages[0] === "string") {
     // axios.post("/logs", {

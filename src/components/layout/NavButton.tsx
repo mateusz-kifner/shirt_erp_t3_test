@@ -4,12 +4,13 @@ import React, {
   type ButtonHTMLAttributes,
   useId,
 } from "react";
+import type TablerIconType from "~/types/TablerIconType";
 
 interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   small?: boolean;
   label: string;
-  Icon: ComponentType<{ size: number; className: string; id?: string }>;
+  Icon: TablerIconType;
   href: string;
   entryName: string;
   gradient?: { from: string; to: string; deg: number };
@@ -26,9 +27,9 @@ function NavButton(props: NavButtonProps) {
       href={href}
       id={uuid}
       className={`bg-black 
-      bg-opacity-0 p-2 transition-all disabled:pointer-events-none disabled:bg-stone-700 hover:bg-opacity-10
-      active:focus:scale-95  active:focus:animate-none active:hover:scale-95 
-      active:hover:animate-none dark:bg-white 
+      bg-opacity-0 p-2 transition-all hover:bg-opacity-10 active:hover:scale-95 active:hover:animate-none
+      active:focus:scale-95  active:focus:animate-none disabled:pointer-events-none 
+      disabled:bg-stone-700 dark:bg-white 
        dark:text-gray-200 dark:hover:bg-opacity-10 ${
          active
            ? "bg-opacity-10 dark:bg-opacity-10"

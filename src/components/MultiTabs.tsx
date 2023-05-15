@@ -11,10 +11,10 @@ import Tooltip from "./basic/Tooltip";
 import { useMergedRef, useResizeObserver } from "@mantine/hooks";
 import { simpleColors } from "~/utils/getRandomColor";
 import { omit } from "lodash";
-import { IconPinned, type TablerIconsProps } from "@tabler/icons-react";
+import { IconPinned } from "@tabler/icons-react";
 import { useUserContext } from "~/context/userContext";
 import Portal from "./Portal";
-import { type Icon as TablerIcon } from "@tabler/icons-react";
+import type TablerIconType from "~/types/TablerIconType";
 
 export interface TabProps extends ComponentPropsWithoutRef<"button"> {
   /** Value that is used to connect Tab with associated panel */
@@ -27,7 +27,7 @@ export interface TabProps extends ComponentPropsWithoutRef<"button"> {
   rightSection?: React.ReactNode;
 
   /** Section of content displayed before label */
-  Icon?: TablerIcon;
+  Icon?: TablerIconType;
 
   small?: boolean;
   setBigSize?: (size: number) => void;
@@ -142,7 +142,7 @@ interface MultiTabsProps {
   onPin: (pinned: number) => void;
 
   childrenLabels: string[];
-  childrenIcons: TablerIcon[];
+  childrenIcons: TablerIconType[];
 
   leftSection?: ReactNode;
   rightSection?: ReactNode;
