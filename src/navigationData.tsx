@@ -9,10 +9,11 @@ import {
   IconBell,
   IconShoppingCart,
 } from "@tabler/icons-react";
+import type TablerIconType from "./types/TablerIconType";
 
 const navigationData: {
   label: string;
-  Icon: ComponentType<{ size: number; className: string }>;
+  Icon: TablerIconType;
   href: string;
   entryName: string;
   gradient?: { from: string; to: string; deg: number };

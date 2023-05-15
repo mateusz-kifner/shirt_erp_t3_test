@@ -1,13 +1,9 @@
-import { useClipboard } from "@mantine/hooks";
 import { useEffect, useState, type CSSProperties, useRef, useId } from "react";
 import preventLeave from "../../utils/preventLeave";
-import { IconCopy } from "@tabler/icons-react";
 import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
-import { showNotification } from "~/lib/notifications";
 import DisplayCell from "../basic/DisplayCell";
 import InputLabel from "../input/InputLabel";
-import { useLabel, useTextField } from "react-aria";
 
 interface EditableTextProps extends EditableInput<string> {
   maxLength?: number;
@@ -33,13 +29,7 @@ const EditableText = (props: EditableTextProps) => {
   const [text, setText] = useState<string>(value ?? initialValue ?? "");
   const [focus, setFocus] = useState<boolean>(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const { labelProps, inputProps } = useTextField(
-    {
-      ...props,
-      inputElementType: "textarea",
-    },
-    textAreaRef
-  );
+
   // const t = useTranslation();
   useEffect(() => {
     if (focus) {
@@ -100,15 +90,14 @@ const EditableText = (props: EditableTextProps) => {
       onFocus={() => !disabled && setFocus(true)}
       onBlur={handleBlurForInnerElements(() => setFocus(false))}
     >
-      <InputLabel label={label} copyValue={text} {...labelProps} />
+      <InputLabel label={label} copyValue={text} htmlFor={"textarea_" + uuid} />
       <DisplayCell
         leftSection={leftSection}
         rightSection={rightSection}
         focus={focus}
       >
         <textarea
-          // id={"textarea_" + uuid}
-          {...inputProps}
+          id={"textarea_" + uuid}
           required={required}
           readOnly={disabled}
           ref={textAreaRef}

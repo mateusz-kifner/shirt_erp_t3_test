@@ -3,6 +3,11 @@ import { IconCopy } from "@tabler/icons-react";
 import React, { type LabelHTMLAttributes, type ReactNode } from "react";
 import { showNotification } from "~/lib/notifications";
 
+//  LabelHTMLAttributes {
+//   form?: string | undefined;
+//   htmlFor?: string | undefined;
+// }
+
 interface InputLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label?: ReactNode;
   copyValue?: string;
