@@ -4,10 +4,10 @@ import preventLeave from "../../utils/preventLeave";
 import { IconCopy, IconX } from "@tabler/icons-react";
 import type EditableInput from "../../types/EditableInput";
 import colorNames from "~/utils/color-names.json";
-import { RGBColor, SketchPicker } from "react-color";
+// import { RGBColor, SketchPicker } from "react-color";
 import { showNotification } from "~/lib/notifications";
 import DisplayCell from "../basic/DisplayCell";
-import { Color } from "react-color";
+// import { Color } from "react-color";
 
 const colorNameKeys = Object.keys(colorNames);
 const colorNamesRGB: [number, number, number][] = colorNameKeys.map((val) => [

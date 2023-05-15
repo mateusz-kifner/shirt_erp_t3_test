@@ -61,6 +61,13 @@ const EditableText = (props: EditableTextProps) => {
     setText(new_value);
   }, [value]);
 
+  // Set initial text area height
+  useEffect(() => {
+    if (textAreaRef.current !== null) {
+      setTextAreaHeight(textAreaRef.current);
+    }
+  }, [textAreaRef]);
+
   const onChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (!(maxLength && e.target.value.length > maxLength)) {
       setText(e.target.value);
@@ -119,13 +126,7 @@ const EditableText = (props: EditableTextProps) => {
           focus-visible:border-transparent
           focus-visible:outline-none
           ${className ?? ""}`}
-          style={{
-            // paddingBottom:
-            //   (textAreaRef.current?.scrollHeight ?? 0) <= 44
-            //     ? undefined
-            //     : "0.5rem",
-            ...style,
-          }}
+          style={style}
           value={text}
           onFocus={() => !disabled && setFocus(true)}
           onClick={() => !disabled && setFocus(true)}

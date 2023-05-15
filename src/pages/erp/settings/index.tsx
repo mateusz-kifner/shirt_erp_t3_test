@@ -156,29 +156,6 @@ function Settings() {
               >
                 Open Test Form
               </Button>
-              {/* <Button
-                onClick={() => {
-                  for (let i = 0; i < 10; i++) {
-                    mutate({ username: "client" + i });
-                  }
-                }}
-                leftSection={<IconBug />}
-              >
-                Add 10 clients
-              </Button> */}
-              <Tooltip tooltip="test" position="left" withinPortal>
-                <Button>test</Button>
-              </Tooltip>
-              <Tooltip tooltip="test" position="right" withinPortal>
-                <Button>test</Button>
-              </Tooltip>
-              <Tooltip tooltip="test" position="top" withinPortal>
-                <Button>test</Button>
-              </Tooltip>
-              <Tooltip tooltip="test" position="bottom" withinPortal>
-                <Button>test</Button>
-              </Tooltip>
-              <Menu></Menu>
             </>
           )}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
@@ -188,7 +165,7 @@ function Settings() {
             title={"test test"}
             description={"test2 test2"}
           >
-            {/* <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
+            <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
               test display cell
             </DisplayCell>
             <DisplayCell
@@ -204,78 +181,9 @@ function Settings() {
               onSubmit={setTestValue}
               rightSection={<IconBug />}
               leftSection={<IconBug />}
-            /> */}
+            />
             {/* <EditableColor label="test color" value="#fff" /> */}
             {/* <InputColor /> */}
-            <Select data={["test", "test2", "test3"]} />
-            <Select
-              defaultValue="pizza"
-              onValueChange={(value) => console.log(value)}
-              data={{
-                food: ["apple", "pizza", "sandwich"],
-                drinks: ["tee", "cola", "water"],
-              }}
-            />
-            <Switch />
-            <Alert
-              trigger={<Button>Alert</Button>}
-              title="TestTitle"
-              description="test desc"
-            >
-              Content
-            </Alert>
-            <ScrollArea className="h-96 w-32">
-              <div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-                <div>test</div>
-              </div>
-            </ScrollArea>
           </Modal>
         </div>
       </div>

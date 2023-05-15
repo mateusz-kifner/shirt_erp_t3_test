@@ -5,14 +5,7 @@ import {
 } from "@mantine/hooks";
 import dayjs from "dayjs";
 import Calendar from "react-calendar";
-import {
-  type DetailedHTMLProps,
-  type InputHTMLAttributes,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { showNotification } from "~/lib/notifications";
 import useTranslation from "~/hooks/useTranslation";
@@ -21,12 +14,7 @@ import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 import type EditableInput from "~/types/EditableInput";
 import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
 
-interface InputDateProps
-  extends DetailedHTMLProps<
-      Omit<InputHTMLAttributes<HTMLInputElement>, "onSubmit" | "value">,
-      HTMLInputElement
-    >,
-    EditableInput<string> {}
+type InputDateProps = EditableInput<string>;
 
 const EditableDate = (props: InputDateProps) => {
   const {
@@ -132,6 +120,7 @@ const EditableDate = (props: InputDateProps) => {
           }`}
           readOnly={disabled}
           required={required}
+          type="date"
         />
 
         <div

@@ -1,9 +1,8 @@
 import { useClipboard, useId } from "@mantine/hooks";
-import { CSSProperties, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 
 import {
   IconCopy,
-  IconDots,
   IconExternalLink,
   IconQuestionMark,
   IconTrashX,
@@ -11,7 +10,7 @@ import {
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { isEqual } from "lodash";
-import EditableInput from "../../types/EditableInput";
+import type EditableInput from "../../types/EditableInput";
 import useTranslation from "~/hooks/useTranslation";
 import { showNotification } from "~/lib/notifications";
 import Tooltip from "../basic/Tooltip";
@@ -119,10 +118,10 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
           </div>
         ) : undefined}
       </label>
-      <Modal isOpen={open} onOpenChange={() => setOpen(false)}>
+      <Modal open={open} onClose={() => setOpen(false)}>
         {allowClear ? (
           <Button
-          onClick={() => {
+            onClick={() => {
               setOpen(false);
               onSubmit?.(null);
             }}
