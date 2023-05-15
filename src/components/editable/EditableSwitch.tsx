@@ -1,10 +1,22 @@
 import { useHover } from "@mantine/hooks";
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import type EditableInput from "../../types/EditableInput";
 import Switch from "../basic/Switch";
 // import Switch from "../basic/Switch";
 
 // FIXME: respect disabled state
+
+// EditableInput<T> {
+//   label?: string;
+//   value?: T;
+//   initialValue?: T;
+//   onSubmit?: (value: T | null) => void | boolean;
+//   disabled?: boolean;
+//   required?: boolean;
+//   leftSection?: ReactNode;
+//   rightSection?: ReactNode;
+//   className?: string;
+// }
 
 interface EditableBoolProps extends EditableInput<boolean> {
   checkLabels: { checked: string; unchecked: string };
@@ -27,7 +39,7 @@ const EditableBool = (props: EditableBoolProps) => {
     leftSection,
   } = props;
 
-  const switchRef = useRef(null);
+  // const switchRef = useRef(null);
   const [bool, setBool] = useState<boolean>(value ?? initialValue ?? false);
   const [dirty, setDirty] = useState<boolean>(false);
   const { hovered, ref } = useHover();
@@ -45,6 +57,10 @@ const EditableBool = (props: EditableBoolProps) => {
     // eslint-disable-next-line
   }, [bool]);
 
+  const handleChange = (checked: boolean) => {
+    onSubmit?.(checked);
+  };
+
   return (
     <div
       className="flex items-center"
@@ -54,9 +70,11 @@ const EditableBool = (props: EditableBoolProps) => {
       {!!leftSection && leftSection}
       <div>{label}</div>
       {active ? (
-        <Switch />
+        <Switch
+          value={value ? "true" : "false"}
+          onCheckedChange={handleChange}
+        />
       ) : (
-        // <input {...inputProps} {...focusProps} ref={switchRef} />
         <div
           className={`relative rounded-md px-px py-[0.5em] font-bold after:absolute after:bottom-0 after:left-[10%] after:w-[80%] after:shadow ${
             bool ? "after:shadow-green-700" : "after:shadow-red-700"
