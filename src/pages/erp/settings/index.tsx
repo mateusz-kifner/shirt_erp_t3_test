@@ -32,6 +32,8 @@ import Switch from "~/components/basic/Switch";
 import ScrollArea from "~/components/basic/ScrollArea";
 import Menu from "~/components/basic/Menu";
 import Alert from "~/components/basic/Alert";
+import EditableDate from "~/components/editable/EditableDate";
+import Popover from "~/components/basic/Popover";
 
 const testData = {
   name: "string",
@@ -158,7 +160,9 @@ function Settings() {
               </Button>
             </>
           )}
-          {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+          <Popover content={<h1>text</h1>}>
+            <Button>PopOver</Button>
+          </Popover>
           <Modal
             open={testFormOpen}
             onClose={() => setTestFormOpen(false)}
@@ -181,6 +185,13 @@ function Settings() {
               onSubmit={setTestValue}
               rightSection={<IconBug />}
               leftSection={<IconBug />}
+            />
+            <EditableDate
+              label="date"
+              value="2021-11-05T12:24:05.097Z"
+              rightSection={<IconBug />}
+              leftSection={<IconBug />}
+              onSubmit={(val) => console.log(val)}
             />
             {/* <EditableColor label="test color" value="#fff" /> */}
             {/* <InputColor /> */}

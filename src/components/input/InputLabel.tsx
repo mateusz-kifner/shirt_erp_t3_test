@@ -23,7 +23,7 @@ function InputLabel(props: InputLabelProps) {
         dark:text-stone-300"
       {...moreProps}
     >
-      <div className="flex items-center py-1">
+      <div className="flex h-8 items-center py-1">
         {label}{" "}
         {copyValue && copyValue.length > 0 && (
           <button

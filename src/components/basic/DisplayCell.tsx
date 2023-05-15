@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactNode } from "react";
+import React, { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
 interface DisplayCellProps extends HTMLAttributes<HTMLDivElement> {
   leftSection?: ReactNode;
@@ -8,19 +8,20 @@ interface DisplayCellProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
 }
 
-const DisplayCell = (props: DisplayCellProps) => {
-  const {
-    leftSection,
-    rightSection,
-    children,
-    disabled = false,
-    focus = false,
-    className,
-    ...moreProps
-  } = props;
-  return (
-    <div
-      className={`
+const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
+  (props, ref) => {
+    const {
+      leftSection,
+      rightSection,
+      children,
+      disabled = false,
+      focus = false,
+      className,
+      ...moreProps
+    } = props;
+    return (
+      <div
+        className={`
         relative
         flex
         min-h-[2.75rem]
@@ -56,27 +57,31 @@ const DisplayCell = (props: DisplayCellProps) => {
           : "border-gray-400 dark:border-stone-600"
       }
       `}
-      {...moreProps}
-    >
-      <div className="flex flex-grow gap-2">
-        <div
-          className="
+        {...moreProps}
+        ref={ref}
+      >
+        <div className="flex flex-grow gap-2">
+          <div
+            className="
           text-gray-400 
           dark:text-stone-600"
-        >
-          {!!leftSection && leftSection}
+          >
+            {!!leftSection && leftSection}
+          </div>
+          <div className="flex flex-grow items-center">{children}</div>
         </div>
-        <div className="flex flex-grow items-center">{children}</div>
-      </div>
-      <div
-        className="
+        <div
+          className="
         text-gray-400 
         dark:text-stone-600"
-      >
-        {!!rightSection && rightSection}
+        >
+          {!!rightSection && rightSection}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+DisplayCell.displayName = "DisplayCell";
 
 export default DisplayCell;

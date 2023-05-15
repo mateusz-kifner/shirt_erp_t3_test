@@ -13,6 +13,10 @@ import { IconCopy } from "@tabler/icons-react";
 import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 import type EditableInput from "~/types/EditableInput";
 import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
+import InputLabel from "../input/InputLabel";
+import DisplayCell from "../basic/DisplayCell";
+import Popover from "../basic/Popover";
+import Button from "../basic/Button";
 
 type InputDateProps = EditableInput<string>;
 
@@ -61,39 +65,17 @@ const EditableDate = (props: InputDateProps) => {
 
   return (
     <div className="relative flex-grow">
-      {label && (
-        <label
-          htmlFor={"inputDate_" + uuid}
-          className="text-sm dark:text-gray-400"
-        >
-          {label}{" "}
-          {date && (
-            <button
-              className="btn btn-square mr-1 p-[2px]"
-              onClick={() => {
-                const dateString = dayjs(date).format("L").toString();
-                clipboard.copy(dateString);
-                showNotification({
-                  title: t.copy_to_clipboard,
-                  message: dateString,
-                  icon: <IconCopy />,
-                });
-              }}
-              tabIndex={-1}
-            >
-              <IconCopy size={16} />
-            </button>
-          )}
-        </label>
-      )}
-      <div
-        onFocus={handleFocusForInnerElements(() => setOpened(true))}
-        onBlur={handleBlurForInnerElements(() => setOpened(false))}
-      >
-        {opened && !disabled && (
+      <InputLabel
+        label={label}
+        copyValue={text}
+        htmlFor={"inputDate_" + uuid}
+      />
+
+      <Popover
+        content={
           <Calendar
             key={value}
-            className={"absolute left-0 top-full z-[120] mt-2 rounded"}
+            className={"z-[1000] w-96 rounded"}
             onChange={(date) => {
               setText(
                 dayjs(date as Date)
@@ -103,33 +85,29 @@ const EditableDate = (props: InputDateProps) => {
             }}
             value={date}
           />
-        )}
-        <div
-          className="absolute left-1 top-1/2 -translate-y-1/2"
-          ref={leftSectionRef}
+        }
+      >
+        <DisplayCell
+          leftSection={leftSection}
+          rightSection={rightSection}
+          focus={opened}
+          // onFocus={handleFocusForInnerElements(() => setOpened(true))}
+          // onBlur={handleBlurForInnerElements(() => setOpened(false))}
+          // onClick={() => setOpened(true)}
         >
-          {!!leftSection && leftSection}
-        </div>
-        <input
-          id={"inputDate_" + uuid}
-          ref={inputDateRef}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          className={`display-cell w-full resize-none overflow-hidden ${
-            error ? "outline-red-600 dark:outline-red-600" : ""
-          }`}
-          readOnly={disabled}
-          required={required}
-          type="date"
-        />
-
-        <div
-          className="absolute right-1 top-1/2 -translate-y-1/2"
-          ref={rightSectionRef}
-        >
-          {!!rightSection && rightSection}
-        </div>
-      </div>
+          <input
+            id={"inputDate_" + uuid}
+            ref={inputDateRef}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className={`display-cell w-full resize-none overflow-hidden ${
+              error ? "outline-red-600 dark:outline-red-600" : ""
+            }`}
+            readOnly={disabled}
+            required={required}
+          />
+        </DisplayCell>
+      </Popover>
     </div>
   );
 };
