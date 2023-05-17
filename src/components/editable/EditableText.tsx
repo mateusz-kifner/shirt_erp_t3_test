@@ -86,7 +86,6 @@ const EditableText = (props: EditableTextProps) => {
 
   const setTextAreaHeight = (target: HTMLTextAreaElement) => {
     target.style.height = "0";
-    console.log(target.scrollHeight);
     target.style.height = `${Math.max(target.scrollHeight, 44)}px`;
   };
 
