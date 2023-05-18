@@ -36,8 +36,9 @@ import {
   useSpreadSheetData,
 } from "../spreadsheet/useSpreadSheetData";
 
-import type EditableInput from "../../types/EditableInput";
 import { getRandomColorByNumber } from "../../utils/getRandomColor";
+
+import type EditableInput from "../../types/EditableInput";
 
 interface EditableTableProps extends EditableInput<Matrix<any>> {
   metadataIcons?: ComponentType[];

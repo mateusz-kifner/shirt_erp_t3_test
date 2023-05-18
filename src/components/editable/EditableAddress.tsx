@@ -1,14 +1,17 @@
+import { useEffect, useState } from "react";
+
 import { useClipboard, useHover } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
 import { isEqual } from "lodash";
-import { useEffect, useState } from "react";
+
 import DisplayCell from "~/components/basic/DisplayCellExpanding";
 import EditableEnum from "~/components/editable/EditableEnum";
 import EditableText from "~/components/editable/EditableText";
 import { showNotification } from "~/lib/notifications";
+import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
+
 import { type AddressType } from "~/schema/addressSchema";
 import type EditableInput from "~/types/EditableInput";
-import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 
 const provinces = [
   "dolnośląskie",

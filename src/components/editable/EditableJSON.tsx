@@ -1,7 +1,10 @@
+import { useId } from "react";
+
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
-import { useId } from "react";
+
 import { showNotification } from "~/lib/notifications";
+
 import type EditableInput from "~/types/EditableInput";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

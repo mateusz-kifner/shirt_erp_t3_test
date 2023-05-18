@@ -1,24 +1,14 @@
-import {
-  Group,
-  Image,
-  MantineTheme,
-  Menu,
-  Modal,
-  Stack,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
-import { Dropzone } from "@mantine/dropzone";
+import { useEffect, useId, useState } from "react";
+
 import { useClickOutside, useHover } from "@mantine/hooks";
 import { IconPhoto, IconTrashX, IconUpload, IconX } from "@tabler/icons-react";
 import axios, { AxiosError } from "axios";
-import { useEffect, useId, useState } from "react";
-import { env } from "~/env/client.mjs";
-import { useTranslation } from "~/i18n";
-import EditableInput from "~/types/EditableInput";
-import { FileType } from "~/types/FileType";
-import TablerIconType from "~/types/TablerIconType";
+import { env } from "~/env.mjs";
 // import FileListItem from "../FileListItem";
+
+import type EditableInput from "~/types/EditableInput";
+import { type FileType } from "~/types/FileType";
+import type TablerIconType from "~/types/TablerIconType";
 
 // FIXME: ENFORCE FILE LIMIT
 

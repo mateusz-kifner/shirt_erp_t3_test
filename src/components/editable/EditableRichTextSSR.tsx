@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   useClickOutside,
   useClipboard,
@@ -6,10 +8,11 @@ import {
 } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
 import DOMPurify from "dompurify";
-import { useEffect, useState } from "react";
 import TurndownService from "turndown";
-import type EditableInput from "~/types/EditableInput";
+
 import preventLeave from "~/utils/preventLeave";
+
+import type EditableInput from "~/types/EditableInput";
 
 const turndownService = new TurndownService();
 

@@ -1,8 +1,7 @@
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 // List items imports
 import ClientListItem from "~/page-components/erp/client/ClientListItem";
-import { ClientType } from "~/schema/clientSchema";
 // import EmailMessageListItem from "~/page-components/erp/email-messages/EmailMessageListItem"
 // import OrderListItem from "~/page-components/erp/orders/OrderListItem"
 // import ProductListItem from "~/page-components/erp/products/ProductListItem"
@@ -10,6 +9,8 @@ import { ClientType } from "~/schema/clientSchema";
 // import WorkstationListItem from "~/page-components/erp/workstations/WorkstationListItem"
 
 import { truncString } from "~/utils/truncString";
+
+import { type ClientType } from "~/schema/clientSchema";
 
 export type apiListItems = {
   [key: string]: {

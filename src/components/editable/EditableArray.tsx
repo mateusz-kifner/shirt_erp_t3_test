@@ -1,10 +1,13 @@
+import { useEffect, useId, useState, type ComponentType } from "react";
+
 import { useListState } from "@mantine/hooks";
 import { IconDots, IconPlus, IconTrashX } from "@tabler/icons-react";
 import { isEqual, omit } from "lodash";
-import { useEffect, useId, useState, type ComponentType } from "react";
+
 import Button from "~/components/basic/Button";
-import type EditableInput from "~/types/EditableInput";
 import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
+
+import type EditableInput from "~/types/EditableInput";
 
 // fixme submit only on edit end
 

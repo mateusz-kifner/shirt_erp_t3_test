@@ -1,5 +1,4 @@
-import { Loader, Stack } from "@mantine/core"
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 export default dynamic(() => import("./EditableTableSSR"), {
   // Disable during server side rendering
@@ -7,8 +6,8 @@ export default dynamic(() => import("./EditableTableSSR"), {
 
   // Render anything as fallback on server, e.g. loader or html content without editor
   loading: () => (
-    <Stack justify="center" align="center" style={{ height: 100 }}>
-      <Loader />
-    </Stack>
+    <div className="flex justify-center" style={{ height: 100 }}>
+      Loading ...
+    </div>
   ),
-})
+});

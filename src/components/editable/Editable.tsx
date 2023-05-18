@@ -1,6 +1,12 @@
-import { useId } from "@mantine/hooks";
 import type { ComponentType, CSSProperties } from "react";
-import NotImplemented from "~/components/NotImplemented";
+
+import { useId } from "@mantine/hooks";
+import {
+  IconBuildingCommunity,
+  IconCalendar,
+  IconCash,
+  IconNumbers,
+} from "@tabler/icons-react";
 
 // Editable imports
 import EditableAddress from "~/components/editable/EditableAddress";
@@ -21,13 +27,8 @@ import EditableTable from "~/components/editable/EditableTable";
 import EditableTableView from "~/components/editable/EditableTableView";
 import EditableText from "~/components/editable/EditableText";
 
-import {
-  IconBuildingCommunity,
-  IconCalendar,
-  IconCash,
-  IconNumbers,
-} from "@tabler/icons-react";
 import apiListItems from "~/components/editable/apiListItems";
+import NotImplemented from "~/components/NotImplemented";
 import { useUserContext } from "~/context/userContext";
 
 interface BaseTemplateType<TName, TValue = string> {

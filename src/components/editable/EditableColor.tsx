@@ -1,9 +1,12 @@
-import { useClickOutside, useClipboard, useHover } from "@mantine/hooks";
 import { useEffect, useId, useState, type CSSProperties } from "react";
+
+import { useClickOutside, useClipboard, useHover } from "@mantine/hooks";
 import DisplayCell from "~/components/basic/DisplayCell";
-import type EditableInput from "~/types/EditableInput";
+
 import colorNames from "~/utils/color-names.json";
 import preventLeave from "~/utils/preventLeave";
+
+import type EditableInput from "~/types/EditableInput";
 
 const colorNameKeys = Object.keys(colorNames);
 const colorNamesRGB: [number, number, number][] = colorNameKeys.map((val) => [

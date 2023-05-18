@@ -1,6 +1,8 @@
 import { useEffect, useId, useState } from "react";
+
 import InputLabel from "~/components/input/InputLabel";
 import useTranslation from "~/hooks/useTranslation";
+
 import type EditableInput from "~/types/EditableInput";
 
 interface EditableEnumProps extends EditableInput<string> {

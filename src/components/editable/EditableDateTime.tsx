@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 import {
   useClickOutside,
   useClipboard,
@@ -6,11 +8,12 @@ import {
 } from "@mantine/hooks";
 import { IconCalendar, IconClock, IconCopy } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { useEffect, useRef, useState } from "react";
+
 import DisplayCell from "~/components/basic/DisplayCell";
 import { showNotification } from "~/lib/notifications";
-import type EditableInput from "~/types/EditableInput";
 import preventLeave from "~/utils/preventLeave";
+
+import type EditableInput from "~/types/EditableInput";
 
 // TODO: make it editable
 
