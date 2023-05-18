@@ -1,5 +1,3 @@
-import React from "react";
-
 const file_upload = () => {
   return (
     <div>

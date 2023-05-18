@@ -1,19 +1,14 @@
-import { useElementSize, useMediaQuery } from "@mantine/hooks";
+import { Children, useId, useState, type ReactNode } from "react";
+
+import { useElementSize } from "@mantine/hooks";
+import { type Icon as TablerIcon } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import {
-  Children,
-  type ComponentType,
-  type ReactNode,
-  useId,
-  useState,
-  MouseEvent,
-} from "react";
+
+import ErrorBoundary from "~/components/ErrorBoundary";
+import MultiTabs from "~/components/MultiTabs";
 import { useUserContext } from "~/context/userContext";
 import useRQCache from "~/hooks/useRQCache";
 import useTranslation from "~/hooks/useTranslation";
-import MultiTabs from "./MultiTabs";
-import ErrorBoundary from "./ErrorBoundary";
-import { type Icon as TablerIcon } from "@tabler/icons-react";
 
 // import MultiTabs from "./MultiTabs"
 

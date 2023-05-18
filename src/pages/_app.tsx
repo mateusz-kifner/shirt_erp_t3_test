@@ -1,16 +1,17 @@
 import { type AppType } from "next/app";
 
-import { api } from "~/utils/api";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Logger from "js-logger";
+import Head from "next/head";
 
-import "~/styles/globals.css";
+import ErrorBoundary from "~/components/ErrorBoundary";
 import AppLayout from "~/components/layout/AppLayout";
 import { UserContextProvider } from "~/context/userContext";
-import { Notifications, showNotification } from "~/lib/notifications";
-import Logger from "js-logger";
 import { env } from "~/env.mjs";
-import ErrorBoundary from "~/components/ErrorBoundary";
-import Head from "next/head";
+import { Notifications, showNotification } from "~/lib/notifications";
+import { api } from "~/utils/api";
+
+import "~/styles/globals.css";
 
 // TODO: refactor logger
 

@@ -1,10 +1,12 @@
-import React, { type FormEvent, useState } from "react";
-import { api } from "~/utils/api";
-import { useRouter } from "next/router";
+import { useState, type FormEvent } from "react";
+
 import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "~/lib/session";
-import useTranslation from "~/hooks/useTranslation";
+import { useRouter } from "next/router";
+
 import Modal from "~/components/basic/Modal";
+import useTranslation from "~/hooks/useTranslation";
+import { sessionOptions } from "~/lib/session";
+import { api } from "~/utils/api";
 
 export default function Login() {
   const router = useRouter();

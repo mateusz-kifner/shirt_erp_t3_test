@@ -1,9 +1,6 @@
+import { useId, type ButtonHTMLAttributes, type ComponentType } from "react";
+
 import Link from "next/link";
-import React, {
-  type ComponentType,
-  type ButtonHTMLAttributes,
-  useId,
-} from "react";
 import type TablerIconType from "~/types/TablerIconType";
 
 interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

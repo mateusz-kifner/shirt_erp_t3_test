@@ -1,20 +1,22 @@
 import {
-  type ComponentPropsWithoutRef,
   forwardRef,
   useEffect,
+  useId,
+  useState,
+  type ComponentPropsWithoutRef,
   type ReactNode,
   type SyntheticEvent,
-  useState,
-  useId,
 } from "react";
-import Tooltip from "./basic/Tooltip";
+
 import { useMergedRef, useResizeObserver } from "@mantine/hooks";
-import { simpleColors } from "~/utils/getRandomColor";
-import { omit } from "lodash";
 import { IconPinned } from "@tabler/icons-react";
+import { omit } from "lodash";
+
+import Portal from "~/components/Portal";
+import Tooltip from "~/components/basic/Tooltip";
 import { useUserContext } from "~/context/userContext";
-import Portal from "./Portal";
 import type TablerIconType from "~/types/TablerIconType";
+import { simpleColors } from "~/utils/getRandomColor";
 
 export interface TabProps extends ComponentPropsWithoutRef<"button"> {
   /** Value that is used to connect Tab with associated panel */

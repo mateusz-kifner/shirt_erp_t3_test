@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+
 import { getRandomColorByNumber } from "~/utils/getRandomColor";
 
 interface DefaultListItemProps<T> {

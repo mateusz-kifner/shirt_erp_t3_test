@@ -1,6 +1,6 @@
-import { clientSchema } from "~/schema/clientSchema";
-
 import { omit } from "lodash";
+
+import { clientSchema } from "~/schema/clientSchema";
 import {
   createProcedureDeleteById,
   createProcedureGetAll,

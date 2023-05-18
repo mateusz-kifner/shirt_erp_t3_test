@@ -51,10 +51,10 @@ const Header = () => {
           className="border-1 inline-flex h-9 w-9
             animate-pop items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-            disabled:pointer-events-none
-            disabled:bg-stone-700 hover:bg-stone-950 
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
             active:focus:scale-95 active:focus:animate-none
-            active:hover:scale-95 active:hover:animate-none"
+            disabled:pointer-events-none disabled:bg-stone-700"
         >
           <IconSearch className="stroke-gray-200" />
         </button>
@@ -62,10 +62,10 @@ const Header = () => {
           className="border-1 inline-flex h-9 w-9
             animate-pop items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-            disabled:pointer-events-none
-            disabled:bg-stone-700 hover:bg-stone-950 
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
             active:focus:scale-95 active:focus:animate-none
-            active:hover:scale-95 active:hover:animate-none"
+            disabled:pointer-events-none disabled:bg-stone-700"
           disabled
         >
           <IconMessage className="stroke-gray-200" />
@@ -74,10 +74,10 @@ const Header = () => {
           className="border-1 inline-flex h-9 w-9
             animate-pop items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-            disabled:pointer-events-none
-            disabled:bg-stone-700 hover:bg-stone-950 
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
             active:focus:scale-95 active:focus:animate-none
-            active:hover:scale-95 active:hover:animate-none"
+            disabled:pointer-events-none disabled:bg-stone-700"
           disabled
         >
           <IconBell className="stroke-gray-200" />
@@ -88,10 +88,10 @@ const Header = () => {
           className="border-1 inline-flex h-9 w-9
             animate-pop items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
-            disabled:pointer-events-none
-            disabled:bg-stone-700 hover:bg-stone-950 
+            hover:bg-stone-950
+            active:hover:scale-95 active:hover:animate-none 
             active:focus:scale-95 active:focus:animate-none
-            active:hover:scale-95 active:hover:animate-none"
+            disabled:pointer-events-none disabled:bg-stone-700"
         >
           <IconSettings className="stroke-gray-200" />
         </Link>

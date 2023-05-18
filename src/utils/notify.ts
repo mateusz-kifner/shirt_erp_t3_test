@@ -1,4 +1,5 @@
 import Logger from "js-logger";
+
 import { showNotification } from "~/lib/notifications";
 
 /**

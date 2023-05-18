@@ -1,9 +1,10 @@
-import { type AriaColorSliderOptions, useColorSlider } from "@react-aria/color";
+import { useRef } from "react";
+
+import { useColorSlider, type AriaColorSliderOptions } from "@react-aria/color";
+import { useFocusRing } from "@react-aria/focus";
+import { useLocale } from "@react-aria/i18n";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useColorSliderState } from "@react-stately/color";
-import { useLocale } from "@react-aria/i18n";
-import { useFocusRing } from "@react-aria/focus";
-import { useRef } from "react";
 
 const TRACK_THICKNESS = 28;
 const THUMB_SIZE = 20;

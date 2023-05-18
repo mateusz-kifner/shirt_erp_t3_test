@@ -1,14 +1,16 @@
 import type { ComponentType } from "react";
+
 import {
+  IconBell,
   IconChecklist,
   IconCrown,
+  IconFile,
   IconMail,
   IconShirt,
-  IconUser,
-  IconFile,
-  IconBell,
   IconShoppingCart,
+  IconUser,
 } from "@tabler/icons-react";
+
 import type TablerIconType from "./types/TablerIconType";
 
 const navigationData: {

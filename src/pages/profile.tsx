@@ -1,8 +1,8 @@
-import React from "react";
-import { api } from "~/utils/api";
 import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "~/lib/session";
 import { useRouter } from "next/router";
+
+import { sessionOptions } from "~/lib/session";
+import { api } from "~/utils/api";
 
 // Make sure to check https://nextjs.org/docs/basic-features/layouts for more info on how to use layouts
 export default function SgProfile() {

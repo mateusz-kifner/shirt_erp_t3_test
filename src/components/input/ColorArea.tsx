@@ -1,7 +1,8 @@
-import { AriaColorAreaOptions, useColorArea } from "@react-aria/color";
-import { useColorAreaState } from "@react-stately/color";
-import { useFocusRing } from "@react-aria/focus";
 import { useRef } from "react";
+
+import { useColorArea, type AriaColorAreaOptions } from "@react-aria/color";
+import { useFocusRing } from "@react-aria/focus";
+import { useColorAreaState } from "@react-stately/color";
 
 const SIZE = 192;
 const FOCUSED_THUMB_SIZE = 28;

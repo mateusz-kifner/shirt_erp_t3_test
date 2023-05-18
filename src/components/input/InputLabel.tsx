@@ -1,6 +1,8 @@
+import { type LabelHTMLAttributes, type ReactNode } from "react";
+
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
-import React, { type LabelHTMLAttributes, type ReactNode } from "react";
+
 import { showNotification } from "~/lib/notifications";
 
 //  LabelHTMLAttributes {

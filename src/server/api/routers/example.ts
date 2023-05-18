@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 import {
-  createTRPCRouter,
-  publicProcedure,
-  privilegedProcedure,
   authenticatedProcedure,
+  createTRPCRouter,
+  privilegedProcedure,
+  publicProcedure,
 } from "~/server/api/trpc";
 
 export const exampleRouter = createTRPCRouter({

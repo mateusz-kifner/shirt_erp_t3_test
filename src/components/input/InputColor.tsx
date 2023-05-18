@@ -1,6 +1,7 @@
+import { useState } from "react";
+
 import { parseColor } from "@react-stately/color";
 import ColorArea from "./ColorArea";
-import { useState } from "react";
 import ColorSlider from "./ColorSlider";
 
 function InputColor() {

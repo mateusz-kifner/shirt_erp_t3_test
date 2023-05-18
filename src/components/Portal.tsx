@@ -1,6 +1,6 @@
-/* eslint-disable react/no-unused-prop-types */
-import React, { type ReactPortal, useRef, useState } from "react";
+import React, { useRef, useState, type ReactPortal } from "react";
 import { createPortal } from "react-dom";
+
 import { useIsomorphicEffect } from "@mantine/hooks";
 
 // mantine portal helper component remixed

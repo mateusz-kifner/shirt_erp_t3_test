@@ -1,11 +1,12 @@
-import { useLocalStorage } from "@mantine/hooks";
 import {
   createContext,
-  type ReactNode,
   useContext,
   type Dispatch,
+  type ReactNode,
   type SetStateAction,
 } from "react";
+
+import { useLocalStorage } from "@mantine/hooks";
 
 interface UserContextType {
   debug: boolean;

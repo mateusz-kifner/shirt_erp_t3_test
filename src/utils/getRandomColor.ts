@@ -1,6 +1,7 @@
-import simpleHash from "./simpleHash";
-import colorNames from "./color-names.json";
 import { startCase, toLower } from "lodash";
+
+import colorNames from "./color-names.json";
+import simpleHash from "./simpleHash";
 
 const colorNamesValues = Object.values(colorNames);
 const colorNamesKeys = Object.keys(colorNames);

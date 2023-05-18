@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, authenticatedProcedure } from "~/server/api/trpc";
-
+import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
 import { prisma } from "~/server/db";
 
 export const exampleRouter = createTRPCRouter({

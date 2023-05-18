@@ -1,7 +1,9 @@
+import { useState } from "react";
+
 import { useLocalStorage } from "@mantine/hooks";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+
 import NavButton from "~/components/layout/NavButton";
 import navigationData from "~/navigationData";
 
