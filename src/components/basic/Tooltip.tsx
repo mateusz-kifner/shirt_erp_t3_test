@@ -1,44 +1,5 @@
-import React, { type ReactNode } from "react";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
-
-// import { OptionalPortal } from "../OptionalPortal";
-// import getAbsolutePositionStyle from "~/utils/getAbsolutePositionStyle";
-// import Portal from "../Portal";
-
-// function getToolTipPosition(
-//   rect: DOMRect | undefined,
-//   position: "left" | "right" | "top" | "bottom",
-//   spacing: number | string = 6
-// ) {
-//   const style: CSSProperties = {};
-
-//   if (rect === undefined) return style;
-
-//   if (position === "left") {
-//     style.left = `${rect.left}px`;
-//     style.top = `${rect.top + rect.height / 2}px`;
-//     style.marginRight = spacing;
-//   }
-//   if (position === "right") {
-//     style.left = `${rect.left + rect.width}px`;
-//     style.top = `${rect.top + rect.height / 2}px`;
-//     style.marginLeft = spacing;
-//   }
-
-//   if (position === "top") {
-//     style.left = `${rect.left + rect.width / 2}px`;
-//     style.top = `${rect.top}px`;
-//     style.marginBottom = spacing;
-//   }
-
-//   if (position === "bottom") {
-//     style.left = `${rect.left + rect.width / 2}px`;
-//     style.top = `${rect.top}px`;
-//     style.marginTop = spacing;
-//   }
-
-//   return style;
-// }
+import { type ReactNode } from "react";
 
 interface TooltipProps {
   children: ReactNode;

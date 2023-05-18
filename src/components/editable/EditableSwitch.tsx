@@ -1,8 +1,7 @@
 import { useHover } from "@mantine/hooks";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import type EditableInput from "../../types/EditableInput";
-import Switch from "../basic/Switch";
-// import Switch from "../basic/Switch";
+import { useEffect, useState } from "react";
+import Switch from "~/components/basic/Switch";
+import type EditableInput from "~/types/EditableInput";
 
 // FIXME: respect disabled state
 

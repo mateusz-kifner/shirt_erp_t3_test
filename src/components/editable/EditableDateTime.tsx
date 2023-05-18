@@ -4,13 +4,13 @@ import {
   useId,
   useMediaQuery,
 } from "@mantine/hooks";
+import { IconCalendar, IconClock, IconCopy } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import preventLeave from "../../utils/preventLeave";
-import { IconCalendar, IconClock, IconCopy } from "@tabler/icons-react";
-import type EditableInput from "../../types/EditableInput";
+import DisplayCell from "~/components/basic/DisplayCell";
 import { showNotification } from "~/lib/notifications";
-import DisplayCell from "../basic/DisplayCell";
+import type EditableInput from "~/types/EditableInput";
+import preventLeave from "~/utils/preventLeave";
 
 // TODO: make it editable
 

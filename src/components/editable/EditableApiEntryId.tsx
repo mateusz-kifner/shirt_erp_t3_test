@@ -1,6 +1,6 @@
-import { CSSProperties } from "react";
-import EditableInput from "../../types/EditableInput";
-import EditableApiEntry from "./EditableApiEntry";
+import { type CSSProperties } from "react";
+import EditableApiEntry from "~/components/editable/EditableApiEntry";
+import type EditableInput from "~/types/EditableInput";
 import { api } from "~/utils/api";
 
 interface EditableApiEntryIdProps extends EditableInput<number> {

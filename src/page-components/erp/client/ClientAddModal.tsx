@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
-// import EditableApiEntry from "../../../components/editable/EditableApiEntry";
-// import EditableText from "../../../components/editable/EditableText";
-// import { ClientType } from "../../../types/ClientType";
-import { api } from "~/utils/api";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
+import { api } from "~/utils/api";
 
 interface ClientAddModalProps {
   opened: boolean;

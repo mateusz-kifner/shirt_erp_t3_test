@@ -1,8 +1,7 @@
 import { useEffect, useId, useState } from "react";
-import type EditableInput from "../../types/EditableInput";
+import InputLabel from "~/components/input/InputLabel";
 import useTranslation from "~/hooks/useTranslation";
-import InputLabel from "../input/InputLabel";
-import Button from "../basic/Button";
+import type EditableInput from "~/types/EditableInput";
 
 interface EditableEnumProps extends EditableInput<string> {
   enum_data: string[];
@@ -39,8 +38,6 @@ const EditableEnum = ({
 
       {/* <div style={{ position: "relative" }}> */}
       <div className="flex-grow">
-        
-
         {/* <Listbox value={data} onChange={onChangeData}>
           <div className="relative">
             <Listbox.Button

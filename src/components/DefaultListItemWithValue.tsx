@@ -1,5 +1,5 @@
-import { getRandomColorByNumber } from "../utils/getRandomColor";
-import { truncString } from "../utils/truncString";
+import { getRandomColorByNumber } from "~/utils/getRandomColor";
+import { truncString } from "~/utils/truncString";
 
 interface DefaultListItemWithValueProps<T> {
   onChange?: (item: T) => void;
@@ -66,12 +66,12 @@ export function DefaultListItemWithValue<
             py-0 
             text-gray-200 
             transition-all 
-            disabled:pointer-events-none  
-            disabled:bg-stone-700 
-            hover:bg-black 
-            hover:bg-opacity-20
-            active:focus:scale-95
+            hover:bg-black  
+            hover:bg-opacity-20 
             active:hover:scale-95 
+            active:focus:scale-95
+            disabled:pointer-events-none
+            disabled:bg-stone-700 
             dark:hover:bg-white 
             dark:hover:bg-opacity-10 
             ${

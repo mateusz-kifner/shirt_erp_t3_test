@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import navigationData from "../../navigationData";
-import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react";
-import { useRouter } from "next/router";
-import NavButton from "./NavButton";
 import { useLocalStorage } from "@mantine/hooks";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import NavButton from "~/components/layout/NavButton";
+import navigationData from "~/navigationData";
 
 function Navigation() {
   const router = useRouter();
@@ -30,7 +30,7 @@ function Navigation() {
         navigationCollapsed ? "w-20" : "w-64"
       }`}
     >
-      <div className="overflow-y-auto overflow-x-hidden transition-all scrollbar  scrollbar-track-transparent scrollbar-thumb-blue-500 scrollbar-corner-transparent scrollbar-thumb-rounded-full scrollbar-w-2 ">
+      <div className="scrollbar scrollbar-track-transparent scrollbar-thumb-blue-500 scrollbar-corner-transparent  scrollbar-thumb-rounded-full scrollbar-w-2 overflow-y-auto overflow-x-hidden transition-all ">
         <div className="flex flex-col gap-2 py-3">
           {navigationData.map(
             (val) =>

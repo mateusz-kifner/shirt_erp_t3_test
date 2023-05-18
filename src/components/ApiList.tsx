@@ -1,20 +1,17 @@
-import { type ReactNode, useEffect, useState } from "react";
 import {
   IconPlus,
   IconRefresh,
   IconSortAscending,
   IconSortDescending,
 } from "@tabler/icons-react";
+import { useEffect, useState, type ReactNode } from "react";
 
-// import { useGesture } from "@use-gesture/react"
 import { useDebouncedValue, useToggle } from "@mantine/hooks";
-import ActionButton from "./basic/ActionButton";
-import List from "./List";
-import { api } from "~/utils/api";
+import List from "~/components/List";
+import ActionButton from "~/components/basic/ActionButton";
+import Pagination from "~/components/basic/Pagination";
 import useTranslation from "~/hooks/useTranslation";
-import Pagination from "./basic/Pagination";
-
-// import List from "../List"
+import { api } from "~/utils/api";
 
 interface ApiListProps<T = any> {
   entryName: string;

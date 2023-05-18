@@ -8,12 +8,14 @@ import {
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
-import React, { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import SuperJSON from "superjson";
 import Button from "~/components/basic/Button";
-// import Editable from "~/components/editable/Editable";
-import EditableAddress from "~/components/editable/EditableAddress";
-import EditableEnum from "~/components/editable/EditableEnum";
+import DisplayCell from "~/components/basic/DisplayCell";
+import Modal from "~/components/basic/Modal";
+import Popover from "~/components/basic/Popover";
+import Select from "~/components/basic/Select";
+import EditableDate from "~/components/editable/EditableDate";
 import EditableText from "~/components/editable/EditableText";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
@@ -21,20 +23,6 @@ import { sessionOptions } from "~/lib/session";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
-import template from "~/templates/test.template";
-import Tooltip from "~/components/basic/Tooltip";
-import DisplayCellExpanding from "~/components/basic/DisplayCellExpanding";
-import DisplayCell from "~/components/basic/DisplayCell";
-// import EditableColor from "~/components/editable/EditableColor";
-import InputColor from "~/components/input/InputColor";
-import Modal from "~/components/basic/Modal";
-import Select from "~/components/basic/Select";
-import Switch from "~/components/basic/Switch";
-import ScrollArea from "~/components/basic/ScrollArea";
-import Menu from "~/components/basic/Menu";
-import Alert from "~/components/basic/Alert";
-import EditableDate from "~/components/editable/EditableDate";
-import Popover from "~/components/basic/Popover";
 
 const testData = {
   name: "string",

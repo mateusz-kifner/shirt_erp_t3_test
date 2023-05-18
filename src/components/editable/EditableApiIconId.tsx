@@ -1,10 +1,8 @@
-import { useEffect, useId, useState } from "react";
 import { IconX } from "@tabler/icons-react";
-// import { useIconsContext } from "../../context/iconsContext"w
-import type EditableInput from "../../types/EditableInput";
-import Button from "../basic/Button";
-import Modal from "../basic/Modal";
-// import ApiIconSVG from "../api/ApiIconSVG"
+import { useEffect, useId, useState } from "react";
+import Button from "~/components/basic/Button";
+import Modal from "~/components/basic/Modal";
+import type EditableInput from "~/types/EditableInput";
 
 interface EditableApiIconIdProps extends EditableInput<number> {
   entryName?: string;

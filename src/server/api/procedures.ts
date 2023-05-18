@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { authenticatedProcedure } from "./trpc";
-import { prisma } from "../db";
 import { type Prisma } from "@prisma/client";
+import { z } from "zod";
+import { prisma } from "~/server/db";
+import { authenticatedProcedure } from "./trpc";
 
 type PrismaModelName = keyof typeof prisma;
 

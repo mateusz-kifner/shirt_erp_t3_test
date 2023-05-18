@@ -1,8 +1,7 @@
-import React, { type CSSProperties, useEffect, useRef, useState } from "react";
-import getAutoClose from "./get-auto-close";
+import { IconInfoCircle, IconX } from "@tabler/icons-react";
+import React, { useEffect, useRef, useState, type CSSProperties } from "react";
 import { type NotificationProps } from "../types";
-import Button from "~/components/basic/Button";
-import { IconBug, IconInfoCircle, IconX } from "@tabler/icons-react";
+import getAutoClose from "./get-auto-close";
 
 export interface NotificationContainerProps {
   notification: NotificationProps;

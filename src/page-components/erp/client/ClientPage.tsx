@@ -1,15 +1,10 @@
-// import template from "../../../models/client.model.json";
-
-// import ApiEntryEditable from "../../../components/api/ApiEntryEditable";
-import { useRouter } from "next/router";
-// import Workspace from "../../../components/layout/Workspace";
-
-import { useState } from "react";
-import { IconList, IconNotebook } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
+import { IconList, IconNotebook } from "@tabler/icons-react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Workspace from "~/components/Workspace";
 import ClientAddModal from "~/page-components/erp/client/ClientAddModal";
 import ClientsList from "~/page-components/erp/client/ClientList";
-import Workspace from "~/components/Workspace";
 
 const entryName = "clients";
 

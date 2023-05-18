@@ -1,9 +1,9 @@
-import { useEffect, useState, type CSSProperties, useRef, useId } from "react";
-import preventLeave from "../../utils/preventLeave";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
+import DisplayCellExpanding from "~/components/basic/DisplayCellExpanding";
+import InputLabel from "~/components/input/InputLabel";
 import type EditableInput from "~/types/EditableInput";
-import { handleBlurForInnerElements } from "../../utils/handleBlurForInnerElements";
-import DisplayCellExpanding from "../basic/DisplayCellExpanding";
-import InputLabel from "../input/InputLabel";
+import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
+import preventLeave from "~/utils/preventLeave";
 
 interface EditableTextProps extends EditableInput<string> {
   maxLength?: number;

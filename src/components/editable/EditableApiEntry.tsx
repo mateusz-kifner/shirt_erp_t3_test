@@ -1,21 +1,20 @@
 import { useClipboard, useId } from "@mantine/hooks";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
-
 import {
   IconCopy,
   IconExternalLink,
   IconQuestionMark,
   IconTrashX,
 } from "@tabler/icons-react";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import { isEqual } from "lodash";
-import type EditableInput from "../../types/EditableInput";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import Button from "~/components/basic/Button";
+import Modal from "~/components/basic/Modal";
+import Tooltip from "~/components/basic/Tooltip";
 import useTranslation from "~/hooks/useTranslation";
 import { showNotification } from "~/lib/notifications";
-import Tooltip from "../basic/Tooltip";
-import Button from "../basic/Button";
-import Modal from "../basic/Modal";
+import type EditableInput from "~/types/EditableInput";
 
 interface EditableApiEntryProps extends EditableInput<any> {
   entryName: string;

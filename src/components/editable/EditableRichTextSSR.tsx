@@ -1,28 +1,17 @@
-import { ActionIcon, Box, Input, TypographyStylesProvider } from "@mantine/core"
 import {
   useClickOutside,
   useClipboard,
   useHover,
   useMergedRef,
-} from "@mantine/hooks"
-import { showNotification } from "@mantine/notifications"
-import { useEffect, useState } from "react"
-import preventLeave from "../../utils/preventLeave"
-import { IconCopy } from "@tabler/icons-react"
-import DOMPurify from "dompurify"
-import TurndownService from "turndown"
-import { SxRadius } from "../../styles/basic"
-import { RichTextEditor, Link } from "@mantine/tiptap"
-import { useEditor } from "@tiptap/react"
-import Highlight from "@tiptap/extension-highlight"
-import StarterKit from "@tiptap/starter-kit"
-import Underline from "@tiptap/extension-underline"
-import TextAlign from "@tiptap/extension-text-align"
-import Superscript from "@tiptap/extension-superscript"
-import SubScript from "@tiptap/extension-subscript"
-import EditableInput from "../../types/EditableInput"
+} from "@mantine/hooks";
+import { IconCopy } from "@tabler/icons-react";
+import DOMPurify from "dompurify";
+import { useEffect, useState } from "react";
+import TurndownService from "turndown";
+import type EditableInput from "~/types/EditableInput";
+import preventLeave from "~/utils/preventLeave";
 
-const turndownService = new TurndownService()
+const turndownService = new TurndownService();
 
 interface EditableRichTextProps extends EditableInput<string> {}
 
@@ -40,9 +29,9 @@ const EditableRichText = ({
       : initialValue
       ? DOMPurify.sanitize(initialValue)
       : ""
-  )
+  );
 
-  const [focus, setFocus] = useState<boolean>(false)
+  const [focus, setFocus] = useState<boolean>(false);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -56,18 +45,18 @@ const EditableRichText = ({
 
     content: text,
     onUpdate: ({ editor }) => {
-      setText(editor.getHTML())
+      setText(editor.getHTML());
     },
-  })
-  const clickOutsideRef = useClickOutside(() => setFocus(false))
+  });
+  const clickOutsideRef = useClickOutside(() => setFocus(false));
   // const richTextEditorRef = useRef<Editor>(null)
-  const clipboard = useClipboard()
-  const { hovered, ref: hoverRef } = useHover()
-  const mergedRef = useMergedRef(clickOutsideRef, hoverRef)
+  const clipboard = useClipboard();
+  const { hovered, ref: hoverRef } = useHover();
+  const mergedRef = useMergedRef(clickOutsideRef, hoverRef);
 
   useEffect(() => {
     if (focus) {
-      window.addEventListener("beforeunload", preventLeave)
+      window.addEventListener("beforeunload", preventLeave);
       // setTimeout(() => {
       //   richTextEditorRef.current?.editor?.focus()
       //   richTextEditorRef.current?.editor?.setSelection(
@@ -78,25 +67,25 @@ const EditableRichText = ({
     } else {
       //prevent excessive updates
       if (text != value && text != "") {
-        onSubmit?.(text)
+        onSubmit?.(text);
       }
-      window.removeEventListener("beforeunload", preventLeave)
+      window.removeEventListener("beforeunload", preventLeave);
     }
     // eslint-disable-next-line
-  }, [focus])
+  }, [focus]);
 
   useEffect(() => {
     return () => {
-      window.removeEventListener("beforeunload", preventLeave)
-    }
-  }, [])
+      window.removeEventListener("beforeunload", preventLeave);
+    };
+  }, []);
 
   useEffect(() => {
     if (value) {
-      const cleanValue = DOMPurify.sanitize(value)
-      setText(cleanValue)
+      const cleanValue = DOMPurify.sanitize(value);
+      setText(cleanValue);
     }
-  }, [value])
+  }, [value]);
 
   return (
     <Input.Wrapper
@@ -121,12 +110,12 @@ const EditableRichText = ({
                           ""
                         )
                     )
-                  )
-                  clipboard.copy(plainText)
+                  );
+                  clipboard.copy(plainText);
                   showNotification({
                     title: "Skopiowano do schowka",
                     message: plainText,
-                  })
+                  });
                 }}
                 tabIndex={-1}
               >
@@ -218,7 +207,7 @@ const EditableRichText = ({
         </TypographyStylesProvider>
       )}
     </Input.Wrapper>
-  )
-}
+  );
+};
 
-export default EditableRichText
+export default EditableRichText;

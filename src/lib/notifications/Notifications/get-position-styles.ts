@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
-import { NotificationsPositioning } from "../types";
+import { type CSSProperties } from "react";
+import { type NotificationsPositioning } from "../types";
 
 export default function getPositionStyle(
   [vertical, horizontal]: NotificationsPositioning,

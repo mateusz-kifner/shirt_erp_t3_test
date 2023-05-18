@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { getRandomColorByNumber } from "../utils/getRandomColor";
+import { getRandomColorByNumber } from "~/utils/getRandomColor";
 
 interface DefaultListItemProps<T> {
   onChange?: (item: T) => void;
@@ -38,13 +38,13 @@ export function DefaultListItem<T extends { id?: number | null }>({
         text-gray-200 
         outline-offset-2
         transition-all 
-        focus-visible:outline-sky-600
+        hover:bg-black
+        hover:bg-opacity-10 
+        focus-visible:outline-sky-600 
+        active:hover:scale-95
+        active:focus:scale-95
         disabled:pointer-events-none 
         disabled:bg-stone-700 
-        hover:bg-black
-        hover:bg-opacity-10
-        active:focus:scale-95 
-        active:hover:scale-95 
         dark:hover:bg-white
         dark:hover:bg-opacity-10 
         ${

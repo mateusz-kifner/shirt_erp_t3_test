@@ -72,14 +72,14 @@ export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>;
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
+import type { PrismaClient } from "@prisma/client";
 import { initTRPC } from "@trpc/server";
+import type { IronSession } from "iron-session";
+import { getIronSession } from "iron-session";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { getIronSession } from "iron-session";
-import type { IronSession } from "iron-session";
-import { prisma } from "../db";
 import { sessionOptions } from "~/lib/session";
-import type { PrismaClient } from "@prisma/client";
+import { prisma } from "~/server/db";
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,

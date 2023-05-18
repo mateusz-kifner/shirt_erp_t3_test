@@ -1,21 +1,17 @@
-import {
-  useClipboard,
-  useDebouncedValue,
-  useElementSize,
-} from "@mantine/hooks";
+import { useDebouncedValue } from "@mantine/hooks";
+import { IconCalendar } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import Calendar from "react-calendar";
-import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { useId, useRef, useState } from "react";
+import Calendar from "react-calendar";
+import ActionButton from "~/components/basic/ActionButton";
+import DisplayCell from "~/components/basic/DisplayCell";
+import Popover from "~/components/basic/Popover";
+import InputLabel from "~/components/input/InputLabel";
 import useTranslation from "~/hooks/useTranslation";
 import type EditableInput from "~/types/EditableInput";
-import InputLabel from "../input/InputLabel";
-import DisplayCell from "../basic/DisplayCell";
-import Popover from "../basic/Popover";
 import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
-import { IconCalendar } from "@tabler/icons-react";
-import ActionButton from "../basic/ActionButton";
 
 type InputDateProps = EditableInput<string>;
 

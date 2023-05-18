@@ -1,7 +1,5 @@
 import { clientSchema } from "~/schema/clientSchema";
 
-import { createTRPCRouter, authenticatedProcedure } from "~/server/api/trpc";
-import { prisma } from "~/server/db";
 import { omit } from "lodash";
 import {
   createProcedureDeleteById,
@@ -9,7 +7,9 @@ import {
   createProcedureGetById,
   createProcedureSearch,
   createProcedureSearchWithPagination,
-} from "../procedures";
+} from "~/server/api/procedures";
+import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
+import { prisma } from "~/server/db";
 
 const clientSchemaWithoutId = clientSchema.omit({ id: true });
 

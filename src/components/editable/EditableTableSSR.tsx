@@ -1,31 +1,17 @@
-import {
-  Button,
-  Group,
-  Stack,
-  Text,
-  Tooltip,
-  useMantineTheme,
-  Input,
-  Divider,
-  ScrollArea,
-  Portal,
-} from "@mantine/core"
 import React, {
-  ComponentType,
   useEffect,
   useId,
   useMemo,
   useState,
-} from "react"
-import { useTranslation } from "../../i18n"
+  type ComponentType,
+} from "react";
 
 // Icons
-import { IconScreenShare, IconTrash } from "@tabler/icons-react"
-import TableCenterIcon from "../icons/TableCenterIcon"
-import TableEdgeIcon from "../icons/TableEdgeIcon"
+import { IconScreenShare, IconTrash } from "@tabler/icons-react";
+import TableCenterIcon from "~/components/icons/TableCenterIcon";
+import TableEdgeIcon from "~/components/icons/TableEdgeIcon";
 
 // Spreadsheet Imports
-import Spreadsheet from "react-spreadsheet"
 import type {
   CellComponent,
   ColumnIndicatorComponent,
@@ -33,41 +19,41 @@ import type {
   Matrix,
   Point,
   RowIndicatorComponent,
-} from "react-spreadsheet"
-import RowIndicator, {
-  enhance as enhanceRowIndicator,
-} from "../spreadsheet/RowIndicator"
+} from "react-spreadsheet";
+import Spreadsheet from "react-spreadsheet";
+import { Cell, enhance as enhanceCell } from "../spreadsheet/Cell";
 import ColumnIndicator, {
   enhance as enhanceColumnIndicator,
-} from "../spreadsheet/ColumnIndicator"
-import CornerIndicator from "../spreadsheet/CornerIndicator"
-import { Cell, enhance as enhanceCell } from "../spreadsheet/Cell"
-import DataViewer from "../spreadsheet/DataViewer"
+} from "../spreadsheet/ColumnIndicator";
+import CornerIndicator from "../spreadsheet/CornerIndicator";
+import DataEditorDisabled from "../spreadsheet/DataEditorDisabled";
+import DataViewer from "../spreadsheet/DataViewer";
+import RowIndicator, {
+  enhance as enhanceRowIndicator,
+} from "../spreadsheet/RowIndicator";
 import {
   UniversalMatrix,
   useSpreadSheetData,
-} from "../spreadsheet/useSpreadSheetData"
-import DataEditorDisabled from "../spreadsheet/DataEditorDisabled"
+} from "../spreadsheet/useSpreadSheetData";
 
-import { SxBackground } from "../../styles/basic"
-import { getRandomColorByNumber } from "../../utils/getRandomColor"
-import EditableInput from "../../types/EditableInput"
+import type EditableInput from "../../types/EditableInput";
+import { getRandomColorByNumber } from "../../utils/getRandomColor";
 
 interface EditableTableProps extends EditableInput<Matrix<any>> {
-  metadataIcons?: ComponentType[]
-  metadataLabels?: string[]
+  metadataIcons?: ComponentType[];
+  metadataLabels?: string[];
   metadata: {
     [key: string]: {
-      id: number
-      [key: string]: any
-    }
-  }
+      id: number;
+      [key: string]: any;
+    };
+  };
   metadataActions: ((
     table: UniversalMatrix,
     metaId: number
-  ) => [UniversalMatrix, string])[]
-  metadataActionIcons: ComponentType[]
-  metadataActionLabels?: string[]
+  ) => [UniversalMatrix, string])[];
+  metadataActionIcons: ComponentType[];
+  metadataActionLabels?: string[];
 }
 
 const EditableTable = (props: EditableTableProps) => {
@@ -84,16 +70,16 @@ const EditableTable = (props: EditableTableProps) => {
     metadataActions,
     metadataActionIcons,
     metadataActionLabels,
-  } = props
-  const [statusText, setStatusText] = useState<string>("")
-  const uuid = useId()
-  const theme = useMantineTheme()
-  const [openedColumn, setOpenedColumn] = useState<boolean>(false)
-  const [openedRow, setOpenedRow] = useState<boolean>(false)
+  } = props;
+  const [statusText, setStatusText] = useState<string>("");
+  const uuid = useId();
+  const theme = useMantineTheme();
+  const [openedColumn, setOpenedColumn] = useState<boolean>(false);
+  const [openedRow, setOpenedRow] = useState<boolean>(false);
   const [contextPositionAndValue, setContextPositionAndValue] = useState<
     [number, number, number]
-  >([0, 0, -1])
-  const { t } = useTranslation()
+  >([0, 0, -1]);
+  const { t } = useTranslation();
   // const [data, setData] = useState<Matrix<any>>()
   const [
     data,
@@ -112,15 +98,15 @@ const EditableTable = (props: EditableTableProps) => {
         [undefined, undefined],
         [undefined, undefined],
       ]
-  )
-  const [selection, setSelection] = useState<Point[]>([])
-  const [updateCount, setUpdateCount] = useState<number>(0)
-  const [canUpdate, setCanUpdate] = useState<boolean>(true)
-  const [fullscreen, setFullscreen] = useState<boolean>(false)
-  const incrementUpdateCount = () => setUpdateCount((count) => count + 1)
+  );
+  const [selection, setSelection] = useState<Point[]>([]);
+  const [updateCount, setUpdateCount] = useState<number>(0);
+  const [canUpdate, setCanUpdate] = useState<boolean>(true);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
+  const incrementUpdateCount = () => setUpdateCount((count) => count + 1);
 
   const setDataWhenNEQ = (new_data: UniversalMatrix) => {
-    let eq = true
+    let eq = true;
     if (
       new_data.length === data.length &&
       new_data[0].length === data[0].length
@@ -132,67 +118,67 @@ const EditableTable = (props: EditableTableProps) => {
             new_data[y][x]?.metaId !== data[y][x]?.metaId ||
             new_data[y][x]?.metaPropertyId !== data[y][x]?.metaPropertyId
           ) {
-            eq = false
+            eq = false;
           }
         }
       }
     } else {
-      eq = false
+      eq = false;
     }
 
     if (!eq) {
-      setData(new_data)
+      setData(new_data);
     }
-  }
+  };
 
-  const darkTheme = theme.colorScheme === "dark"
+  const darkTheme = theme.colorScheme === "dark";
 
   const setSelectionIfNotNull = (value: Point[]) => {
-    value.length != 0 && setSelection(value)
-  }
+    value.length != 0 && setSelection(value);
+  };
 
   const setMetadataOnSelection = (metadata: { [key: string]: any }) => {
-    setMetadata(selection, metadata)
-    incrementUpdateCount()
-    setSelection([])
-  }
+    setMetadata(selection, metadata);
+    incrementUpdateCount();
+    setSelection([]);
+  };
   const clearMetadataOnSelection = () => {
-    clearMetadata(selection)
-    incrementUpdateCount()
-    setSelection([])
-  }
+    clearMetadata(selection);
+    incrementUpdateCount();
+    setSelection([]);
+  };
 
   const onContextmenuColumn = (
     e: React.MouseEvent<HTMLDivElement>,
     column: number
   ) => {
-    e.preventDefault()
-    if (disabled) return
+    e.preventDefault();
+    if (disabled) return;
     if (!openedColumn) {
-      setOpenedColumn(true)
-      setContextPositionAndValue([e?.pageX, e?.pageY, column])
+      setOpenedColumn(true);
+      setContextPositionAndValue([e?.pageX, e?.pageY, column]);
     } else {
-      setOpenedColumn(false)
+      setOpenedColumn(false);
     }
-  }
+  };
 
   const onContextmenuRow = (
     e: React.MouseEvent<HTMLDivElement>,
     row: number
   ) => {
-    e.preventDefault()
-    if (disabled) return
+    e.preventDefault();
+    if (disabled) return;
     if (!openedColumn) {
-      setOpenedRow(true)
-      setContextPositionAndValue([e?.pageX, e?.pageY, row])
+      setOpenedRow(true);
+      setContextPositionAndValue([e?.pageX, e?.pageY, row]);
     } else {
-      setOpenedColumn(false)
+      setOpenedColumn(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (updateCount > 0 && canUpdate) {
-      let eq = true
+      let eq = true;
       if (
         value &&
         value.length === data.length &&
@@ -205,23 +191,23 @@ const EditableTable = (props: EditableTableProps) => {
               value[y][x]?.metaId !== data[y][x]?.metaId ||
               value[y][x]?.metaPropertyId !== data[y][x]?.metaPropertyId
             ) {
-              eq = false
+              eq = false;
             }
           }
         }
       } else {
-        eq = false
+        eq = false;
       }
 
       if (!eq) {
-        onSubmit && onSubmit(data)
-        setUpdateCount(0)
+        onSubmit && onSubmit(data);
+        setUpdateCount(0);
       }
     }
     //eslint-disable-next-line
-  }, [updateCount, canUpdate])
+  }, [updateCount, canUpdate]);
 
-  useEffect(() => {}, [disabled])
+  useEffect(() => {}, [disabled]);
 
   const enhancedColumnIndicator = useMemo(
     () =>
@@ -231,7 +217,7 @@ const EditableTable = (props: EditableTableProps) => {
       ) as unknown as ColumnIndicatorComponent,
     //eslint-disable-next-line
     [openedColumn]
-  )
+  );
 
   const enhancedRowIndicator = useMemo(
     () =>
@@ -241,14 +227,14 @@ const EditableTable = (props: EditableTableProps) => {
       ) as unknown as RowIndicatorComponent,
     //eslint-disable-next-line
     [openedRow]
-  )
+  );
 
   const enhancedCell = useMemo(
     () => enhanceCell(Cell, metadataIcons ?? []) as unknown as CellComponent,
     [metadataIcons]
-  )
+  );
 
-  const metadataActionsMemo = useMemo(() => metadataActions, [metadataActions])
+  const metadataActionsMemo = useMemo(() => metadataActions, [metadataActions]);
 
   return (
     <Input.Wrapper label={label} required={required}>
@@ -296,7 +282,7 @@ const EditableTable = (props: EditableTableProps) => {
                     <Button
                       variant="default"
                       onClick={() => {
-                        setOpenedColumn(false)
+                        setOpenedColumn(false);
                       }}
                     >
                       <Text color="grey" size="xs">
@@ -314,10 +300,10 @@ const EditableTable = (props: EditableTableProps) => {
                         />
                       }
                       onClick={() => {
-                        addColumn(contextPositionAndValue[2])
-                        incrementUpdateCount()
-                        setStatusText("Dodano kolumnę")
-                        setOpenedColumn(false)
+                        addColumn(contextPositionAndValue[2]);
+                        incrementUpdateCount();
+                        setStatusText("Dodano kolumnę");
+                        setOpenedColumn(false);
                       }}
                     >
                       {t("add-column-left")}
@@ -332,10 +318,10 @@ const EditableTable = (props: EditableTableProps) => {
                         />
                       }
                       onClick={() => {
-                        addColumn(contextPositionAndValue[2] + 1)
-                        incrementUpdateCount()
-                        setStatusText("Dodano kolumnę")
-                        setOpenedColumn(false)
+                        addColumn(contextPositionAndValue[2] + 1);
+                        incrementUpdateCount();
+                        setStatusText("Dodano kolumnę");
+                        setOpenedColumn(false);
                       }}
                     >
                       {t("add-column-right")}
@@ -352,10 +338,10 @@ const EditableTable = (props: EditableTableProps) => {
                         />
                       }
                       onClick={() => {
-                        removeColumn(contextPositionAndValue[2])
-                        incrementUpdateCount()
-                        setStatusText("Usunięto kolumnę")
-                        setOpenedColumn(false)
+                        removeColumn(contextPositionAndValue[2]);
+                        incrementUpdateCount();
+                        setStatusText("Usunięto kolumnę");
+                        setOpenedColumn(false);
                       }}
                     >
                       {t("remove-column")}
@@ -381,7 +367,7 @@ const EditableTable = (props: EditableTableProps) => {
                     <Button
                       variant="default"
                       onClick={() => {
-                        setOpenedRow(false)
+                        setOpenedRow(false);
                       }}
                     >
                       <Text color="grey" size="xs">
@@ -399,10 +385,10 @@ const EditableTable = (props: EditableTableProps) => {
                         />
                       }
                       onClick={() => {
-                        addRow(contextPositionAndValue[2])
-                        incrementUpdateCount()
-                        setStatusText("Dodano kolumnę")
-                        setOpenedRow(false)
+                        addRow(contextPositionAndValue[2]);
+                        incrementUpdateCount();
+                        setStatusText("Dodano kolumnę");
+                        setOpenedRow(false);
                       }}
                     >
                       {t("add-row-top")}
@@ -417,10 +403,10 @@ const EditableTable = (props: EditableTableProps) => {
                         />
                       }
                       onClick={() => {
-                        addRow(contextPositionAndValue[2] + 1)
-                        incrementUpdateCount()
-                        setStatusText("Dodano kolumnę")
-                        setOpenedRow(false)
+                        addRow(contextPositionAndValue[2] + 1);
+                        incrementUpdateCount();
+                        setStatusText("Dodano kolumnę");
+                        setOpenedRow(false);
                       }}
                     >
                       {t("add-row-bottom")}
@@ -437,10 +423,10 @@ const EditableTable = (props: EditableTableProps) => {
                         />
                       }
                       onClick={() => {
-                        removeRow(contextPositionAndValue[2])
-                        incrementUpdateCount()
-                        setStatusText("Usunięto kolumnę")
-                        setOpenedRow(false)
+                        removeRow(contextPositionAndValue[2]);
+                        incrementUpdateCount();
+                        setStatusText("Usunięto kolumnę");
+                        setOpenedRow(false);
                       }}
                     >
                       {t("remove-row")}
@@ -478,9 +464,9 @@ const EditableTable = (props: EditableTableProps) => {
                                   setMetadataOnSelection({
                                     metaId: metadata[key].id,
                                     metaPropertyId: index,
-                                  })
-                                  setStatusText("Ustawiono metadane")
-                                  incrementUpdateCount()
+                                  });
+                                  setStatusText("Ustawiono metadane");
+                                  incrementUpdateCount();
                                 }}
                               >
                                 {Icon && <Icon />}
@@ -514,10 +500,10 @@ const EditableTable = (props: EditableTableProps) => {
                                         metadataActionsMemo[index](
                                           data,
                                           metadata[key].id
-                                        )
-                                      setStatusText(status)
-                                      return new_data
-                                    })
+                                        );
+                                      setStatusText(status);
+                                      return new_data;
+                                    });
                                 }}
                               >
                                 {Icon && <Icon />}
@@ -537,9 +523,9 @@ const EditableTable = (props: EditableTableProps) => {
                 p={0}
                 size="xs"
                 onClick={() => {
-                  clearMetadataOnSelection()
-                  incrementUpdateCount()
-                  setStatusText("Usunięto metadane")
+                  clearMetadataOnSelection();
+                  incrementUpdateCount();
+                  setStatusText("Usunięto metadane");
                 }}
               >
                 <IconTrash />
@@ -553,7 +539,7 @@ const EditableTable = (props: EditableTableProps) => {
                 p={0}
                 size="xs"
                 onClick={() => {
-                  setFullscreen((fullscreen) => !fullscreen)
+                  setFullscreen((fullscreen) => !fullscreen);
                 }}
               >
                 <IconScreenShare />
@@ -565,13 +551,13 @@ const EditableTable = (props: EditableTableProps) => {
           <Spreadsheet
             data={data}
             onChange={(data) => {
-              setDataWhenNEQ(data)
-              incrementUpdateCount()
+              setDataWhenNEQ(data);
+              incrementUpdateCount();
             }}
             onSelect={setSelectionIfNotNull}
             darkMode={darkTheme}
             onModeChange={(mode) => {
-              setCanUpdate(mode === "view")
+              setCanUpdate(mode === "view");
             }}
             onCellCommit={() => setCanUpdate(true)}
             DataViewer={DataViewer}
@@ -599,7 +585,7 @@ const EditableTable = (props: EditableTableProps) => {
         </Text>
       </Stack>
     </Input.Wrapper>
-  )
-}
+  );
+};
 
-export default EditableTable
+export default EditableTable;

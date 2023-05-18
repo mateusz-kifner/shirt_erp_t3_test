@@ -1,25 +1,25 @@
-import type { ComponentType, CSSProperties } from "react";
-import NotImplemented from "../NotImplemented";
 import { useId } from "@mantine/hooks";
+import type { ComponentType, CSSProperties } from "react";
+import NotImplemented from "~/components/NotImplemented";
 
 // Editable imports
-import EditableText from "./EditableText";
-import EditableRichText from "./EditableRichText";
-import EditableDateTime from "./EditableDateTime";
-import EditableDate from "./EditableDate";
-import EditableSwitch from "./EditableSwitch";
-import EditableColor from "./EditableColor";
-import EditableEnum from "./EditableEnum";
-import EditableJSON from "./EditableJSON";
-import EditableApiIconId from "./EditableApiIconId";
-import EditableAddress from "./EditableAddress";
-import EditableFiles from "./EditableFiles";
-import EditableArray from "./EditableArray";
-import EditableApiEntry from "./EditableApiEntry";
-import EditableApiEntryId from "./EditableApiEntryId";
-import EditableTable from "./EditableTable";
-import EditableDesign from "./EditableDesign";
-import EditableTableView from "./EditableTableView";
+import EditableAddress from "~/components/editable/EditableAddress";
+import EditableApiEntry from "~/components/editable/EditableApiEntry";
+import EditableApiEntryId from "~/components/editable/EditableApiEntryId";
+import EditableApiIconId from "~/components/editable/EditableApiIconId";
+import EditableArray from "~/components/editable/EditableArray";
+import EditableColor from "~/components/editable/EditableColor";
+import EditableDate from "~/components/editable/EditableDate";
+import EditableDateTime from "~/components/editable/EditableDateTime";
+import EditableDesign from "~/components/editable/EditableDesign";
+import EditableEnum from "~/components/editable/EditableEnum";
+import EditableFiles from "~/components/editable/EditableFiles";
+import EditableJSON from "~/components/editable/EditableJSON";
+import EditableRichText from "~/components/editable/EditableRichText";
+import EditableSwitch from "~/components/editable/EditableSwitch";
+import EditableTable from "~/components/editable/EditableTable";
+import EditableTableView from "~/components/editable/EditableTableView";
+import EditableText from "~/components/editable/EditableText";
 
 import {
   IconBuildingCommunity,
@@ -27,9 +27,8 @@ import {
   IconCash,
   IconNumbers,
 } from "@tabler/icons-react";
-import apiListItems from "./apiListItems";
+import apiListItems from "~/components/editable/apiListItems";
 import { useUserContext } from "~/context/userContext";
-// import { makeDefaultListItem } from "../DefaultListItem"
 
 interface BaseTemplateType<TName, TValue = string> {
   label: string;

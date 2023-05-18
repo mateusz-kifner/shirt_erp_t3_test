@@ -1,26 +1,24 @@
-import { Input } from "@mantine/core"
-import EditableInput from "../../types/EditableInput"
-import { FileType } from "../../types/FileType"
 import {
   Group,
-  MantineTheme,
-  Modal,
-  useMantineTheme,
-  Text,
-  Stack,
   Image,
+  MantineTheme,
   Menu,
-} from "@mantine/core"
-import { Dropzone } from "@mantine/dropzone"
-import axios, { AxiosError } from "axios"
-import { useEffect, useId, useState } from "react"
-import { IconPhoto, IconUpload, IconX, IconTrashX } from "@tabler/icons-react"
-import { env } from "../../env/client.mjs"
-import TablerIconType from "../../types/TablerIconType"
-import { SxRadius } from "../../styles/basic"
-import FileListItem from "../FileListItem"
-import { useTranslation } from "../../i18n"
-import { useClickOutside, useHover } from "@mantine/hooks"
+  Modal,
+  Stack,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import { Dropzone } from "@mantine/dropzone";
+import { useClickOutside, useHover } from "@mantine/hooks";
+import { IconPhoto, IconTrashX, IconUpload, IconX } from "@tabler/icons-react";
+import axios, { AxiosError } from "axios";
+import { useEffect, useId, useState } from "react";
+import { env } from "~/env/client.mjs";
+import { useTranslation } from "~/i18n";
+import EditableInput from "~/types/EditableInput";
+import { FileType } from "~/types/FileType";
+import TablerIconType from "~/types/TablerIconType";
+// import FileListItem from "../FileListItem";
 
 // FIXME: ENFORCE FILE LIMIT
 
@@ -32,7 +30,7 @@ function getIconColor(status: any, theme: MantineTheme) {
     ? theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]
     : theme.colorScheme === "dark"
     ? theme.colors.dark[0]
-    : theme.colors.gray[7]
+    : theme.colors.gray[7];
 }
 
 function ImageUploadIcon({
@@ -40,18 +38,18 @@ function ImageUploadIcon({
   ...props
 }: React.ComponentProps<TablerIconType> & { status: any }) {
   if (status.accepted) {
-    return <IconUpload {...props} />
+    return <IconUpload {...props} />;
   }
 
   if (status.rejected) {
-    return <IconX {...props} />
+    return <IconX {...props} />;
   }
 
-  return <IconPhoto {...props} />
+  return <IconPhoto {...props} />;
 }
 
 interface EditableFilesProps extends EditableInput<FileType[]> {
-  maxCount?: number
+  maxCount?: number;
 }
 
 const EditableFiles = (props: EditableFilesProps) => {
@@ -63,34 +61,34 @@ const EditableFiles = (props: EditableFilesProps) => {
     initialValue,
     disabled,
     maxCount = 128,
-  } = props
-  const { t } = useTranslation()
-  const theme = useMantineTheme()
-  const uuid = useId()
-  const [focus, setFocus] = useState<boolean>(false)
-  const [files, setFiles] = useState<FileType[]>(value ?? initialValue ?? [])
-  const [error, setError] = useState<string | undefined>()
-  const [uploading, setUploading] = useState<number>(0)
-  const [previewOpened, setPreviewOpened] = useState<boolean>(false)
-  const [preview, setPreview] = useState<string>("")
+  } = props;
+  const { t } = useTranslation();
+  const theme = useMantineTheme();
+  const uuid = useId();
+  const [focus, setFocus] = useState<boolean>(false);
+  const [files, setFiles] = useState<FileType[]>(value ?? initialValue ?? []);
+  const [error, setError] = useState<string | undefined>();
+  const [uploading, setUploading] = useState<number>(0);
+  const [previewOpened, setPreviewOpened] = useState<boolean>(false);
+  const [preview, setPreview] = useState<string>("");
   const [previewWidth, setPreviewWidth] = useState<number | null | undefined>(
     null
-  )
-  const refClickOutside = useClickOutside(() => setFocus(false))
-  const { hovered, ref: hoverdRef } = useHover()
+  );
+  const refClickOutside = useClickOutside(() => setFocus(false));
+  const { hovered, ref: hoverdRef } = useHover();
 
   const onUploadMany = (new_files: File[]) => {
-    if (!new_files) return
+    if (!new_files) return;
     if (files.length + new_files.length > maxCount) {
-      setError("File limit reached")
-      return
+      setError("File limit reached");
+      return;
     }
-    setUploading((num: number) => num + new_files.length)
+    setUploading((num: number) => num + new_files.length);
 
-    const formData = new FormData()
+    const formData = new FormData();
 
     for (let i = 0; i < new_files.length; i++) {
-      formData.append("files", new_files[i])
+      formData.append("files", new_files[i]);
     }
 
     // upload file for spec entry
@@ -101,41 +99,41 @@ const EditableFiles = (props: EditableFilesProps) => {
     axios
       .post(env.NEXT_PUBLIC_SERVER_API_URL + "/api/upload", formData)
       .then((res: any) => {
-        const filesData = res.data
-        onSubmit?.([...files, ...filesData])
-        setFiles((files) => [...files, ...filesData])
-        setUploading((num: number) => num - new_files.length)
-        setError(undefined)
+        const filesData = res.data;
+        onSubmit?.([...files, ...filesData]);
+        setFiles((files) => [...files, ...filesData]);
+        setUploading((num: number) => num - new_files.length);
+        setError(undefined);
       })
       .catch((err: AxiosError) => {
-        setError(err.response?.statusText)
-        setUploading((num: number) => num - new_files.length)
-      })
-  }
+        setError(err.response?.statusText);
+        setUploading((num: number) => num - new_files.length);
+      });
+  };
 
   const onDelete = (index: number) => {
     axios
       .delete(env.NEXT_PUBLIC_SERVER_API_URL + `/api/upload/files/${index}`)
       .then((res) => {
         if (res?.data?.id !== undefined) {
-          setFiles((files) => files.filter((file) => file.id !== res.data.id))
-          onSubmit?.(files.filter((file) => file.id !== res.data.id))
+          setFiles((files) => files.filter((file) => file.id !== res.data.id));
+          onSubmit?.(files.filter((file) => file.id !== res.data.id));
         }
-        setError(undefined)
+        setError(undefined);
 
         //        console.log(res)
       })
       .catch((err: AxiosError) => {
-        setFiles((files) => files.filter((val) => val.id !== index))
-        setError(err.response?.statusText)
-        console.log(err)
-      })
-  }
+        setFiles((files) => files.filter((val) => val.id !== index));
+        setError(err.response?.statusText);
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    if (value === undefined || value === null) return
-    setFiles(value)
-  }, [value])
+    if (value === undefined || value === null) return;
+    setFiles(value);
+  }, [value]);
 
   return (
     <Input.Wrapper
@@ -188,9 +186,9 @@ const EditableFiles = (props: EditableFilesProps) => {
                   <FileListItem
                     value={file}
                     onPreview={(url, width) => {
-                      setPreview(url)
-                      setPreviewWidth(width)
-                      setPreviewOpened(true)
+                      setPreview(url);
+                      setPreviewWidth(width);
+                      setPreviewOpened(true);
                     }}
                     style={{ flexGrow: 1 }}
                     menuNode={
@@ -220,7 +218,7 @@ const EditableFiles = (props: EditableFilesProps) => {
                             <Menu.Item
                               icon={<IconTrashX size={14} />}
                               onClick={() => {
-                                file.id && onDelete(file.id)
+                                file.id && onDelete(file.id);
                               }}
                               color="red"
                             >
@@ -273,10 +271,10 @@ const EditableFiles = (props: EditableFilesProps) => {
           {focus && (
             <Dropzone
               onDrop={(files) => {
-                onUploadMany(files)
+                onUploadMany(files);
               }}
               onReject={(file_error) => {
-                console.log(file_error)
+                console.log(file_error);
               }}
               style={{ minWidth: "100%" }}
               multiple={maxCount !== 1}
@@ -302,7 +300,7 @@ const EditableFiles = (props: EditableFilesProps) => {
         </Stack>
       </div>
     </Input.Wrapper>
-  )
-}
+  );
+};
 
-export default EditableFiles
+export default EditableFiles;

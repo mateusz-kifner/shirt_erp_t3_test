@@ -1,15 +1,11 @@
+import { useDidUpdate, useForceUpdate, useReducedMotion } from "@mantine/hooks";
 import React, { useRef } from "react";
-import { useForceUpdate, useDidUpdate, useReducedMotion } from "@mantine/hooks";
+import Portal from "~/components/Portal";
+import NotificationContainer from "../NotificationContainer/NotificationContainer";
+import { useNotificationsEvents, type NotificationsEvents } from "../events";
 import { type NotificationsPositioning } from "../types";
-import {
-  notifications as GlobalNotifications,
-  NotificationsEvents,
-  useNotificationsEvents,
-} from "../events";
 import getPositionStyles from "./get-position-styles";
 import useNotificationsState from "./use-notifications-state";
-import NotificationContainer from "../NotificationContainer/NotificationContainer";
-import Portal from "~/components/Portal";
 
 const POSITIONS = [
   "top-left",
