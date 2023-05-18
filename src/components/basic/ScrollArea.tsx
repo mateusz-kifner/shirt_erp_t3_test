@@ -1,4 +1,5 @@
-import React, { type HTMLAttributes, type ReactNode } from "react";
+import { type HTMLAttributes, type ReactNode } from "react";
+
 import * as RadixScrollArea from "@radix-ui/react-scroll-area";
 
 interface ScrollAreaProps

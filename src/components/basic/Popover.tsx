@@ -1,7 +1,6 @@
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
+
 import * as RadixPopover from "@radix-ui/react-popover";
-// import { IconX } from "@tabler/icons-react";
-// import ActionButton from "./ActionButton";
 
 interface PopoverProps extends RadixPopover.PopoverProps {
   children?: ReactNode;

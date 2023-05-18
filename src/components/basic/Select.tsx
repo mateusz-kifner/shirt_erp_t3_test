@@ -1,6 +1,8 @@
-import React, { forwardRef, useId } from "react";
+import { forwardRef, useId } from "react";
+
 import * as RadixSelect from "@radix-ui/react-select";
 import { IconCheck, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+
 import useTranslation from "~/hooks/useTranslation";
 
 interface SelectProps extends RadixSelect.SelectProps {

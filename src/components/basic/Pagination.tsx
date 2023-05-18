@@ -1,10 +1,11 @@
+import { useId } from "react";
+
 import { usePagination } from "@mantine/hooks";
 import {
   IconChevronLeft,
   IconChevronRight,
   IconDots,
 } from "@tabler/icons-react";
-import { useId } from "react";
 
 interface PaginationProps {
   siblings?: number;

@@ -1,9 +1,9 @@
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import * as RadixAlertDialog from "@radix-ui/react-alert-dialog";
+import Button from "~/components/basic/Button";
+import Separator from "~/components/basic/Separator";
 import useTranslation from "~/hooks/useTranslation";
-import Button from "./Button";
-import Separator from "./Separator";
 
 // RadixAlertDialog.AlertDialogProps {
 //   children?: React.ReactNode;

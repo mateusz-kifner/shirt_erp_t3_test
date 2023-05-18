@@ -1,5 +1,3 @@
-import React from "react";
-
 import * as RadixSeparator from "@radix-ui/react-separator";
 
 // RadixSeparator.SeparatorProps extends PrimitiveDivProps {
