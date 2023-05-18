@@ -23,6 +23,7 @@ import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
 import template from "~/templates/test.template";
 import Tooltip from "~/components/basic/Tooltip";
+import DisplayCellExpanding from "~/components/basic/DisplayCellExpanding";
 import DisplayCell from "~/components/basic/DisplayCell";
 // import EditableColor from "~/components/editable/EditableColor";
 import InputColor from "~/components/input/InputColor";
@@ -103,7 +104,9 @@ function Settings() {
   const [testFormOpen, setTestFormOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [testValue, setTestValue] = useState<string | null>("");
-  const [testDate, setTestDate] = useState<string | null>("2021-11-05T12:24:05.097Z");
+  const [testDate, setTestDate] = useState<string | null>(
+    "2021-11-05T12:24:05.097Z"
+  );
   const { mutate } = api.client.create.useMutation();
 
   if (!data?.user) return null;
@@ -162,7 +165,6 @@ function Settings() {
             </>
           )}
           <Popover trigger={<Button>PopOver</Button>}>
-            
             <h1>text</h1>
           </Popover>
           <Modal
@@ -191,7 +193,7 @@ function Settings() {
             <EditableDate
               label="date"
               value={testDate ?? undefined}
-              rightSection={<IconBug />}
+              // rightSection={<IconBug />}
               leftSection={<IconBug />}
               onSubmit={(val) => console.log(val)}
             />

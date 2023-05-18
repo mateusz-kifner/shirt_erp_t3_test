@@ -8,7 +8,7 @@ interface DisplayCellProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
 }
 
-const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
+const DisplayCellExpanding = forwardRef<HTMLDivElement, DisplayCellProps>(
   (props, ref) => {
     const {
       leftSection,
@@ -27,24 +27,25 @@ const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
         min-h-[2.75rem]
         w-full
         resize-none
-        items-center
-        gap-2 
-        overflow-hidden
-        whitespace-pre-line 
-        break-words
+        gap-2
+        overflow-hidden 
+        whitespace-pre-line
+        break-words 
         rounded
         border
         border-solid
         bg-white
+        p-2
         text-sm
         leading-normal
-        text-gray-400
+        text-stone-800
         outline-none
-        read-only:bg-transparent 
+        read-only:bg-transparent
         read-only:outline-none 
         focus:border-sky-600 
+        
         dark:bg-stone-800
-        dark:text-stone-600
+        dark:text-stone-200
         dark:outline-none
         dark:read-only:bg-transparent 
         dark:read-only:outline-none 
@@ -59,16 +60,28 @@ const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
         {...moreProps}
         ref={ref}
       >
-        {!!leftSection && leftSection}
-        <div className="flex flex-grow items-center text-stone-800 dark:text-stone-200">
-          {children}
+        <div className="flex flex-grow gap-2">
+          <div
+            className="
+          text-gray-400 
+          dark:text-stone-600"
+          >
+            {!!leftSection && leftSection}
+          </div>
+          <div className="flex flex-grow items-center">{children}</div>
         </div>
-        {!!rightSection && rightSection}
+        <div
+          className="
+        text-gray-400 
+        dark:text-stone-600"
+        >
+          {!!rightSection && rightSection}
+        </div>
       </div>
     );
   }
 );
 
-DisplayCell.displayName = "DisplayCell";
+DisplayCellExpanding.displayName = "DisplayCellExpanding";
 
-export default DisplayCell;
+export default DisplayCellExpanding;

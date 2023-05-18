@@ -106,8 +106,8 @@ const EditableDateTime = (props: EditableDateTimeProps) => {
             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
           text-gray-200 no-underline transition-all  
           hover:bg-black hover:bg-opacity-30
-            active:focus:scale-95 active:focus:animate-none 
-            active:hover:scale-95 active:hover:animate-none"
+            active:hover:scale-95 active:hover:animate-none 
+            active:focus:scale-95 active:focus:animate-none"
                 onClick={() => {
                   const dateString = dayjs(date).format("L LT").toString();
                   clipboard.copy(dateString);

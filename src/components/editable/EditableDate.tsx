@@ -14,6 +14,8 @@ import DisplayCell from "../basic/DisplayCell";
 import Popover from "../basic/Popover";
 import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
+import { IconCalendar } from "@tabler/icons-react";
+import ActionButton from "../basic/ActionButton";
 
 type InputDateProps = EditableInput<string>;
 
@@ -70,9 +72,23 @@ const EditableDate = (props: InputDateProps) => {
         htmlFor={"inputDate_" + uuid}
       />
       <DisplayCell
+        className="px-2"
         leftSection={leftSection}
         rightSection={
-          <Popover trigger={rightSection}>
+          <Popover
+            trigger={
+              !!rightSection ? (
+                rightSection
+              ) : (
+                <div className="-my-2 flex h-10 items-center justify-center">
+                  <ActionButton className="border-none">
+                    <IconCalendar />
+                  </ActionButton>
+                </div>
+              )
+            }
+            contentProps={{ align: "end", sideOffset: 13 }}
+          >
             <Calendar
               key={value}
               className={"z-[1000] w-96 rounded p-2"}
@@ -112,6 +128,7 @@ const EditableDate = (props: InputDateProps) => {
               `}
           readOnly={disabled}
           required={required}
+          autoComplete="off"
         />
       </DisplayCell>
     </div>
