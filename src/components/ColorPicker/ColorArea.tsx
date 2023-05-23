@@ -8,7 +8,8 @@ const THUMB_SIZE = 20;
 const BORDER_RADIUS = 4;
 
 interface ColorAreaProps {
-  initialValue: { s: number; v: number };
+  // initialValue: { s: number; v: number };
+  value: { s: number; v: number };
   hue?: number;
   isDisabled?: boolean;
   onChange?: (value: { s: number; v: number }) => void;
@@ -16,7 +17,7 @@ interface ColorAreaProps {
 }
 
 function ColorArea(props: ColorAreaProps) {
-  const { initialValue, isDisabled, hue = 0, onChange, alpha = 1 } = props;
+  const { value, isDisabled, hue = 0, onChange, alpha = 1 } = props;
 
   const [areaState, setAreaState] = useReducer<
     Reducer<{ s: number; v: number }, { s: number; v: number }>
@@ -25,7 +26,13 @@ function ColorArea(props: ColorAreaProps) {
       return next;
     }
     return prev;
-  }, initialValue);
+  }, value);
+
+  useEffect(() => {
+    if (value.s !== areaState.s || value.v !== areaState.v) {
+      setAreaState(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     onChange?.(areaState);

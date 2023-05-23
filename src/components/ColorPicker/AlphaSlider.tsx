@@ -1,12 +1,12 @@
 import { useMove } from "@mantine/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import tinycolor2 from "tinycolor2";
 
 const TRACK_THICKNESS = 28;
 const THUMB_SIZE = 20;
 
 interface ColorSliderProps {
-  initialValue: number;
+  value: number;
   isDisabled?: boolean;
   saturation?: number;
   brightness?: number;
@@ -15,14 +15,8 @@ interface ColorSliderProps {
 }
 
 function HueSlider(props: ColorSliderProps) {
-  const {
-    initialValue,
-    onChange,
-    hue = 0,
-    saturation = 0,
-    brightness = 0,
-  } = props;
-  const [alpha, setAlpha] = useState(initialValue);
+  const { value, onChange, hue = 0, saturation = 0, brightness = 0 } = props;
+  const [alpha, setAlpha] = useState(value);
   const { ref, active } = useMove(({ x }) => {
     setAlpha(x);
     onChange?.(x);
@@ -40,6 +34,12 @@ function HueSlider(props: ColorSliderProps) {
     v: brightness,
     a: alpha,
   });
+
+  useEffect(() => {
+    if (value !== alpha) {
+      setAlpha(value);
+    }
+  }, [value]);
 
   return (
     <div

@@ -1,29 +1,36 @@
 import { useMove } from "@mantine/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import tinycolor2 from "tinycolor2";
 
 const TRACK_THICKNESS = 28;
 const THUMB_SIZE = 20;
 
 interface ColorSliderProps {
-  initialValue: number;
+  value: number;
   isDisabled?: boolean;
   onChange: (value: number) => void;
 }
 
 function HueSlider(props: ColorSliderProps) {
-  const { initialValue, onChange } = props;
-  const [hue, setHue] = useState(initialValue);
+  const { value, onChange } = props;
+  const [hue, setHue] = useState(value);
   const { ref, active } = useMove(({ x }) => {
     setHue(x * 360);
     onChange?.(x * 360);
   });
 
   const thumbColor = tinycolor2.fromRatio({
-    h: hue / 360.0,
+    h: hue,
     s: 1,
     v: 1,
   });
+
+  useEffect(() => {
+    console.log(value);
+    if (value !== hue) {
+      setHue(value);
+    }
+  }, [value]);
 
   return (
     <div
