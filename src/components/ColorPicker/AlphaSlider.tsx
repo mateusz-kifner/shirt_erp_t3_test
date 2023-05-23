@@ -24,21 +24,21 @@ function HueSlider(props: ColorSliderProps) {
   } = props;
   const [alpha, setAlpha] = useState(initialValue);
   const { ref, active } = useMove(({ x }) => {
-    setAlpha(x * 360);
-    onChange?.(x * 100);
+    setAlpha(x);
+    onChange?.(x);
   });
 
   const sliderColor = tinycolor2.fromRatio({
-    h: hue / 360,
-    s: saturation / 100,
-    v: brightness / 100,
+    h: hue,
+    s: saturation,
+    v: brightness,
   });
 
   const thumbColor = tinycolor2.fromRatio({
-    h: hue / 360,
-    s: saturation / 100,
-    v: brightness / 100,
-    a: alpha / 360.0,
+    h: hue,
+    s: saturation,
+    v: brightness,
+    a: alpha,
   });
 
   return (
@@ -48,11 +48,13 @@ function HueSlider(props: ColorSliderProps) {
         flexDirection: "column",
         alignItems: "center",
         width: 360,
+        minWidth: 360,
         touchAction: "none",
         forcedColorAdjust: "none",
         position: "relative",
         background: 'url("/assets/checkerboard.svg") 0px 0px/16px 16px repeat',
         borderRadius: 4,
+        height: TRACK_THICKNESS,
       }}
       ref={ref}
     >
@@ -75,7 +77,7 @@ function HueSlider(props: ColorSliderProps) {
             width: false ? TRACK_THICKNESS + 4 : THUMB_SIZE,
             height: false ? TRACK_THICKNESS + 4 : THUMB_SIZE,
             background: 'url("/assets/checkerboard.svg")  repeat',
-            left: alpha,
+            left: alpha * 360,
           }}
         >
           <div

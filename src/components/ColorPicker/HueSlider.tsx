@@ -32,6 +32,7 @@ function HueSlider(props: ColorSliderProps) {
         flexDirection: "column",
         alignItems: "center",
         width: 360,
+        minWidth: 360,
         touchAction: "none",
         forcedColorAdjust: "none",
         position: "relative",

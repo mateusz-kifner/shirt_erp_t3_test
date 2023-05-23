@@ -8,10 +8,10 @@ const THUMB_SIZE = 20;
 const BORDER_RADIUS = 4;
 
 interface ColorAreaProps {
-  initialValue: { saturation: number; brightness: number };
+  initialValue: { s: number; v: number };
   hue?: number;
   isDisabled?: boolean;
-  onChange?: (value: { saturation: number; brightness: number }) => void;
+  onChange?: (value: { s: number; v: number }) => void;
   alpha?: number;
 }
 
@@ -19,17 +19,9 @@ function ColorArea(props: ColorAreaProps) {
   const { initialValue, isDisabled, hue = 0, onChange, alpha = 1 } = props;
 
   const [areaState, setAreaState] = useReducer<
-    Reducer<
-      { saturation: number; brightness: number },
-      { saturation: number; brightness: number }
-    >
+    Reducer<{ s: number; v: number }, { s: number; v: number }>
   >((prev, next) => {
-    if (
-      next.saturation >= 0 &&
-      next.saturation <= 100 &&
-      next.brightness >= 0 &&
-      next.brightness <= 100
-    ) {
+    if (next.s >= 0 && next.s <= 1 && next.v >= 0 && next.v <= 1) {
       return next;
     }
     return prev;
@@ -40,20 +32,18 @@ function ColorArea(props: ColorAreaProps) {
   }, [areaState]);
 
   const { ref, active } = useMove(
-    ({ x, y }) =>
-      !isDisabled &&
-      setAreaState({ saturation: x * 100, brightness: 100 - y * 100 })
+    ({ x, y }) => !isDisabled && setAreaState({ s: x, v: 1.0 - y })
   );
   const areaColor = tinycolor2.fromRatio({
-    h: hue / 360.0,
+    h: hue,
     s: 1,
     v: 1,
     a: alpha,
   });
   const thumbColor = tinycolor2.fromRatio({
-    h: hue / 360.0,
-    s: areaState.saturation / 100.0,
-    v: areaState.brightness / 100.0,
+    h: hue,
+    s: areaState.s,
+    v: areaState.v,
     a: alpha,
   });
 
@@ -94,8 +84,8 @@ function ColorArea(props: ColorAreaProps) {
           boxShadow: "0 0 0 1px black, inset 0 0 0 1px black",
           height: false ? FOCUSED_THUMB_SIZE + 4 : THUMB_SIZE,
           width: false ? FOCUSED_THUMB_SIZE + 4 : THUMB_SIZE,
-          left: areaState.saturation * 2,
-          top: 200 - areaState.brightness * 2,
+          left: areaState.s * 200,
+          top: 200 - areaState.v * 200,
         }}
       ></div>
     </div>
