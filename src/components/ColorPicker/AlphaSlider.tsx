@@ -8,21 +8,37 @@ const THUMB_SIZE = 20;
 interface ColorSliderProps {
   initialValue: number;
   isDisabled?: boolean;
+  saturation?: number;
+  brightness?: number;
+  hue?: number;
   onChange: (value: number) => void;
 }
 
 function HueSlider(props: ColorSliderProps) {
-  const { initialValue, onChange } = props;
-  const [hue, setHue] = useState(initialValue);
+  const {
+    initialValue,
+    onChange,
+    hue = 0,
+    saturation = 0,
+    brightness = 0,
+  } = props;
+  const [alpha, setAlpha] = useState(initialValue);
   const { ref, active } = useMove(({ x }) => {
-    setHue(x * 360);
-    onChange?.(x * 360);
+    setAlpha(x * 360);
+    onChange?.(x * 100);
+  });
+
+  const sliderColor = tinycolor2.fromRatio({
+    h: hue / 360,
+    s: saturation / 100,
+    v: brightness / 100,
   });
 
   const thumbColor = tinycolor2.fromRatio({
-    h: hue / 360.0,
-    s: 1,
-    v: 1,
+    h: hue / 360,
+    s: saturation / 100,
+    v: brightness / 100,
+    a: alpha / 360.0,
   });
 
   return (
@@ -35,6 +51,8 @@ function HueSlider(props: ColorSliderProps) {
         touchAction: "none",
         forcedColorAdjust: "none",
         position: "relative",
+        background: 'url("/assets/checkerboard.svg") 0px 0px/16px 16px repeat',
+        borderRadius: 4,
       }}
       ref={ref}
     >
@@ -45,8 +63,7 @@ function HueSlider(props: ColorSliderProps) {
           borderRadius: 4,
           touchAction: "none",
           forcedColorAdjust: "none",
-          background:
-            "linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 17%, rgb(0, 255, 0) 33%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 67%, rgb(255, 0, 255) 83%, rgb(255, 0, 0) 100%)",
+          background: `linear-gradient(to right, rgba(0,0,0,0), ${sliderColor.toHex8String()})`,
         }}
       >
         <div
@@ -57,10 +74,15 @@ function HueSlider(props: ColorSliderProps) {
             boxShadow: "0 0 0 1px black, inset 0 0 0 1px black",
             width: false ? TRACK_THICKNESS + 4 : THUMB_SIZE,
             height: false ? TRACK_THICKNESS + 4 : THUMB_SIZE,
-            background: thumbColor.toHexString(),
-            left: hue,
+            background: 'url("/assets/checkerboard.svg")  repeat',
+            left: alpha,
           }}
-        ></div>
+        >
+          <div
+            className="h-full w-full rounded-full"
+            style={{ background: thumbColor.toHex8String() }}
+          ></div>
+        </div>
       </div>
     </div>
   );
