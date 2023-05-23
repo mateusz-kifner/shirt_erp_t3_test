@@ -1,12 +1,24 @@
-import { useEffect, useId, useState, type CSSProperties } from "react";
+import {
+  Reducer,
+  useEffect,
+  useId,
+  useReducer,
+  useState,
+  type CSSProperties,
+} from "react";
 
-import { useClickOutside, useClipboard, useHover } from "@mantine/hooks";
-import DisplayCell from "~/components/basic/DisplayCell";
+import { useClickOutside, useHover } from "@mantine/hooks";
 
 import colorNames from "~/utils/color-names.json";
 import preventLeave from "~/utils/preventLeave";
 
+import { Color, parseColor } from "@react-stately/color";
+import { IconColorPicker } from "@tabler/icons-react";
 import type EditableInput from "~/types/EditableInput";
+import ActionButton from "../basic/ActionButton";
+import DisplayCell from "../basic/DisplayCell";
+import Popover from "../basic/Popover";
+import InputLabel from "../input/InputLabel";
 
 const colorNameKeys = Object.keys(colorNames);
 const colorNamesRGB: [number, number, number][] = colorNameKeys.map((val) => [
@@ -69,14 +81,36 @@ interface EditableColorProps extends EditableInput<string> {
 }
 
 const EditableColor = (props: EditableColorProps) => {
-  const { label, value, initialValue, onSubmit, disabled, required, style } =
-    props;
+  const {
+    label,
+    value,
+    initialValue,
+    onSubmit,
+    disabled,
+    required,
+    style,
+    leftSection,
+    rightSection,
+  } = props;
   const uuid = useId();
-  const [color, setColor] = useState<RGBColor | undefined>();
+  const [color, setColor] = useState<Color | undefined>();
+  const [color2, setColor2] = useReducer<Reducer<Color, Color | string>>(
+    (prev, next) => {
+      try {
+        if (typeof next === "string") {
+          const newColor = parseColor(next);
+          return newColor;
+        }
+        return next;
+      } catch {
+        return prev;
+      }
+    },
+    parseColor("#fff")
+  );
   // value ?? initialValue ?? undefined
   const [focus, setFocus] = useState<boolean>(false);
   const ref = useClickOutside(() => setFocus(false));
-  const clipboard = useClipboard();
   const { hovered, ref: refHover } = useHover();
 
   // const colorName = useMemo(
@@ -134,49 +168,73 @@ const EditableColor = (props: EditableColorProps) => {
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
     >
-      {label && (
-        <label
-          htmlFor={"textarea_" + uuid}
-          className="
-          text-sm
-          dark:text-stone-300"
-        >
-          <div className="flex items-center py-1">
-            {label}{" "}
-            {/* {color && color.length > 0 && (
-              <button
-                className="border-1 inline-flex animate-pop items-center justify-center
-            gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-          text-gray-200 no-underline transition-all  
-          hover:bg-black hover:bg-opacity-30
-            active:hover:scale-95 active:hover:animate-none 
-            active:focus:scale-95 active:focus:animate-none"
-                onClick={() => {
-                  clipboard.copy(color);
-                  showNotification({
-                    title: "Skopiowano do schowka",
-                    message: color,
-                    icon: <IconCopy />,
-                  });
-                }}
-                tabIndex={-1}
-              >
-                <IconCopy size={16} />
-              </button>
-            )} */}
-          </div>
-        </label>
-      )}
-      <div ref={ref} style={{ position: "relative" }}>
+      <InputLabel
+        label={label}
+        copyValue={color?.toString("hexa")}
+        htmlFor={"inputColor_" + uuid}
+      />
+      <DisplayCell
+        className="px-2"
+        leftSection={leftSection}
+        rightSection={
+          <Popover
+            trigger={
+              !!rightSection ? (
+                rightSection
+              ) : (
+                <div className="-my-2 flex h-10 items-center justify-center">
+                  <ActionButton className="border-none">
+                    <IconColorPicker />
+                  </ActionButton>
+                </div>
+              )
+            }
+            contentProps={{ align: "end", sideOffset: 13 }}
+          ></Popover>
+        }
+        // focus={opened}
+      >
+        <input
+          id={"inputColor_" + uuid}
+          ref={ref}
+          value={color?.toString("hexa")}
+          onChange={(e) => {
+            setColor(parseColor(e.target.value));
+          }}
+          className={`
+              data-disabled:text-gray-500
+              dark:data-disabled:text-gray-500
+              -mb-3
+              -mt-2
+              w-full
+              resize-none
+              overflow-hidden 
+              whitespace-pre-line
+              break-words
+              bg-transparent
+              pb-3
+              pt-[0.625rem]
+              text-sm
+              outline-none
+              focus-visible:border-transparent
+              focus-visible:outline-none
+              `}
+          readOnly={disabled}
+          required={required}
+          autoComplete="off"
+        />
+      </DisplayCell>
+      {/* <div ref={ref} style={{ position: "relative" }}>
         {focus ? (
-          <SketchPicker
-            color={color}
-            onChange={(color) => {
-              setColor(color.rgb);
-            }}
-            styles={{ default: {} }}
-          />
+          <></>
         ) : (
+          // <SketchPicker
+          //   color={color}
+          //   onChange={(color) => {
+          //     setColor(color.rgb);
+          //   }}
+          //   styles={{ default: {} }}
+          // />
           // <ColorInput
           //   swatchesPerRow={7}
           //   format="hex"
@@ -305,9 +363,9 @@ const EditableColor = (props: EditableColorProps) => {
           // >
           //   {colorName || "⸺"}
           // </Text>
-          <DisplayCell>test</DisplayCell>
+          
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

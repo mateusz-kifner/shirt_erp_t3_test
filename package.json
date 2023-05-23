@@ -34,6 +34,7 @@
     "@trpc/react-query": "^10.26.0",
     "@trpc/server": "^10.26.0",
     "@types/dompurify": "^3.0.2",
+    "@types/tinycolor2": "^1.4.3",
     "bcrypt": "^5.1.0",
     "dayjs": "^1.11.7",
     "dompurify": "^3.0.3",
@@ -46,6 +47,7 @@
     "react-calendar": "^4.2.1",
     "react-dom": "18.2.0",
     "superjson": "1.12.3",
+    "tinycolor2": "^1.6.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {

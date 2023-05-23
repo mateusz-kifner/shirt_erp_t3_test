@@ -12,13 +12,12 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import SuperJSON from "superjson";
 
+import InputColor from "~/components/ColorPicker/InputColor";
 import Button from "~/components/basic/Button";
-import DisplayCell from "~/components/basic/DisplayCell";
 import Modal from "~/components/basic/Modal";
 import Popover from "~/components/basic/Popover";
 import Select from "~/components/basic/Select";
-import EditableDate from "~/components/editable/EditableDate";
-import EditableText from "~/components/editable/EditableText";
+import EditableColor from "~/components/editable/EditableColor";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
@@ -93,6 +92,7 @@ function Settings() {
   const { debug, toggleDebug, toggleTheme, theme } = useUserContext();
   const [testFormOpen, setTestFormOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [testColor, setTestColor] = useState<string>("#fff");
   const [testValue, setTestValue] = useState<string | null>("");
   const [testDate, setTestDate] = useState<string | null>(
     "2021-11-05T12:24:05.097Z"
@@ -163,7 +163,7 @@ function Settings() {
             title={"test test"}
             description={"test2 test2"}
           >
-            <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
+            {/* <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
               test display cell
             </DisplayCell>
             <DisplayCell
@@ -173,7 +173,7 @@ function Settings() {
             >
               test display cell
             </DisplayCell>
-            <EditableText
+             <EditableText
               label="test"
               value={testValue ?? undefined}
               onSubmit={setTestValue}
@@ -186,9 +186,17 @@ function Settings() {
               // rightSection={<IconBug />}
               leftSection={<IconBug />}
               onSubmit={(val) => console.log(val)}
+            /> */}
+            <EditableColor
+              label="test color"
+              value={testColor}
+              onSubmit={(val) => setTestColor(val ?? "")}
             />
-            {/* <EditableColor label="test color" value="#fff" /> */}
-            {/* <InputColor /> */}
+            <InputColor />
+            {/* <ColorArea
+              initialValue={{ saturation: 55, brightness: 55 }}
+              hue={0}
+            /> */}
           </Modal>
         </div>
       </div>

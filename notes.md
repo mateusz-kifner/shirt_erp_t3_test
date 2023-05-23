@@ -1,2 +1,11 @@
 - fix ids in Editable elements label
-- move to react-aria
+- move to radix
+-
+
+tested libs
+
+- useform - not possible to update onChange
+- react-aria / react-stately - to much boilerplate
+- mantine - good, but super slow for ssr
+- daisyui - not enough interactions / bad design
+- headlessui - too little components
