@@ -1,7 +1,7 @@
 import { useEyeDropper } from "@mantine/hooks";
 import { IconColorPicker } from "@tabler/icons-react";
 import { useState } from "react";
-import tinycolor2, { ColorFormats } from "tinycolor2";
+import tinycolor2, { type ColorFormats } from "tinycolor2";
 import ActionButton from "../basic/ActionButton";
 import AlphaSlider from "./AlphaSlider";
 import ColorArea from "./ColorArea";
@@ -154,7 +154,7 @@ function InputColor() {
               <label>
                 {"R : "}
                 <input
-                  className="w-9  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-red-500"
+                  className="w-9  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-red-500"
                   value={RGBAText.r}
                   onChange={(e) => {
                     const newColor = { ...RGBAText, r: e.target.value };
@@ -166,7 +166,7 @@ function InputColor() {
               <label>
                 {"G : "}
                 <input
-                  className="w-9  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-green-500"
+                  className="w-9  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-green-500"
                   value={RGBAText.g}
                   onChange={(e) => {
                     const newColor = { ...RGBAText, g: e.target.value };
@@ -178,7 +178,7 @@ function InputColor() {
               <label>
                 {"B : "}
                 <input
-                  className="w-9 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-blue-500"
+                  className="w-9 border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-blue-500"
                   value={RGBAText.b}
                   onChange={(e) => {
                     const newColor = { ...RGBAText, b: e.target.value };
@@ -190,7 +190,7 @@ function InputColor() {
               <label>
                 {"A : "}
                 <input
-                  className="w-9 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-yellow-500"
+                  className="w-9 border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-yellow-500"
                   value={RGBAText.a}
                   onChange={(e) => {
                     const newColor = { ...RGBAText, a: e.target.value };
@@ -204,7 +204,7 @@ function InputColor() {
               <label>
                 {"H : "}
                 <input
-                  className="w-12  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-red-500"
+                  className="w-12  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-red-500"
                   value={HSVText.h}
                   onChange={(e) => {
                     const newColor = { ...HSVText, h: e.target.value };
@@ -216,7 +216,7 @@ function InputColor() {
               <label>
                 {"S : "}
                 <input
-                  className="w-12  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-green-500"
+                  className="w-12  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-green-500"
                   value={HSVText.s}
                   onChange={(e) => {
                     const newColor = { ...HSVText, s: e.target.value };
@@ -228,7 +228,7 @@ function InputColor() {
               <label>
                 {"V : "}
                 <input
-                  className="w-12 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-blue-500"
+                  className="w-12 border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-blue-500"
                   value={HSVText.v}
                   onChange={(e) => {
                     const newColor = { ...HSVText, v: e.target.value };
@@ -237,11 +237,13 @@ function InputColor() {
                   }}
                 />
               </label>
+
               <ActionButton
                 className="self-end"
                 onClick={() => {
                   pickColor().catch((e) => console.log(e));
                 }}
+                disabled={!supported}
               >
                 <IconColorPicker />
               </ActionButton>
@@ -267,8 +269,6 @@ function InputColor() {
           onActive={setIsActiveAlpha}
         />
       </div>
-
-      <span>{getHex8()}</span>
     </div>
   );
 }

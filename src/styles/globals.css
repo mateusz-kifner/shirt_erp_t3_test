@@ -100,8 +100,18 @@ body::-webkit-scrollbar {
       active:hover:animate-none  
       active:focus:scale-95 
       active:focus:animate-none
-      dark:border-stone-200 
-      dark:text-stone-200;
+      disabled:animate-none 
+      disabled:opacity-30
+      disabled:outline-none 
+      disabled:hover:bg-transparent
+      dark:border-stone-200
+      dark:text-stone-200
+      dark:disabled:animate-none
+      dark:disabled:opacity-30
+      dark:disabled:outline-none
+      dark:disabled:hover:bg-transparent
+      dark:disabled:active:hover:scale-100
+      dark:disabled:active:focus:scale-100;
   }
 }
 
