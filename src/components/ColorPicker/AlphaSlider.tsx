@@ -1,45 +1,31 @@
 import { useMove } from "@mantine/hooks";
-import { useEffect, useState } from "react";
-import tinycolor2 from "tinycolor2";
+import { omit } from "lodash";
+import { useEffect } from "react";
+import tinycolor2, { type ColorFormats } from "tinycolor2";
 
 const TRACK_THICKNESS = 28;
 const THUMB_SIZE = 20;
 
 interface ColorSliderProps {
-  value: number;
-  isDisabled?: boolean;
-  saturation?: number;
-  brightness?: number;
-  hue?: number;
-  onChange: (value: number) => void;
+  value: ColorFormats.HSVA;
+  disabled?: boolean;
+  onChange: (value: ColorFormats.HSVA) => void;
+  onActive?: (isActive: boolean) => void;
 }
 
 function HueSlider(props: ColorSliderProps) {
-  const { value, onChange, hue = 0, saturation = 0, brightness = 0 } = props;
-  const [alpha, setAlpha] = useState(value);
-  const { ref, active } = useMove(({ x }) => {
-    setAlpha(x);
-    onChange?.(x);
-  });
+  const { value, onChange, onActive, disabled } = props;
+  const { ref, active } = useMove(
+    ({ x }) => !disabled && onChange?.({ ...value, a: x })
+  );
 
-  const sliderColor = tinycolor2.fromRatio({
-    h: hue,
-    s: saturation,
-    v: brightness,
-  });
+  const sliderColor = tinycolor2.fromRatio(omit(value, ["a"]));
 
-  const thumbColor = tinycolor2.fromRatio({
-    h: hue,
-    s: saturation,
-    v: brightness,
-    a: alpha,
-  });
+  const thumbColor = tinycolor2.fromRatio(value);
 
   useEffect(() => {
-    if (value !== alpha) {
-      setAlpha(value);
-    }
-  }, [value]);
+    onActive?.(active);
+  }, [active]);
 
   return (
     <div
@@ -77,7 +63,7 @@ function HueSlider(props: ColorSliderProps) {
             width: false ? TRACK_THICKNESS + 4 : THUMB_SIZE,
             height: false ? TRACK_THICKNESS + 4 : THUMB_SIZE,
             background: 'url("/assets/checkerboard.svg")  repeat',
-            left: alpha * 360,
+            left: value.a * 360,
           }}
         >
           <div

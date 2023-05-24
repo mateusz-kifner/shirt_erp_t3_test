@@ -1,56 +1,55 @@
 import { useEyeDropper } from "@mantine/hooks";
 import { IconColorPicker } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
-import tinycolor2 from "tinycolor2";
+import { useState } from "react";
+import tinycolor2, { ColorFormats } from "tinycolor2";
 import ActionButton from "../basic/ActionButton";
 import AlphaSlider from "./AlphaSlider";
 import ColorArea from "./ColorArea";
 import HueSlider from "./HueSlider";
+import useColor from "./useColor";
 
 function InputColor() {
   const { supported, open } = useEyeDropper();
+  const [isActiveArea, setIsActiveArea] = useState<boolean>(false);
+  const [isActiveHue, setIsActiveHue] = useState<boolean>();
+  const [isActiveAlpha, setIsActiveAlpha] = useState<boolean>(false);
 
-  const [colorHSV, setColorHSV] = useState<{
-    h: number;
-    s: number;
-    v: number;
-    a: number;
-    dirty: boolean;
-  }>({ h: 0, s: 1, v: 1, a: 1, dirty: false });
+  const isActive = isActiveArea || isActiveHue || isActiveAlpha;
 
-  console.log(colorHSV);
+  const { color, getRGBA, setHSV, getHSV, setHex, getHex8 } = useColor();
 
-  const color = tinycolor2.fromRatio(colorHSV);
+  const colorRGBA = getRGBA();
 
-  const colorRGB = color.toRgb();
   const [RGBAText, setRGBAText] = useState<{
     r: string;
     g: string;
     b: string;
     a: string;
-    dirty: boolean;
   }>({
-    r: colorRGB.r.toString(),
-    g: colorRGB.g.toString(),
-    b: colorRGB.b.toString(),
-    a: Math.floor(colorRGB.a * 100).toString(),
-    dirty: false,
+    r: colorRGBA.r.toFixed(0),
+    g: colorRGBA.g.toFixed(0),
+    b: colorRGBA.b.toFixed(0),
+    a: Math.floor(colorRGBA.a * 100).toFixed(0),
   });
 
   const [HSVText, setHSVText] = useState<{
     h: string;
     s: string;
     v: string;
-    dirty: boolean;
+    a: string;
   }>({
-    h: colorHSV.h.toString(),
-    s: colorHSV.s.toString(),
-    v: colorHSV.v.toString(),
-    dirty: false,
+    h: color.h.toFixed(0),
+    s: color.s.toString(),
+    v: color.v.toString(),
+    a: Math.floor(color.a * 100).toFixed(0),
   });
 
-  // update color when RGBA input changes
-  useEffect(() => {
+  const updateHSVandHSVText = (RGBAText: {
+    r: string;
+    g: string;
+    b: string;
+    a: string;
+  }) => {
     const newColor = tinycolor2.fromRatio({
       r: parseInt(RGBAText.r),
       g: parseInt(RGBAText.g),
@@ -58,54 +57,64 @@ function InputColor() {
       a: parseInt(RGBAText.a) / 100,
     });
 
-    if (RGBAText.dirty && newColor.isValid()) {
+    if (newColor.isValid() && !isActive) {
       const newColorHSV = newColor.toHsv();
-      setColorHSV({ ...newColorHSV, dirty: false });
-      setRGBAText((prev) => ({ ...prev, dirty: false }));
+      setHSV(newColorHSV);
+      setHSVText({
+        h: newColorHSV.h.toFixed(0),
+        s: newColorHSV.s.toFixed(3),
+        v: newColorHSV.v.toFixed(3),
+        a: (newColorHSV.a * 100).toFixed(0),
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [RGBAText.dirty, RGBAText.r, RGBAText.g, RGBAText.b, RGBAText.a]);
+  };
 
-  // update color when RGBA input changes
-  useEffect(() => {
+  const updateHSVandRGBAText = (HSVText: {
+    h: string;
+    s: string;
+    v: string;
+    a: string;
+  }) => {
     const newColor = tinycolor2.fromRatio({
       h: parseFloat(HSVText.h),
       s: parseFloat(HSVText.s),
       v: parseFloat(HSVText.v),
-      a: colorRGB.a,
+      a: parseFloat(HSVText.a) / 100,
     });
-    if (HSVText.dirty && newColor.isValid()) {
-      const newColorHSV = newColor.toHsv();
-      setColorHSV({ ...newColorHSV, dirty: false });
-      setHSVText((prev) => ({ ...prev, dirty: false }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [HSVText.dirty, HSVText.h, HSVText.s, HSVText.v, colorRGB.a]);
-
-  // update RGBA input when color changes
-  useEffect(() => {
-    if (colorHSV.dirty) {
+    if (newColor.isValid() && !isActive) {
+      const newColorRGB = newColor.toRgb();
+      setHSV(newColor.toHsv());
       setRGBAText({
-        r: colorRGB.r.toString(),
-        g: colorRGB.g.toString(),
-        b: colorRGB.b.toString(),
-        a: Math.floor(colorRGB.a * 100).toString(),
-        dirty: false,
+        r: newColorRGB.r.toFixed(0),
+        g: newColorRGB.g.toFixed(0),
+        b: newColorRGB.b.toFixed(0),
+        a: Math.floor(newColorRGB.a * 100).toFixed(0),
       });
-      setHSVText({
-        h: colorHSV.h.toString(),
-        s: colorHSV.s.toFixed(2),
-        v: colorHSV.v.toFixed(2),
-        dirty: false,
-      });
-      setColorHSV((prev) => ({ ...prev, dirty: false }));
     }
-  }, [colorHSV.dirty, colorHSV.h, colorHSV.s, colorHSV.v, colorHSV.a]);
+  };
+
+  const updateRGBATextandHSVText = (color: ColorFormats.HSVA) => {
+    const newColor = tinycolor2.fromRatio(color);
+    const newColorRGBA = newColor.toRgb();
+    const newColorHSV = newColor.toHsv();
+    setRGBAText({
+      r: newColorRGBA.r.toFixed(0),
+      g: newColorRGBA.g.toFixed(0),
+      b: newColorRGBA.b.toFixed(0),
+      a: Math.floor(newColorRGBA.a * 100).toFixed(0),
+    });
+    setHSVText({
+      h: newColorHSV.h.toFixed(0),
+      s: newColorHSV.s.toFixed(3),
+      v: newColorHSV.v.toFixed(3),
+      a: Math.floor(newColorHSV.a * 100).toFixed(0),
+    });
+  };
 
   const pickColor = async () => {
     try {
       const { sRGBHex } = await open();
-      setColorHSV({ ...tinycolor2(sRGBHex).toHsv(), dirty: true });
+      setHex(sRGBHex);
     } catch (e) {
       console.log(e);
     }
@@ -115,18 +124,12 @@ function InputColor() {
     <div className="m-3 flex w-[360px] flex-col gap-3">
       <div className="flex gap-3">
         <ColorArea
-          value={{ s: colorHSV.s, v: colorHSV.v }}
-          onChange={({ s, v }) => {
-            setColorHSV((prev) => ({
-              h: prev.h,
-              a: prev.a,
-              s,
-              v,
-              dirty: true,
-            }));
+          value={getHSV()}
+          onChange={(color) => {
+            setHSV(color);
+            updateRGBATextandHSVText(color);
           }}
-          hue={colorHSV.h}
-          alpha={colorHSV.a}
+          onActive={setIsActiveArea}
         />
         <div className="flex flex-grow flex-col gap-3">
           <div
@@ -142,7 +145,7 @@ function InputColor() {
                 width: "100%",
                 height: "100%",
                 borderRadius: 4,
-                background: color.toHex8String(),
+                background: getHex8(),
               }}
             ></div>
           </div>
@@ -154,11 +157,9 @@ function InputColor() {
                   className="w-9  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-red-500"
                   value={RGBAText.r}
                   onChange={(e) => {
-                    setRGBAText((prev) => ({
-                      ...prev,
-                      r: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...RGBAText, r: e.target.value };
+                    setRGBAText(newColor);
+                    updateHSVandHSVText(newColor);
                   }}
                 />
               </label>
@@ -168,11 +169,9 @@ function InputColor() {
                   className="w-9  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-green-500"
                   value={RGBAText.g}
                   onChange={(e) => {
-                    setRGBAText((prev) => ({
-                      ...prev,
-                      g: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...RGBAText, g: e.target.value };
+                    setRGBAText(newColor);
+                    updateHSVandHSVText(newColor);
                   }}
                 />
               </label>
@@ -182,11 +181,9 @@ function InputColor() {
                   className="w-9 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-blue-500"
                   value={RGBAText.b}
                   onChange={(e) => {
-                    setRGBAText((prev) => ({
-                      ...prev,
-                      b: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...RGBAText, b: e.target.value };
+                    setRGBAText(newColor);
+                    updateHSVandHSVText(newColor);
                   }}
                 />
               </label>
@@ -196,11 +193,9 @@ function InputColor() {
                   className="w-9 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-yellow-500"
                   value={RGBAText.a}
                   onChange={(e) => {
-                    setRGBAText((prev) => ({
-                      ...prev,
-                      a: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...RGBAText, a: e.target.value };
+                    setRGBAText(newColor);
+                    updateHSVandHSVText(newColor);
                   }}
                 />
               </label>
@@ -209,42 +204,36 @@ function InputColor() {
               <label>
                 {"H : "}
                 <input
-                  className="w-9  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-red-500"
+                  className="w-12  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-red-500"
                   value={HSVText.h}
                   onChange={(e) => {
-                    setHSVText((prev) => ({
-                      ...prev,
-                      h: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...HSVText, h: e.target.value };
+                    setHSVText(newColor);
+                    updateHSVandRGBAText(newColor);
                   }}
                 />
               </label>
               <label>
                 {"S : "}
                 <input
-                  className="w-9  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-green-500"
+                  className="w-12  border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-green-500"
                   value={HSVText.s}
                   onChange={(e) => {
-                    setHSVText((prev) => ({
-                      ...prev,
-                      s: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...HSVText, s: e.target.value };
+                    setHSVText(newColor);
+                    updateHSVandRGBAText(newColor);
                   }}
                 />
               </label>
               <label>
                 {"V : "}
                 <input
-                  className="w-9 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-blue-500"
+                  className="w-12 border-b border-b-stone-400 bg-stone-800 text-right outline-none focus-visible:border-b-blue-500"
                   value={HSVText.v}
                   onChange={(e) => {
-                    setHSVText((prev) => ({
-                      ...prev,
-                      v: e.target.value,
-                      dirty: true,
-                    }));
+                    const newColor = { ...HSVText, v: e.target.value };
+                    setHSVText(newColor);
+                    updateHSVandRGBAText(newColor);
                   }}
                 />
               </label>
@@ -262,23 +251,24 @@ function InputColor() {
       </div>
       <div className="flex flex-col gap-3">
         <HueSlider
-          value={colorHSV.h}
-          onChange={(h) => {
-            setColorHSV((prev) => ({ ...prev, h, dirty: true }));
+          value={getHSV()}
+          onChange={(color) => {
+            setHSV(color);
+            updateRGBATextandHSVText(color);
           }}
+          onActive={setIsActiveHue}
         />
         <AlphaSlider
-          value={colorHSV.a}
-          onChange={(a) => {
-            setColorHSV((prev) => ({ ...prev, a, dirty: true }));
+          value={getHSV()}
+          onChange={(color) => {
+            setHSV(color);
+            updateRGBATextandHSVText(color);
           }}
-          hue={colorHSV.h}
-          saturation={colorHSV.s}
-          brightness={colorHSV.v}
+          onActive={setIsActiveAlpha}
         />
       </div>
 
-      <span>{color.toHex8String()}</span>
+      <span>{getHex8()}</span>
     </div>
   );
 }
