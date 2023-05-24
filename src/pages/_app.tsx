@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Logger from "js-logger";
 import Head from "next/head";
 
+import { TooltipProvider as RadixTooltipProvider } from "@radix-ui/react-tooltip";
 import ErrorBoundary from "~/components/ErrorBoundary";
 import AppLayout from "~/components/layout/AppLayout";
 import { UserContextProvider } from "~/context/userContext";
@@ -55,16 +56,18 @@ Logger.setLevel(
 const App: AppType = ({ Component, pageProps }) => {
   return (
     <UserContextProvider>
-      <Notifications />
-      <AppLayout>
-        <Head>
-          <title>ShirtERP</title>
-        </Head>
-        <ErrorBoundary fallback={<h1>Application crashed</h1>}>
-          <Component {...pageProps} />
-        </ErrorBoundary>
-      </AppLayout>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <RadixTooltipProvider>
+        <Notifications />
+        <AppLayout>
+          <Head>
+            <title>ShirtERP</title>
+          </Head>
+          <ErrorBoundary fallback={<h1>Application crashed</h1>}>
+            <Component {...pageProps} />
+          </ErrorBoundary>
+        </AppLayout>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </RadixTooltipProvider>
     </UserContextProvider>
   );
 };

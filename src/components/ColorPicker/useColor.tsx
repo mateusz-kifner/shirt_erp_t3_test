@@ -1,7 +1,7 @@
 import { useState } from "react";
 import tinycolor2 from "tinycolor2";
 
-const useColor = (initialColor?: string) => {
+const useColor = (initialColor?: string, onChange?: (hex: string) => void) => {
   const [color, setColor] = useState(tinycolor2(initialColor).toHsv());
 
   const colorObj = tinycolor2(color);
@@ -9,6 +9,7 @@ const useColor = (initialColor?: string) => {
   const setHSV = (color: { h: number; s: number; v: number; a: number }) => {
     const newColor = tinycolor2.fromRatio(color);
     if (newColor.isValid()) {
+      onChange?.(newColor.toHex8());
       setColor(color);
     }
     return newColor.isValid();
@@ -17,6 +18,7 @@ const useColor = (initialColor?: string) => {
   const setRGB = (color: { r: number; g: number; b: number; a: number }) => {
     const newColor = tinycolor2.fromRatio(color);
     if (newColor.isValid()) {
+      onChange?.(newColor.toHex8());
       setColor(newColor.toHsv());
     }
     return newColor.isValid();
@@ -25,6 +27,7 @@ const useColor = (initialColor?: string) => {
   const setHex = (hex: string) => {
     const newColor = tinycolor2(hex);
     if (newColor.isValid()) {
+      onChange?.(newColor.toHex8());
       setColor(newColor.toHsv());
     }
     return newColor.isValid();

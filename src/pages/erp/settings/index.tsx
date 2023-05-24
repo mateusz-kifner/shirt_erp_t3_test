@@ -12,7 +12,6 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import SuperJSON from "superjson";
 
-import InputColor from "~/components/ColorPicker/InputColor";
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
 import Popover from "~/components/basic/Popover";
@@ -192,7 +191,7 @@ function Settings() {
               value={testColor}
               onSubmit={(val) => setTestColor(val ?? "")}
             />
-            <InputColor />
+            {/* <InputColor /> */}
             {/* <ColorArea
               initialValue={{ saturation: 55, brightness: 55 }}
               hue={0}

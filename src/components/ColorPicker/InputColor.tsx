@@ -1,22 +1,43 @@
 import { useEyeDropper } from "@mantine/hooks";
-import { IconColorPicker } from "@tabler/icons-react";
-import { useState } from "react";
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconColorPicker,
+} from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import tinycolor2, { type ColorFormats } from "tinycolor2";
+import useTranslation from "~/hooks/useTranslation";
 import ActionButton from "../basic/ActionButton";
 import AlphaSlider from "./AlphaSlider";
 import ColorArea from "./ColorArea";
+import ColorSwatches from "./ColorSwatches";
 import HueSlider from "./HueSlider";
+import colors from "./colors.json";
 import useColor from "./useColor";
 
-function InputColor() {
+interface InputColorProps {
+  value?: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+}
+
+function InputColor(props: InputColorProps) {
+  const { value, onChange, disabled } = props;
   const { supported, open } = useEyeDropper();
+  const [openPalette, setOpenPalette] = useState<boolean>(false);
+
   const [isActiveArea, setIsActiveArea] = useState<boolean>(false);
   const [isActiveHue, setIsActiveHue] = useState<boolean>();
   const [isActiveAlpha, setIsActiveAlpha] = useState<boolean>(false);
 
   const isActive = isActiveArea || isActiveHue || isActiveAlpha;
 
-  const { color, getRGBA, setHSV, getHSV, setHex, getHex8 } = useColor();
+  const t = useTranslation();
+
+  const { color, getRGBA, setHSV, getHSV, setHex, getHex8 } = useColor(
+    value,
+    onChange
+  );
 
   const colorRGBA = getRGBA();
 
@@ -43,6 +64,12 @@ function InputColor() {
     v: color.v.toString(),
     a: Math.floor(color.a * 100).toFixed(0),
   });
+
+  useEffect(() => {
+    if (!!value && value !== getHex8()) {
+      setHex(value);
+    }
+  }, [value]);
 
   const updateHSVandHSVText = (RGBAText: {
     r: string;
@@ -115,13 +142,19 @@ function InputColor() {
     try {
       const { sRGBHex } = await open();
       setHex(sRGBHex);
+      const newColor = tinycolor2(sRGBHex);
+      updateRGBATextandHSVText(newColor.toHsv());
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <div className="m-3 flex w-[360px] flex-col gap-3">
+    <div
+      className={`relative flex w-[388px] flex-col gap-3 p-3 ${
+        openPalette ? "overflow-hidden" : ""
+      }`}
+    >
       <div className="flex gap-3">
         <ColorArea
           value={getHSV()}
@@ -129,6 +162,7 @@ function InputColor() {
             setHSV(color);
             updateRGBATextandHSVText(color);
           }}
+          disabled={disabled}
           onActive={setIsActiveArea}
         />
         <div className="flex flex-grow flex-col gap-3">
@@ -161,6 +195,7 @@ function InputColor() {
                     setRGBAText(newColor);
                     updateHSVandHSVText(newColor);
                   }}
+                  disabled={disabled}
                 />
               </label>
               <label>
@@ -173,6 +208,7 @@ function InputColor() {
                     setRGBAText(newColor);
                     updateHSVandHSVText(newColor);
                   }}
+                  disabled={disabled}
                 />
               </label>
               <label>
@@ -185,6 +221,7 @@ function InputColor() {
                     setRGBAText(newColor);
                     updateHSVandHSVText(newColor);
                   }}
+                  disabled={disabled}
                 />
               </label>
               <label>
@@ -197,6 +234,7 @@ function InputColor() {
                     setRGBAText(newColor);
                     updateHSVandHSVText(newColor);
                   }}
+                  disabled={disabled}
                 />
               </label>
             </div>
@@ -211,6 +249,7 @@ function InputColor() {
                     setHSVText(newColor);
                     updateHSVandRGBAText(newColor);
                   }}
+                  disabled={disabled}
                 />
               </label>
               <label>
@@ -235,6 +274,7 @@ function InputColor() {
                     setHSVText(newColor);
                     updateHSVandRGBAText(newColor);
                   }}
+                  disabled={disabled}
                 />
               </label>
 
@@ -243,7 +283,7 @@ function InputColor() {
                 onClick={() => {
                   pickColor().catch((e) => console.log(e));
                 }}
-                disabled={!supported}
+                disabled={!supported || disabled}
               >
                 <IconColorPicker />
               </ActionButton>
@@ -251,7 +291,7 @@ function InputColor() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 pb-7">
         <HueSlider
           value={getHSV()}
           onChange={(color) => {
@@ -259,6 +299,7 @@ function InputColor() {
             updateRGBATextandHSVText(color);
           }}
           onActive={setIsActiveHue}
+          disabled={disabled}
         />
         <AlphaSlider
           value={getHSV()}
@@ -267,7 +308,60 @@ function InputColor() {
             updateRGBATextandHSVText(color);
           }}
           onActive={setIsActiveAlpha}
+          disabled={disabled}
         />
+      </div>
+      <div
+        className={`absolute bottom-0 left-0 flex w-full flex-col gap-3  overflow-hidden bg-stone-200 transition-all dark:bg-stone-800 ${
+          openPalette ? "h-full p-3" : "h-7 px-3"
+        }`}
+      >
+        <button
+          className="inline-flex
+          h-8
+          select-none 
+          items-center 
+          justify-center
+          gap-3
+          rounded-md 
+          bg-transparent 
+          stroke-gray-200 
+          px-4 
+          py-0
+          font-semibold 
+          uppercase
+          text-stone-800  
+          no-underline 
+          outline-offset-4 
+          transition-all 
+          hover:bg-black 
+          hover:bg-opacity-30 
+          focus-visible:outline-sky-600
+          disabled:pointer-events-none 
+          disabled:bg-stone-700 
+          dark:bg-transparent 
+          dark:text-stone-200
+          dark:hover:bg-black 
+          dark:hover:bg-opacity-30
+
+          "
+          onClick={() => {
+            setOpenPalette((val) => !val);
+          }}
+          disabled={disabled}
+        >
+          {t.color_palette}
+          {openPalette ? <IconChevronDown /> : <IconChevronUp />}
+        </button>
+        {openPalette && (
+          <ColorSwatches
+            onClick={(val) => {
+              setHex(val);
+              setOpenPalette(false);
+            }}
+            colors={colors}
+          />
+        )}
       </div>
     </div>
   );

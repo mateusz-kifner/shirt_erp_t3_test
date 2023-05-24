@@ -19,13 +19,13 @@ const ScrollArea = (props: ScrollAreaProps) => {
         {children}
       </RadixScrollArea.Viewport>
       <RadixScrollArea.Scrollbar
-        className="flex touch-none select-none bg-stone-950 p-0.5 transition-colors duration-[160ms] ease-out hover:bg-stone-600 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+        className="flex touch-none select-none rounded bg-white p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5  data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col dark:bg-stone-950"
         orientation="vertical"
       >
         <RadixScrollArea.Thumb className="relative flex-1 rounded-[10px] bg-stone-600 before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']" />
       </RadixScrollArea.Scrollbar>
       <RadixScrollArea.Scrollbar
-        className="flex touch-none select-none bg-stone-950 p-0.5 transition-colors duration-[160ms] ease-out hover:bg-stone-600 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+        className="flex touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out hover:bg-stone-600 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col dark:bg-stone-950"
         orientation="horizontal"
       >
         <RadixScrollArea.Thumb className="relative flex-1 rounded-[10px] bg-stone-600 before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']" />

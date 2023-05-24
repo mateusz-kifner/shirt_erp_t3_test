@@ -19,7 +19,7 @@ const Popover = (props: PopoverProps) => {
       {!!anchor && <RadixPopover.Anchor asChild>{anchor}</RadixPopover.Anchor>}
       <RadixPopover.Portal>
         <RadixPopover.Content
-          className=" rounded bg-stone-200 shadow data-[state=open]:animate-show dark:bg-stone-950"
+          className=" overflow-hidden rounded bg-stone-200 shadow data-[state=open]:animate-show dark:bg-stone-950"
           sideOffset={5}
           {...contentProps}
         >
