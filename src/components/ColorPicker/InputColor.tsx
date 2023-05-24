@@ -136,6 +136,7 @@ function InputColor() {
             style={{
               flexGrow: 1,
               borderRadius: 4,
+              overflow: "hidden",
               background:
                 'url("/assets/checkerboard.svg") 0px 0px/16px 16px repeat',
             }}
@@ -144,7 +145,6 @@ function InputColor() {
               style={{
                 width: "100%",
                 height: "100%",
-                borderRadius: 4,
                 background: getHex8(),
               }}
             ></div>
