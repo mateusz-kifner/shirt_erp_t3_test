@@ -307,14 +307,13 @@ body::-webkit-scrollbar {
 /* Tooltip text */
 .tooltip .tooltip-text {
   visibility: hidden;
-  width: 120px;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px 8px;
   border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
   position: absolute;
-  z-index: 1;
+  z-index: 100;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
@@ -332,16 +331,33 @@ body::-webkit-scrollbar {
   right: 105%;
 }
 
-.tooltip .tooltip-text-top {
-  width: 120px;
+.tooltip .tooltip-text-top-start {
+  bottom: 100%;
+  left: 0;
+}
+.tooltip .tooltip-text-top-center {
   bottom: 100%;
   left: 50%;
-  margin-left: -60px;
+  transform: translate(-50%, 0);
 }
 
-.tooltip .tooltip-text-bottom {
-  width: 120px;
+.tooltip .tooltip-text-top-end {
+  bottom: 100%;
+  right: 0;
+}
+
+.tooltip .tooltip-text-bottom-start {
+  top: 100%;
+  left: 0;
+}
+
+.tooltip .tooltip-text-bottom-center {
   top: 100%;
   left: 50%;
-  margin-left: -60px;
+  transform: translate(-50%, 0);
+}
+
+.tooltip .tooltip-text-bottom-end {
+  top: 100%;
+  right: 0;
 }

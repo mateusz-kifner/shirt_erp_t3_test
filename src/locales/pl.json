@@ -97,5 +97,7 @@
   "en": "English",
   "color_palette": "Paleta kolorów",
   "color_without_alpha": "Kolor bez kanału alpha",
-  "color_with_alpha": "Wartość koloru"
+  "color_with_alpha": "Wartość koloru",
+  "hide": "Ukryj",
+  "show": "Pokaż"
 }
