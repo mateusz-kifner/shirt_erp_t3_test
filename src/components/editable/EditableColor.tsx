@@ -73,7 +73,6 @@ const EditableColor = (props: EditableColorProps) => {
     rightSection,
   } = props;
   const uuid = useId();
-
   const [colorText, setColorText] = useState<string | null>(
     value !== undefined && value.length > 3
       ? value
@@ -81,6 +80,8 @@ const EditableColor = (props: EditableColorProps) => {
       ? initialValue
       : ""
   );
+
+  const ref = useClickOutside(() => setFocus(false));
 
   const colorTextObj = tinycolor(colorText ?? "");
   const colorTextHSV = colorTextObj.toHsv();
@@ -90,7 +91,6 @@ const EditableColor = (props: EditableColorProps) => {
   });
 
   const [focus, setFocus] = useState<boolean>(false);
-  const ref = useClickOutside(() => setFocus(false));
 
   const colorName = useMemo(
     () => (colorText !== null ? getColorNameFromHex(colorText) : ""),
@@ -113,26 +113,30 @@ const EditableColor = (props: EditableColorProps) => {
     setColor((prev) => (equalHSV(val, prev) ? prev : val));
   };
 
+  const onLoseFocus = () => {
+    if (colorText !== value) {
+      if (!colorText || colorText === null) {
+        onSubmit?.(null);
+        setColorText(null);
+        return;
+      }
+      const colorObj = tinycolor(colorText);
+      if (colorObj.isValid()) {
+        let hex = colorObj.toHex8String();
+        if (hex.substring(7) === "ff") {
+          hex = hex.substring(0, 7);
+        }
+        onSubmit?.(hex);
+        setColorText(hex);
+      }
+    }
+  };
+
   useEffect(() => {
     if (focus) {
       window.addEventListener("beforeunload", preventLeave);
     } else {
-      if (colorText !== value) {
-        if (!colorText || colorText === null) {
-          onSubmit?.(null);
-          setColorText(null);
-          return;
-        }
-        const colorObj = tinycolor(colorText);
-        if (colorObj.isValid()) {
-          let hex = colorObj.toHex8String();
-          if (hex.substring(7) === "ff") {
-            hex = hex.substring(0, 7);
-          }
-          onSubmit?.(hex);
-          setColorText(hex);
-        }
-      }
+      onLoseFocus();
       window.removeEventListener("beforeunload", preventLeave);
     }
     // eslint-disable-next-line
@@ -144,20 +148,20 @@ const EditableColor = (props: EditableColorProps) => {
     };
   }, []);
 
-  const onKeyDown = (e: React.KeyboardEvent<any>) => {
-    if (focus) {
-      if (e.code == "Enter" || e.code == "Escape") {
-        setFocus(false);
-        e.preventDefault();
-      }
+  useEffect(() => {
+    const valueObj = tinycolor(value);
+    const valueHSV = { ...valueObj.toHsv(), h: valueObj.toHsv().h / 360 };
+    if (equalHSV(valueHSV, color)) {
+      setColorViaHSVObj(valueHSV);
     }
-  };
+  }, [value]);
 
   return (
     <div
       className="flex-grow"
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
+      ref={ref}
     >
       <InputLabel
         label={label}
@@ -165,10 +169,13 @@ const EditableColor = (props: EditableColorProps) => {
         htmlFor={"inputColor_" + uuid}
       />
       <DisplayCell
-        className="h-11 px-2"
+        className={`h-11 px-2 ${
+          !colorTextObj.isValid() ? "border-red-500" : ""
+        }`}
         leftSection={leftSection}
         rightSection={
           <Popover
+            onOpenChange={onLoseFocus}
             modal={false}
             trigger={
               !!rightSection ? (
@@ -193,15 +200,15 @@ const EditableColor = (props: EditableColorProps) => {
         }
         focus={focus}
       >
-        <input
-          type="text"
-          autoCorrect="false"
-          spellCheck="false"
-          id={"inputColor_" + uuid}
-          ref={ref}
-          value={colorText ?? ""}
-          onChange={(e) => setColorViaString(e.target.value)}
-          className={`
+        {focus ? (
+          <input
+            type="text"
+            autoCorrect="false"
+            spellCheck="false"
+            id={"inputColor_" + uuid}
+            value={colorText ?? ""}
+            onChange={(e) => setColorViaString(e.target.value)}
+            className={`
               data-disabled:text-gray-500
               dark:data-disabled:text-gray-500
               -mb-3
@@ -219,10 +226,13 @@ const EditableColor = (props: EditableColorProps) => {
               focus-visible:border-transparent
               focus-visible:outline-none
               `}
-          readOnly={disabled}
-          required={required}
-          autoComplete="off"
-        />
+            readOnly={disabled}
+            required={required}
+            autoComplete="off"
+          />
+        ) : (
+          <span>{colorText ?? ""}</span>
+        )}
       </DisplayCell>
     </div>
   );

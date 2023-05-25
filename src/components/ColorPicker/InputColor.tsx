@@ -89,7 +89,7 @@ function InputColor(props: InputColorProps) {
 
     if (newColor.isValid() && !isActive) {
       const newColorHSV = newColor.toHsv();
-      setHSV({ ...newColorHSV, h: Math.floor(newColorHSV.h / 360) });
+      setHSV({ ...newColorHSV, h: newColorHSV.h / 360 });
       setHSVText({
         h: newColorHSV.h.toFixed(0),
         s: newColorHSV.s.toFixed(3),
@@ -106,14 +106,15 @@ function InputColor(props: InputColorProps) {
     a: string;
   }) => {
     const newColor = tinycolor2.fromRatio({
-      h: parseFloat(HSVText.h),
+      h: parseFloat(HSVText.h) / 360,
       s: parseFloat(HSVText.s),
       v: parseFloat(HSVText.v),
       a: parseFloat(HSVText.a) / 100,
     });
     if (newColor.isValid() && !isActive) {
       const newColorRGB = newColor.toRgb();
-      setHSV(newColor.toHsv());
+      const newColorHSV = newColor.toHsv();
+      setHSV({ ...newColorHSV, h: newColorHSV.h / 360 });
       setRGBAText({
         r: newColorRGB.r.toFixed(0),
         g: newColorRGB.g.toFixed(0),

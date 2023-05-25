@@ -192,12 +192,13 @@ function Settings() {
               initialValue={{ saturation: 55, brightness: 55 }}
               hue={0}
             /> */}
+            <EditableColor
+              label="test color"
+              value={testColor}
+              onSubmit={(val) => setTestColor(val ?? "")}
+            />
+            {testColor}
           </Modal>
-          <EditableColor
-            label="test color"
-            value={testColor}
-            onSubmit={(val) => setTestColor(val ?? "")}
-          />
         </div>
       </div>
     </div>
