@@ -165,7 +165,7 @@ const EditableColor = (props: EditableColorProps) => {
         htmlFor={"inputColor_" + uuid}
       />
       <DisplayCell
-        className="px-2"
+        className="h-11 px-2"
         leftSection={leftSection}
         rightSection={
           <Popover
