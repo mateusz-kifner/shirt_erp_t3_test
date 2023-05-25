@@ -314,11 +314,14 @@ body::-webkit-scrollbar {
   z-index: 100;
   white-space: nowrap;
   word-break: keep-all;
+  transition: opacity 150ms ease-in-out 400ms, visibility 0ms 400ms;
+  opacity: 0;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltip-text {
   visibility: visible;
+  opacity: 1;
 }
 
 .tooltip .tooltip-text-right {

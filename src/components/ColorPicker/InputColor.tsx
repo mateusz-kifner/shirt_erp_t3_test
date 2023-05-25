@@ -25,6 +25,7 @@ interface InputColorProps {
 function InputColor(props: InputColorProps) {
   const { value, onChange, disabled } = props;
   const { supported, open } = useEyeDropper();
+  const [swatchesLoaded, setSwatchesLoaded] = useState<boolean>(false);
   const [openPalette, setOpenPalette] = useState<boolean>(false);
 
   const [isActiveArea, setIsActiveArea] = useState<boolean>(false);
@@ -152,7 +153,6 @@ function InputColor(props: InputColorProps) {
   };
 
   const colorHex = getHex8();
-  console.log(colorHex.substring(0, 7));
 
   return (
     <div className={`relative flex w-[388px] flex-col gap-3 p-3 `}>
@@ -356,6 +356,7 @@ function InputColor(props: InputColorProps) {
 
           "
           onClick={() => {
+            if (!swatchesLoaded) setSwatchesLoaded(true);
             setOpenPalette((val) => !val);
           }}
           disabled={disabled}
@@ -363,13 +364,14 @@ function InputColor(props: InputColorProps) {
           {t.color_palette}
           {openPalette ? <IconChevronDown /> : <IconChevronUp />}
         </button>
-        {openPalette && (
+        {(swatchesLoaded || openPalette) && (
           <ColorSwatches
             onClick={(val) => {
               setHex(val);
               setOpenPalette(false);
             }}
             colors={colors}
+            className={openPalette ? "" : "hidden"}
           />
         )}
       </div>

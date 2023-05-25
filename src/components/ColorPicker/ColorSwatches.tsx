@@ -1,7 +1,6 @@
 import { useLocalStorage } from "@mantine/hooks";
 import { IconNote, IconNoteOff } from "@tabler/icons-react";
 import { useId } from "react";
-import useTranslation from "~/hooks/useTranslation";
 import ActionButton from "../basic/ActionButton";
 import ScrollArea from "../basic/ScrollArea";
 import SimpleTooltip from "../basic/SimpleTooltip";
@@ -11,19 +10,18 @@ import SimpleTooltip from "../basic/SimpleTooltip";
 interface ColorSwatchesProps {
   colors: { [key: string]: { [key: string]: string } };
   onClick?: (hex: string) => void;
+  className: string;
 }
 
 function ColorSwatches(props: ColorSwatchesProps) {
-  const { colors, onClick } = props;
+  const { colors, onClick, className } = props;
   const uuid = useId();
-  const t = useTranslation();
   const [colorTooltip, setColorTooltip] = useLocalStorage({
     key: "colorTooltip",
     defaultValue: true,
   });
-
   return (
-    <ScrollArea className="relative">
+    <ScrollArea className={`relative ${className ?? ""}`}>
       <div className="relative flex w-fit flex-col gap-4">
         <ActionButton
           className="absolute
