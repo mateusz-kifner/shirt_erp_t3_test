@@ -68,7 +68,6 @@ function InputColor(props: InputColorProps) {
 
   useEffect(() => {
     const colorHSV = getHSV();
-    console.log(colorHSV, value, equalHSV(colorHSV, value!));
     if (!!value && !equalHSV(colorHSV, value)) {
       setHSV(value);
     }

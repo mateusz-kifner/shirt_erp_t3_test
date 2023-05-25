@@ -6,8 +6,9 @@ import colorNames from "~/utils/color-names.json";
 import preventLeave from "~/utils/preventLeave";
 
 import { IconColorPicker } from "@tabler/icons-react";
-import tinycolor2 from "tinycolor2";
+import tinycolor, { ColorFormats } from "tinycolor2";
 import type EditableInput from "~/types/EditableInput";
+import equalHSV from "~/utils/equalHSV";
 import InputColor from "../ColorPicker/InputColor";
 import ActionButton from "../basic/ActionButton";
 import DisplayCell from "../basic/DisplayCell";
@@ -73,7 +74,7 @@ const EditableColor = (props: EditableColorProps) => {
   } = props;
   const uuid = useId();
 
-  const [color, setColor] = useState<string | null>(
+  const [colorText, setColorText] = useState<string | null>(
     value !== undefined && value.length > 3
       ? value
       : initialValue !== undefined && initialValue.length > 3
@@ -81,32 +82,61 @@ const EditableColor = (props: EditableColorProps) => {
       : ""
   );
 
+  const colorTextObj = tinycolor(colorText ?? "");
+  const colorTextHSV = colorTextObj.toHsv();
+  const [color, setColor] = useState({
+    ...colorTextHSV,
+    h: colorTextHSV.h / 360,
+  });
+
   const [focus, setFocus] = useState<boolean>(false);
   const ref = useClickOutside(() => setFocus(false));
 
   const colorName = useMemo(
-    () => (color !== null ? getColorNameFromHex(color) : ""),
-    [color]
+    () => (colorText !== null ? getColorNameFromHex(colorText) : ""),
+    [colorText]
   );
+
+  const setColorViaString = (val: string) => {
+    setColorText(val);
+    const valHSV = tinycolor(val).toHsv();
+    setColor((prev) => {
+      console.log(prev, valHSV);
+      return equalHSV(valHSV, prev) ? prev : valHSV;
+    });
+  };
+
+  const setColorViaHSVObj = (val: ColorFormats.HSVA) => {
+    const valObj = tinycolor.fromRatio(val);
+    let hex = valObj.toHex8String();
+    if (hex.substring(7) === "ff") {
+      hex = hex.substring(0, 7);
+    }
+    setColorText(hex);
+    setColor((prev) => {
+      console.log(prev, val);
+      return equalHSV(val, prev) ? prev : val;
+    });
+  };
 
   useEffect(() => {
     if (focus) {
       window.addEventListener("beforeunload", preventLeave);
     } else {
-      if (color !== value) {
-        if (!color || color === null) {
+      if (colorText !== value) {
+        if (!colorText || colorText === null) {
           onSubmit?.(null);
-          setColor(null);
+          setColorText(null);
           return;
         }
-        const colorObj = tinycolor2(color);
+        const colorObj = tinycolor(colorText);
         if (colorObj.isValid()) {
           let hex = colorObj.toHex8String();
           if (hex.substring(7) === "ff") {
             hex = hex.substring(0, 7);
           }
           onSubmit?.(hex);
-          setColor(hex);
+          setColorText(hex);
         }
       }
       window.removeEventListener("beforeunload", preventLeave);
@@ -119,14 +149,6 @@ const EditableColor = (props: EditableColorProps) => {
       window.removeEventListener("beforeunload", preventLeave);
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (value) {
-  //     setColor(value);
-  //   } else {
-  //     setColor("");
-  //   }
-  // }, [value]);
 
   const onKeyDown = (e: React.KeyboardEvent<any>) => {
     if (focus) {
@@ -145,7 +167,7 @@ const EditableColor = (props: EditableColorProps) => {
     >
       <InputLabel
         label={label}
-        copyValue={color ?? ""}
+        copyValue={colorText ?? ""}
         htmlFor={"inputColor_" + uuid}
       />
       <DisplayCell
@@ -158,7 +180,7 @@ const EditableColor = (props: EditableColorProps) => {
               !!rightSection ? (
                 rightSection
               ) : (
-                <div className="-my-2 flex h-10 items-center justify-center">
+                <div className="flex h-11 items-center justify-center">
                   <ActionButton className="border-none">
                     <IconColorPicker />
                   </ActionButton>
@@ -167,25 +189,15 @@ const EditableColor = (props: EditableColorProps) => {
             }
             contentProps={{
               align: "end",
-              sideOffset: 13,
+              sideOffset: 5,
               className:
-                "pb-3  overflow-hidden rounded bg-stone-200 shadow data-[state=open]:animate-show dark:bg-stone-950",
+                "pb-3 overflow-hidden rounded bg-stone-200 shadow data-[state=open]:animate-show dark:bg-stone-950",
             }}
           >
-            <InputColor
-              value={tinycolor2(color ?? "#f00").toHsv()}
-              onChange={(color) => {
-                const colorHex = tinycolor2.fromRatio(color).toHex8String();
-                if (color.a === 1) {
-                  setColor(colorHex.substring(0, 7));
-                } else {
-                  setColor(colorHex);
-                }
-              }}
-            />
+            <InputColor value={color} onChange={setColorViaHSVObj} />
           </Popover>
         }
-        // focus={opened}
+        focus={focus}
       >
         <input
           type="text"
@@ -193,10 +205,8 @@ const EditableColor = (props: EditableColorProps) => {
           spellCheck="false"
           id={"inputColor_" + uuid}
           ref={ref}
-          value={color ?? ""}
-          onChange={(e) => {
-            setColor(e.target.value);
-          }}
+          value={colorText ?? ""}
+          onChange={(e) => setColorViaString(e.target.value)}
           className={`
               data-disabled:text-gray-500
               dark:data-disabled:text-gray-500
