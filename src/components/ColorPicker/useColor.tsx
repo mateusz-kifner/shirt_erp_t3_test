@@ -9,7 +9,7 @@ const useColor = (initialColor?: string, onChange?: (hex: string) => void) => {
   const setHSV = (color: { h: number; s: number; v: number; a: number }) => {
     const newColor = tinycolor2.fromRatio(color);
     if (newColor.isValid()) {
-      onChange?.(newColor.toHex8());
+      onChange?.(newColor.toHex8String());
       setColor(color);
     }
     return newColor.isValid();
@@ -18,7 +18,7 @@ const useColor = (initialColor?: string, onChange?: (hex: string) => void) => {
   const setRGB = (color: { r: number; g: number; b: number; a: number }) => {
     const newColor = tinycolor2.fromRatio(color);
     if (newColor.isValid()) {
-      onChange?.(newColor.toHex8());
+      onChange?.(newColor.toHex8String());
       setColor(newColor.toHsv());
     }
     return newColor.isValid();
@@ -27,7 +27,7 @@ const useColor = (initialColor?: string, onChange?: (hex: string) => void) => {
   const setHex = (hex: string) => {
     const newColor = tinycolor2(hex);
     if (newColor.isValid()) {
-      onChange?.(newColor.toHex8());
+      onChange?.(newColor.toHex8String());
       setColor(newColor.toHsv());
     }
     return newColor.isValid();

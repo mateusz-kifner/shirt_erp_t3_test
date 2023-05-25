@@ -1,21 +1,26 @@
 import { type HTMLAttributes, type ReactNode } from "react";
 
 import * as RadixScrollArea from "@radix-ui/react-scroll-area";
+import { omit } from "lodash";
 
-interface ScrollAreaProps
-  extends RadixScrollArea.ScrollAreaProps,
-    Omit<HTMLAttributes<HTMLDivElement>, "dir"> {
+interface ScrollAreaProps extends Omit<HTMLAttributes<HTMLDivElement>, "dir"> {
   children: ReactNode;
+  rootProps?: RadixScrollArea.ScrollAreaProps;
+  viewportProps?: RadixScrollArea.ScrollAreaViewportProps;
 }
 
 const ScrollArea = (props: ScrollAreaProps) => {
-  const { children, className, ...moreProps } = props;
+  const { children, className, rootProps, viewportProps, ...moreProps } = props;
   return (
     <RadixScrollArea.Root
       className={`overflow-hidden rounded ${className}`}
+      {...rootProps}
       {...moreProps}
     >
-      <RadixScrollArea.Viewport className="h-full w-full rounded">
+      <RadixScrollArea.Viewport
+        className={`h-full w-full rounded ${viewportProps?.className ?? ""}`}
+        {...omit(viewportProps, ["className"])}
+      >
         {children}
       </RadixScrollArea.Viewport>
       <RadixScrollArea.Scrollbar

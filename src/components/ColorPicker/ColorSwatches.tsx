@@ -18,11 +18,6 @@ function ColorSwatches(props: ColorSwatchesProps) {
             <span className="pl-2">{key}</span>
             <div className="flex flex-wrap gap-2">
               {Object.keys(colors[key]!).map((colorName, colorIndex) => (
-                // <Tooltip
-                //   delayDuration={150}
-                //   tooltip={colorName}
-                //   key={`${key}_${index}_${colorIndex}_${uuid}`}
-                // >
                 <div
                   key={`${key}_${index}_${colorIndex}_${uuid}`}
                   className="h-[1.9rem] w-[1.9rem] rounded"
@@ -30,7 +25,6 @@ function ColorSwatches(props: ColorSwatchesProps) {
                   onClick={() => onClick?.(colors[key]![colorName]!)}
                   title={colorName}
                 ></div>
-                // {/* </Tooltip> */}
               ))}
             </div>
           </div>

@@ -186,17 +186,18 @@ function Settings() {
               leftSection={<IconBug />}
               onSubmit={(val) => console.log(val)}
             /> */}
-            <EditableColor
-              label="test color"
-              value={testColor}
-              onSubmit={(val) => setTestColor(val ?? "")}
-            />
+
             {/* <InputColor /> */}
             {/* <ColorArea
               initialValue={{ saturation: 55, brightness: 55 }}
               hue={0}
             /> */}
           </Modal>
+          <EditableColor
+            label="test color"
+            value={testColor}
+            onSubmit={(val) => setTestColor(val ?? "")}
+          />
         </div>
       </div>
     </div>

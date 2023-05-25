@@ -312,7 +312,7 @@ function InputColor(props: InputColorProps) {
         />
       </div>
       <div
-        className={`absolute bottom-0 left-0 flex w-full flex-col gap-3  overflow-hidden bg-stone-200 transition-all dark:bg-stone-800 ${
+        className={`absolute bottom-0 left-0 flex w-full flex-col gap-3  overflow-hidden bg-stone-200 transition-all dark:bg-stone-950 ${
           openPalette ? "h-full p-3" : "h-7 px-3"
         }`}
       >
@@ -336,13 +336,14 @@ function InputColor(props: InputColorProps) {
           transition-all 
           hover:bg-black 
           hover:bg-opacity-30 
-          focus-visible:outline-sky-600
-          disabled:pointer-events-none 
+          focus-visible:outline-sky-600 
+          disabled:pointer-events-none
           disabled:bg-stone-700 
           dark:bg-transparent 
-          dark:text-stone-200
-          dark:hover:bg-black 
-          dark:hover:bg-opacity-30
+          dark:text-stone-200 
+          dark:hover:bg-white
+          dark:hover:bg-opacity-30 
+          dark:first-letter:hover:bg-white
 
           "
           onClick={() => {

@@ -150,6 +150,7 @@ const EditableColor = (props: EditableColorProps) => {
         leftSection={leftSection}
         rightSection={
           <Popover
+            modal={false}
             trigger={
               !!rightSection ? (
                 rightSection
@@ -171,8 +172,12 @@ const EditableColor = (props: EditableColorProps) => {
             <InputColor
               value={color ?? "#ff0000"}
               onChange={(color) => {
-                setColor(color);
-                console.log(color);
+                console.log(color.substring(7), color.length > 7);
+                if (color.length > 7 && color.substring(7) === "ff") {
+                  setColor(color.substring(0, 7));
+                } else {
+                  setColor(color);
+                }
               }}
             />
           </Popover>
