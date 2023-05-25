@@ -100,10 +100,7 @@ const EditableColor = (props: EditableColorProps) => {
   const setColorViaString = (val: string) => {
     setColorText(val);
     const valHSV = tinycolor(val).toHsv();
-    setColor((prev) => {
-      console.log(prev, valHSV);
-      return equalHSV(valHSV, prev) ? prev : valHSV;
-    });
+    setColor((prev) => (equalHSV(valHSV, prev) ? prev : valHSV));
   };
 
   const setColorViaHSVObj = (val: ColorFormats.HSVA) => {
@@ -113,10 +110,7 @@ const EditableColor = (props: EditableColorProps) => {
       hex = hex.substring(0, 7);
     }
     setColorText(hex);
-    setColor((prev) => {
-      console.log(prev, val);
-      return equalHSV(val, prev) ? prev : val;
-    });
+    setColor((prev) => (equalHSV(val, prev) ? prev : val));
   };
 
   useEffect(() => {
