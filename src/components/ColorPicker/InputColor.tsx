@@ -151,13 +151,12 @@ function InputColor(props: InputColorProps) {
     }
   };
 
+  const colorHex = getHex8();
+  console.log(colorHex.substring(0, 7));
+
   return (
-    <div
-      className={`relative flex w-[388px] flex-col gap-3 p-3 ${
-        openPalette ? "overflow-hidden" : ""
-      }`}
-    >
-      <div className="flex gap-3">
+    <div className={`relative flex w-[388px] flex-col gap-3 p-3 `}>
+      <div className={`flex gap-3 ${openPalette ? "overflow-hidden" : ""}`}>
         <ColorArea
           value={getHSV()}
           onChange={(color) => {
@@ -170,6 +169,7 @@ function InputColor(props: InputColorProps) {
         <div className="flex flex-grow flex-col gap-3">
           <div
             style={{
+              display: "flex",
               flexGrow: 1,
               borderRadius: 4,
               overflow: "hidden",
@@ -181,7 +181,14 @@ function InputColor(props: InputColorProps) {
               style={{
                 width: "100%",
                 height: "100%",
-                background: getHex8(),
+                background: colorHex.substring(0, 7),
+              }}
+            ></div>
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: colorHex,
               }}
             ></div>
           </div>
@@ -244,7 +251,7 @@ function InputColor(props: InputColorProps) {
               <label>
                 {"H : "}
                 <input
-                  className="w-12  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-red-500"
+                  className="w-12  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-violet-500"
                   value={HSVText.h}
                   onChange={(e) => {
                     const newColor = { ...HSVText, h: e.target.value };
@@ -257,7 +264,7 @@ function InputColor(props: InputColorProps) {
               <label>
                 {"S : "}
                 <input
-                  className="w-12  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-green-500"
+                  className="w-12  border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-cyan-500"
                   value={HSVText.s}
                   onChange={(e) => {
                     const newColor = { ...HSVText, s: e.target.value };
@@ -269,7 +276,7 @@ function InputColor(props: InputColorProps) {
               <label>
                 {"V : "}
                 <input
-                  className="w-12 border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-blue-500"
+                  className="w-12 border-b border-b-stone-400 bg-transparent text-right outline-none focus-visible:border-b-fuchsia-500"
                   value={HSVText.v}
                   onChange={(e) => {
                     const newColor = { ...HSVText, v: e.target.value };

@@ -95,5 +95,7 @@
   "copy_to_clipboard": "Kopiuj do schowka",
   "pl": "Polski",
   "en": "English",
-  "color_palette": "Paleta kolorów"
+  "color_palette": "Paleta kolorów",
+  "color_without_alpha": "Kolor bez kanału alpha",
+  "color_with_alpha": "Wartość koloru"
 }
