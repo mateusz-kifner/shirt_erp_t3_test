@@ -17,12 +17,12 @@ function ColorSwatches(props: ColorSwatchesProps) {
       <div className="flex flex-col gap-4 px-1">
         {Object.keys(colors).map((key, index) => (
           <div key={`${key}_${index}_${uuid}`} className="flex flex-col gap-2">
-            <span className="pl-2">{key}</span>
+            {!key.startsWith("_") && <span className="pl-2">{key}</span>}
             <div className="flex flex-wrap gap-2">
               {Object.keys(colors[key]!).map((colorName, colorIndex) => (
                 <div
                   key={`${key}_${index}_${colorIndex}_${uuid}`}
-                  className="h-[1.9rem] w-[1.9rem] rounded"
+                  className="h-[1.5rem] w-[1.5rem] rounded"
                   style={{ background: colors[key]![colorName] }}
                   onClick={() => onClick?.(colors[key]![colorName]!)}
                   title={colorName}
