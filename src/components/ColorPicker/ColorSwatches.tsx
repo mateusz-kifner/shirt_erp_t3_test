@@ -1,6 +1,8 @@
 import { useId } from "react";
 import ScrollArea from "../basic/ScrollArea";
 
+// Scroll in color palette will not work in modal due to radix bug (25.05.2023)
+
 interface ColorSwatchesProps {
   colors: { [key: string]: { [key: string]: string } };
   onClick?: (hex: string) => void;

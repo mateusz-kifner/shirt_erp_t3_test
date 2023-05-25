@@ -1,0 +1,20 @@
+import { type ColorFormats } from "tinycolor2";
+
+function equalHSV(hsv1: ColorFormats.HSVA, hsv2: ColorFormats.HSVA) {
+  if (hsv1.a - hsv2.a > 0.001) return false;
+
+  if (hsv1.s < 0.001 && hsv2.s < 0.001 && hsv1.v - hsv2.v < 0.001) return true;
+
+  if (hsv1.v < 0.001 && hsv2.v < 0.001) return true;
+
+  if (
+    hsv1.h - hsv2.h < 0.001 &&
+    hsv1.s - hsv2.s < 0.001 &&
+    hsv1.v - hsv2.v < 0.001
+  )
+    return true;
+
+  return false;
+}
+
+export default equalHSV;

@@ -14,6 +14,8 @@ import DisplayCell from "../basic/DisplayCell";
 import Popover from "../basic/Popover";
 import InputLabel from "../input/InputLabel";
 
+// Scroll in color palette will not work in modal due to radix bug (25.05.2023)
+
 const colorNameKeys = Object.keys(colorNames);
 const colorNamesRGB: [number, number, number][] = colorNameKeys.map((val) => [
   parseInt(val.substring(1, 3), 16),
@@ -70,6 +72,7 @@ const EditableColor = (props: EditableColorProps) => {
     rightSection,
   } = props;
   const uuid = useId();
+
   const [color, setColor] = useState<string | null>(
     value !== undefined && value.length > 3
       ? value
@@ -170,13 +173,13 @@ const EditableColor = (props: EditableColorProps) => {
             }}
           >
             <InputColor
-              value={color ?? "#ff0000"}
+              value={tinycolor2(color ?? "#f00").toHsv()}
               onChange={(color) => {
-                console.log(color.substring(7), color.length > 7);
-                if (color.length > 7 && color.substring(7) === "ff") {
-                  setColor(color.substring(0, 7));
+                const colorHex = tinycolor2.fromRatio(color).toHex8String();
+                if (color.a === 1) {
+                  setColor(colorHex.substring(0, 7));
                 } else {
-                  setColor(color);
+                  setColor(colorHex);
                 }
               }}
             />

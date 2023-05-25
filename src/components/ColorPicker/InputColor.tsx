@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import tinycolor2, { type ColorFormats } from "tinycolor2";
 import useTranslation from "~/hooks/useTranslation";
+import equalHSV from "~/utils/equalHSV";
 import ActionButton from "../basic/ActionButton";
 import AlphaSlider from "./AlphaSlider";
 import ColorArea from "./ColorArea";
@@ -16,8 +17,8 @@ import colors from "./colors.json";
 import useColor from "./useColor";
 
 interface InputColorProps {
-  value?: string;
-  onChange: (value: string) => void;
+  value?: ColorFormats.HSVA;
+  onChange: (value: ColorFormats.HSVA) => void;
   disabled?: boolean;
 }
 
@@ -66,8 +67,10 @@ function InputColor(props: InputColorProps) {
   });
 
   useEffect(() => {
-    if (!!value && value !== getHex8()) {
-      setHex(value);
+    const colorHSV = getHSV();
+    console.log(colorHSV, value, equalHSV(colorHSV, value!));
+    if (!!value && !equalHSV(colorHSV, value)) {
+      setHSV(value);
     }
   }, [value]);
 
@@ -86,7 +89,7 @@ function InputColor(props: InputColorProps) {
 
     if (newColor.isValid() && !isActive) {
       const newColorHSV = newColor.toHsv();
-      setHSV(newColorHSV);
+      setHSV({ ...newColorHSV, h: Math.floor(newColorHSV.h / 360) });
       setHSVText({
         h: newColorHSV.h.toFixed(0),
         s: newColorHSV.s.toFixed(3),
