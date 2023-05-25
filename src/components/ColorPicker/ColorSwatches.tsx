@@ -1,6 +1,5 @@
-import { useLocalStorage } from "@mantine/hooks";
 import { IconNote, IconNoteOff } from "@tabler/icons-react";
-import { useId } from "react";
+import { useId, useState } from "react";
 import ActionButton from "../basic/ActionButton";
 import ScrollArea from "../basic/ScrollArea";
 import SimpleTooltip from "../basic/SimpleTooltip";
@@ -16,10 +15,15 @@ interface ColorSwatchesProps {
 function ColorSwatches(props: ColorSwatchesProps) {
   const { colors, onClick, className } = props;
   const uuid = useId();
-  const [colorTooltip, setColorTooltip] = useLocalStorage({
-    key: "colorTooltip",
-    defaultValue: true,
-  });
+  const [disableColorTooltip, _setDisableColorTooltip] = useState<boolean>(
+    localStorage.getItem("disableColorTooltip") === "1"
+  );
+
+  const setDisableColorTooltip = (value: boolean) => {
+    _setDisableColorTooltip(value);
+    localStorage.setItem("disableColorTooltip", value ? "1" : "0");
+  };
+
   return (
     <ScrollArea className={`relative ${className ?? ""}`}>
       <div className="relative flex w-fit flex-col gap-4">
@@ -31,16 +35,23 @@ function ColorSwatches(props: ColorSwatchesProps) {
             hover:bg-transparent
             dark:hover:bg-transparent
             "
-          onClick={() => setColorTooltip((v) => !v)}
+          onClick={() => setDisableColorTooltip(!disableColorTooltip)}
         >
-          {colorTooltip ? <IconNote /> : <IconNoteOff />}
+          {disableColorTooltip ? <IconNoteOff /> : <IconNote />}
         </ActionButton>
         {Object.keys(colors).map((key, index) => (
           <div key={`${key}_${index}_${uuid}`} className="flex flex-col gap-2">
             {!key.startsWith("_") && <span className="pl-2">{key}</span>}
             <div className="flex flex-wrap gap-2">
               {Object.keys(colors[key]!).map((colorName, colorIndex) =>
-                colorTooltip ? (
+                disableColorTooltip ? (
+                  <div
+                    key={`${key}_${index}_${colorIndex}_${uuid}`}
+                    className="h-[1.5rem] w-[1.5rem] rounded"
+                    style={{ background: colors[key]![colorName] }}
+                    onClick={() => onClick?.(colors[key]![colorName]!)}
+                  ></div>
+                ) : (
                   <SimpleTooltip
                     key={`${key}_${index}_${colorIndex}_${uuid}`}
                     tooltip={colorName}
@@ -59,13 +70,6 @@ function ColorSwatches(props: ColorSwatchesProps) {
                       onClick={() => onClick?.(colors[key]![colorName]!)}
                     ></div>
                   </SimpleTooltip>
-                ) : (
-                  <div
-                    key={`${key}_${index}_${colorIndex}_${uuid}`}
-                    className="h-[1.5rem] w-[1.5rem] rounded"
-                    style={{ background: colors[key]![colorName] }}
-                    onClick={() => onClick?.(colors[key]![colorName]!)}
-                  ></div>
                 )
               )}
             </div>
