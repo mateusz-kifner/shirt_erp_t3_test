@@ -17,6 +17,8 @@ import Modal from "~/components/basic/Modal";
 import Popover from "~/components/basic/Popover";
 import Select from "~/components/basic/Select";
 import EditableColor from "~/components/editable/EditableColor";
+import EditableDate from "~/components/editable/EditableDate";
+import EditableText from "~/components/editable/EditableText";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
@@ -171,8 +173,8 @@ function Settings() {
               disabled
             >
               test display cell
-            </DisplayCell>
-             <EditableText
+              </DisplayCell>*/}
+            <EditableText
               label="test"
               value={testValue ?? undefined}
               onSubmit={setTestValue}
@@ -184,8 +186,11 @@ function Settings() {
               value={testDate ?? undefined}
               // rightSection={<IconBug />}
               leftSection={<IconBug />}
-              onSubmit={(val) => console.log(val)}
-            /> */}
+              onSubmit={(val) => {
+                setTestDate(val);
+                console.log(val);
+              }}
+            />
 
             {/* <InputColor /> */}
             {/* <ColorArea

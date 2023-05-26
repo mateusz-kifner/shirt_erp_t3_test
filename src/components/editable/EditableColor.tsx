@@ -1,4 +1,11 @@
-import { useEffect, useId, useMemo, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 
 import { useClickOutside } from "@mantine/hooks";
 
@@ -91,6 +98,7 @@ const EditableColor = (props: EditableColorProps) => {
   });
 
   const [focus, setFocus] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const colorName = useMemo(
     () => (colorText !== null ? getColorNameFromHex(colorText) : ""),
@@ -134,6 +142,7 @@ const EditableColor = (props: EditableColorProps) => {
 
   useEffect(() => {
     if (focus) {
+      inputRef.current?.focus();
       window.addEventListener("beforeunload", preventLeave);
     } else {
       onLoseFocus();
@@ -169,10 +178,17 @@ const EditableColor = (props: EditableColorProps) => {
         htmlFor={"inputColor_" + uuid}
       />
       <DisplayCell
-        className={`h-11 px-2 ${
-          !colorTextObj.isValid() ? "border-red-500" : ""
-        }`}
-        leftSection={leftSection}
+        className={!colorTextObj.isValid() ? "border-red-500" : ""}
+        leftSection={
+          !!leftSection ? (
+            leftSection
+          ) : (
+            <div
+              className="relative h-6 w-6 rounded-full before:absolute before:left-[0.0625rem] before:top-[0.0625rem] before:-z-10 before:h-[1.375rem] before:w-[1.375rem] before:rounded-full before:bg-white"
+              style={{ background: colorText ?? "" }}
+            ></div>
+          )
+        }
         rightSection={
           <Popover
             onOpenChange={onLoseFocus}
@@ -200,39 +216,32 @@ const EditableColor = (props: EditableColorProps) => {
         }
         focus={focus}
       >
-        {focus ? (
-          <input
-            type="text"
-            autoCorrect="false"
-            spellCheck="false"
-            id={"inputColor_" + uuid}
-            value={colorText ?? ""}
-            onChange={(e) => setColorViaString(e.target.value)}
-            className={`
+        <input
+          type="text"
+          autoCorrect="false"
+          spellCheck="false"
+          id={"inputColor_" + uuid}
+          value={colorText ?? ""}
+          onChange={(e) => setColorViaString(e.target.value)}
+          className={`
               data-disabled:text-gray-500
               dark:data-disabled:text-gray-500
-              -mb-3
-              -mt-2
               w-full
               resize-none
-              overflow-hidden 
               whitespace-pre-line
               break-words
               bg-transparent
-              pb-3
-              pt-[0.625rem]
+              py-1
               text-sm
               outline-none
               focus-visible:border-transparent
               focus-visible:outline-none
               `}
-            readOnly={disabled}
-            required={required}
-            autoComplete="off"
-          />
-        ) : (
-          <span>{colorText ?? ""}</span>
-        )}
+          readOnly={disabled}
+          required={required}
+          autoComplete="off"
+          ref={inputRef}
+        />
       </DisplayCell>
     </div>
   );

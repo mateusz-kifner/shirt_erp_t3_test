@@ -4,6 +4,7 @@ import { useClipboard } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
 
 import { showNotification } from "~/lib/notifications";
+import ActionButton from "../basic/ActionButton";
 
 //  LabelHTMLAttributes {
 //   form?: string | undefined;
@@ -28,13 +29,8 @@ function InputLabel(props: InputLabelProps) {
       <div className="flex h-8 items-center py-1">
         {label}{" "}
         {copyValue && copyValue.length > 0 && (
-          <button
-            className="border-1 inline-flex animate-pop items-center justify-center
-          gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-        text-gray-200 no-underline transition-all  
-        hover:bg-black hover:bg-opacity-30
-          active:hover:scale-95 active:hover:animate-none 
-          active:focus:scale-95 active:focus:animate-none"
+          <ActionButton
+            className="h-fit w-fit p-0.5"
             onClick={() => {
               clipboard.copy(copyValue);
               showNotification({
@@ -46,7 +42,7 @@ function InputLabel(props: InputLabelProps) {
             tabIndex={-1}
           >
             <IconCopy size={16} />
-          </button>
+          </ActionButton>
         )}
       </div>
     </label>

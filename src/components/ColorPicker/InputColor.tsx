@@ -172,8 +172,7 @@ function InputColor(props: InputColorProps) {
             style={{
               display: "flex",
               flexGrow: 1,
-              borderRadius: 4,
-              overflow: "hidden",
+              borderRadius: 6,
               background:
                 'url("/assets/checkerboard.svg") 0px 0px/16px 16px repeat',
             }}
@@ -182,6 +181,8 @@ function InputColor(props: InputColorProps) {
               style={{
                 width: "100%",
                 height: "100%",
+                borderTopLeftRadius: 4,
+                borderBottomLeftRadius: 4,
                 background: colorHex.substring(0, 7),
               }}
             ></div>
@@ -189,6 +190,8 @@ function InputColor(props: InputColorProps) {
               style={{
                 width: "100%",
                 height: "100%",
+                borderTopRightRadius: 4,
+                borderBottomRightRadius: 4,
                 background: colorHex,
               }}
             ></div>

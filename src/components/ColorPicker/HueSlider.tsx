@@ -17,7 +17,6 @@ function HueSlider(props: ColorSliderProps) {
   const { ref, active } = useMove(
     ({ x }) => !disabled && onChange?.({ ...value, h: x })
   );
-  console.log(value, value.h * 360);
   const thumbColor = tinycolor2.fromRatio({
     h: value.h,
     s: 1,
