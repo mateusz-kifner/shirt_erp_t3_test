@@ -18,6 +18,7 @@ import Popover from "~/components/basic/Popover";
 import Select from "~/components/basic/Select";
 import EditableColor from "~/components/editable/EditableColor";
 import EditableDate from "~/components/editable/EditableDate";
+import EditableDateTime from "~/components/editable/EditableDateTime";
 import EditableText from "~/components/editable/EditableText";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
@@ -190,6 +191,12 @@ function Settings() {
                 setTestDate(val);
                 console.log(val);
               }}
+            />
+            <EditableDateTime
+              label="datetime"
+              value={"2021-11-05T12:24:05.097Z"}
+              // rightSection={<IconBug />}
+              leftSection={<IconBug />}
             />
 
             {/* <InputColor /> */}

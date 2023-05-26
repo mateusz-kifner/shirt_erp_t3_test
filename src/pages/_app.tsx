@@ -14,6 +14,19 @@ import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 
+// dayjs imports
+import dayjs from "dayjs";
+import "dayjs/locale/pl";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+import isToday from "dayjs/plugin/isToday";
+import { useRouter } from "next/router";
+
+dayjs.extend(localizedFormat);
+dayjs.extend(isToday);
+dayjs.extend(relativeTime);
+
 // TODO: refactor logger
 
 Logger.setHandler(function (messages, context) {
@@ -54,6 +67,9 @@ Logger.setLevel(
 );
 
 const App: AppType = ({ Component, pageProps }) => {
+  const router = useRouter();
+  dayjs.locale(router.locale);
+
   return (
     <UserContextProvider>
       <RadixTooltipProvider>

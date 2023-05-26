@@ -67,7 +67,7 @@ const EditableDate = (props: InputDateProps) => {
     >
       <InputLabel
         label={label}
-        copyValue={text}
+        copyValue={dayjs(date).format("L").toString()}
         htmlFor={"inputDate_" + uuid}
       />
       <DisplayCell
@@ -92,7 +92,11 @@ const EditableDate = (props: InputDateProps) => {
               key={value}
               className={"z-[1000] w-96 rounded p-2"}
               onChange={(date) => {
-                !!date && setDate(date as Date);
+                setText(
+                  dayjs(date as Date)
+                    .format("L")
+                    .toString()
+                );
               }}
               value={date}
             />
