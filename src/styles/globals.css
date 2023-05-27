@@ -78,34 +78,42 @@ body::-webkit-scrollbar {
     @apply inline-flex
       h-8
       w-8
-      animate-pop 
-      select-none
+      animate-pop
+      select-none 
       items-center
-      justify-center 
+      justify-center
       gap-3
-      rounded-md
-    
-      font-semibold 
+      rounded-md 
+      border-2
+      border-solid
+      border-transparent
+      font-semibold
       uppercase
-      text-stone-800
+      text-stone-800 
       no-underline
+      outline-none
       outline-offset-4
       transition-all
       hover:bg-black
       hover:bg-opacity-30
-      focus-visible:outline-sky-600
-      active:outline-blue-600
-      active:hover:scale-95 
-      active:hover:animate-none
-      active:focus:scale-95 
-      active:focus:animate-none  
-      disabled:animate-none 
-      disabled:opacity-30
-      disabled:outline-none 
-      disabled:hover:bg-transparent
-      dark:text-stone-200 
+      focus-visible:border-sky-600
+      active:border-blue-600
+      active:hover:scale-95
+      active:hover:animate-none 
+      active:focus:scale-95
+      active:focus:animate-none
+      disabled:animate-none
+      disabled:opacity-30 
+      disabled:outline-none  
+      disabled:hover:bg-transparent 
+      dark:border-solid
+      dark:border-transparent 
+      dark:text-stone-200
+      dark:outline-none 
       dark:hover:bg-white
       dark:hover:bg-opacity-20
+      dark:focus-visible:border-sky-600
+      dark:active:border-blue-600
       dark:disabled:animate-none
       dark:disabled:opacity-30
       dark:disabled:outline-none

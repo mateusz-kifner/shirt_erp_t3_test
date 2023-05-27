@@ -7,6 +7,7 @@ interface DisplayCellProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   focus?: boolean;
   disabled?: boolean;
+  error?: boolean;
 }
 
 const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
@@ -17,6 +18,7 @@ const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
       children,
       disabled = false,
       focus = false,
+      error = false,
       className,
       ...moreProps
     } = props;
@@ -55,7 +57,8 @@ const DisplayCell = forwardRef<HTMLDivElement, DisplayCellProps>(
           disabled && " bg-transparent text-gray-500",
           focus
             ? "border-sky-600 dark:border-sky-600"
-            : "border-gray-400 dark:border-stone-600"
+            : "border-gray-400 dark:border-stone-600",
+          error && "border-red-500 dark:border-red-500"
         )}
         {...moreProps}
         ref={ref}

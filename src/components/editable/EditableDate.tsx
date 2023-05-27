@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconCalendar } from "@tabler/icons-react";
@@ -10,11 +10,10 @@ import ActionButton from "~/components/basic/ActionButton";
 import DisplayCell from "~/components/basic/DisplayCell";
 import Popover from "~/components/basic/Popover";
 import InputLabel from "~/components/input/InputLabel";
-import useTranslation from "~/hooks/useTranslation";
-import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
-import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
 
 import type EditableInput from "~/types/EditableInput";
+import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
+import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
 
 type InputDateProps = EditableInput<string>;
 
@@ -31,56 +30,66 @@ const EditableDate = (props: InputDateProps) => {
   } = props;
   const uuid = useId();
   const router = useRouter();
-  const t = useTranslation();
   const [focus, setFocus] = useState<boolean>(false);
   const dateFormat = router.locale === "pl" ? "DD.MM.YYYY" : "YYYY-MM-DD";
-  const [date, setDate] = useState<Date | null>(
-    value ? new Date(value) : initialValue ? new Date(initialValue) : null
+  const [text, setText] = useState(
+    dayjs(value ?? initialValue ?? null)
+      .format("L")
+      .toString()
   );
-  const [text, setText] = useState(dayjs(date).format("L").toString());
 
   const [debouncedText, cancel] = useDebouncedValue(text, 300);
   const inputDateRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<boolean>(false);
+  const [calendarOpened, setCalendarOpened] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const newDate = dayjs(debouncedText, dateFormat, router.locale);
-  //   if (newDate.toString() != "Invalid Date") {
-  //     if (
-  //       newDate.format("YYYY-MM-DD").toString() !=
-  //       dayjs(value).format("YYYY-MM-DD").toString()
-  //     ) {
-  //       onSubmit?.(newDate.format("YYYY-MM-DD").toString());
-  //     }
-  //     setError(false);
-  //   } else {
-  //     setError(true);
-  //   }
-  // }, [debouncedText]);
+  useEffect(() => {
+    if (focus && !calendarOpened) {
+      inputDateRef.current?.focus();
+      inputDateRef.current?.selectionStart &&
+        (inputDateRef.current.selectionStart =
+          inputDateRef.current.value.length);
+    }
+  }, [focus]);
+
+  useEffect(() => {
+    const newDate = dayjs(debouncedText, dateFormat, router.locale);
+    if (newDate.isValid()) {
+      if (
+        newDate.format("YYYY-MM-DD").toString() !=
+        dayjs(value).format("YYYY-MM-DD").toString()
+      ) {
+        onSubmit?.(newDate.format("YYYY-MM-DD").toString());
+      }
+      setError(false);
+    } else {
+      setError(true);
+    }
+  }, [debouncedText]);
 
   return (
-    <div
-      className="relative flex-grow"
-      onFocus={handleFocusForInnerElements(() => setFocus(true))}
-      onBlur={handleBlurForInnerElements(() => setFocus(false))}
-      onClick={() => setFocus(true)}
-    >
+    <div className="relative flex-grow">
       <InputLabel
         label={label}
-        copyValue={dayjs(date).format("L").toString()}
+        copyValue={text}
         htmlFor={"inputDate_" + uuid}
       />
       <DisplayCell
-        className="px-2"
+        onFocus={handleFocusForInnerElements(() => setFocus(true))}
+        onBlur={handleBlurForInnerElements(() => setFocus(false))}
+        onClick={() => setFocus(true)}
+        className={"px-2"}
+        error={error}
         leftSection={leftSection}
         rightSection={
           <Popover
+            onOpenChange={setCalendarOpened}
             trigger={
               !!rightSection ? (
                 rightSection
               ) : (
-                <div className="-my-2 flex h-10 items-center justify-center">
-                  <ActionButton className="border-none">
+                <div className="flex items-center justify-center">
+                  <ActionButton>
                     <IconCalendar />
                   </ActionButton>
                 </div>
@@ -98,11 +107,15 @@ const EditableDate = (props: InputDateProps) => {
                     .toString()
                 );
               }}
-              value={date}
+              value={
+                dayjs(text).isValid()
+                  ? dayjs(text).format("YYYY-MM-DD").toString()
+                  : null
+              }
             />
           </Popover>
         }
-        // focus={opened}
+        focus={focus || calendarOpened}
       >
         <input
           id={"inputDate_" + uuid}
@@ -111,24 +124,21 @@ const EditableDate = (props: InputDateProps) => {
           onChange={(e) => {
             setText(e.target.value);
           }}
-          className={`
+          className="
               data-disabled:text-gray-500
               dark:data-disabled:text-gray-500
-              -mb-3
-              -mt-2
               w-full
               resize-none
               overflow-hidden 
               whitespace-pre-line
               break-words
               bg-transparent
-              pb-3
-              pt-[0.625rem]
+              py-1
               text-sm
               outline-none
               focus-visible:border-transparent
               focus-visible:outline-none
-              `}
+              "
           readOnly={disabled}
           required={required}
           autoComplete="off"

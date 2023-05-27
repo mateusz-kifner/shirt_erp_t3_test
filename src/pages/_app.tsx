@@ -17,6 +17,7 @@ import "~/styles/globals.css";
 // dayjs imports
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -26,6 +27,7 @@ import { useRouter } from "next/router";
 dayjs.extend(localizedFormat);
 dayjs.extend(isToday);
 dayjs.extend(relativeTime);
+dayjs.extend(customParseFormat);
 
 // TODO: refactor logger
 
