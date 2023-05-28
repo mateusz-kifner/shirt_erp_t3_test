@@ -14,48 +14,40 @@ import SuperJSON from "superjson";
 
 import { useLocalStorage } from "@mantine/hooks";
 import Button from "~/components/basic/Button";
-import Modal from "~/components/basic/Modal";
-import Popover from "~/components/basic/Popover";
 import Select from "~/components/basic/Select";
-import EditableAddress from "~/components/editable/EditableAddress";
-import EditableApiEntry from "~/components/editable/EditableApiEntry";
-import EditableColor from "~/components/editable/EditableColor";
-import EditableDate from "~/components/editable/EditableDate";
-import EditableDateTime from "~/components/editable/EditableDateTime";
-import EditableText from "~/components/editable/EditableText";
+import Editable from "~/components/editable/Editable";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
-import ClientListItem from "~/page-components/erp/client/ClientListItem";
-import { ClientType } from "~/schema/clientSchema";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
+import template from "~/templates/test.template";
 import { api } from "~/utils/api";
 
 const testData = {
   name: "string",
-  bool: true,
-  switch: false,
+  // bool: true,
+  // switch: false,
   category: "option 1",
   color: "#ff0000",
   date: "2021-11-05T12:24:05.097Z",
   datetime: "2021-11-05T12:24:05.097Z",
   product: null,
   client: null,
-  productComponent: null,
-  productComponents: [],
-  image: null,
-  file: null,
-  files: null,
-  workstations: null,
-  employee: null,
-  employees: null,
-  submit: null,
+  // productComponent: null,
+  // productComponents: [],
+  // image: null,
+  // file: null,
+  // files: null,
+  // workstations: null,
+  // employee: null,
+  // employees: null,
+  // submit: null,
 
-  group: { name: "test", color: "#ff0000" },
-  group2: { name: "test", color: "#ff0000" },
-  group3: { name: {}, color: "#ff0000" },
-  group_of_arrays: { arrayText: [], arrayText2: [] },
+  // group: { name: "test", color: "#ff0000" },
+  // group2: { name: "test", color: "#ff0000" },
+  // group3: { name: {}, color: "#ff0000" },
+  // group_of_arrays: { arrayText: [], arrayText2: [] },
 };
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
@@ -189,97 +181,10 @@ function Settings() {
               </Button>
             </>
           )}
-          <Popover trigger={<Button>PopOver</Button>}>
-            <h1>text</h1>
-          </Popover>
-          <Modal
-            open={testFormOpen}
-            onClose={() => setTestFormOpen(false)}
-            title={"test test"}
-            description={"test2 test2"}
-          >
-            {/* <DisplayCell rightSection={<IconBug />} leftSection={<IconBug />}>
-              test display cell
-            </DisplayCell>
-            <DisplayCell
-              rightSection={<IconBug />}
-              leftSection={<IconBug />}
-              disabled
-            >
-              test display cell
-              </DisplayCell>*/}
-            <EditableText
-              label="test"
-              value={testValue ?? undefined}
-              onSubmit={setTestValue}
-              rightSection={<IconBug />}
-              leftSection={<IconBug />}
-            />
-            <EditableDate
-              label="date"
-              value={testDate ?? undefined}
-              // rightSection={<IconBug />}
-              leftSection={<IconBug />}
-              onSubmit={(val) => {
-                setTestDate(val);
-                console.log(val);
-              }}
-            />
-            <EditableDateTime
-              label="datetime"
-              value={"2021-11-05T12:24:05.097Z"}
-              // rightSection={<IconBug />}
-              leftSection={<IconBug />}
-            />
-
-            {/* <InputColor /> */}
-            {/* <ColorArea
-              initialValue={{ saturation: 55, brightness: 55 }}
-              hue={0}
-            /> */}
-            <EditableColor
-              label="test color"
-              value={testColor}
-              onSubmit={(val) => setTestColor(val ?? "")}
-            />
-            {testColor}
-          </Modal>
-          <EditableAddress
-            label={{
-              name: "Address",
-              apartmentNumber: "apartmentNumber",
-              city: "city",
-              postCode: "postCode",
-              secondLine: "secondLine",
-              streetNumber: "streetNumber",
-              streetName: "streetName",
-              province: "province",
-            }}
-            value={{
-              apartmentNumber: "123",
-              city: "Gdynia",
-              postCode: "54-533",
-              province: "pomorskie",
-              streetName: "Lawendowa",
-              streetNumber: "45",
-            }}
-            rightSection={<IconBug />}
-            leftSection={<IconBug />}
-            required
-          />
-
-          <EditableApiEntry
-            label="client"
-            entryName={"client"}
-            Element={ClientListItem}
-            value={val}
-            onSubmit={setVal}
-            copyProvider={(val: ClientType) =>
-              val?.firstname + " " + val?.lastname
-            }
-            required
-            helpTooltip="test help"
-            allowClear
+          <Editable
+            data={testData}
+            template={template}
+            onSubmit={(key, value) => console.log(key, value)}
           />
         </div>
       </div>

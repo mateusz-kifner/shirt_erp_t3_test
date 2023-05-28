@@ -2,17 +2,18 @@ import { useEffect, useId, useState } from "react";
 
 import { useClickOutside, useHover } from "@mantine/hooks";
 import { IconPhoto, IconTrashX, IconUpload, IconX } from "@tabler/icons-react";
-import axios, { AxiosError } from "axios";
 import { env } from "~/env.mjs";
 // import FileListItem from "../FileListItem";
 
+import useTranslation from "~/hooks/useTranslation";
+import { FileType } from "~/schema/fileSchema";
 import type EditableInput from "~/types/EditableInput";
-import { type FileType } from "~/types/FileType";
 import type TablerIconType from "~/types/TablerIconType";
+import Modal from "../basic/Modal";
 
 // FIXME: ENFORCE FILE LIMIT
 
-function getIconColor(status: any, theme: MantineTheme) {
+function getIconColor(status: any) {
   return status.accepted
     ? //@ts-ignore
       theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 4 : 6]
@@ -52,8 +53,7 @@ const EditableFiles = (props: EditableFilesProps) => {
     disabled,
     maxCount = 128,
   } = props;
-  const { t } = useTranslation();
-  const theme = useMantineTheme();
+  const t = useTranslation();
   const uuid = useId();
   const [focus, setFocus] = useState<boolean>(false);
   const [files, setFiles] = useState<FileType[]>(value ?? initialValue ?? []);
@@ -144,10 +144,10 @@ const EditableFiles = (props: EditableFilesProps) => {
           <Image src={preview} alt="" />
         </Modal>
 
-        <Stack
+        <div
           ref={hoverdRef}
-          pt="md"
-          pb="xl"
+          className="pb-4 pt-2"
+
           // p={files.length > 0 || active ? "md" : "xs"}
           // sx={[
           //   (theme) => ({
@@ -287,7 +287,7 @@ const EditableFiles = (props: EditableFilesProps) => {
               </Group>
             </Dropzone>
           )}
-        </Stack>
+        </div>
       </div>
     </Input.Wrapper>
   );

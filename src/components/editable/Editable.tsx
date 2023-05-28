@@ -17,14 +17,11 @@ import EditableArray from "~/components/editable/EditableArray";
 import EditableColor from "~/components/editable/EditableColor";
 import EditableDate from "~/components/editable/EditableDate";
 import EditableDateTime from "~/components/editable/EditableDateTime";
-import EditableDesign from "~/components/editable/EditableDesign";
 import EditableEnum from "~/components/editable/EditableEnum";
 import EditableFiles from "~/components/editable/EditableFiles";
 import EditableJSON from "~/components/editable/EditableJSON";
 import EditableRichText from "~/components/editable/EditableRichText";
 import EditableSwitch from "~/components/editable/EditableSwitch";
-import EditableTable from "~/components/editable/EditableTable";
-import EditableTableView from "~/components/editable/EditableTableView";
 import EditableText from "~/components/editable/EditableText";
 
 import apiListItems from "~/components/editable/apiListItems";
@@ -201,10 +198,6 @@ const editableFields: editableFields = {
   file: { component: EditableFiles, props: { maxCount: 1 } },
   image: { component: EditableFiles, props: { maxCount: 1 } },
   files: { component: EditableFiles, props: {} },
-  table: { component: EditableTable, props: {} },
-  tableView: { component: EditableTableView, props: {} },
-  design: { component: EditableDesign, props: {} },
-  designView: { component: EditableDesign, props: {} },
   apiEntry: {
     component: EditableApiEntry,
     props: {},

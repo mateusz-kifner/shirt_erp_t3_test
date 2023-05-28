@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 
+// @ts-ignore
 async function hashPassword(password) {
   const saltRounds = 10; // Number of salt rounds to use
 
