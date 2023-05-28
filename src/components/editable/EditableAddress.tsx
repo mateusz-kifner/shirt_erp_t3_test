@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { useClipboard, useHover } from "@mantine/hooks";
+import { useClickOutside, useFocusReturn } from "@mantine/hooks";
 import { isEqual } from "lodash";
 
 import EditableEnum from "~/components/editable/EditableEnum";
 import EditableText from "~/components/editable/EditableText";
-import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 
 import DisplayCellExpanding from "~/components/basic/DisplayCellExpanding";
 import { type AddressType } from "~/schema/addressSchema";
@@ -65,8 +64,12 @@ const EditableAddress = (props: EditableAddressProps) => {
         }
   );
   const [focus, setFocus] = useState<boolean>(false);
-  const clipboard = useClipboard();
-  const { hovered, ref } = useHover();
+
+  const ref = useClickOutside(() => setFocus(false));
+  const [enumOpen, setEnumOpen] = useState<boolean>(false);
+  const returnFocus = useFocusReturn({
+    opened: enumOpen,
+  });
 
   const setAddressField = (key: string, val: string) => {
     const new_address = { ...address, [key]: val };
@@ -128,19 +131,18 @@ const EditableAddress = (props: EditableAddressProps) => {
   };
 
   return (
-    <div
-      onClick={() => !disabled && setFocus(true)}
-      onFocus={() => !disabled && setFocus(true)}
-      onBlur={handleBlurForInnerElements(() => setFocus(false))}
-      ref={ref}
-    >
+    <div>
       <InputLabel
         label={label?.name}
         copyValue={toString()}
         required={required}
       />
-      <DisplayCellExpanding>
-        {focus ? (
+      <DisplayCellExpanding
+        ref={ref}
+        onClick={() => !disabled && setFocus(true)}
+        onFocus={() => !disabled && setFocus(true)}
+      >
+        {focus || enumOpen ? (
           <div
             style={{ position: "relative" }}
             className="flex flex-grow flex-col gap-2"
@@ -199,6 +201,11 @@ const EditableAddress = (props: EditableAddressProps) => {
                 value !== null && setAddressField("province", value)
               }
               enum_data={provinces}
+              open={enumOpen}
+              onOpenChange={(open) => {
+                setEnumOpen(open);
+                !open && returnFocus();
+              }}
             />
           </div>
         ) : (
