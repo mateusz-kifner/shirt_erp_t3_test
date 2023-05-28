@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
 import { useId } from "@mantine/hooks";
 import { IconExternalLink, IconTrashX } from "@tabler/icons-react";
-import { isEqual } from "lodash";
+import { capitalize, isEqual } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -77,22 +77,36 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
       />
 
       <Modal open={open} onClose={() => setOpen(false)}>
-        {allowClear ? (
-          <Button
-            onClick={() => {
-              setOpen(false);
-              onSubmit?.(null);
-            }}
-            leftSection={<IconTrashX />}
-          >
-            {t.clear}
-          </Button>
-        ) : undefined}
+        <div className="h-8">
+          {allowClear ? (
+            <Button
+              onClick={() => {
+                setOpen(false);
+                onSubmit?.(null);
+              }}
+              leftSection={<IconTrashX size={12} />}
+              className="h-8 p-3 text-xs"
+            >
+              {t.clear}
+            </Button>
+          ) : undefined}
+        </div>
         {entryName ? (
           <ApiList
             entryName={entryName ?? ""}
             ListItem={Element}
-            label={label}
+            label={
+              entryName
+                ? capitalize(
+                    (
+                      t[entryName as keyof typeof t] as {
+                        singular: string;
+                        plural: string;
+                      }
+                    ).plural
+                  )
+                : undefined
+            }
             onChange={(value) => {
               setOpen(false);
               setApiEntry(value);

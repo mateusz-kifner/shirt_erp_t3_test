@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   IconBug,
@@ -12,6 +12,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import SuperJSON from "superjson";
 
+import { useLocalStorage } from "@mantine/hooks";
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
 import Popover from "~/components/basic/Popover";
@@ -105,6 +106,15 @@ function Settings() {
     "2021-11-05T12:24:05.097Z"
   );
   const { mutate } = api.client.create.useMutation();
+  const [remSize, setRemSize] = useLocalStorage({
+    key: "remSize",
+    defaultValue: 10,
+  });
+
+  useEffect(() => {
+    const html = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
+    html.style.fontSize = "" + remSize + "px";
+  }, [remSize]);
 
   if (!data?.user) return null;
   const user = data.user;
@@ -127,6 +137,24 @@ function Settings() {
           <Button onClick={() => logout.mutate()} leftSection={<IconLogout />}>
             {t.sign_out}
           </Button>
+          <div className="flex flex-grow items-center gap-2">
+            <span className="flex-grow">{t.zoom}</span>
+            <Button onClick={() => setRemSize(12)} className="w-10">
+              -2
+            </Button>
+            <Button onClick={() => setRemSize(14)} className="w-10">
+              -1
+            </Button>
+            <Button onClick={() => setRemSize(16)} className="w-10">
+              0
+            </Button>
+            <Button onClick={() => setRemSize(18)} className="w-10">
+              1
+            </Button>
+            <Button onClick={() => setRemSize(20)} className="w-10">
+              2
+            </Button>
+          </div>
           <div className="flex items-center justify-stretch">
             <span className="w-1/2">{t.language}</span>
             <Select
@@ -249,7 +277,9 @@ function Settings() {
             copyProvider={(val: ClientType) =>
               val?.firstname + " " + val?.lastname
             }
-            required={true}
+            required
+            helpTooltip="test help"
+            allowClear
           />
         </div>
       </div>

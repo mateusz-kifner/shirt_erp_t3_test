@@ -99,5 +99,6 @@
   "color_without_alpha": "Color without alpha channel",
   "color_with_alpha": "Color value",
   "hide": "Hide",
-  "show": "show"
+  "show": "show",
+  "zoom": "Zoom"
 }

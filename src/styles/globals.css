@@ -64,8 +64,7 @@ body::-webkit-scrollbar {
       bg-blue-600
       stroke-gray-200 
       px-4 py-0 
-      font-semibold 
-      uppercase 
+      font-semibold  
       text-gray-200
       no-underline 
       outline-offset-4

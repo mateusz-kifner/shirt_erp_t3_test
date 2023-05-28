@@ -23,6 +23,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import isToday from "dayjs/plugin/isToday";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 dayjs.extend(localizedFormat);
 dayjs.extend(isToday);
@@ -71,6 +72,12 @@ Logger.setLevel(
 const App: AppType = ({ Component, pageProps }) => {
   const router = useRouter();
   dayjs.locale(router.locale);
+
+  useEffect(() => {
+    const remSize = localStorage.getItem("remSize");
+    const html = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
+    html.style.fontSize = `${remSize}px`;
+  }, []);
 
   return (
     <UserContextProvider>

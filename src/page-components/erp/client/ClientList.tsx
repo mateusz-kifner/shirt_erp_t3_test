@@ -16,12 +16,15 @@ interface ClientListProps {
 const ClientsList = ({ selectedId, onAddElement }: ClientListProps) => {
   const router = useRouter();
   const t = useTranslation();
+  console.log(
+    entryName,
+    entryName ? capitalize(t[entryName].plural) : undefined
+  );
 
   return (
     <ApiList
       ListItem={ClientListItem}
       entryName={entryName}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       label={entryName ? capitalize(t[entryName].plural) : undefined}
       selectedId={selectedId}
       onChange={(val: { id: number }) => {
