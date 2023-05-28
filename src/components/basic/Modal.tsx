@@ -50,11 +50,9 @@ function Modal(props: ModalProps) {
       <RadixDialog.Portal>
         <RadixDialog.Overlay className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-40" />
         <RadixDialog.Content className="absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-3 shadow dark:bg-stone-800">
-          {!!title && <RadixDialog.Title>{title}Radix</RadixDialog.Title>}
+          {!!title && <RadixDialog.Title>{title}</RadixDialog.Title>}
           {!!description && (
-            <RadixDialog.Description>
-              {description}Radix
-            </RadixDialog.Description>
+            <RadixDialog.Description>{description}</RadixDialog.Description>
           )}
           {children}
           {!disableClose && (

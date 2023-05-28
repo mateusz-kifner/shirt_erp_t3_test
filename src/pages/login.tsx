@@ -33,20 +33,20 @@ export default function Login() {
   };
 
   return (
-    <Modal
-      open={true}
-      disableClose
-
-      // title={<h2 className="text-2xl">{t.sign_in}</h2>}
-    >
-      <form onSubmit={handleLogin}>
-        <div className="flex flex-col gap-4 px-2 pb-8 pt-2">
-          <div className="h-7  text-red-700 dark:text-red-400">
-            {!!errorMsg ? errorMsg : ` `}
-          </div>
-          <input
-            name="username"
-            className="
+    <div>
+      <Modal
+        open={true}
+        disableClose
+        title={<h2 className="text-2xl">{t.sign_in}</h2>}
+      >
+        <form onSubmit={handleLogin}>
+          <div className="flex flex-col gap-4 px-2 pb-8 pt-2">
+            <div className="h-7  text-red-700 dark:text-red-400">
+              {!!errorMsg ? errorMsg : ` `}
+            </div>
+            <input
+              name="username"
+              className="
                 data-disabled:text-gray-500
                 dark:data-disabled:text-gray-500
                 data-disabled:bg-transparent 
@@ -78,12 +78,12 @@ export default function Login() {
                 dark:read-only:bg-transparent 
                 dark:read-only:outline-none
                 dark:focus:border-sky-600"
-            type="text"
-            placeholder={t.username}
-          />
-          <input
-            name="password"
-            className="
+              type="text"
+              placeholder={t.username}
+            />
+            <input
+              name="password"
+              className="
                 data-disabled:text-gray-500
                 dark:data-disabled:text-gray-500
                 data-disabled:bg-transparent 
@@ -115,11 +115,11 @@ export default function Login() {
                 dark:read-only:bg-transparent 
                 dark:read-only:outline-none
                 dark:focus:border-sky-600"
-            type="password"
-            placeholder={t.password}
-          />
-          <input
-            className={`
+              type="password"
+              placeholder={t.password}
+            />
+            <input
+              className={`
             border-1
               mt-8 
               inline-flex
@@ -147,12 +147,13 @@ export default function Login() {
               active:focus:animate-none 
               disabled:pointer-events-none 
               disabled:bg-stone-700`}
-            type="submit"
-            value={t.sign_in}
-          />
-        </div>
-      </form>
-    </Modal>
+              type="submit"
+              value={t.sign_in}
+            />
+          </div>
+        </form>
+      </Modal>
+    </div>
   );
 }
 
