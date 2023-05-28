@@ -14,10 +14,11 @@ import ActionButton from "../basic/ActionButton";
 interface InputLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label?: ReactNode;
   copyValue?: string;
+  required?: boolean;
 }
 
 function InputLabel(props: InputLabelProps) {
-  const { label, copyValue, ...moreProps } = props;
+  const { label, copyValue, required, ...moreProps } = props;
   const clipboard = useClipboard();
   return label ? (
     <label
@@ -27,10 +28,11 @@ function InputLabel(props: InputLabelProps) {
       {...moreProps}
     >
       <div className="flex h-8 items-center py-1">
-        {label}{" "}
+        {label}
+        {required && <span className="text-red-600">*</span>}
         {copyValue && copyValue.length > 0 && (
           <ActionButton
-            className="h-fit w-fit p-0.5"
+            className="ml-1 h-5 w-5"
             onClick={() => {
               clipboard.copy(copyValue);
               showNotification({

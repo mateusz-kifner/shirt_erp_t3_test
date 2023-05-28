@@ -16,6 +16,7 @@ import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
 import Popover from "~/components/basic/Popover";
 import Select from "~/components/basic/Select";
+import EditableAddress from "~/components/editable/EditableAddress";
 import EditableColor from "~/components/editable/EditableColor";
 import EditableDate from "~/components/editable/EditableDate";
 import EditableDateTime from "~/components/editable/EditableDateTime";
@@ -211,6 +212,29 @@ function Settings() {
             />
             {testColor}
           </Modal>
+          <EditableAddress
+            label={{
+              name: "Address",
+              apartmentNumber: "apartmentNumber",
+              city: "city",
+              postCode: "postCode",
+              secondLine: "secondLine",
+              streetNumber: "streetNumber",
+              streetName: "streetName",
+              province: "province",
+            }}
+            value={{
+              apartmentNumber: "123",
+              city: "Gdynia",
+              postCode: "54-533",
+              province: "pomorskie",
+              streetName: "Lawendowa",
+              streetNumber: "45",
+            }}
+            rightSection={<IconBug />}
+            leftSection={<IconBug />}
+            required
+          />
         </div>
       </div>
     </div>
