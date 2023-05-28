@@ -1,23 +1,18 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
-import { useClipboard, useId } from "@mantine/hooks";
-import {
-  IconCopy,
-  IconExternalLink,
-  IconQuestionMark,
-  IconTrashX,
-} from "@tabler/icons-react";
+import { useId } from "@mantine/hooks";
+import { IconExternalLink, IconTrashX } from "@tabler/icons-react";
 import { isEqual } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
-import Tooltip from "~/components/basic/Tooltip";
 import useTranslation from "~/hooks/useTranslation";
-import { showNotification } from "~/lib/notifications";
 
 import type EditableInput from "~/types/EditableInput";
+import ApiList from "../ApiList";
+import InputLabel from "../input/InputLabel";
 
 interface EditableApiEntryProps extends EditableInput<any> {
   entryName: string;
@@ -45,7 +40,7 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
     style,
     withErase = false,
     listProps,
-    linkEntry = false,
+    linkEntry = true,
     helpTooltip,
     allowClear = false,
   } = props;
@@ -54,7 +49,6 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
   const [prev, setPrev] = useState<any>(apiEntry);
   const [open, setOpen] = useState<boolean>(false);
   const uuid = useId();
-  const clipboard = useClipboard();
   // eslint-disable-next-line
   const copyValue = useMemo(() => copyProvider(apiEntry), [apiEntry]);
   const router = useRouter();
@@ -72,54 +66,16 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
     // eslint-disable-next-line
   }, [apiEntry]);
 
+  console.log(value);
+
   return (
     <div>
-      <label>
-        {label && label.length > 0 ? (
-          <div className="flex w-full justify-between">
-            <div className="flex">
-              {label}
-              {apiEntry && copyValue && (
-                <button
-                  className="border-1 inline-flex animate-pop items-center justify-center
-             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-           text-gray-200 no-underline transition-all  
-           hover:bg-black hover:bg-opacity-30
-             active:hover:scale-95 active:hover:animate-none 
-             active:focus:scale-95 active:focus:animate-none"
-                  onClick={() => {
-                    clipboard.copy(copyValue);
-                    showNotification({
-                      title: "Skopiowano do schowka",
-                      message: copyValue,
-                      icon: <IconCopy />,
-                    });
-                  }}
-                  tabIndex={-1}
-                >
-                  <IconCopy size={16} />
-                </button>
-              )}
+      <InputLabel
+        label={label}
+        copyValue={apiEntry && copyValue ? copyValue : ""}
+        required={required}
+      />
 
-              {helpTooltip && (
-                <Tooltip tooltip={helpTooltip}>
-                  <button
-                    className="border-1 inline-flex animate-pop items-center justify-center
-             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-           text-gray-200 no-underline transition-all  
-           hover:bg-black hover:bg-opacity-30
-             active:hover:scale-95 active:hover:animate-none 
-             active:focus:scale-95 active:focus:animate-none"
-                    tabIndex={-1}
-                  >
-                    <IconQuestionMark size={16} />
-                  </button>
-                </Tooltip>
-              )}
-            </div>
-          </div>
-        ) : undefined}
-      </label>
       <Modal open={open} onClose={() => setOpen(false)}>
         {allowClear ? (
           <Button
@@ -127,28 +83,23 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
               setOpen(false);
               onSubmit?.(null);
             }}
-            // color="red"
-            // variant="subtle"
-            // size="sm"
             leftSection={<IconTrashX />}
-            // radius="xl"
           >
             {t.clear}
           </Button>
         ) : undefined}
         {entryName ? (
-          <div></div>
+          <ApiList
+            entryName={entryName ?? ""}
+            ListItem={Element}
+            label={label}
+            onChange={(value) => {
+              setOpen(false);
+              setApiEntry(value);
+            }}
+            {...listProps}
+          />
         ) : (
-          // <ApiList
-          //   entryName={entryName ?? ""}
-          //   ListItem={Element}
-          //   label={label}
-          //   onChange={(value) => {
-          //     setOpened(false);
-          //     setApiEntry(value);
-          //   }}
-          //   {...listProps}
-          // />
           <div className="text-red-500">
             Entry Name not valid or element was not defined in mapping
           </div>
@@ -157,20 +108,11 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
       {entryName ? (
         <div
           key={uuid}
-          // sx={[
-          //   SxRadius,
-          //   (theme) => ({
-          //     position: "relative",
-          //     border: "1px solid transparent",
-          //     "&:hover": {
-          //       border:
-          //         theme.colorScheme === "dark"
-          //           ? "1px solid #2C2E33"
-          //           : "1px solid #ced4da",
-          //     },
-          //     overflow: "hidden",
-          //   }),
-          // ]}
+          className={` relative flex overflow-hidden rounded border border-solid border-transparent ${
+            open
+              ? "border-sky-600 dark:border-sky-600"
+              : "border-gray-400 dark:border-stone-600"
+          }`}
         >
           <Element
             onChange={() => setOpen(true)}
@@ -178,28 +120,13 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
             disabled={disabled}
           />
           {linkEntry && value && value?.id && (
-            <div
-            // sx={[
-            //   (theme) => ({
-            //     position: "absolute",
-            //     top: "50%",
-            //     right: "-3rem",
-            //     transform: "translate(0,-50%)",
-            //   }),
-            // ]}
-            >
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">
               <Link
                 href={`/erp/${entryName}/${value?.id as string}`}
-                className="border-1 inline-flex animate-pop items-center justify-center
-             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
-           text-gray-200 no-underline transition-all  
-           hover:bg-black hover:bg-opacity-30
-             active:hover:scale-95 active:hover:animate-none 
-             active:focus:scale-95 active:focus:animate-none"
+                className="action-button"
                 tabIndex={-1}
               >
                 <IconExternalLink size={18} />
-                <div style={{ width: "2.4rem" }}></div>
               </Link>
             </div>
           )}

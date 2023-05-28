@@ -105,6 +105,7 @@ export function createProcedureSearchWithPagination(
       })
     )
     .query(async ({ input }) => {
+      console.log(input);
       const search = [];
       if (input.query && input.query.length > 0) {
         const splitQuery = input.query.split(" ");

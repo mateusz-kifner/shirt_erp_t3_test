@@ -14,24 +14,11 @@ interface EditableApiEntryIdProps extends EditableInput<number> {
 }
 
 const EditableApiEntryId = (props: EditableApiEntryIdProps) => {
-  const {
-    label,
-    value,
-    initialValue,
-    onSubmit,
-    disabled,
-    required,
-    Element,
-    entryName,
-    copyProvider = () => "",
-    style,
-    withErase = false,
-  } = props;
+  const { value, onSubmit, entryName } = props;
   const { data } = api[entryName as "client"].getById.useQuery(
     value as number,
     { enabled: !!value }
   );
-  // const { data } = useStrapi(entryName, value ? value : null)
   return (
     <EditableApiEntry
       {...props}

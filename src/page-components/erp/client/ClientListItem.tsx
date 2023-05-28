@@ -1,6 +1,6 @@
-import { truncString } from "~/utils/truncString";
-import { type ClientType } from "~/schema/clientSchema";
 import { DefaultListItem } from "~/components/DefaultListItem";
+import { type ClientType } from "~/schema/clientSchema";
+import { truncString } from "~/utils/truncString";
 
 interface ClientListItemProps {
   onChange?: (item: Partial<ClientType>) => void;
@@ -33,7 +33,7 @@ const ClientListItem = (props: ClientListItemProps) => {
         (value?.firstname && value.firstname.length > 0) ||
         (value?.lastname && value.lastname.length > 0)
           ? `${value?.firstname?.[0] ?? ""}${value?.lastname?.[0] ?? ""}`
-          : value.username?.substring(0, 2) ?? ""
+          : value?.username?.substring(0, 2) ?? ""
       }
       {...props}
     />

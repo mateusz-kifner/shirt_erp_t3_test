@@ -17,6 +17,7 @@ import Modal from "~/components/basic/Modal";
 import Popover from "~/components/basic/Popover";
 import Select from "~/components/basic/Select";
 import EditableAddress from "~/components/editable/EditableAddress";
+import EditableApiEntry from "~/components/editable/EditableApiEntry";
 import EditableColor from "~/components/editable/EditableColor";
 import EditableDate from "~/components/editable/EditableDate";
 import EditableDateTime from "~/components/editable/EditableDateTime";
@@ -24,6 +25,8 @@ import EditableText from "~/components/editable/EditableText";
 import { useUserContext } from "~/context/userContext";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
+import ClientListItem from "~/page-components/erp/client/ClientListItem";
+import { ClientType } from "~/schema/clientSchema";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
@@ -95,6 +98,7 @@ function Settings() {
   const { debug, toggleDebug, toggleTheme, theme } = useUserContext();
   const [testFormOpen, setTestFormOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [val, setVal] = useState<any>(null);
   const [testColor, setTestColor] = useState<string>("#fff");
   const [testValue, setTestValue] = useState<string | null>("");
   const [testDate, setTestDate] = useState<string | null>(
@@ -234,6 +238,18 @@ function Settings() {
             rightSection={<IconBug />}
             leftSection={<IconBug />}
             required
+          />
+
+          <EditableApiEntry
+            label="client"
+            entryName={"client"}
+            Element={ClientListItem}
+            value={val}
+            onSubmit={setVal}
+            copyProvider={(val: ClientType) =>
+              val?.firstname + " " + val?.lastname
+            }
+            required={true}
           />
         </div>
       </div>
