@@ -1,10 +1,10 @@
-import type { IncomingMessage, ServerResponse } from "http";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { type Prisma } from "@prisma/client";
 import formidable from "formidable";
 import type IncomingForm from "formidable/Formidable";
-import HTTPError from "~/utils/HTTPError";
+import type { IncomingMessage, ServerResponse } from "http";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "~/server/db";
-import { type Prisma } from "@prisma/client";
+import HTTPError from "~/utils/HTTPError";
 import { genRandomStringServerOnly } from "~/utils/genRandomString";
 
 /**
@@ -35,7 +35,7 @@ export default async function Upload(
       maxFileSize: 10 * 1024 * 1024 * 1024, // 10Gb
       maxFieldsSize: 10 * 1024 * 1024 * 1024, // 10Gb
       maxFiles: 1024,
-      hashAlgorithm: "sha1",
+      // hashAlgorithm: "sha1",
     });
 
     const { files } = await new Promise<{
@@ -59,15 +59,27 @@ export default async function Upload(
 
     const fileArray = Array.isArray(files) ? files : [files];
 
-    const newFiles: Prisma.FileCreateInput[] = fileArray.map((file) => ({
-      size: file.size,
-      filepath: file.filepath,
-      originalFilename: file.originalFilename,
-      newFilename: file.newFilename,
-      mimetype: file.mimetype,
-      hash: file.hash,
-      token: genRandomStringServerOnly(40),
-    }));
+    const newFiles: Prisma.FileCreateInput[] = fileArray.map((file) => {
+      const originalFilenameExtDot = file.originalFilename!.lastIndexOf(".");
+      const extWithDot = file.originalFilename!.substring(
+        originalFilenameExtDot
+      );
+      const fileName = file.originalFilename!.substring(
+        0,
+        originalFilenameExtDot
+      );
+      const hash = genRandomStringServerOnly(10);
+      return {
+        size: file.size,
+        filepath: file.filepath,
+        originalFilename: file.originalFilename,
+        filename: `${fileName}_${hash}${extWithDot}`,
+        newFilename: file.newFilename,
+        mimetype: file.mimetype,
+        hash,
+        token: genRandomStringServerOnly(32),
+      };
+    });
 
     prisma.file
       .createMany({ data: newFiles, skipDuplicates: false })

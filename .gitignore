@@ -42,4 +42,6 @@ yarn-error.log*
 *.tsbuildinfo
 
 /.vscode
-/uploads/
+
+uploads/*
+!uploads/.gitkeep

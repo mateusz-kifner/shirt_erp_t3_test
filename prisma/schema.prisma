@@ -38,9 +38,10 @@ model File {
     filepath         String     @db.VarChar(2048)
     originalFilename String?    @db.VarChar(1024)
     newFilename      String?    @db.VarChar(1024)
-    mimetype         String?    @db.VarChar(40)
-    hash             String?    @db.VarChar(40)
-    token            String?    @db.VarChar(40)
+    filename         String?    @db.VarChar(1024)
+    mimetype         String?    @db.VarChar(255)
+    hash             String?    @db.VarChar(10)
+    token            String?    @db.VarChar(32)
     createdAt        DateTime   @default(now())
     updatedAt        DateTime   @updatedAt
     createdById      Int?
