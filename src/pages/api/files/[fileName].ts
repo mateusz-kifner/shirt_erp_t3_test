@@ -19,14 +19,13 @@ export default async function Files(req: NextApiRequest, res: NextApiResponse) {
 
     const { fileName, token } = req.query;
     const download = req.query.download === "";
-    console.log(fileName, token, download);
 
     const file = await prisma.file.findFirst({ where: { filename: fileName } });
     if (!file) {
       throw new HTTPError(404, `File not found`);
     }
     // Check if correct token was provided, public resources have empty token
-    if ((file.token ?? "") !== (token ?? "")) {
+    if (!!file.token && (file.token ?? "") !== (token ?? "")) {
       throw new HTTPError(404, `File not found`);
     }
     if (download) {

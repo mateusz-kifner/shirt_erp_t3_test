@@ -98,6 +98,7 @@ export default async function Upload(
       status: "success",
       statusCode: 201,
       message: "Success: File uploaded successfully",
+      data: newFiles,
     });
   } catch (err) {
     if (err instanceof HTTPError) {
