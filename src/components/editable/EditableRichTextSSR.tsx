@@ -6,16 +6,24 @@ import {
   useHover,
   useMergedRef,
 } from "@mantine/hooks";
-import { IconCopy } from "@tabler/icons-react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import DOMPurify from "dompurify";
-import TurndownService from "turndown";
+// import TurndownService from "turndown";
+
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+import StarterKit from "@tiptap/starter-kit";
 
 import preventLeave from "~/utils/preventLeave";
 
 import type EditableInput from "~/types/EditableInput";
+// const turndownService = new TurndownService();
 
-const turndownService = new TurndownService();
-
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface EditableRichTextProps extends EditableInput<string> {}
 
 const EditableRichText = ({
@@ -41,7 +49,7 @@ const EditableRichText = ({
       Underline,
       Link,
       Superscript,
-      SubScript,
+      Subscript,
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
@@ -91,125 +99,120 @@ const EditableRichText = ({
   }, [value]);
 
   return (
-    <Input.Wrapper
-      label={
-        label && label.length > 0 ? (
-          <>
-            {label}
-            {text.length > 0 && text !== "<p><br></p>" && (
-              <ActionIcon
-                size="xs"
-                style={{
-                  display: "inline-block",
-                  transform: "translate(4px, 4px)",
-                }}
-                onClick={() => {
-                  const plainText = unescape(
-                    turndownService.turndown(
-                      text
-                        .replace(/h[0-9]>/g, "div>")
-                        .replace(
-                          /<\/*(s|em|strong|a|b|i|mark|del|small|ins|sub|sup)>/g,
-                          ""
-                        )
-                    )
-                  );
-                  clipboard.copy(plainText);
-                  showNotification({
-                    title: "Skopiowano do schowka",
-                    message: plainText,
-                  });
-                }}
-                tabIndex={-1}
-              >
-                <IconCopy size={16} />
-              </ActionIcon>
-            )}
-          </>
-        ) : undefined
-      }
-      labelElement="div"
-      required={required}
+    <div
+      // label={
+      //   label && label.length > 0 ? (
+      //     <>
+      //       {label}
+      //       {text.length > 0 && text !== "<p><br></p>" && (
+      //         <ActionButton
+      //           onClick={() => {
+      //             // const plainText = unescape(
+      //             //   turndownService.turndown(
+      //             //     text
+      //             //       .replace(/h[0-9]>/g, "div>")
+      //             //       .replace(
+      //             //         /<\/*(s|em|strong|a|b|i|mark|del|small|ins|sub|sup)>/g,
+      //             //         ""
+      //             //       )
+      //             //   )
+      //             // );
+      //             clipboard.copy("");
+      //             showNotification({
+      //               title: "Skopiowano do schowka",
+      //               message: "",
+      //             });
+      //           }}
+      //           tabIndex={-1}
+      //         >
+      //           <IconCopy size={16} />
+      //         </ActionButton>
+      //       )}
+      //     </>
+      //   ) : undefined
+      // }
+      // labelElement="div"
+      //required={required}
       ref={mergedRef}
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
       // onBlur={handleBlurForInnerElements(() => setFocus(false))}
     >
       {focus ? (
-        <RichTextEditor editor={editor}>
-          <RichTextEditor.Toolbar sticky tabIndex={999999999}>
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Bold />
-              <RichTextEditor.Italic />
-              <RichTextEditor.Underline />
-              <RichTextEditor.Strikethrough />
-              <RichTextEditor.ClearFormatting />
-              <RichTextEditor.Highlight />
-              <RichTextEditor.Code />
-            </RichTextEditor.ControlsGroup>
+        // <RichTextEditor editor={editor}>
+        //   <RichTextEditor.Toolbar sticky tabIndex={999999999}>
+        //     <RichTextEditor.ControlsGroup>
+        //       <RichTextEditor.Bold />
+        //       <RichTextEditor.Italic />
+        //       <RichTextEditor.Underline />
+        //       <RichTextEditor.Strikethrough />
+        //       <RichTextEditor.ClearFormatting />
+        //       <RichTextEditor.Highlight />
+        //       <RichTextEditor.Code />
+        //     </RichTextEditor.ControlsGroup>
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.H1 />
-              <RichTextEditor.H2 />
-              <RichTextEditor.H3 />
-              <RichTextEditor.H4 />
-            </RichTextEditor.ControlsGroup>
-            {/* disabled because of bug in peer deps*/}
-            {/* <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Blockquote />
-              <RichTextEditor.Hr />
-              <RichTextEditor.BulletList />
-              <RichTextEditor.OrderedList />
-              <RichTextEditor.Subscript />
-              <RichTextEditor.Superscript />
-            </RichTextEditor.ControlsGroup> */}
-            {/* disabled due to focus loss */}
-            {/* <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Link />
-              <RichTextEditor.Unlink />
-            </RichTextEditor.ControlsGroup> */}
+        //     <RichTextEditor.ControlsGroup>
+        //       <RichTextEditor.H1 />
+        //       <RichTextEditor.H2 />
+        //       <RichTextEditor.H3 />
+        //       <RichTextEditor.H4 />
+        //     </RichTextEditor.ControlsGroup>
+        //     {/* disabled because of bug in peer deps*/}
+        //     {/* <RichTextEditor.ControlsGroup>
+        //       <RichTextEditor.Blockquote />
+        //       <RichTextEditor.Hr />
+        //       <RichTextEditor.BulletList />
+        //       <RichTextEditor.OrderedList />
+        //       <RichTextEditor.Subscript />
+        //       <RichTextEditor.Superscript />
+        //     </RichTextEditor.ControlsGroup> */}
+        //     {/* disabled due to focus loss */}
+        //     {/* <RichTextEditor.ControlsGroup>
+        //       <RichTextEditor.Link />
+        //       <RichTextEditor.Unlink />
+        //     </RichTextEditor.ControlsGroup> */}
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.AlignLeft />
-              <RichTextEditor.AlignCenter />
-              <RichTextEditor.AlignJustify />
-              <RichTextEditor.AlignRight />
-            </RichTextEditor.ControlsGroup>
-          </RichTextEditor.Toolbar>
+        //     <RichTextEditor.ControlsGroup>
+        //       <RichTextEditor.AlignLeft />
+        //       <RichTextEditor.AlignCenter />
+        //       <RichTextEditor.AlignJustify />
+        //       <RichTextEditor.AlignRight />
+        //     </RichTextEditor.ControlsGroup>
+        //   </RichTextEditor.Toolbar>
 
-          <RichTextEditor.Content />
-        </RichTextEditor>
+        //   <RichTextEditor.Content />
+        // </RichTextEditor>
+        <EditorContent editor={editor} />
       ) : (
-        <TypographyStylesProvider>
-          <Box
-            sx={[
-              (theme) => ({
-                width: "100%",
+        <div
+          // sx={[
+          //   (theme) => ({
+          //     width: "100%",
 
-                fontSize: theme.fontSizes.sm,
-                minHeight: 36,
-                wordBreak: "break-word",
-                whiteSpace: "pre-line",
-                padding: "10px 16px",
-                paddingRight: 32,
-                lineHeight: text.trimStart().startsWith("<") ? undefined : 1.55,
-                border: hovered
-                  ? disabled
-                    ? "1px solid transparent"
-                    : theme.colorScheme === "dark"
-                    ? "1px solid #2C2E33"
-                    : "1px solid #ced4da"
-                  : "1px solid transparent",
-              }),
-              // SxBorder,
-              SxRadius,
-            ]}
-            className="plain-html"
-            dangerouslySetInnerHTML={{ __html: text || "⸺" }}
-          ></Box>
-        </TypographyStylesProvider>
+          //     fontSize: theme.fontSizes.sm,
+          //     minHeight: 36,
+          //     wordBreak: "break-word",
+          //     whiteSpace: "pre-line",
+          //     padding: "10px 16px",
+          //     paddingRight: 32,
+          //     lineHeight: text.trimStart().startsWith("<") ? undefined : 1.55,
+          //     border: hovered
+          //       ? disabled
+          //         ? "1px solid transparent"
+          //         : theme.colorScheme === "dark"
+          //         ? "1px solid #2C2E33"
+          //         : "1px solid #ced4da"
+          //       : "1px solid transparent",
+          //   }),
+          //   // SxBorder,
+          //   SxRadius,
+          // ]
+          // }
+          className="plain-html"
+          dangerouslySetInnerHTML={{ __html: text || "⸺" }}
+        ></div>
       )}
-    </Input.Wrapper>
+    </div>
   );
 };
 
