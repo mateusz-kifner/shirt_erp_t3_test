@@ -1,11 +1,8 @@
-import { type Prisma } from "@prisma/client";
 import { createReadStream } from "fs";
 import fs from "fs/promises";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "~/server/db";
 import HTTPError from "~/utils/HTTPError";
-
-type _ = Prisma.EmailMessageFindManyArgs;
 
 export default async function Files(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -28,10 +25,12 @@ export default async function Files(req: NextApiRequest, res: NextApiResponse) {
     if (!file) {
       throw new HTTPError(404, `File not found`);
     }
-    if (file.token !== token ?? "") {
+    // Check if correct token was provided, public resources have empty token
+    if ((file.token ?? "") !== (token ?? "")) {
       throw new HTTPError(404, `File not found`);
     }
     if (download) {
+      // Download headers
       res.setHeader(
         "Content-Disposition",
         `attachment; filename=${file?.originalFilename}`
@@ -41,24 +40,18 @@ export default async function Files(req: NextApiRequest, res: NextApiResponse) {
       const fileStream = createReadStream(
         `./uploads/${file?.newFilename as string}`
       );
+
       fileStream.pipe(res);
     } else {
+      // View headers
+      res.setHeader("Content-Type", file.mimetype ?? "");
+
       const imageData = await fs.readFile(
         `./uploads/${file?.newFilename as string}`
       );
 
-      // Set the appropriate headers for the image response
-      res.setHeader("Content-Type", file.mimetype ?? ""); // Replace 'image/png' with the appropriate MIME type for your image
-
-      // Send the image data as the response
       res.send(imageData);
     }
-
-    // res.status(201).json({
-    //   status: "success",
-    //   statusCode: 201,
-    //   message: "Success: File uploaded successfully",
-    // });
   } catch (err) {
     if (err instanceof HTTPError) {
       res.status(err.statusCode).json({
