@@ -131,19 +131,19 @@ function Settings() {
           </Button>
           <div className="flex flex-grow items-center gap-2">
             <span className="flex-grow">{t.zoom}</span>
-            <Button onClick={() => setRemSize(12)} className="w-10">
+            <Button onClick={() => setRemSize(12)} className="w-12">
               -2
             </Button>
-            <Button onClick={() => setRemSize(14)} className="w-10">
+            <Button onClick={() => setRemSize(14)} className="w-12">
               -1
             </Button>
-            <Button onClick={() => setRemSize(16)} className="w-10">
+            <Button onClick={() => setRemSize(16)} className="w-12">
               0
             </Button>
-            <Button onClick={() => setRemSize(18)} className="w-10">
+            <Button onClick={() => setRemSize(18)} className="w-12">
               1
             </Button>
-            <Button onClick={() => setRemSize(20)} className="w-10">
+            <Button onClick={() => setRemSize(20)} className="w-12">
               2
             </Button>
           </div>

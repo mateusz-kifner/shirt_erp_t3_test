@@ -33,9 +33,9 @@ function NavButton(props: NavButtonProps) {
            : "bg-opacity-0 dark:bg-opacity-0"
        } overflow-hidden rounded-full `}
     >
-      <div className="flex w-64 items-center gap-3">
+      <div className="flex w-64 items-center gap-3 text-sm">
         <div
-          className="flex h-10 w-10 items-center justify-center rounded-full"
+          className="flex h-10 w-10 items-center justify-center rounded-full "
           style={{
             background: `linear-gradient(${gradient?.deg ?? 0}deg, ${
               gradient ? gradient.from : color ?? "#0C8599"

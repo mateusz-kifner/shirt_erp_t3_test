@@ -44,7 +44,7 @@ function Select(props: SelectProps) {
         className="
           inline-flex h-9 flex-grow animate-pop select-none items-center
           justify-center gap-3 rounded-md 
-          border border-solid border-gray-600 bg-white stroke-gray-200 p-0  px-4 py-0 text-center font-semibold uppercase
+          border border-solid border-gray-600 bg-white stroke-gray-200 p-0  px-4 py-0 text-center font-semibold 
           text-stone-800 no-underline
           outline-offset-4 transition-all hover:bg-black
           hover:bg-opacity-20 focus-visible:outline-sky-600
