@@ -27,14 +27,16 @@ const DisplayCellExpanding = forwardRef<HTMLDivElement, DisplayCellProps>(
         min-h-[2.75rem]
         w-full
         resize-none
+        items-center
         gap-2
-        overflow-hidden 
-        whitespace-pre-line
-        break-words 
-        rounded
+        overflow-hidden
+        whitespace-pre-line 
+        break-words
+        rounded 
         border
         border-solid
         bg-white
+        px-2
         text-sm
         leading-normal
         text-stone-800

@@ -27,6 +27,7 @@ import EditableText from "~/components/editable/EditableText";
 import apiListItems from "~/components/editable/apiListItems";
 import NotImplemented from "~/components/NotImplemented";
 import { useUserContext } from "~/context/userContext";
+import EditableShortText from "./EditableShortText";
 
 interface BaseTemplateType<TName, TValue = string> {
   label: string;
@@ -165,17 +166,17 @@ export type editableFields = {
 
 const editableFields: editableFields = {
   title: {
-    component: EditableText,
+    component: EditableShortText,
     props: { style: { fontSize: "1.4em" } },
   },
   text: { component: EditableText, props: {} },
   richtext: { component: EditableRichText, props: {} },
   number: {
-    component: EditableText,
+    component: EditableShortText,
     props: { leftSection: <IconNumbers size={18} /> },
   },
   money: {
-    component: EditableText,
+    component: EditableShortText,
     props: {
       rightSection: <div className="pr-2">PLN</div>,
       leftSection: <IconCash size={18} />,

@@ -33,6 +33,7 @@ import Select from "../basic/Select";
 
 interface EditableEnumProps extends EditableInput<string>, RadixSelectProps {
   enum_data: string[];
+  collapse?: boolean;
 }
 
 const EditableEnum = ({
@@ -43,9 +44,10 @@ const EditableEnum = ({
   onSubmit,
   disabled,
   required,
+  collapse = false,
   ...moreProps
 }: EditableEnumProps) => (
-  <div className="flex flex-grow gap-3">
+  <div className={`flex flex-grow  ${collapse ? "gap-3 pt-3" : "flex-col"}`}>
     <InputLabel label={label} copyValue={value} required={required} />
 
     <Select

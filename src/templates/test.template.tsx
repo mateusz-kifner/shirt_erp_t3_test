@@ -1,3 +1,5 @@
+import { IconBug } from "@tabler/icons-react";
+
 const testTemplate = {
   id: { type: "id" },
 
@@ -5,14 +7,20 @@ const testTemplate = {
     label: "Napis",
     type: "text",
     initialValue: "test",
+    leftSection: <IconBug />,
+    rightSection: <IconBug />,
   },
   number: {
     label: "number",
     type: "number",
+    leftSection: <IconBug />,
+    rightSection: <IconBug />,
   },
   money: {
     label: "money",
     type: "money",
+    leftSection: <IconBug />,
+    rightSection: <IconBug />,
   },
 
   // bool: {
@@ -31,6 +39,7 @@ const testTemplate = {
     type: "enum",
     initialValue: "option 1",
     enum_data: ["option 1", "option 2", "option 3"],
+    collapce: true,
   },
   // color: {
   //   label: "Kolor",

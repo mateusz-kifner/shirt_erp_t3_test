@@ -44,7 +44,8 @@ function Select(props: SelectProps) {
         className="
           inline-flex h-9 flex-grow animate-pop select-none items-center
           justify-between gap-3 rounded-md 
-          border border-solid border-gray-400 bg-white stroke-gray-200 p-0  px-4 py-0 text-center font-semibold 
+          border border-solid border-gray-400 bg-white stroke-gray-200 
+          px-2 py-0 text-center font-semibold 
           text-stone-800 no-underline
           outline-offset-4 transition-all hover:bg-black
           hover:bg-opacity-20 focus-visible:outline-sky-600
@@ -67,12 +68,13 @@ function Select(props: SelectProps) {
       <RadixSelect.Portal>
         <RadixSelect.Content
           className="w-full
+              translate-x-1
               rounded-xl
               border
-              border-solid
+              border-solid 
               border-gray-400 
-              bg-stone-200 
-              p-2   
+              bg-stone-200
+              p-2
               shadow-xl     
               dark:border-stone-600     
               dark:bg-stone-800"
