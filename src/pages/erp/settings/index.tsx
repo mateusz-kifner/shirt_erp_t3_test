@@ -93,7 +93,7 @@ function Settings() {
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [val, setVal] = useState<any>(null);
   const [testColor, setTestColor] = useState<string>("#fff");
-  const [testValue, setTestValue] = useState<string | null>("");
+  const [testValue, setTestValue] = useState<any>(testData);
   const [testDate, setTestDate] = useState<string | null>(
     "2021-11-05T12:24:05.097Z"
   );
@@ -118,7 +118,7 @@ function Settings() {
   };
 
   return (
-    <div className="flex w-full flex-row items-start justify-center pt-28 font-sans dark:text-gray-200">
+    <div className="flex w-full flex-row items-start justify-center pb-12 pt-28 font-sans dark:text-gray-200">
       <div className="card mx-auto w-[36rem] bg-white shadow-xl dark:bg-stone-800">
         <IconUserCircle className="mx-auto -mt-20 h-32 w-32 rounded-full border-8 border-white bg-gray-200 stroke-slate-900 dark:border-stone-800  dark:bg-stone-800  dark:stroke-gray-200 " />
         <div className="mt-2 text-center text-3xl font-medium">
@@ -182,9 +182,14 @@ function Settings() {
             </>
           )}
           <Editable
-            data={testData}
+            data={testValue}
             template={template}
-            onSubmit={(key, value) => console.log(key, value)}
+            onSubmit={(key, value) => {
+              // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+              setTestValue((val) => ({ ...val, [key]: value }));
+              console.log(key, value);
+            }}
           />
         </div>
       </div>

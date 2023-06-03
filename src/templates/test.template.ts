@@ -6,14 +6,14 @@ const testTemplate = {
     type: "text",
     initialValue: "test",
   },
-  // number: {
-  //   label: "number",
-  //   type: "number",
-  // },
-  // money: {
-  //   label: "money",
-  //   type: "money",
-  // },
+  number: {
+    label: "number",
+    type: "number",
+  },
+  money: {
+    label: "money",
+    type: "money",
+  },
 
   // bool: {
   //   label: "checkbox",
@@ -38,16 +38,16 @@ const testTemplate = {
   //   initialValue: { name: "Red", hex: "#ff0000" },
   //   showText: true,
   // },
-  // date: {
-  //   label: "Date",
-  //   type: "date",
-  //   initialValue: "2021-11-05T12:24:05.097Z",
-  // },
-  // datetime: {
-  //   label: "Datetime",
-  //   type: "datetime",
-  //   initialValue: "2021-11-05T12:24:05.097Z",
-  // },
+  date: {
+    label: "Date",
+    type: "date",
+    initialValue: "2021-11-05T12:24:05.097Z",
+  },
+  datetime: {
+    label: "Datetime",
+    type: "datetime",
+    initialValue: "2021-11-05T12:24:05.097Z",
+  },
   // product: {
   //   label: "product",
   //   type: "apiEntry",

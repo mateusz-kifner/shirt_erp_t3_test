@@ -90,7 +90,7 @@ const EditableDate = (props: InputDateProps) => {
               ) : (
                 <div className="flex items-center justify-center">
                   <ActionButton>
-                    <IconCalendar />
+                    <IconCalendar size={18} />
                   </ActionButton>
                 </div>
               )

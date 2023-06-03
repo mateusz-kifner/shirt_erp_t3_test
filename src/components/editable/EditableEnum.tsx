@@ -51,7 +51,10 @@ const EditableEnum = ({
     <Select
       data={enum_data}
       value={value}
-      onValueChange={onSubmit}
+      onValueChange={(value) => {
+        onSubmit?.(value);
+        console.log(value);
+      }}
       defaultValue={initialValue}
       disabled={disabled}
       {...moreProps}

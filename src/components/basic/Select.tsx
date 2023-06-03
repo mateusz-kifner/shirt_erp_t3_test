@@ -43,8 +43,8 @@ function Select(props: SelectProps) {
       <RadixSelect.Trigger
         className="
           inline-flex h-9 flex-grow animate-pop select-none items-center
-          justify-center gap-3 rounded-md 
-          border border-solid border-gray-600 bg-white stroke-gray-200 p-0  px-4 py-0 text-center font-semibold 
+          justify-between gap-3 rounded-md 
+          border border-solid border-gray-400 bg-white stroke-gray-200 p-0  px-4 py-0 text-center font-semibold 
           text-stone-800 no-underline
           outline-offset-4 transition-all hover:bg-black
           hover:bg-opacity-20 focus-visible:outline-sky-600
@@ -53,6 +53,7 @@ function Select(props: SelectProps) {
           active:focus:animate-none
           disabled:pointer-events-none
           disabled:bg-stone-700
+          dark:border-stone-600
           dark:bg-stone-800 
           dark:text-gray-200  
           dark:hover:bg-stone-600 
@@ -64,7 +65,18 @@ function Select(props: SelectProps) {
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
       <RadixSelect.Portal>
-        <RadixSelect.Content className="w-full rounded-xl bg-stone-200 p-3 shadow-xl dark:bg-stone-800">
+        <RadixSelect.Content
+          className="w-full
+              rounded-xl
+              border
+              border-solid
+              border-gray-400 
+              bg-stone-200 
+              p-2   
+              shadow-xl     
+              dark:border-stone-600     
+              dark:bg-stone-800"
+        >
           <RadixSelect.ScrollUpButton className="">
             <IconChevronUp />
           </RadixSelect.ScrollUpButton>

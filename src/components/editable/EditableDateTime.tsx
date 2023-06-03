@@ -100,13 +100,16 @@ const EditableDateTime = (props: EditableDateTimeProps) => {
         label={label}
         copyValue={dayjs(date).format("L LT").toString()}
       />
-      <DisplayCell leftSection={<IconCalendar />}>
+      <DisplayCell leftSection={<IconCalendar size={18} />}>
         {active ? (
           <div className="flex flex-grow gap-2">{/* TODO */}</div>
         ) : (
           <div className="flex gap-2">
             {date ? dayjs(date).format("L").toString() : "⸺"}
-            <IconClock className="text-gray-400 dark:text-stone-600" />
+            <IconClock
+              className="text-gray-400 dark:text-stone-600"
+              size={18}
+            />
             {date ? dayjs(date).format("LT").toString() : "⸺"}
           </div>
         )}

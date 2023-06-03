@@ -35,7 +35,6 @@ const DisplayCellExpanding = forwardRef<HTMLDivElement, DisplayCellProps>(
         border
         border-solid
         bg-white
-        p-2
         text-sm
         leading-normal
         text-stone-800
@@ -43,7 +42,6 @@ const DisplayCellExpanding = forwardRef<HTMLDivElement, DisplayCellProps>(
         read-only:bg-transparent
         read-only:outline-none 
         focus:border-sky-600 
-        
         dark:bg-stone-800
         dark:text-stone-200
         dark:outline-none
@@ -60,23 +58,27 @@ const DisplayCellExpanding = forwardRef<HTMLDivElement, DisplayCellProps>(
         {...moreProps}
         ref={ref}
       >
-        <div className="flex flex-grow gap-2">
-          <div
-            className="
+        <div className="flex flex-grow items-center gap-2">
+          {!!leftSection && (
+            <div
+              className="
           text-gray-400 
           dark:text-stone-600"
-          >
-            {!!leftSection && leftSection}
-          </div>
+            >
+              {leftSection}
+            </div>
+          )}
           <div className="flex flex-grow items-center">{children}</div>
         </div>
-        <div
-          className="
+        {!!rightSection && (
+          <div
+            className="
         text-gray-400 
         dark:text-stone-600"
-        >
-          {!!rightSection && rightSection}
-        </div>
+          >
+            {rightSection}
+          </div>
+        )}
       </div>
     );
   }
