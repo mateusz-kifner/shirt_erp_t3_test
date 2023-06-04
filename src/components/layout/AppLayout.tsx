@@ -24,8 +24,6 @@ function Layout({ children }: PropsWithChildren) {
 
   return (
     <div>
-      <Header />
-      <Navigation />
       <main
         className={`${
           navigationCollapsed ? "pl-20" : "pl-64"
@@ -33,6 +31,8 @@ function Layout({ children }: PropsWithChildren) {
       >
         {children}
       </main>
+      <Header />
+      <Navigation />
     </div>
   );
 }

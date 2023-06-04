@@ -84,9 +84,9 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
   }, [selectedId]);
 
   return (
-    <div className="flex flex-col gap-2 p-2 text-stone-900 dark:text-stone-100 ">
+    <div className="flex flex-col gap-4 text-stone-900 dark:text-stone-100 ">
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between p-2">
+        <div className="flex justify-between px-2">
           <h2 className="text-2xl font-bold">{label}</h2>
           <div className="flex gap-2">
             {!!buttonSection && buttonSection}
@@ -126,7 +126,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
             )}
           </div>
         </div>
-        <div className="flex gap-3 px-4">
+        <div className="flex gap-3 px-2.5">
           <div className="flex ">
             <ActionButton
               className="
@@ -167,8 +167,8 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
                 border-solid 
                 border-gray-400
                 bg-white
-                p-2
                 px-4
+                py-2
                 text-sm
                 leading-normal 
                 outline-none 
@@ -188,7 +188,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
           />
         </div>
       </div>
-      <div className="flex flex-grow flex-col px-2 py-4">
+      <div className="flex flex-grow flex-col">
         <List<T>
           data={items as T[]}
           ListItem={ListItem}

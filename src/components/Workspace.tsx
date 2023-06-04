@@ -126,7 +126,7 @@ const Workspace = ({
 
   return (
     <div
-      className="flex flex-nowrap items-start gap-4 overflow-hidden p-1 sm:p-4"
+      className="flex flex-grow flex-nowrap items-start gap-4 overflow-hidden p-1 sm:p-4"
       ref={ref}
     >
       <MultiTabs
@@ -144,12 +144,12 @@ const Workspace = ({
         activeTabs.map((childIndex, index) => (
           <div
             key={uuid + index}
-            className="w-[420px] rounded bg-white p-2 shadow-lg dark:bg-stone-800"
-          >
-            {/* {...(childrenWrapperProps &&
+            className="relative flex w-[420px] min-w-[420px] flex-col rounded bg-white p-4 shadow-lg dark:bg-stone-800"
+            {...(childrenWrapperProps &&
             childrenWrapperProps[childIndex] !== undefined
               ? childrenWrapperProps[childIndex]
-              : { style: { flexGrow: 1 } })} */}
+              : { style: { flexGrow: 1 } })}
+          >
             <ErrorBoundary
               fallback={
                 <h1>
