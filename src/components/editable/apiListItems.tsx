@@ -20,7 +20,7 @@ export type apiListItems = {
 };
 
 const apiListItems = {
-  clients: {
+  client: {
     ListItem: ClientListItem,
     copyProvider: (value: ClientType) =>
       (value?.firstname && value.firstname?.length > 0) ||

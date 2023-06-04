@@ -27,6 +27,7 @@ import EditableText from "~/components/editable/EditableText";
 import apiListItems from "~/components/editable/apiListItems";
 import NotImplemented from "~/components/NotImplemented";
 import { useUserContext } from "~/context/userContext";
+import { makeDefaultListItem } from "../DefaultListItemWithValue";
 import EditableShortText from "./EditableShortText";
 
 interface BaseTemplateType<TName, TValue = string> {
@@ -212,7 +213,7 @@ const editableFields: editableFields = {
             props.entryName as keyof typeof apiListItems
           ].copyProvider;
       } else {
-        // newProps["Element"] = makeDefaultListItem("name");
+        newProps["Element"] = makeDefaultListItem("name");
       }
       return newProps;
     },
@@ -230,7 +231,7 @@ const editableFields: editableFields = {
             props.entryName as keyof typeof apiListItems
           ].copyProvider;
       } else {
-        // newProps["Element"] = makeDefaultListItem("name");
+        newProps["Element"] = makeDefaultListItem("name");
       }
       return newProps;
     },

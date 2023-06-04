@@ -60,13 +60,13 @@ const testTemplate = {
   // product: {
   //   label: "product",
   //   type: "apiEntry",
-  //   entryName: "products",
+  //   entryName: "product",
   // },
-  // client: {
-  //   label: "client",
-  //   type: "apiEntry",
-  //   entryName: "clients",
-  // },
+  client: {
+    label: "client",
+    type: "apiEntry",
+    entryName: "client",
+  },
   // productComponent: {
   //   label: "productComponent",
   //   type: "productComponent",
