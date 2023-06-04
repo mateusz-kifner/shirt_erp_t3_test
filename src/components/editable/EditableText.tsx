@@ -132,6 +132,7 @@ const EditableText = (props: EditableTextProps) => {
           onKeyDown={onKeyDownTextarea}
           onInput={(e) => setTextAreaHeight(e.target as HTMLTextAreaElement)}
           maxLength={maxLength}
+          placeholder={focus ? undefined : "⸺"}
           {...moreProps}
         />
       </DisplayCellExpanding>

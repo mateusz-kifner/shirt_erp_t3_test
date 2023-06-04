@@ -117,16 +117,18 @@ const EditableAddress = (props: EditableAddressProps) => {
   const toString = () => {
     if (!address) return undefined;
     return (
-      (address?.streetName ? "ul. " + address?.streetName : "") +
-      " " +
+      (address?.streetName ? `ul. ${address?.streetName} ` : "") +
       (address.streetNumber || "") +
       (address.apartmentNumber ? " / " + address.apartmentNumber : "") +
-      "\n" +
+      ((address?.streetName ||
+        address.streetNumber ||
+        address.apartmentNumber) &&
+        "\n") +
       (address.secondLine ? address.secondLine + "\n" : "") +
       (address.postCode ? address.postCode + " " : "") +
       (address.city || "") +
       (address.postCode || address.city ? "\n" : "") +
-      (address.province || address.province)
+      address.province
     );
   };
 
@@ -209,7 +211,7 @@ const EditableAddress = (props: EditableAddressProps) => {
             />
           </div>
         ) : (
-          toString()
+          toString() || "⸺"
         )}
       </DisplayCellExpanding>
     </div>
