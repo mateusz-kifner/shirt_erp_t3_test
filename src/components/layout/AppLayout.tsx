@@ -8,7 +8,7 @@ function Layout({ children }: PropsWithChildren) {
   const { navigationCollapsed } = useUserContext();
 
   useEffect(() => {
-    // initialize theme (bypasses userContext, 10x faster)
+    // initialize theme
     const theme = localStorage.getItem("user-theme");
     const htmlElement = document.querySelector("html") as HTMLHtmlElement;
     htmlElement.classList.add(theme === "0" ? "light" : "dark");
@@ -31,8 +31,8 @@ function Layout({ children }: PropsWithChildren) {
       >
         {children}
       </main>
-      <Header />
       <Navigation />
+      <Header />
     </div>
   );
 }

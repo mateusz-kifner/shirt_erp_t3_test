@@ -9,6 +9,11 @@ body {
   scrollbar-color: #a8a29e #e5e7eb;
 }
 
+body,
+.dark body {
+  overflow-y: scroll;
+}
+
 html.dark,
 .dark body {
   scrollbar-width: thin;

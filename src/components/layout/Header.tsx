@@ -1,4 +1,4 @@
-import { useElementSize, useLocalStorage } from "@mantine/hooks";
+import { useElementSize } from "@mantine/hooks";
 import {
   IconBell,
   IconMessage,
@@ -6,15 +6,12 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useUserContext } from "~/context/userContext";
 
 const Header = () => {
   const { ref, width: actionButtonsWidth } = useElementSize();
 
-  const [navigationCollapsed, setNavigationCollapsed] =
-    useLocalStorage<boolean>({
-      key: "user-navigation-collapsed",
-      defaultValue: false,
-    });
+  const { navigationCollapsed } = useUserContext();
 
   return (
     <div className="fixed left-0 top-0 flex h-14 w-full items-center justify-between border-b-[1px] border-stone-700 bg-stone-900 px-4">

@@ -1,28 +1,16 @@
 import { useState } from "react";
 
-import { useLocalStorage } from "@mantine/hooks";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 import NavButton from "~/components/layout/NavButton";
+import { useUserContext } from "~/context/userContext";
 import navigationData from "~/navigationData";
 
 function Navigation() {
   const router = useRouter();
-  const [navigationCollapsed, setNavigationCollapsed] =
-    useLocalStorage<boolean>({
-      key: "user-navigation-collapsed",
-      defaultValue: false,
-    });
-
-  const toggleNavigationCollapsed = () => {
-    setNavigationCollapsed((val) => !val);
-  };
-
-  const [debug, setDebug] = useLocalStorage<boolean>({
-    key: "user-debug",
-    defaultValue: false,
-  });
+  const { navigationCollapsed, toggleNavigationCollapsed, debug } =
+    useUserContext();
 
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
