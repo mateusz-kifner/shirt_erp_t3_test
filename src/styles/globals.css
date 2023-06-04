@@ -420,3 +420,14 @@ body::-webkit-scrollbar {
   font-style: italic;
   font-weight: bold;
 }
+
+.plain-html a,
+.plain-html a:visited,
+.plain-html a:link {
+  text-decoration: none;
+  color: #4dabf7;
+}
+
+.plain-html a:hover {
+  text-decoration: underline;
+}

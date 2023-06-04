@@ -405,125 +405,13 @@ const EditableRichText = ({
                   );
                 }
               })}
-              {/* <RadixToolbar.Button
-                className="action-button"
-                onClick={() => editor?.chain().focus().unsetAllMarks().run()}
-              >
-                <IconClearFormatting size={18} />
-              </RadixToolbar.Button>
-              <div className="action-button-group">
-                <RadixToolbar.Button
-                  className="action-button"
-                  onClick={() => editor?.chain().focus().toggleBold().run()}
-                >
-                  <IconBold size={18} />
-                </RadixToolbar.Button>
-                <RadixToolbar.Button
-                  className="action-button"
-                  onClick={() => editor?.chain().focus().toggleItalic().run()}
-                >
-                  <IconItalic size={18} />
-                </RadixToolbar.Button>
-                <RadixToolbar.Button
-                  className="action-button"
-                  onClick={() =>
-                    editor?.chain().focus().toggleUnderline().run()
-                  }
-                >
-                  <IconUnderline size={18} />
-                </RadixToolbar.Button>
-                <RadixToolbar.Button
-                  className="action-button"
-                  onClick={() => editor?.chain().focus().toggleStrike().run()}
-                >
-                  <IconStrikethrough size={18} />
-                </RadixToolbar.Button>
-                <RadixToolbar.Button
-                  className="action-button"
-                  onClick={() =>
-                    editor?.chain().focus().toggleHighlight().run()
-                  }
-                >
-                  <IconHighlight size={18} />
-                </RadixToolbar.Button>
-              </div>
-              {/* <RadixToolbar.ToggleGroup 
-                type="multiple"
-                aria-label="Text formatting"
-              >
-                <RadixToolbar.ToggleItem
-                  className="action-button"
-                  value="bold"
-                  aria-label="Bold"
-                >
-                  <IconBold size={18} />
-                </RadixToolbar.ToggleItem>
-                <RadixToolbar.ToggleItem
-                  className="action-button"
-                  value="italic"
-                  aria-label="Italic"
-                >
-                  <IconItalic size={18} />
-                </RadixToolbar.ToggleItem>
-                <RadixToolbar.ToggleItem
-                  className="action-button"
-                  value="strikethrough"
-                  aria-label="Strike through"
-                >
-                  <IconUnderline size={18} />
-                </RadixToolbar.ToggleItem>
-              </RadixToolbar.ToggleGroup>
-              <RadixToolbar.Separator className="bg-mauve6 mx-[10px] w-[1px]" /> */}
-              {/* <RadixToolbar.ToggleGroup
-                type="single"
-                defaultValue="center"
-                aria-label="Text alignment"
-                className="action-button-group"
-              >
-                <RadixToolbar.ToggleItem
-                  className="action-button "
-                  value="left"
-                  aria-label="Left aligned"
-                >
-                  <IconAlignLeft size={18} />
-                </RadixToolbar.ToggleItem>
-                <RadixToolbar.ToggleItem
-                  className="action-button"
-                  value="center"
-                  aria-label="Center aligned"
-                >
-                  <IconAlignCenter size={18} />
-                </RadixToolbar.ToggleItem>
-                <RadixToolbar.ToggleItem
-                  className="action-button"
-                  value="right"
-                  aria-label="Right aligned"
-                >
-                  <IconAlignRight size={18} />
-                </RadixToolbar.ToggleItem>
-              </RadixToolbar.ToggleGroup>
-              <RadixToolbar.Separator className="bg-mauve6 mx-[10px] w-[1px]" /> */}
-              {/* <RadixToolbar.Link
-              className="bg-transparent text-mauve11 inline-flex justify-center items-center hover:bg-transparent hover:cursor-pointer flex-shrink-0 flex-grow-0 basis-auto h-[25px] px-[5px] rounded text-[13px] leading-none bg-white ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-              href="#"
-              target="_blank"
-              style={{ marginRight: 10 }}
-            >
-              Edited 2 hours ago
-            </RadixToolbar.Link> */}
-              {/* <RadixToolbar.Button
-              className="px-[10px] text-white bg-violet9 flex-shrink-0 flex-grow-0 basis-auto h-[25px] rounded inline-flex text-[13px] leading-none items-center justify-center outline-none hover:bg-violet10 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7"
-              style={{ marginLeft: 'auto' }}
-            >
-              Share
-            </RadixToolbar.Button> */}
             </RadixToolbar.Root>
 
             <EditorContent editor={editor} />
           </div>
         ) : (
           <div
-            className="plain-html"
+            className="plain-html editor w-full"
             dangerouslySetInnerHTML={{ __html: text || "⸺" }}
           ></div>
         )}

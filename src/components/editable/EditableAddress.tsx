@@ -145,8 +145,8 @@ const EditableAddress = (props: EditableAddressProps) => {
         {focus || enumOpen ? (
           <div
             style={{ position: "relative" }}
-            className="flex flex-grow flex-col gap-2"
-            tabIndex={999999999} // ensure that focus can be captured on element
+            className="flex flex-grow flex-col gap-2 pb-3"
+            tabIndex={99999} // ensure that focus can be captured on element
           >
             <EditableText
               label={label?.streetName ?? undefined}

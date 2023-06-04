@@ -66,7 +66,7 @@ const ApiEntryEditable = <EntryType,>({
   // };
 
   return (
-    <div className=" flex min-h-[200px] flex-grow flex-col">
+    <div className=" flex min-h-[200px] flex-grow flex-col gap-2">
       {data && Object.keys(data).length > 0 ? (
         <>
           {/* <div className="relative flex min-h-[200px] flex-col"> */}
