@@ -253,7 +253,7 @@ const EditableRichText = ({
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-2 focus:outline-none py-2.5 editor",
+          "prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-2 focus:outline-none editor",
       },
     },
     content: text,
@@ -301,7 +301,6 @@ const EditableRichText = ({
 
   return (
     <div
-      //required={required}
       ref={clickOutsideRef}
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
@@ -310,10 +309,12 @@ const EditableRichText = ({
       <InputLabel
         label={label}
         copyValue={plainText.length > 0 ? plainText : ""}
+        required={required}
       />
       <DisplayCellExpanding
         leftSection={!focus && leftSection}
         rightSection={!focus && rightSection}
+        className="py-2.5"
       >
         {focus ? (
           <div className="flex flex-grow flex-col">

@@ -1,13 +1,14 @@
 import { useEffect, useId, useState, type ComponentType } from "react";
 
 import { useListState } from "@mantine/hooks";
-import { IconDots, IconPlus, IconTrashX } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 import { isEqual, omit } from "lodash";
 
 import Button from "~/components/basic/Button";
 import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 
 import type EditableInput from "~/types/EditableInput";
+import Menu from "../basic/Menu";
 
 // fixme submit only on edit end
 
@@ -121,38 +122,9 @@ const EditableArray = (props: EditableArrayProps) => {
                   />
                 </div>
                 {!disabled && (
-                  <MenuTrigger>
-                    <Button aria-label="Menu">
-                      <IconDots size={14} />
-                    </Button>
-                    <Popover>
-                      <Menu
-                        onAction={(key) => {
-                          if (key === "delete") {
-                            handlers.remove(index);
-                          }
-                        }}
-                      >
-                        <Item id="delete">
-                          <IconTrashX size={14} />
-                          Delete
-                        </Item>
-                      </Menu>
-                    </Popover>
-                  </MenuTrigger>
-                  // <Menu>
-                  //   <Menu.Button>
-                  //     <ActionButton tabIndex={-1} className="rounded-xl">
-
-                  //     </ActionButton>
-                  //   </Menu.Button>
-
-                  //   <Menu.Items>
-                  //     <Menu.Item>
-                  //
-                  //     </Menu.Item>
-                  //   </Menu.Items>
-                  // </Menu>
+                  <Menu>
+                    <Menu.Item>Test</Menu.Item>
+                  </Menu>
                 )}
               </div>
             );

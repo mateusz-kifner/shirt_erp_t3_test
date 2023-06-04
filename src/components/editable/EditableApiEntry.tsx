@@ -103,7 +103,7 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
                         singular: string;
                         plural: string;
                       }
-                    ).plural
+                    )?.plural
                   )
                 : undefined
             }
