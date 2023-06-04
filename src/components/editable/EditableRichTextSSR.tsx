@@ -310,7 +310,6 @@ const EditableRichText = ({
         .replace(/<\/*(s|em|strong|a|b|i|mark|del|small|ins|sub|sup)>/g, "")
     )
   );
-  console.log(plainText);
 
   return (
     <div

@@ -9,6 +9,7 @@ import Workspace from "~/components/Workspace";
 import ClientAddModal from "~/page-components/erp/client/ClientAddModal";
 import ClientsList from "~/page-components/erp/client/ClientList";
 import template from "~/templates/client.template.json";
+import { getQueryAsIntOrNull } from "~/utils/query";
 
 const entryName = "client";
 
@@ -18,12 +19,8 @@ const ClientsPage = () => {
     "only screen and (hover: none) and (pointer: coarse)"
   );
   const router = useRouter();
-  const idStr = Array.isArray(router.query.id)
-    ? router.query.id[0]
-    : router.query.id;
+  const id = getQueryAsIntOrNull(router, "id");
 
-  const id =
-    idStr !== undefined && !isNaN(parseInt(idStr)) ? parseInt(idStr) : null;
   return (
     <div className="flex gap-4">
       <Workspace

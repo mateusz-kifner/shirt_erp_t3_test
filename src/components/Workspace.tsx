@@ -1,4 +1,4 @@
-import { Children, useId, useState, type ReactNode } from "react";
+import { Children, useId, type ReactNode } from "react";
 
 import { useElementSize } from "@mantine/hooks";
 import { type Icon as TablerIcon } from "@tabler/icons-react";
@@ -9,6 +9,7 @@ import MultiTabs from "~/components/MultiTabs";
 import { useUserContext } from "~/context/userContext";
 import useRQCache from "~/hooks/useRQCache";
 import useTranslation from "~/hooks/useTranslation";
+import { getQueryAsIntOrNull } from "~/utils/query";
 
 // import MultiTabs from "./MultiTabs"
 
@@ -39,75 +40,57 @@ const Workspace = ({
   // const isMobile = hasTouch || isSmall
   // const [menuPosition, setMenuPosition] = useState<[number, number]>([0, 0])
   // const [menuOpened, setMenuOpen] = useState<boolean>(false)
-  const [pinned, setPinned] = useState<number[]>([]);
-  const [active, setActive] = useState<number | undefined>();
+  // const [pinned, setPinned] = useState<number[]>([]);
+  // const [active, setActive] = useState<number | undefined>();
   const uuid = useId();
   const router = useRouter();
-  const idStr = Array.isArray(router.query.id)
-    ? router.query.id[0]
-    : router.query.id;
-  const id = idStr ? parseInt(idStr) : -1;
+  const id = getQueryAsIntOrNull(router, "id");
 
   const t = useTranslation();
   const { navigationCollapsed, toggleNavigationCollapsed, debug } =
     useUserContext();
   const { ref, width } = useElementSize();
 
-  const [tabStateArray, setTabStateArray] = useRQCache<
-    { id: number; active?: number; pinned: number[]; lastUpdate: number }[]
-  >("pinned" + cacheKey, []);
+  const [tabStateArray, setTabStateArray] = useRQCache<{
+    [key: string]: { active?: number; pinned: number[] };
+  }>("pinned_" + cacheKey, {});
 
-  // const tabState = tabStateArray.filter((value) => value.id === id)[0];
+  const tabState = tabStateArray[cacheKey] ?? {
+    active: defaultActive,
+    pinned: defaultPinned,
+  };
 
-  // if (tabState === undefined) {
-  //   if (tabStateArray.length > 9) {
-  //     let oldestId = -1;
-  //     let oldestTime = Number.MAX_SAFE_INTEGER;
-  //     for (const tabState of tabStateArray) {
-  //       if (tabState.lastUpdate < oldestTime) {
-  //         oldestTime = tabState.lastUpdate;
-  //         oldestId = tabState.id;
-  //       }
-  //     }
-  //     setTabStateArray([
-  //       ...tabStateArray.filter((val) => val.id !== oldestId),
-  //       { id, active: 1, pinned: [0], lastUpdate: Date.now() },
-  //     ]);
+  const setTabState = (pinned: number[], active?: number) => {
+    setTabStateArray({ ...tabStateArray, [cacheKey]: { active, pinned } });
+  };
+
+  const togglePin = (pin: number) => {
+    if (tabState.pinned.indexOf(pin) !== -1) {
+      setTabState(
+        tabState.pinned.filter((val) => val !== pin),
+        tabState.active
+      );
+    } else {
+      setTabState([...tabState.pinned, pin], tabState.active);
+    }
+  };
+
+  const setActive = (active?: number) => {
+    setTabState(tabState.pinned, active);
+  };
+  // setPinned((pinnedArray) => {
+  //   if (pinnedArray.includes(pinned)) {
+  //     return pinnedArray.filter((val) => val !== pinned);
   //   } else {
-  //     setTabStateArray([
-  //       ...tabStateArray,
-  //       { id, active: 1, pinned: [0], lastUpdate: Date.now() },
-  //     ]);
+  //     return [...pinnedArray, pinned];
   //   }
-  // }
-
-  // if (tabState !== undefined) {
-  //   const index = tabStateArray.indexOf(tabState);
-  //   if (index !== -1) {
-  //     const newTabStateArray = [...tabStateArray];
-  //     if (newTabStateArray[index]!.pinned.includes(pinned)) {
-  //       newTabStateArray[index]!.pinned.filter((val) => val !== pinned);
-  //     } else {
-  //       newTabStateArray[index]!.pinned.push(pinned);
-  //     }
-  //     newTabStateArray[index]!.lastUpdate = Date.now();
-  //   }
-  // }
-
-  const togglePin = (pinned: number) =>
-    setPinned((pinnedArray) => {
-      if (pinnedArray.includes(pinned)) {
-        return pinnedArray.filter((val) => val !== pinned);
-      } else {
-        return [...pinnedArray, pinned];
-      }
-    });
+  // });
 
   const child_array = Children.toArray(children);
 
-  const activeTabs = [...pinned];
-  if (active !== undefined && !activeTabs.includes(active))
-    activeTabs.push(active);
+  const activeTabs = [...tabState.pinned];
+  if (tabState.active !== undefined && !activeTabs.includes(tabState.active))
+    activeTabs.push(tabState.active);
 
   // useEffect(() => {
   //   if (!childrenLabels) return
@@ -130,9 +113,9 @@ const Workspace = ({
       ref={ref}
     >
       <MultiTabs
-        active={active}
+        active={tabState.active}
         onActive={setActive}
-        pinned={pinned}
+        pinned={tabState.pinned}
         onPin={togglePin}
         childrenLabels={childrenLabels}
         childrenIcons={childrenIcons}
