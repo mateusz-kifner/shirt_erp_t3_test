@@ -84,6 +84,14 @@ body::-webkit-scrollbar {
       disabled:bg-stone-700;
   }
 
+  .action-button-group > .action-button {
+    @apply rounded-none;
+  }
+
+  .action-button-group > .action-button {
+    @apply rounded-none border-b border-l border-r-0 border-t border-solid border-stone-400 first:rounded-l-md last:rounded-r-md last:border-r dark:border-stone-600;
+  }
+
   .action-button {
     @apply inline-flex
       h-8
@@ -381,4 +389,34 @@ body::-webkit-scrollbar {
 .tooltip .tooltip-text-bottom-end {
   top: 100%;
   right: 0;
+}
+
+.editor > h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.editor > h2 {
+  font-size: 1.75em;
+  font-weight: bold;
+}
+
+.editor > h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.editor > h4 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.editor > h5 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.editor > h6 {
+  font-style: italic;
+  font-weight: bold;
 }
