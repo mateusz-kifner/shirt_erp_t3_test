@@ -1,11 +1,6 @@
 import { ReactNode, useEffect, useId, useState } from "react";
 
-import {
-  useClickOutside,
-  useClipboard,
-  useHover,
-  useMergedRef,
-} from "@mantine/hooks";
+import { useClickOutside } from "@mantine/hooks";
 import { EditorContent, useEditor } from "@tiptap/react";
 import DOMPurify from "dompurify";
 import TurndownService from "turndown";
@@ -117,14 +112,14 @@ const controls: (
       operation: { name: "setTextAlign", attributes: "left" },
     },
     {
-      label: "alignRightControlLabel",
-      icon: <IconAlignRight stroke={1.5} size={18} />,
-      operation: { name: "setTextAlign", attributes: "right" },
-    },
-    {
       label: "alignCenterControlLabel",
       icon: <IconAlignCenter stroke={1.5} size={18} />,
       operation: { name: "setTextAlign", attributes: "center" },
+    },
+    {
+      label: "alignRightControlLabel",
+      icon: <IconAlignRight stroke={1.5} size={18} />,
+      operation: { name: "setTextAlign", attributes: "right" },
     },
     {
       label: "alignJustifyControlLabel",
@@ -232,6 +227,8 @@ const EditableRichText = ({
   onSubmit,
   disabled,
   required,
+  leftSection,
+  rightSection,
 }: EditableRichTextProps) => {
   const uuid = useId();
   const [text, setText] = useState<string>(
@@ -264,22 +261,13 @@ const EditableRichText = ({
       setText(editor.getHTML());
     },
   });
-  const clickOutsideRef = useClickOutside(() => setFocus(false));
-  // const richTextEditorRef = useRef<Editor>(null)
-  const clipboard = useClipboard();
-  const { hovered, ref: hoverRef } = useHover();
-  const mergedRef = useMergedRef(clickOutsideRef, hoverRef);
+  const clickOutsideRef = useClickOutside<HTMLDivElement>(() =>
+    setFocus(false)
+  );
 
   useEffect(() => {
     if (focus) {
       window.addEventListener("beforeunload", preventLeave);
-      // setTimeout(() => {
-      //   richTextEditorRef.current?.editor?.focus()
-      //   richTextEditorRef.current?.editor?.setSelection(
-      //     richTextEditorRef.current?.editor?.getLength(),
-      //     0
-      //   )
-      // })
     } else {
       //prevent excessive updates
       if (text != value && text != "") {
@@ -314,7 +302,7 @@ const EditableRichText = ({
   return (
     <div
       //required={required}
-      ref={mergedRef}
+      ref={clickOutsideRef}
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
       // onBlur={handleBlurForInnerElements(() => setFocus(false))}
@@ -323,11 +311,14 @@ const EditableRichText = ({
         label={label}
         copyValue={plainText.length > 0 ? plainText : ""}
       />
-      <DisplayCellExpanding>
+      <DisplayCellExpanding
+        leftSection={!focus && leftSection}
+        rightSection={!focus && rightSection}
+      >
         {focus ? (
           <div className="flex flex-grow flex-col">
             <RadixToolbar.Root
-              className="-mx-2 flex gap-2 border-b border-solid border-b-stone-400 p-2 dark:border-stone-600 "
+              className="-mx-2 flex flex-wrap gap-2 border-b border-solid border-b-stone-400 p-2 dark:border-stone-600 "
               aria-label="Formatting options"
             >
               {controls.map((value, index) => {
@@ -411,7 +402,14 @@ const EditableRichText = ({
         ) : (
           <div
             className="plain-html editor w-full"
-            dangerouslySetInnerHTML={{ __html: text || "⸺" }}
+            dangerouslySetInnerHTML={{
+              __html:
+                text.length === 0 ||
+                text === "<p></p>" ||
+                text === "<p></p><p></p>"
+                  ? "⸺"
+                  : text,
+            }}
           ></div>
         )}
       </DisplayCellExpanding>

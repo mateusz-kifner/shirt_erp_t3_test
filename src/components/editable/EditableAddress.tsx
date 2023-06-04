@@ -140,9 +140,12 @@ const EditableAddress = (props: EditableAddressProps) => {
         required={required}
       />
       <DisplayCellExpanding
+        className="p-2"
         ref={ref}
         onClick={() => !disabled && setFocus(true)}
         onFocus={() => !disabled && setFocus(true)}
+        leftSection={!(focus || enumOpen) && leftSection}
+        rightSection={rightSection}
       >
         {focus || enumOpen ? (
           <div
