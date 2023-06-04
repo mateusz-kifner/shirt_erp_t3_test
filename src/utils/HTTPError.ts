@@ -9,7 +9,7 @@ class HTTPError extends Error {
     if (arguments.length >= 3 && extras) {
       Object.assign(this, extras);
     }
-    this.name = toName(code);
+    this.name = toHTTPErrorName(code).replaceAll(" ", "");
     this.statusCode = code;
   }
 }
@@ -23,10 +23,10 @@ export default HTTPError;
  *   500 => "InternalServerError"
  */
 
-export function toName(code: number): string {
+export function toHTTPErrorName(code: number): string {
   const suffix =
     ((code / 100) | 0) === 4 || ((code / 100) | 0) === 5 ? " error" : "";
   return startCase(
     toLower(String(STATUS_CODES[code]).replace(/error$/i, "") + suffix)
-  ).replaceAll(" ", "");
+  );
 }

@@ -17,6 +17,7 @@ import Button from "~/components/basic/Button";
 import Select from "~/components/basic/Select";
 import Editable from "~/components/editable/Editable";
 import { useUserContext } from "~/context/userContext";
+import { useLoaded } from "~/hooks/useLoaded";
 import useTranslation from "~/hooks/useTranslation";
 import { sessionOptions } from "~/lib/session";
 import { appRouter } from "~/server/api/root";
@@ -77,6 +78,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
 
 function Settings() {
   const router = useRouter();
+  const loaded = useLoaded();
   const { locale } = router;
   const { data } = api.session.user.useQuery();
   const logout = api.session.logout.useMutation({
@@ -104,8 +106,10 @@ function Settings() {
   });
 
   useEffect(() => {
-    const html = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
-    html.style.fontSize = "" + remSize + "px";
+    if (loaded) {
+      const html = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
+      html.style.fontSize = "" + remSize + "px";
+    }
   }, [remSize]);
 
   if (!data?.user) return null;
