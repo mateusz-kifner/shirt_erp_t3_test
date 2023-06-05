@@ -121,8 +121,10 @@ const EditableText = (props: EditableTextProps) => {
           py-3
           text-sm
           outline-none
+          placeholder:text-gray-400
           focus-visible:border-transparent
           focus-visible:outline-none
+          dark:placeholder:text-stone-600
           ${className ?? ""}`}
           style={style}
           value={text}

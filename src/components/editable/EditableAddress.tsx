@@ -132,6 +132,8 @@ const EditableAddress = (props: EditableAddressProps) => {
     );
   };
 
+  const valueString = toString();
+
   return (
     <div>
       <InputLabel
@@ -140,7 +142,9 @@ const EditableAddress = (props: EditableAddressProps) => {
         required={required}
       />
       <DisplayCellExpanding
-        className="p-2"
+        className={`p-2 ${
+          !valueString ? "text-gray-400 dark:text-stone-600" : ""
+        }`}
         ref={ref}
         onClick={() => !disabled && setFocus(true)}
         onFocus={() => !disabled && setFocus(true)}

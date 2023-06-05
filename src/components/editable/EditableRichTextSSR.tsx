@@ -402,7 +402,13 @@ const EditableRichText = ({
           </div>
         ) : (
           <div
-            className="plain-html editor w-full"
+            className={`plain-html editor w-full ${
+              text.length === 0 ||
+              text === "<p></p>" ||
+              text === "<p></p><p></p>"
+                ? "text-gray-400 dark:text-stone-600"
+                : ""
+            }`}
             dangerouslySetInnerHTML={{
               __html:
                 text.length === 0 ||

@@ -53,18 +53,24 @@ const EditableDate = (props: InputDateProps) => {
   }, [focus]);
 
   useEffect(() => {
-    const newDate = dayjs(debouncedText, dateFormat, router.locale);
-    if (newDate.isValid()) {
-      if (
-        newDate.format("YYYY-MM-DD").toString() !=
-        dayjs(value).format("YYYY-MM-DD").toString()
-      ) {
-        onSubmit?.(newDate.format("YYYY-MM-DD").toString());
-      }
-      setError(false);
-    } else {
-      setError(true);
+    if (debouncedText.length === 0) {
+      onSubmit?.(null);
+      return;
     }
+
+    const newDate = dayjs(debouncedText, dateFormat, router.locale);
+    if (!newDate.isValid()) {
+      setError(true);
+      return;
+    }
+
+    if (
+      newDate.format("YYYY-MM-DD").toString() !=
+      dayjs(value).format("YYYY-MM-DD").toString()
+    ) {
+      onSubmit?.(newDate.format("YYYY-MM-DD").toString());
+    }
+    setError(false);
   }, [debouncedText]);
 
   return (
@@ -136,8 +142,10 @@ const EditableDate = (props: InputDateProps) => {
               py-1
               text-sm
               outline-none
+              placeholder:text-gray-400
               focus-visible:border-transparent
               focus-visible:outline-none
+              dark:placeholder:text-stone-600
               "
           readOnly={disabled}
           required={required}
