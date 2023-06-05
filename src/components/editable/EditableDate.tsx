@@ -54,6 +54,7 @@ const EditableDate = (props: InputDateProps) => {
 
   useEffect(() => {
     if (debouncedText.length === 0) {
+      setError(false);
       onSubmit?.(null);
       return;
     }
@@ -68,9 +69,9 @@ const EditableDate = (props: InputDateProps) => {
       newDate.format("YYYY-MM-DD").toString() !=
       dayjs(value).format("YYYY-MM-DD").toString()
     ) {
+      setError(false);
       onSubmit?.(newDate.format("YYYY-MM-DD").toString());
     }
-    setError(false);
   }, [debouncedText]);
 
   return (

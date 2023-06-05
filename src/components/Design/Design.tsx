@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-export default dynamic(() => import("./EditableDesignSSR"), {
+export default dynamic(() => import("./DesignSSR"), {
   // Disable during server side rendering
   ssr: false,
 
