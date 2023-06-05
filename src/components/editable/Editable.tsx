@@ -294,7 +294,7 @@ function Field(props: { [index: string]: any }) {
   }
   const Component =
     editableFields[props.type as keyof typeof editableFields]!.component;
-  return <Component {...newProps} />;
+  return <Component {...newProps} type={undefined} />;
 }
 
 function EditableWrapper(
