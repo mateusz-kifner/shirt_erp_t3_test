@@ -1,6 +1,7 @@
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { IconX } from "@tabler/icons-react";
 import { type ReactNode } from "react";
+import { useLoaded } from "~/hooks/useLoaded";
 import ActionButton from "./ActionButton";
 
 // RadixDialog.DialogProps {
@@ -34,6 +35,8 @@ function Modal(props: ModalProps) {
     onClose,
     disableClose = false,
   } = props;
+  const isLoaded = useLoaded();
+
   return (
     <RadixDialog.Root
       defaultOpen={defaultOpen}
@@ -42,7 +45,7 @@ function Modal(props: ModalProps) {
         !open && onClose?.();
         onOpenChange?.(open);
       }}
-      open={open}
+      open={isLoaded && open} // In order to mitigate hydration errors in radix-ui v1.0.3, we are preventing render on server.
     >
       {!!trigger && (
         <RadixDialog.Trigger asChild>{trigger}Radix</RadixDialog.Trigger>
