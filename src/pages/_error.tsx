@@ -1,6 +1,6 @@
 import { toHTTPErrorName } from "~/utils/HTTPError";
 
-function Error({ statusCode }: { statusCode: number }) {
+function ErrorPage({ statusCode }: { statusCode: number }) {
   return (
     <div className="mt-20 w-full text-center text-xl">
       {statusCode
@@ -10,9 +10,9 @@ function Error({ statusCode }: { statusCode: number }) {
   );
 }
 
-Error.getInitialProps = ({ res, err }: any) => {
+ErrorPage.getInitialProps = ({ res, err }: any) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
 };
 
-export default Error;
+export default ErrorPage;
