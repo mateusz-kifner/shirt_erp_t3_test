@@ -282,6 +282,9 @@ body::-webkit-scrollbar {
 .react-calendar__tile--now {
   background: #ffff76;
 }
+.dark .react-calendar__tile--now {
+  background: #a16207;
+}
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {

@@ -105,7 +105,6 @@ const EditableDate = (props: InputDateProps) => {
             contentProps={{ align: "end", sideOffset: 13 }}
           >
             <Calendar
-              key={value}
               className={"z-[1000] w-96 rounded p-2"}
               onChange={(date) => {
                 setText(
@@ -114,11 +113,7 @@ const EditableDate = (props: InputDateProps) => {
                     .toString()
                 );
               }}
-              value={
-                dayjs(text).isValid()
-                  ? dayjs(text).format("YYYY-MM-DD").toString()
-                  : null
-              }
+              value={dayjs(text).isValid() ? dayjs(text).toDate() : undefined}
             />
           </Popover>
         }
