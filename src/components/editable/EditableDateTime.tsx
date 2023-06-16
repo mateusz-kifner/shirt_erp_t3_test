@@ -19,10 +19,20 @@ import InputLabel from "../input/InputLabel";
 // BUG: clicking on label causes copy onClick to occur.
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface EditableDateTimeProps extends EditableInput<string> {}
+interface EditableDateTimeProps extends EditableInput<string> {
+  collapse: boolean;
+}
 
 const EditableDateTime = (props: EditableDateTimeProps) => {
-  const { label, value, initialValue, onSubmit, disabled, required } = props;
+  const {
+    label,
+    value,
+    initialValue,
+    onSubmit,
+    disabled,
+    required,
+    collapse = false,
+  } = props;
 
   // let new_props = { ...props }
   // delete new_label
@@ -91,7 +101,7 @@ const EditableDateTime = (props: EditableDateTimeProps) => {
 
   return (
     <div
-      className="flex-grow"
+      className={`flex-grow ${collapse ? "flex items-center" : ""}`}
       // onClick={() => !disabled && setFocus(true)}
       // onFocus={() => !disabled && setFocus(true)}
       // onBlur={handleBlurForInnerElements(() => setFocus(false))}

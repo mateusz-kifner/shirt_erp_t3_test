@@ -56,6 +56,7 @@ const testTemplate = {
     label: "Datetime",
     type: "datetime",
     initialValue: "2021-11-05T12:24:05.097Z",
+    collapse: true,
   },
   // product: {
   //   label: "product",
