@@ -25,6 +25,7 @@ interface ApiListProps<T = any> {
   filterKeys?: string[];
   excludeKey?: string;
   excludeValue?: string;
+  sortColumn?: string;
   onAddElement?: () => void;
   defaultSearch?: string;
   showAddButton?: boolean;
@@ -51,6 +52,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
     defaultSearch,
     showAddButton,
     buttonSection,
+    sortColumn,
   } = props;
 
   const itemsPerPage = 10;
@@ -71,6 +73,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
     excludeKey,
     excludeValue,
     currentPage: page,
+    sortColumn,
     itemsPerPage,
   });
 

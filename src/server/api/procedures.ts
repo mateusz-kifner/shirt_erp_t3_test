@@ -97,7 +97,7 @@ export function createProcedureSearchWithPagination(
         keys: z.array(z.string()),
         query: z.string().optional(),
         sort: z.enum(["desc", "asc"]).default("desc"),
-        sortColumn: z.string().default("username"),
+        sortColumn: z.string().default("name"),
         excludeKey: z.string().optional(),
         excludeValue: z.string().optional(),
         currentPage: z.number(),

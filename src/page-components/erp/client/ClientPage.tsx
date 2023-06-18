@@ -48,7 +48,7 @@ const ClientsPage = () => {
         onClose={(id?: number) => {
           setOpenAddModal(false);
           id !== undefined &&
-            router.push(`/erp/clients/${id}`).catch((e) => {
+            router.push(`/erp/client/${id}`).catch((e) => {
               throw e;
             });
         }}

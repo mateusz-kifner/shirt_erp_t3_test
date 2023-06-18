@@ -4,26 +4,22 @@ import { useRouter } from "next/router";
 import ApiList from "~/components/ApiList";
 import useTranslation from "~/hooks/useTranslation";
 import { type RouterNames } from "~/utils/api";
-import ClientListItem from "./ClientListItem";
+import OrderListItem from "./OrderListItem";
 
-const entryName: RouterNames = "client";
+const entryName: RouterNames = "order";
 
-interface ClientListProps {
+interface OrderListProps {
   selectedId: number | null;
   onAddElement?: () => void;
 }
 
-const ClientsList = ({ selectedId, onAddElement }: ClientListProps) => {
+const OrdersList = ({ selectedId, onAddElement }: OrderListProps) => {
   const router = useRouter();
   const t = useTranslation();
-  console.log(
-    entryName,
-    entryName ? capitalize(t[entryName].plural) : undefined
-  );
 
   return (
     <ApiList
-      ListItem={ClientListItem}
+      ListItem={OrderListItem}
       entryName={entryName}
       label={entryName ? capitalize(t[entryName].plural) : undefined}
       selectedId={selectedId}
@@ -35,14 +31,13 @@ const ClientsList = ({ selectedId, onAddElement }: ClientListProps) => {
       listItemProps={{
         linkTo: (val: { id: number }) => `/erp/${entryName}/${val.id}`,
       }}
-      filterKeys={["username", "firstname", "email", "companyName"]}
+      filterKeys={["name", "notes"]}
       onAddElement={onAddElement}
       showAddButton
-      sortColumn="username"
-      excludeKey="username"
+      excludeKey="name"
       excludeValue="Szablon"
     />
   );
 };
 
-export default ClientsList;
+export default OrdersList;

@@ -46,7 +46,10 @@ const OrderListItem = (props: OrderListItemProps) => {
       secondElement={
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         (value?.status
-          ? truncString(t[value.status as keyof typeof t] as string, 20) + " | "
+          ? truncString(
+              (t[value.status as keyof typeof t] as string) ?? "",
+              20
+            ) + " | "
           : "") +
         dateDisplay +
         (value?.client?.firstname || value?.client?.lastname ? " | " : "") +
