@@ -90,7 +90,7 @@ model EmailMessage {
     html          String?
     text          String?
     messageId     String?   @db.VarChar(255)
-    headerLines   Json?
+    headerLines   String?
     textAsHtml    String?
     nextMessageId Int?
     createdAt     DateTime  @default(now())
@@ -150,9 +150,9 @@ model OrderArchive {
     price             String?   @db.VarChar(255)
     isPricePaid       Boolean?
     dateOfCompletion  DateTime? @db.Date
-    tables            Json?
-    designs           Json?
-    emailMessagesText Json?
+    tables            String?
+    designs           String?
+    emailMessagesText String?
     createdAt         DateTime  @default(now())
     updatedAt         DateTime  @updatedAt
     createdById       Int?
@@ -170,9 +170,9 @@ model Order {
     price             String?      @db.VarChar(255)
     isPricePaid       Boolean?
     dateOfCompletion  DateTime?    @db.Date
-    tables            Json?
-    designs           Json?
-    emailMessagesText Json?
+    tables            String?
+    designs           String?
+    emailMessagesText String?
     workTime          Decimal?     @db.Decimal(10, 2)
     client            Client?      @relation(fields: [clientId], references: [id])
     address           TypeAddress? @relation(fields: [addressId], references: [id])
@@ -196,7 +196,7 @@ model Procedure {
     id           Int      @id @default(autoincrement())
     name         String?  @db.VarChar(255)
     description  String?
-    workstations Json?
+    workstations String?
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
     createdById  Int?
@@ -209,7 +209,7 @@ model Product {
     category    String?  @db.VarChar(255)
     description String?
     iconId      Int?
-    variants    Json?
+    variants    String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     createdById Int?
@@ -221,8 +221,8 @@ model Workstation {
     name             String?  @db.VarChar(255)
     description      String?
     iconId           Int?
-    pluginConfig     Json?
-    nextWorkstations Json?
+    pluginConfig     String?
+    nextWorkstations String?
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
     createdById      Int?

@@ -8,6 +8,8 @@ interface DefaultListItemProps<T> {
   firstElement?: ReactNode;
   secondElement?: ReactNode;
   avatarElement?: ReactNode;
+  leftSection?: ReactNode;
+  rightSection?: ReactNode;
   active?: boolean;
   disabled?: boolean;
 }
@@ -18,6 +20,8 @@ export function DefaultListItem<T extends { id?: number | null }>({
   firstElement,
   secondElement,
   avatarElement,
+  leftSection,
+  rightSection,
   active,
   disabled,
 }: DefaultListItemProps<T>) {
@@ -79,12 +83,14 @@ export function DefaultListItem<T extends { id?: number | null }>({
         </div>
       )}
       <div className="flex flex-grow flex-col items-start gap-2">
+        {!!leftSection && leftSection}
         <span className="text-sm text-stone-800 dark:text-stone-200">
           {!!firstElement && firstElement}
         </span>
         <span className="text-xs text-stone-600 dark:text-stone-400">
           {!!secondElement && secondElement}
         </span>
+        {!!rightSection && rightSection}
       </div>
     </button>
   );
