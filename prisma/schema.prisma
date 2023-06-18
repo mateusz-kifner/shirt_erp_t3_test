@@ -163,21 +163,23 @@ model OrderArchive {
 }
 
 model Order {
-    id                Int       @id @default(autoincrement())
-    name              String?   @db.VarChar(255)
-    status            String?   @db.VarChar(255)
+    id                Int          @id @default(autoincrement())
+    name              String?      @db.VarChar(255)
+    status            String?      @db.VarChar(255)
     notes             String?
-    price             String?   @db.VarChar(255)
+    price             String?      @db.VarChar(255)
     isPricePaid       Boolean?
-    dateOfCompletion  DateTime? @db.Date
+    dateOfCompletion  DateTime?    @db.Date
     tables            Json?
     designs           Json?
     emailMessagesText Json?
-    workTime          Decimal?  @db.Decimal(10, 2)
-    client            Client?   @relation(fields: [clientId], references: [id])
+    workTime          Decimal?     @db.Decimal(10, 2)
+    client            Client?      @relation(fields: [clientId], references: [id])
+    address           TypeAddress? @relation(fields: [addressId], references: [id])
     clientId          Int?
-    createdAt         DateTime  @default(now())
-    updatedAt         DateTime  @updatedAt
+    addressId         Int?
+    createdAt         DateTime     @default(now())
+    updatedAt         DateTime     @updatedAt
     createdById       Int?
     updatedById       Int?
 }
@@ -239,6 +241,7 @@ model TypeAddress {
     city            String?  @db.VarChar(255)
     province        String?  @db.VarChar(255)
     Clients         Client[]
+    Orders          Order[]
 }
 
 model TypeIcon {
