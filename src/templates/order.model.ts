@@ -130,11 +130,14 @@ const order_template = {
     label: "Utworzono",
     type: "datetime",
     disabled: true,
+    collapse: true,
   },
+
   updatedAt: {
     label: "Edytowano",
     type: "datetime",
     disabled: true,
+    collapse: true,
   },
 };
 
