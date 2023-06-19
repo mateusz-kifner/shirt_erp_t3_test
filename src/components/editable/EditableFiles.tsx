@@ -1,15 +1,24 @@
 import { useEffect, useId, useState } from "react";
 
 import { useClickOutside, useHover } from "@mantine/hooks";
-import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
+import {
+  IconArrowDown,
+  IconArrowUp,
+  IconPhoto,
+  IconTrashX,
+  IconUpload,
+  IconX,
+} from "@tabler/icons-react";
 // import FileListItem from "../FileListItem";
 
+import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import useTranslation from "~/hooks/useTranslation";
 import { FileType } from "~/schema/fileSchema";
 import type EditableInput from "~/types/EditableInput";
 import type TablerIconType from "~/types/TablerIconType";
 import FileListItem from "../FileListItem";
 import Modal from "../basic/Modal";
+import InputLabel from "../input/InputLabel";
 
 // FIXME: ENFORCE FILE LIMIT
 
@@ -132,6 +141,13 @@ const EditableFiles = (props: EditableFilesProps) => {
       onFocus={() => !disabled && setFocus(true)}
       ref={refClickOutside}
     >
+      <InputLabel
+        label={label}
+        copyValue={value?.reduce(
+          (prev, next) => prev + next.originalFilename + "\n",
+          ""
+        )}
+      />
       <div tabIndex={100000}>
         <Modal
           open={previewOpened}
@@ -139,22 +155,14 @@ const EditableFiles = (props: EditableFilesProps) => {
           // styles={{
           //   body: { maxWidth: "80vw", width: previewWidth ?? undefined },
           // }}
+          contentProps={{ className: "w-[90vw] " }}
         >
-          <img src={preview} alt="" />
+          <img src={preview} alt="" className="w-[90vw]" />
         </Modal>
 
-        <div
-          ref={hoverdRef}
-          className="relative min-h-[44px] border border-solid border-transparent pb-4 pt-2 hover:border-stone-400 dark:hover:border-stone-800"
-        >
+        <div ref={hoverdRef} className="relative min-h-[44px]  pb-4 pt-2 ">
           {files.length > 0
             ? files.map((file, index) => (
-                // <div
-                //   className="flex gap-2"
-                //   // pr={active ? undefined : 32}
-                //   key={uuid + "_" + file.id + "_" + file.filename}
-                //   style={{ position: "relative" }}
-                // >
                 <FileListItem
                   key={uuid + "_" + file.id + "_" + file.filename}
                   value={file}
@@ -164,46 +172,28 @@ const EditableFiles = (props: EditableFilesProps) => {
                     setPreviewOpened(true);
                   }}
                   style={{ flexGrow: 1 }}
-                  menuNode={
+                  contextMenuContent={
                     !disabled && (
-                      <></>
-                      // <Menu
-                      //   styles={(theme) => ({
-                      //     dropdown: {
-                      //       // marginTop: 4,
-                      //       // marginLeft: -8,
-                      //       backgroundColor:
-                      //         theme.colorScheme === "dark"
-                      //           ? theme.colors.dark[7]
-                      //           : theme.white,
-                      //     },
-                      //     arrow: {
-                      //       backgroundColor:
-                      //         theme.colorScheme === "dark"
-                      //           ? theme.colors.dark[7]
-                      //           : theme.white,
-                      //     },
-                      //   })}
-                      //   position="bottom-start"
-                      //   offset={4}
-                      //   opened={true}
-                      // >
-                      //   <Menu.Dropdown>
-                      //     <Menu.Item
-                      //       icon={<IconTrashX size={14} />}
-                      //       onClick={() => {
-                      //         file.id && onDelete(file.id);
-                      //       }}
-                      //       color="red"
-                      //     >
-                      //       Delete
-                      //     </Menu.Item>
-                      //   </Menu.Dropdown>
-                      // </Menu>
+                      <>
+                        <RadixContextMenu.Item
+                          className="button flex-grow justify-start bg-stone-800 hover:bg-stone-600"
+                          disabled={index === 0}
+                        >
+                          <IconArrowUp /> Up
+                        </RadixContextMenu.Item>
+                        <RadixContextMenu.Item
+                          className="button flex-grow justify-start bg-stone-800 hover:bg-stone-600"
+                          disabled={index === files.length - 1}
+                        >
+                          <IconArrowDown /> Down
+                        </RadixContextMenu.Item>
+                        <RadixContextMenu.Item className="button flex-grow justify-start bg-stone-800 hover:bg-stone-600">
+                          <IconTrashX /> Delete
+                        </RadixContextMenu.Item>
+                      </>
                     )
                   }
                 />
-                // </div>
               ))
             : !uploading && <div>⸺</div>}
           {error && <div className="text-red-500">{error}</div>}
