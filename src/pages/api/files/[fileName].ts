@@ -30,9 +30,12 @@ export default async function Files(req: NextApiRequest, res: NextApiResponse) {
     }
     if (download) {
       // Download headers
+      console.log(file?.originalFilename);
       res.setHeader(
         "Content-Disposition",
-        `attachment; filename=${file?.originalFilename}`
+        `attachment; filename="${encodeURIComponent(
+          file?.originalFilename ?? ""
+        )}"`
       );
       res.setHeader("Content-Type", "application/octet-stream");
 
@@ -43,7 +46,10 @@ export default async function Files(req: NextApiRequest, res: NextApiResponse) {
       fileStream.pipe(res);
     } else {
       // View headers
-      res.setHeader("Content-Type", file.mimetype ?? "");
+      res.setHeader(
+        "Content-Type",
+        file.mimetype ?? "application/octet-stream"
+      );
 
       const imageData = await fs.readFile(
         `./uploads/${file?.newFilename as string}`
@@ -60,6 +66,7 @@ export default async function Files(req: NextApiRequest, res: NextApiResponse) {
       });
       return;
     } else {
+      console.log(err);
       res.status(500).json({
         status: "error",
         statusCode: 500,

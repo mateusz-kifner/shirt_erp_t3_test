@@ -53,7 +53,7 @@ const order_template = {
   client: {
     label: "Klient",
     type: "apiEntry",
-    entryName: "clients",
+    entryName: "client",
     linkEntry: true,
     helpTooltip:
       "Jeśli adres jest całkowicie pusty to ustawienie Klienta spowoduje automatyczne wypełnienie adresu.",

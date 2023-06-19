@@ -9,12 +9,13 @@ interface TooltipProps {
   spacing?: number | string;
   withinPortal?: boolean;
   delayDuration?: number;
+  disabled?: boolean;
 }
 
 function Tooltip(props: TooltipProps) {
-  const { tooltip, children, delayDuration = 700 } = props;
+  const { tooltip, children, delayDuration = 700, disabled = false } = props;
 
-  if (!tooltip) return <>{children}</>;
+  if (!tooltip || disabled) return <>{children}</>;
 
   return (
     <RadixTooltip.Root delayDuration={delayDuration}>

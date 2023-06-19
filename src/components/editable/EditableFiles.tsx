@@ -167,60 +167,61 @@ const EditableFiles = (props: EditableFilesProps) => {
         >
           {files.length > 0
             ? files.map((file, index) => (
-                <div
-                  className="flex gap-2"
-                  // pr={active ? undefined : 32}
+                // <div
+                //   className="flex gap-2"
+                //   // pr={active ? undefined : 32}
+                //   key={uuid + "_" + file.id + "_" + file.filename}
+                //   style={{ position: "relative" }}
+                // >
+                <FileListItem
                   key={uuid + "_" + file.id + "_" + file.filename}
-                  style={{ position: "relative" }}
-                >
-                  <FileListItem
-                    value={file}
-                    onPreview={(url, width) => {
-                      setPreview(url);
-                      setPreviewWidth(width);
-                      setPreviewOpened(true);
-                    }}
-                    style={{ flexGrow: 1 }}
-                    menuNode={
-                      !disabled && (
-                        <></>
-                        // <Menu
-                        //   styles={(theme) => ({
-                        //     dropdown: {
-                        //       // marginTop: 4,
-                        //       // marginLeft: -8,
-                        //       backgroundColor:
-                        //         theme.colorScheme === "dark"
-                        //           ? theme.colors.dark[7]
-                        //           : theme.white,
-                        //     },
-                        //     arrow: {
-                        //       backgroundColor:
-                        //         theme.colorScheme === "dark"
-                        //           ? theme.colors.dark[7]
-                        //           : theme.white,
-                        //     },
-                        //   })}
-                        //   position="bottom-start"
-                        //   offset={4}
-                        //   opened={true}
-                        // >
-                        //   <Menu.Dropdown>
-                        //     <Menu.Item
-                        //       icon={<IconTrashX size={14} />}
-                        //       onClick={() => {
-                        //         file.id && onDelete(file.id);
-                        //       }}
-                        //       color="red"
-                        //     >
-                        //       Delete
-                        //     </Menu.Item>
-                        //   </Menu.Dropdown>
-                        // </Menu>
-                      )
-                    }
-                  />
-                </div>
+                  value={file}
+                  onPreview={(url, width) => {
+                    setPreview(url);
+                    setPreviewWidth(width);
+                    setPreviewOpened(true);
+                  }}
+                  style={{ flexGrow: 1 }}
+                  menuNode={
+                    !disabled && (
+                      <></>
+                      // <Menu
+                      //   styles={(theme) => ({
+                      //     dropdown: {
+                      //       // marginTop: 4,
+                      //       // marginLeft: -8,
+                      //       backgroundColor:
+                      //         theme.colorScheme === "dark"
+                      //           ? theme.colors.dark[7]
+                      //           : theme.white,
+                      //     },
+                      //     arrow: {
+                      //       backgroundColor:
+                      //         theme.colorScheme === "dark"
+                      //           ? theme.colors.dark[7]
+                      //           : theme.white,
+                      //     },
+                      //   })}
+                      //   position="bottom-start"
+                      //   offset={4}
+                      //   opened={true}
+                      // >
+                      //   <Menu.Dropdown>
+                      //     <Menu.Item
+                      //       icon={<IconTrashX size={14} />}
+                      //       onClick={() => {
+                      //         file.id && onDelete(file.id);
+                      //       }}
+                      //       color="red"
+                      //     >
+                      //       Delete
+                      //     </Menu.Item>
+                      //   </Menu.Dropdown>
+                      // </Menu>
+                    )
+                  }
+                />
+                // </div>
               ))
             : !uploading && <div>⸺</div>}
           {error && <div className="text-red-500">{error}</div>}

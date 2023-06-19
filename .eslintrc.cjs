@@ -19,6 +19,7 @@ const config = {
         "@typescript-eslint/restrict-plus-operands": "warn",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/no-unsafe-argument": "warn",
+        "@next/next/no-img-element": "off",
       },
     },
   ],
