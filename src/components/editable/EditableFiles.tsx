@@ -145,25 +145,7 @@ const EditableFiles = (props: EditableFilesProps) => {
 
         <div
           ref={hoverdRef}
-          className="pb-4 pt-2"
-
-          // p={files.length > 0 || active ? "md" : "xs"}
-          // sx={[
-          //   (theme) => ({
-          //     width: "100%",
-          //     position: "relative",
-          //     minHeight: 44,
-          //     border: "1px solid transparent",
-          //     "&:hover": {
-          //       border:
-          //         theme.colorScheme === "dark"
-          //           ? "1px solid #2C2E33"
-          //           : "1px solid #ced4da",
-          //     },
-          //   }),
-          //   // SxBorder,
-          //   SxRadius,
-          // ]}
+          className="relative min-h-[44px] border border-solid border-transparent pb-4 pt-2 hover:border-stone-400 dark:hover:border-stone-800"
         >
           {files.length > 0
             ? files.map((file, index) => (

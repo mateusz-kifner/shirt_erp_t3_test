@@ -1,6 +1,8 @@
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { IconX } from "@tabler/icons-react";
+import { omit } from "lodash";
 import { type ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 import { useLoaded } from "~/hooks/useLoaded";
 import ActionButton from "./ActionButton";
 
@@ -17,6 +19,7 @@ interface ModalProps extends RadixDialog.DialogProps {
   description?: ReactNode;
   children: ReactNode;
   trigger?: ReactNode;
+  contentProps?: RadixDialog.DialogContentProps;
   onClose?: () => void;
   disableClose?: boolean;
 }
@@ -34,6 +37,7 @@ function Modal(props: ModalProps) {
     open,
     onClose,
     disableClose = false,
+    contentProps,
   } = props;
   const isLoaded = useLoaded();
 
@@ -51,8 +55,14 @@ function Modal(props: ModalProps) {
         <RadixDialog.Trigger asChild>{trigger}Radix</RadixDialog.Trigger>
       )}
       <RadixDialog.Portal>
-        <RadixDialog.Overlay className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-40" />
-        <RadixDialog.Content className="absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-3 shadow dark:bg-stone-800">
+        <RadixDialog.Overlay className="fixed left-0 top-0 z-[9998] h-screen w-screen bg-black  bg-opacity-40" />
+        <RadixDialog.Content
+          className={twMerge(
+            "fixed left-1/2 top-1/2  z-[9999] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-3 shadow  dark:bg-stone-800",
+            contentProps?.className
+          )}
+          {...omit(contentProps, ["className"])}
+        >
           {!!title && <RadixDialog.Title>{title}</RadixDialog.Title>}
           {!!description && (
             <RadixDialog.Description>{description}</RadixDialog.Description>

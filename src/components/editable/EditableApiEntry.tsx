@@ -111,6 +111,8 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
               setOpen(false);
               setApiEntry(value);
             }}
+            excludeKey="name"
+            excludeValue="Szablon"
             {...listProps}
           />
         ) : (

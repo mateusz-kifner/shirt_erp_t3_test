@@ -58,6 +58,12 @@ const order_template = {
     helpTooltip:
       "Jeśli adres jest całkowicie pusty to ustawienie Klienta spowoduje automatyczne wypełnienie adresu.",
     allowClear: true,
+
+    listProps: {
+      sortColumn: "username",
+      excludeKey: "username",
+      filterKeys: ["username", "firstname", "email", "companyName"],
+    },
     onSubmitTrigger: (
       key: string,
       client: ClientType,

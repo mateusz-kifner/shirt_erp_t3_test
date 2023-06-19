@@ -54,6 +54,7 @@ const ApiList = <T,>(props: ApiListProps<T>) => {
     buttonSection,
     sortColumn,
   } = props;
+  console.log(sortColumn);
 
   const itemsPerPage = 10;
   const t = useTranslation();
