@@ -5,6 +5,7 @@ export const fileSchema = z.object({
   size: z.number(),
   filepath: z.string().max(2048),
   originalFilename: z.string().max(1024).nullable().optional(),
+  filename: z.string().max(1024).nullable().optional(),
   newFilename: z.string().max(1024).nullable().optional(),
   mimetype: z.string().max(40).nullable().optional(),
   hash: z.string().max(40).nullable().optional(),

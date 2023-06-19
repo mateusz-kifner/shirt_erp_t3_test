@@ -37,7 +37,7 @@ const order_template = {
   },
   isPricePaid: {
     label: "Cena zapłacona",
-    type: "boolean",
+    type: "switch",
     initialValue: false,
     children: { checked: "Tak", unchecked: "Nie" },
   },

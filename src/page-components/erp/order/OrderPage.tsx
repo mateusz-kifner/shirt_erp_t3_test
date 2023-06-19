@@ -33,7 +33,7 @@ import OrderList from "./OrderList";
 // import OrderMessagesView from "./OrderMessagesView"
 // import axios from "axios"
 
-const entryName = "orders";
+const entryName = "order";
 
 const OrdersPage: NextPage = () => {
   const uuid = useId();

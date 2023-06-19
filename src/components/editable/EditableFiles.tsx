@@ -1,14 +1,14 @@
 import { useEffect, useId, useState } from "react";
 
 import { useClickOutside, useHover } from "@mantine/hooks";
-import { IconPhoto, IconTrashX, IconUpload, IconX } from "@tabler/icons-react";
-import { env } from "~/env.mjs";
+import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
 // import FileListItem from "../FileListItem";
 
 import useTranslation from "~/hooks/useTranslation";
 import { FileType } from "~/schema/fileSchema";
 import type EditableInput from "~/types/EditableInput";
 import type TablerIconType from "~/types/TablerIconType";
+import FileListItem from "../FileListItem";
 import Modal from "../basic/Modal";
 
 // FIXME: ENFORCE FILE LIMIT
@@ -78,7 +78,7 @@ const EditableFiles = (props: EditableFilesProps) => {
     const formData = new FormData();
 
     for (let i = 0; i < new_files.length; i++) {
-      formData.append("files", new_files[i]);
+      formData.append("files", new_files[i] as Blob);
     }
 
     // upload file for spec entry
@@ -86,38 +86,37 @@ const EditableFiles = (props: EditableFilesProps) => {
     // formData.append("refId", "1") // entry id
     // formData.append("field", "files")
 
-    axios
-      .post(env.NEXT_PUBLIC_SERVER_API_URL + "/api/upload", formData)
-      .then((res: any) => {
-        const filesData = res.data;
-        onSubmit?.([...files, ...filesData]);
-        setFiles((files) => [...files, ...filesData]);
-        setUploading((num: number) => num - new_files.length);
-        setError(undefined);
-      })
-      .catch((err: AxiosError) => {
-        setError(err.response?.statusText);
-        setUploading((num: number) => num - new_files.length);
-      });
+    // axios
+    //   .post(env.NEXT_PUBLIC_SERVER_API_URL + "/api/upload", formData)
+    //   .then((res: any) => {
+    //     const filesData = res.data;
+    //     onSubmit?.([...files, ...filesData]);
+    //     setFiles((files) => [...files, ...filesData]);
+    //     setUploading((num: number) => num - new_files.length);
+    //     setError(undefined);
+    //   })
+    //   .catch((err: AxiosError) => {
+    //     setError(err.response?.statusText);
+    //     setUploading((num: number) => num - new_files.length);
+    //   });
   };
 
   const onDelete = (index: number) => {
-    axios
-      .delete(env.NEXT_PUBLIC_SERVER_API_URL + `/api/upload/files/${index}`)
-      .then((res) => {
-        if (res?.data?.id !== undefined) {
-          setFiles((files) => files.filter((file) => file.id !== res.data.id));
-          onSubmit?.(files.filter((file) => file.id !== res.data.id));
-        }
-        setError(undefined);
-
-        //        console.log(res)
-      })
-      .catch((err: AxiosError) => {
-        setFiles((files) => files.filter((val) => val.id !== index));
-        setError(err.response?.statusText);
-        console.log(err);
-      });
+    // axios
+    //   .delete(env.NEXT_PUBLIC_SERVER_API_URL + `/api/upload/files/${index}`)
+    //   .then((res) => {
+    //     if (res?.data?.id !== undefined) {
+    //       setFiles((files) => files.filter((file) => file.id !== res.data.id));
+    //       onSubmit?.(files.filter((file) => file.id !== res.data.id));
+    //     }
+    //     setError(undefined);
+    //     //        console.log(res)
+    //   })
+    //   .catch((err: AxiosError) => {
+    //     setFiles((files) => files.filter((val) => val.id !== index));
+    //     setError(err.response?.statusText);
+    //     console.log(err);
+    //   });
   };
 
   useEffect(() => {
@@ -126,22 +125,22 @@ const EditableFiles = (props: EditableFilesProps) => {
   }, [value]);
 
   return (
-    <Input.Wrapper
-      label={label && label.length > 0 ? label : undefined}
-      required={required}
+    <div
+      // label={label && label.length > 0 ? label : undefined}
+      // required={required}
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
       ref={refClickOutside}
     >
       <div tabIndex={100000}>
         <Modal
-          opened={previewOpened}
+          open={previewOpened}
           onClose={() => setPreviewOpened(false)}
-          styles={{
-            body: { maxWidth: "80vw", width: previewWidth ?? undefined },
-          }}
+          // styles={{
+          //   body: { maxWidth: "80vw", width: previewWidth ?? undefined },
+          // }}
         >
-          <Image src={preview} alt="" />
+          <img src={preview} alt="" />
         </Modal>
 
         <div
@@ -168,9 +167,10 @@ const EditableFiles = (props: EditableFilesProps) => {
         >
           {files.length > 0
             ? files.map((file, index) => (
-                <Group
+                <div
+                  className="flex gap-2"
                   // pr={active ? undefined : 32}
-                  key={uuid + "_" + file.id + "_" + file.name}
+                  key={uuid + "_" + file.id + "_" + file.filename}
                   style={{ position: "relative" }}
                 >
                   <FileListItem
@@ -183,46 +183,47 @@ const EditableFiles = (props: EditableFilesProps) => {
                     style={{ flexGrow: 1 }}
                     menuNode={
                       !disabled && (
-                        <Menu
-                          styles={(theme) => ({
-                            dropdown: {
-                              // marginTop: 4,
-                              // marginLeft: -8,
-                              backgroundColor:
-                                theme.colorScheme === "dark"
-                                  ? theme.colors.dark[7]
-                                  : theme.white,
-                            },
-                            arrow: {
-                              backgroundColor:
-                                theme.colorScheme === "dark"
-                                  ? theme.colors.dark[7]
-                                  : theme.white,
-                            },
-                          })}
-                          position="bottom-start"
-                          offset={4}
-                          opened={true}
-                        >
-                          <Menu.Dropdown>
-                            <Menu.Item
-                              icon={<IconTrashX size={14} />}
-                              onClick={() => {
-                                file.id && onDelete(file.id);
-                              }}
-                              color="red"
-                            >
-                              Delete
-                            </Menu.Item>
-                          </Menu.Dropdown>
-                        </Menu>
+                        <></>
+                        // <Menu
+                        //   styles={(theme) => ({
+                        //     dropdown: {
+                        //       // marginTop: 4,
+                        //       // marginLeft: -8,
+                        //       backgroundColor:
+                        //         theme.colorScheme === "dark"
+                        //           ? theme.colors.dark[7]
+                        //           : theme.white,
+                        //     },
+                        //     arrow: {
+                        //       backgroundColor:
+                        //         theme.colorScheme === "dark"
+                        //           ? theme.colors.dark[7]
+                        //           : theme.white,
+                        //     },
+                        //   })}
+                        //   position="bottom-start"
+                        //   offset={4}
+                        //   opened={true}
+                        // >
+                        //   <Menu.Dropdown>
+                        //     <Menu.Item
+                        //       icon={<IconTrashX size={14} />}
+                        //       onClick={() => {
+                        //         file.id && onDelete(file.id);
+                        //       }}
+                        //       color="red"
+                        //     >
+                        //       Delete
+                        //     </Menu.Item>
+                        //   </Menu.Dropdown>
+                        // </Menu>
                       )
                     }
                   />
-                </Group>
+                </div>
               ))
-            : !uploading && <Text>⸺</Text>}
-          {error && <Text color="red">{error}</Text>}
+            : !uploading && <div>⸺</div>}
+          {error && <div className="text-red-500">{error}</div>}
           {/* {(active && focus) ||
             (!!uploading && (
               //   ? (files.length < maxFileCount || !!uploading) &&
@@ -259,37 +260,38 @@ const EditableFiles = (props: EditableFilesProps) => {
               </Button>
             ))} */}
           {focus && (
-            <Dropzone
-              onDrop={(files) => {
-                onUploadMany(files);
-              }}
-              onReject={(file_error) => {
-                console.log(file_error);
-              }}
-              style={{ minWidth: "100%" }}
-              multiple={maxCount !== 1}
-            >
-              <Group
-                position="center"
-                spacing="xl"
-                style={{ minHeight: 66, pointerEvents: "none" }}
-              >
-                <ImageUploadIcon
-                  status={status}
-                  style={{ color: getIconColor(status, theme) }}
-                  size={42}
-                />
-                <div>
-                  <Text size="lg" inline>
-                    Wrzuć tu pliki do wysłania
-                  </Text>
-                </div>
-              </Group>
-            </Dropzone>
+            <></>
+            // <Dropzone
+            //   onDrop={(files) => {
+            //     onUploadMany(files);
+            //   }}
+            //   onReject={(file_error) => {
+            //     console.log(file_error);
+            //   }}
+            //   style={{ minWidth: "100%" }}
+            //   multiple={maxCount !== 1}
+            // >
+            //   <Group
+            //     position="center"
+            //     spacing="xl"
+            //     style={{ minHeight: 66, pointerEvents: "none" }}
+            //   >
+            //     <ImageUploadIcon
+            //       status={status}
+            //       style={{ color: getIconColor(status, theme) }}
+            //       size={42}
+            //     />
+            //     <div>
+            //       <Text size="lg" inline>
+            //         Wrzuć tu pliki do wysłania
+            //       </Text>
+            //     </div>
+            //   </Group>
+            // </Dropzone>
           )}
         </div>
       </div>
-    </Input.Wrapper>
+    </div>
   );
 };
 

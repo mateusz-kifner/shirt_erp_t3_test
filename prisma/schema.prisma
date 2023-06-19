@@ -47,6 +47,7 @@ model File {
     createdById      Int?
     updatedById      Int?
     TypeIcon         TypeIcon[]
+    Order            Order[]
 }
 
 model Client {
@@ -173,6 +174,7 @@ model Order {
     tables            String?
     designs           String?
     emailMessagesText String?
+    files             File[]
     workTime          Decimal?     @db.Decimal(10, 2)
     client            Client?      @relation(fields: [clientId], references: [id])
     address           TypeAddress? @relation(fields: [addressId], references: [id])
