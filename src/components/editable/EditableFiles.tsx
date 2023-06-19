@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { ChangeEvent, useEffect, useId, useState, type DragEvent } from "react";
 
 import { useClickOutside, useHover } from "@mantine/hooks";
 import {
@@ -73,6 +73,7 @@ const EditableFiles = (props: EditableFilesProps) => {
   const [previewWidth, setPreviewWidth] = useState<number | null | undefined>(
     null
   );
+  const [dragActive, setDragActive] = useState<boolean>(false);
   const refClickOutside = useClickOutside(() => setFocus(false));
   const { hovered, ref: hoverdRef } = useHover();
 
@@ -133,6 +134,85 @@ const EditableFiles = (props: EditableFilesProps) => {
     setFiles(value);
   }, [value]);
 
+  const handleDrag = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    try {
+      if (e.target.files && e.target.files[0]) {
+        console.log("files handleChange", e.target.files[0]);
+        // at least one file has been selected
+
+        // validate file type
+        // const valid = validateFileType(e.target.files[0])
+        // if (!valid) {
+        //   toast({
+        //     title: 'Invalid file type',
+        //     description: 'Please upload a valid file type.',
+        //   })
+        //   return
+        // }
+
+        // const { getUrl, error } = await s3Upload(e.target.files[0])
+        // if (!getUrl || error) throw new Error('Error uploading file')
+
+        const { name, size } = e.target.files[0];
+
+        // addFilesToState([{ name, getUrl, size }])
+      }
+    } catch (error) {
+      // already handled
+    }
+  };
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // validate file type
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const files = Array.from(e.dataTransfer.files);
+      console.log("files handleDrop", files);
+      // const validFiles = files.filter((file) => validateFileType(file))
+
+      // if (files.length !== validFiles.length) {
+      //   toast({
+      //     title: 'Invalid file type',
+      //     description: 'Only image files are allowed.',
+      //   })
+      // }
+
+      try {
+        // const filesWithUrl = await Promise.all(
+        //   validFiles.map(async (file) => {
+        //     const { name, size } = file
+        //     const { getUrl, error } = await s3Upload(file)
+
+        //     if (!getUrl || error) return { name, size, getUrl: '', error }
+        //     return { name, size, getUrl }
+        //   })
+        // )
+
+        setDragActive(false);
+
+        // at least one file has been selected
+        // addFilesToState(filesWithUrl)
+
+        e.dataTransfer.clearData();
+      } catch (error) {
+        // already handled
+      }
+    }
+  };
+
   return (
     <div
       // label={label && label.length > 0 ? label : undefined}
@@ -140,6 +220,7 @@ const EditableFiles = (props: EditableFilesProps) => {
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
       ref={refClickOutside}
+      onDragEnter={handleDrag}
     >
       <InputLabel
         label={label}
@@ -148,7 +229,7 @@ const EditableFiles = (props: EditableFilesProps) => {
           ""
         )}
       />
-      <div tabIndex={100000}>
+      <div tabIndex={100000} className="pb-4 pt-2 ">
         <Modal
           open={previewOpened}
           onClose={() => setPreviewOpened(false)}
@@ -160,7 +241,16 @@ const EditableFiles = (props: EditableFilesProps) => {
           <img src={preview} alt="" className="w-[90vw]" />
         </Modal>
 
-        <div ref={hoverdRef} className="relative min-h-[44px]  pb-4 pt-2 ">
+        <div
+          ref={hoverdRef}
+          className={`relative min-h-[44px]  rounded border border-solid transition-all ${
+            dragActive ? "border-sky-600" : "border-transparent"
+          }`}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
           {files.length > 0
             ? files.map((file, index) => (
                 <FileListItem
