@@ -8,6 +8,13 @@ import ClientListItem from "./ClientListItem";
 
 const entryName: RouterNames = "client";
 
+export const clientListSearchParams = {
+  filterKeys: ["username", "firstname", "email", "companyName"],
+  sortColumn: "username",
+  excludeKey: "username",
+  excludeValue: "Szablon",
+};
+
 interface ClientListProps {
   selectedId: number | null;
   onAddElement?: () => void;
@@ -35,12 +42,9 @@ const ClientsList = ({ selectedId, onAddElement }: ClientListProps) => {
       listItemProps={{
         linkTo: (val: { id: number }) => `/erp/${entryName}/${val.id}`,
       }}
-      filterKeys={["username", "firstname", "email", "companyName"]}
       onAddElement={onAddElement}
       showAddButton
-      sortColumn="username"
-      excludeKey="username"
-      excludeValue="Szablon"
+      {...clientListSearchParams}
     />
   );
 };

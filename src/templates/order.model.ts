@@ -1,3 +1,4 @@
+import { clientListSearchParams } from "~/page-components/erp/client/ClientList";
 import { ClientType } from "~/schema/clientSchema";
 import { OrderType } from "~/schema/orderSchema";
 
@@ -58,12 +59,7 @@ const order_template = {
     helpTooltip:
       "Jeśli adres jest całkowicie pusty to ustawienie Klienta spowoduje automatyczne wypełnienie adresu.",
     allowClear: true,
-
-    listProps: {
-      sortColumn: "username",
-      excludeKey: "username",
-      filterKeys: ["username", "firstname", "email", "companyName"],
-    },
+    listProps: clientListSearchParams,
     onSubmitTrigger: (
       key: string,
       client: ClientType,

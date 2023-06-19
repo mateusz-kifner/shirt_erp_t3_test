@@ -8,6 +8,12 @@ import OrderListItem from "./OrderListItem";
 
 const entryName: RouterNames = "order";
 
+export const orderListSearchParams = {
+  filterKeys: ["name", "notes"],
+  excludeKey: "name",
+  excludeValue: "Szablon",
+};
+
 interface OrderListProps {
   selectedId: number | null;
   onAddElement?: () => void;
@@ -31,11 +37,9 @@ const OrdersList = ({ selectedId, onAddElement }: OrderListProps) => {
       listItemProps={{
         linkTo: (val: { id: number }) => `/erp/${entryName}/${val.id}`,
       }}
-      filterKeys={["name", "notes"]}
       onAddElement={onAddElement}
       showAddButton
-      excludeKey="name"
-      excludeValue="Szablon"
+      {...orderListSearchParams}
     />
   );
 };
