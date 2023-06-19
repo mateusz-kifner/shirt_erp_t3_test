@@ -1,18 +1,27 @@
+import { z } from "zod";
 import { orderSchema } from "~/schema/orderSchema";
 import {
   createProcedureDeleteById,
   createProcedureGetAll,
-  createProcedureGetById,
   createProcedureSearch,
   createProcedureSearchWithPagination,
 } from "~/server/api/procedures";
-import { createTRPCRouter } from "~/server/api/trpc";
+
+import { prisma } from "~/server/db";
+
+import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
 
 const orderSchemaWithoutId = orderSchema.omit({ id: true });
 
 export const orderRouter = createTRPCRouter({
   getAll: createProcedureGetAll("order"),
-  getById: createProcedureGetById("order"),
+  getById: authenticatedProcedure.input(z.number()).query(async ({ input }) => {
+    const data = await prisma.order.findUnique({
+      where: { id: input },
+      include: { files: true, client: true, address: true },
+    });
+    return data;
+  }),
   // create: authenticatedProcedure
   //   .input(orderSchemaWithoutId)
   //   .mutation(async ({ input: orderData }) => {
