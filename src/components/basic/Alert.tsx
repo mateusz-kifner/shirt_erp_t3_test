@@ -40,7 +40,7 @@ const Alert = (props: AlertProps) => {
         <RadixAlertDialog.Trigger asChild>{trigger}</RadixAlertDialog.Trigger>
       )}
       <RadixAlertDialog.Portal>
-        <RadixAlertDialog.Overlay className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-40 data-[state=open]:animate-show" />
+        <RadixAlertDialog.Overlay className="fixed left-0 top-0 h-screen w-screen bg-black bg-opacity-40 data-[state=open]:animate-show" />
         <RadixAlertDialog.Content className="fixed left-[50%] top-[50%] max-h-[85vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow dark:bg-stone-800">
           {!!title && (
             <RadixAlertDialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
