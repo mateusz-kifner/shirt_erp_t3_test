@@ -46,6 +46,7 @@ const ApiEntryEditable = <EntryType,>({
   const router = useRouter();
 
   const apiUpdate = (key: string, val: any) => {
+    console.log(key, val);
     /**/
   };
   //   setStatus("loading");

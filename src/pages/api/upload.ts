@@ -3,7 +3,9 @@ import formidable from "formidable";
 import type IncomingForm from "formidable/Formidable";
 import type { IncomingMessage, ServerResponse } from "http";
 import imageSize from "image-size";
+import { getIronSession, type IronSession } from "iron-session";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { sessionOptions } from "~/lib/session";
 import { prisma } from "~/server/db";
 import HTTPError from "~/utils/HTTPError";
 import { genRandomStringServerOnly } from "~/utils/genRandomString";
@@ -31,6 +33,8 @@ export default async function Upload(
     if (req.method !== "POST") {
       throw new HTTPError(405, `Method ${req.method as string} not allowed`);
     }
+    const session: IronSession = await getIronSession(req, res, sessionOptions);
+    if (!session.isLoggedIn) throw new HTTPError(401, `Unauthenticated`);
 
     form = new formidable.IncomingForm({
       multiples: true,
@@ -50,7 +54,7 @@ export default async function Upload(
           reject(new HTTPError(500, err?.message));
           return;
         }
-        const { file: unpackedFiles } = files;
+        const { files: unpackedFiles } = files;
         if (unpackedFiles == undefined) {
           reject(new HTTPError(500, "Failed to upload file"));
           return;
@@ -76,7 +80,6 @@ export default async function Upload(
       try {
         imgSize = imageSize(file.filepath);
       } catch {}
-      console.log(imgSize);
       return {
         size: file.size,
         filepath: file.filepath,
@@ -91,12 +94,13 @@ export default async function Upload(
       };
     });
 
-    prisma.file
-      .createMany({ data: newFiles, skipDuplicates: false })
-      .then()
-      .catch((err) => {
-        throw err;
-      });
+    await prisma.file.createMany({ data: newFiles, skipDuplicates: false });
+
+    const filenames = newFiles.map((val) => val.filename) as string[];
+
+    const filesFromDb = await prisma.file.findMany({
+      where: { filename: { in: filenames } },
+    });
 
     // const { originalFilename, filepath: tempFilePath } = file;
     // const ext = (originalFilename ?? "unknown.unknown").split(".").pop();
@@ -108,7 +112,7 @@ export default async function Upload(
       status: "success",
       statusCode: 201,
       message: "Success: File uploaded successfully",
-      data: newFiles,
+      data: filesFromDb,
     });
   } catch (err) {
     if (err instanceof HTTPError) {

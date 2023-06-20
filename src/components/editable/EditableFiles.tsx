@@ -19,6 +19,7 @@ import {
 
 import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import useTranslation from "~/hooks/useTranslation";
+import useUploadMutation from "~/hooks/useUploadMutation";
 import { type FileType } from "~/schema/fileSchema";
 import type EditableInput from "~/types/EditableInput";
 import type TablerIconType from "~/types/TablerIconType";
@@ -75,10 +76,6 @@ const EditableFiles = (props: EditableFilesProps) => {
   const [error, setError] = useState<string | undefined>();
   const [uploading, setUploading] = useState<number>(0);
   const [previewOpened, setPreviewOpened] = useState<boolean>(false);
-  // const [preview, setPreview] = useState<string>("");
-  // const [previewWidth, setPreviewWidth] = useState<number | null | undefined>(
-  //   null
-  // );
   const [preview, setPreview] = useState<{
     url: string;
     width: number;
@@ -87,6 +84,22 @@ const EditableFiles = (props: EditableFilesProps) => {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const refClickOutside = useClickOutside(() => setFocus(false));
   const { hovered, ref: hoverdRef } = useHover();
+  const { mutate: uploadMutate } = useUploadMutation({
+    onSuccess: (data: Response, variables: FormData, context: unknown) => {
+      data
+        .json()
+        .then((data) => {
+          if (data?.statusCode === 201 && Array.isArray(data?.data)) {
+            onSubmit?.([...files, ...data.data]);
+            // console.log(data.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    onError: function (error: unknown, variables: FormData, context: unknown) {
+      console.log(error, variables, context);
+    },
+  });
 
   const onUploadMany = (new_files: File[]) => {
     if (!new_files) return;
@@ -106,6 +119,8 @@ const EditableFiles = (props: EditableFilesProps) => {
     // formData.append("ref", "api::order.order") // entryName
     // formData.append("refId", "1") // entry id
     // formData.append("field", "files")
+
+    uploadMutate(formData);
 
     // axios
     //   .post(env.NEXT_PUBLIC_SERVER_API_URL + "/api/upload", formData)
@@ -191,6 +206,7 @@ const EditableFiles = (props: EditableFilesProps) => {
     // validate file type
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const files = Array.from(e.dataTransfer.files);
+      onUploadMany(files);
       console.log("files handleDrop", files);
       // const validFiles = files.filter((file) => validateFileType(file))
 
@@ -226,8 +242,6 @@ const EditableFiles = (props: EditableFilesProps) => {
 
   return (
     <div
-      // label={label && label.length > 0 ? label : undefined}
-      // required={required}
       onClick={() => !disabled && setFocus(true)}
       onFocus={() => !disabled && setFocus(true)}
       ref={refClickOutside}
@@ -239,6 +253,7 @@ const EditableFiles = (props: EditableFilesProps) => {
           (prev, next) => `${prev}${next.originalFilename}\n`,
           ""
         )}
+        required={required}
       />
       <div tabIndex={100000} className="pb-4 pt-2 ">
         <Modal open={previewOpened} onClose={() => setPreviewOpened(false)}>
@@ -298,6 +313,7 @@ const EditableFiles = (props: EditableFilesProps) => {
                 />
               ))
             : !uploading && <div>⸺</div>}
+          <div className={`${uploading ? "" : "hidden"}`}>upload</div>
           {error && <div className="text-red-500">{error}</div>}
           {/* {(active && focus) ||
             (!!uploading && (
@@ -334,36 +350,6 @@ const EditableFiles = (props: EditableFilesProps) => {
                 )}
               </Button>
             ))} */}
-          {focus && (
-            <></>
-            // <Dropzone
-            //   onDrop={(files) => {
-            //     onUploadMany(files);
-            //   }}
-            //   onReject={(file_error) => {
-            //     console.log(file_error);
-            //   }}
-            //   style={{ minWidth: "100%" }}
-            //   multiple={maxCount !== 1}
-            // >
-            //   <Group
-            //     position="center"
-            //     spacing="xl"
-            //     style={{ minHeight: 66, pointerEvents: "none" }}
-            //   >
-            //     <ImageUploadIcon
-            //       status={status}
-            //       style={{ color: getIconColor(status, theme) }}
-            //       size={42}
-            //     />
-            //     <div>
-            //       <Text size="lg" inline>
-            //         Wrzuć tu pliki do wysłania
-            //       </Text>
-            //     </div>
-            //   </Group>
-            // </Dropzone>
-          )}
         </div>
       </div>
     </div>
