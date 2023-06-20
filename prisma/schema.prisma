@@ -42,6 +42,8 @@ model File {
     mimetype         String?    @db.VarChar(255)
     hash             String?    @db.VarChar(10)
     token            String?    @db.VarChar(32)
+    width            Int?
+    height           Int?
     createdAt        DateTime   @default(now())
     updatedAt        DateTime   @updatedAt
     createdById      Int?

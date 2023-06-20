@@ -2,6 +2,7 @@ import { type Prisma } from "@prisma/client";
 import formidable from "formidable";
 import type IncomingForm from "formidable/Formidable";
 import type { IncomingMessage, ServerResponse } from "http";
+import imageSize from "image-size";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "~/server/db";
 import HTTPError from "~/utils/HTTPError";
@@ -10,6 +11,8 @@ import { genRandomStringServerOnly } from "~/utils/genRandomString";
 /**
  * Upload using multiform data, requires using name file
  */
+
+// TODO: make size calculation async
 
 let form: IncomingForm;
 
@@ -69,6 +72,11 @@ export default async function Upload(
         originalFilenameExtDot
       );
       const hash = genRandomStringServerOnly(10);
+      let imgSize = null;
+      try {
+        imgSize = imageSize(file.filepath);
+      } catch {}
+      console.log(imgSize);
       return {
         size: file.size,
         filepath: file.filepath,
@@ -76,6 +84,8 @@ export default async function Upload(
         filename: `${fileName}_${hash}${extWithDot}`,
         newFilename: file.newFilename,
         mimetype: file.mimetype,
+        width: imgSize?.width,
+        height: imgSize?.height,
         hash,
         token: genRandomStringServerOnly(32),
       };

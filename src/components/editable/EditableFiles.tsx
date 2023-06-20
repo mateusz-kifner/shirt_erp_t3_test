@@ -1,4 +1,10 @@
-import { ChangeEvent, useEffect, useId, useState, type DragEvent } from "react";
+import {
+  useEffect,
+  useId,
+  useState,
+  type ChangeEvent,
+  type DragEvent,
+} from "react";
 
 import { useClickOutside, useHover } from "@mantine/hooks";
 import {
@@ -13,7 +19,7 @@ import {
 
 import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import useTranslation from "~/hooks/useTranslation";
-import { FileType } from "~/schema/fileSchema";
+import { type FileType } from "~/schema/fileSchema";
 import type EditableInput from "~/types/EditableInput";
 import type TablerIconType from "~/types/TablerIconType";
 import FileListItem from "../FileListItem";
@@ -225,7 +231,7 @@ const EditableFiles = (props: EditableFilesProps) => {
       <InputLabel
         label={label}
         copyValue={value?.reduce(
-          (prev, next) => prev + next.originalFilename + "\n",
+          (prev, next) => `${prev}${next.originalFilename}\n`,
           ""
         )}
       />
@@ -233,9 +239,6 @@ const EditableFiles = (props: EditableFilesProps) => {
         <Modal
           open={previewOpened}
           onClose={() => setPreviewOpened(false)}
-          // styles={{
-          //   body: { maxWidth: "80vw", width: previewWidth ?? undefined },
-          // }}
           contentProps={{ className: "w-[90vw] " }}
         >
           <img src={preview} alt="" className="w-[90vw]" />
@@ -254,7 +257,7 @@ const EditableFiles = (props: EditableFilesProps) => {
           {files.length > 0
             ? files.map((file, index) => (
                 <FileListItem
-                  key={uuid + "_" + file.id + "_" + file.filename}
+                  key={`${uuid}_${file.id}_${file.filename}`}
                   value={file}
                   onPreview={(url, width) => {
                     setPreview(url);
