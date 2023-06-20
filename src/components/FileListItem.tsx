@@ -45,7 +45,7 @@ const FileListItem = (props: FileListItemProps) => {
         style={style}
         className="relative flex items-center gap-2 overflow-hidden border-l border-r border-t border-solid border-gray-400 first:rounded-t last:rounded-b last:border-b dark:border-stone-600"
       >
-        <div className="relative h-[100px] w-[100px] overflow-hidden  child-hover:visible">
+        <div className="relative h-[100px] w-[100px] min-w-[100px] overflow-hidden  child-hover:visible">
           <img
             src={preview ?? "/assets/unknown_file.svg"}
             alt=""

@@ -11,6 +11,7 @@ import {
   IconArrowDown,
   IconArrowUp,
   IconPhoto,
+  IconPlus,
   IconTrashX,
   IconUpload,
   IconX,
@@ -18,6 +19,7 @@ import {
 // import FileListItem from "../FileListItem";
 
 import * as RadixContextMenu from "@radix-ui/react-context-menu";
+import { IconLoader2 } from "@tabler/icons-react";
 import useTranslation from "~/hooks/useTranslation";
 import useUploadMutation from "~/hooks/useUploadMutation";
 import { type FileType } from "~/schema/fileSchema";
@@ -88,16 +90,21 @@ const EditableFiles = (props: EditableFilesProps) => {
     onSuccess: (data: Response, variables: FormData, context: unknown) => {
       data
         .json()
-        .then((data) => {
-          if (data?.statusCode === 201 && Array.isArray(data?.data)) {
-            onSubmit?.([...files, ...data.data]);
-            // console.log(data.data);
+        .then((res) => {
+          if (res?.statusCode === 201 && Array.isArray(res?.data)) {
+            const filesData = res.data as FileType[];
+            onSubmit?.([...files, ...filesData]);
+            setFiles((files) => [...files, ...filesData]);
+            setUploading((num: number) => num - filesData.length);
+            setError(undefined);
           }
         })
         .catch((err) => console.log(err));
     },
     onError: function (error: unknown, variables: FormData, context: unknown) {
       console.log(error, variables, context);
+      // setError(error.response?.statusText);
+      // setUploading((num: number) => num - new_files.length);
     },
   });
 
@@ -114,11 +121,6 @@ const EditableFiles = (props: EditableFilesProps) => {
     for (let i = 0; i < new_files.length; i++) {
       formData.append("files", new_files[i] as Blob);
     }
-
-    // upload file for spec entry
-    // formData.append("ref", "api::order.order") // entryName
-    // formData.append("refId", "1") // entry id
-    // formData.append("field", "files")
 
     uploadMutate(formData);
 
@@ -313,7 +315,55 @@ const EditableFiles = (props: EditableFilesProps) => {
                 />
               ))
             : !uploading && <div>⸺</div>}
-          <div className={`${uploading ? "" : "hidden"}`}>upload</div>
+          <div className="relative w-full">
+            {/* <Button className="absolute inset-0"> test </Button> */}
+            <label
+              htmlFor="file"
+              className="inline-flex
+              h-10 w-full select-none
+              items-center 
+              justify-center 
+              gap-3
+              rounded-b 
+              border 
+              border-solid 
+              border-gray-400
+              stroke-gray-200 
+              px-4 
+              py-0
+              font-semibold 
+              text-gray-200  
+              no-underline
+              outline-offset-4 
+              transition-all
+              hover:bg-white 
+              hover:bg-opacity-20 
+              focus-visible:outline-sky-600
+              disabled:pointer-events-none
+              disabled:bg-stone-700
+              dark:border-stone-600
+              dark:hover:bg-black
+              dark:hover:bg-opacity-20"
+            >
+              {uploading ? (
+                <IconLoader2 className="animate-spin" />
+              ) : (
+                <IconPlus />
+              )}
+              {uploading ? t.uploading : t.add_files}
+            </label>
+            <input
+              id="file"
+              type="file"
+              className="absolute inset-0 -z-10"
+              // className={`${uploading ? "" : "hidden"}`}
+              // className={`relative w-full cursor-pointer after:absolute after:inset-0 after:w-full after:bg-red-500 ${
+              //   uploading
+              //     ? "after:content-['uploading']"
+              //     : "after:content-['choose file']"
+              // }`}
+            />
+          </div>
           {error && <div className="text-red-500">{error}</div>}
           {/* {(active && focus) ||
             (!!uploading && (
