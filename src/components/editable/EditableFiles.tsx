@@ -75,10 +75,15 @@ const EditableFiles = (props: EditableFilesProps) => {
   const [error, setError] = useState<string | undefined>();
   const [uploading, setUploading] = useState<number>(0);
   const [previewOpened, setPreviewOpened] = useState<boolean>(false);
-  const [preview, setPreview] = useState<string>("");
-  const [previewWidth, setPreviewWidth] = useState<number | null | undefined>(
-    null
-  );
+  // const [preview, setPreview] = useState<string>("");
+  // const [previewWidth, setPreviewWidth] = useState<number | null | undefined>(
+  //   null
+  // );
+  const [preview, setPreview] = useState<{
+    url: string;
+    width: number;
+    height: number;
+  }>({ url: "", width: 100, height: 100 });
   const [dragActive, setDragActive] = useState<boolean>(false);
   const refClickOutside = useClickOutside(() => setFocus(false));
   const { hovered, ref: hoverdRef } = useHover();
@@ -236,12 +241,13 @@ const EditableFiles = (props: EditableFilesProps) => {
         )}
       />
       <div tabIndex={100000} className="pb-4 pt-2 ">
-        <Modal
-          open={previewOpened}
-          onClose={() => setPreviewOpened(false)}
-          contentProps={{ className: "w-[90vw] " }}
-        >
-          <img src={preview} alt="" className="w-[90vw]" />
+        <Modal open={previewOpened} onClose={() => setPreviewOpened(false)}>
+          <img
+            src={preview.url}
+            alt=""
+            className="max-h-[85vh] max-w-[85vw]"
+            style={{ width: preview.width }}
+          />
         </Modal>
 
         <div
@@ -259,9 +265,12 @@ const EditableFiles = (props: EditableFilesProps) => {
                 <FileListItem
                   key={`${uuid}_${file.id}_${file.filename}`}
                   value={file}
-                  onPreview={(url, width) => {
-                    setPreview(url);
-                    setPreviewWidth(width);
+                  onPreview={(url, width, height) => {
+                    setPreview({
+                      url,
+                      width: width ?? 300,
+                      height: height ?? 300,
+                    });
                     setPreviewOpened(true);
                   }}
                   style={{ flexGrow: 1 }}

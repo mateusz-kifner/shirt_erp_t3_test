@@ -10,6 +10,8 @@ export const fileSchema = z.object({
   mimetype: z.string().max(40).nullable().optional(),
   hash: z.string().max(40).nullable().optional(),
   token: z.string().max(40).nullable().optional(),
+  width: z.number().min(0).optional().nullable(),
+  height: z.number().min(0).optional().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
   createdById: z.number().nullable().optional(),

@@ -64,7 +64,9 @@ const FileListItem = (props: FileListItemProps) => {
                       value.filename +
                       (value?.token && value.token.length > 0
                         ? "?token=" + value?.token
-                        : "")
+                        : ""),
+                    value?.width,
+                    value?.height
                   );
               }}
             >
