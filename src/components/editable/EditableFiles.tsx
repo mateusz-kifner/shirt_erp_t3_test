@@ -11,6 +11,7 @@ import {
   IconArrowUp,
   IconPlus,
   IconTrashX,
+  IconUpload,
 } from "@tabler/icons-react";
 
 import * as RadixContextMenu from "@radix-ui/react-context-menu";
@@ -161,7 +162,7 @@ const EditableFiles = (props: EditableFilesProps) => {
         )}
         required={required}
       />
-      <div tabIndex={100000} className="pb-4 pt-2 ">
+      <div tabIndex={100000} className="pb-4 pt-2">
         <Modal open={previewOpened} onClose={() => setPreviewOpened(false)}>
           <img
             src={preview.url}
@@ -172,8 +173,10 @@ const EditableFiles = (props: EditableFilesProps) => {
         </Modal>
 
         <div
-          className={`relative min-h-[44px]  rounded border border-solid transition-all ${
-            dragActive ? "border-sky-600" : "border-transparent"
+          className={`relative min-h-[44px]  rounded border border-solid transition-all after:absolute after:inset-0  ${
+            dragActive
+              ? "border-sky-600  after:bg-sky-600 after:bg-opacity-20"
+              : "border-transparent after:bg-opacity-0"
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -217,7 +220,18 @@ const EditableFiles = (props: EditableFilesProps) => {
                   }
                 />
               ))
-            : !uploading && <div>⸺</div>}
+            : !uploading && (
+                <div className="flex h-24 items-center justify-center gap-2 rounded-t border-l border-r border-t border-solid border-gray-400 text-xl dark:border-stone-600">
+                  {dragActive ? (
+                    <>
+                      <IconUpload size={44} />
+                      {t.drop_files_here}
+                    </>
+                  ) : (
+                    "Brak plików"
+                  )}
+                </div>
+              )}
           <div className="relative w-full">
             <label
               htmlFor="file"
