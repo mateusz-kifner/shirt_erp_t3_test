@@ -1,14 +1,14 @@
 import { useEffect, useId, useState, type ComponentType } from "react";
 
 import { useListState } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus, IconTrashX } from "@tabler/icons-react";
 import { isEqual, omit } from "lodash";
 
 import Button from "~/components/basic/Button";
-import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
 
+import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import type EditableInput from "~/types/EditableInput";
-import Menu from "../basic/Menu";
+import InputLabel from "../input/InputLabel";
 
 // fixme submit only on edit end
 
@@ -42,7 +42,7 @@ const EditableArray = (props: EditableArrayProps) => {
     unique = true,
   } = props;
   const [items, handlers] = useListState<any>(value ?? initialValue ?? []);
-  const [focus, setFocus] = useState<boolean>(false);
+  // const [focus, setFocus] = useState<boolean>(false);
   const [prev, setPrev] = useState<any[]>(items);
   const uuid = useId();
 
@@ -88,29 +88,20 @@ const EditableArray = (props: EditableArrayProps) => {
   return (
     <div
       className="flex-grow"
-      onClick={() => !disabled && setFocus(true)}
-      onFocus={() => !disabled && setFocus(true)}
-      onBlur={handleBlurForInnerElements(() => setFocus(false))}
-      tabIndex={999999}
+      // onClick={() => !disabled && setFocus(true)}
+      // onFocus={() => !disabled && setFocus(true)}
+      // onBlur={handleBlurForInnerElements(() => setFocus(false))}
+      // tabIndex={999999}
     >
-      {label && (
-        <label
-          htmlFor={"textarea_" + uuid}
-          className="
-        text-sm
-        dark:text-gray-400"
-        >
-          <div className="flex items-center py-1">{label}</div>
-        </label>
-      )}
+      <InputLabel label={label} />
 
-      <div className="relative h-11">
-        <div className=" mb-8 mt-4 flex flex-col">
+      <div className="flex min-h-[2.75rem] flex-col gap-2">
+        <div className=" flex flex-col gap-2">
           {items.length == 0 && "⸺"}
           {items.map((val, index) => {
             return (
-              <div className="flex gap-2" key={uuid + index}>
-                <div className="flex-grow rounded-sm bg-stone-200 dark:bg-stone-800">
+              <RadixContextMenu.Root key={uuid + index}>
+                <RadixContextMenu.Trigger className="flex-grow rounded-sm bg-stone-200 dark:bg-stone-800">
                   <Element
                     {...omit(elementProps, ["label"])}
                     value={val}
@@ -120,25 +111,32 @@ const EditableArray = (props: EditableArrayProps) => {
                     disabled={disabled}
                     linkEntry={linkEntry}
                   />
-                </div>
-                {!disabled && (
-                  <Menu>
-                    <Menu.Item>Test</Menu.Item>
-                  </Menu>
-                )}
-              </div>
+                </RadixContextMenu.Trigger>
+                <RadixContextMenu.Portal>
+                  <RadixContextMenu.Content className="flex min-w-[220px] flex-col gap-2 overflow-hidden rounded-md bg-white p-[5px] dark:bg-stone-950">
+                    <RadixContextMenu.Item
+                      className="button flex-grow justify-start bg-stone-800 hover:bg-stone-600"
+                      onClick={() => {
+                        handlers.remove(index);
+                      }}
+                    >
+                      <IconTrashX /> Delete
+                    </RadixContextMenu.Item>
+                  </RadixContextMenu.Content>
+                </RadixContextMenu.Portal>
+              </RadixContextMenu.Root>
             );
           })}
         </div>
 
         {!disabled && (
           <Button
-            className="bg-sky-500"
+            className=""
             onClick={
               () => handlers.append(null)
               //  setItems((val) => [...val, null])
             }
-            // disabled={maxCount ? maxCount <= items.length : undefined}
+            disabled={maxCount ? maxCount <= items.length : undefined}
             // style={{ flexGrow: 1 }}
           >
             <IconPlus />

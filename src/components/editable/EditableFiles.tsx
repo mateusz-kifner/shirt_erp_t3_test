@@ -6,13 +6,7 @@ import {
   type DragEvent,
 } from "react";
 
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconPlus,
-  IconTrashX,
-  IconUpload,
-} from "@tabler/icons-react";
+import { IconPlus, IconTrashX, IconUpload } from "@tabler/icons-react";
 
 import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import { IconLoader2 } from "@tabler/icons-react";
@@ -162,7 +156,7 @@ const EditableFiles = (props: EditableFilesProps) => {
         )}
         required={required}
       />
-      <div tabIndex={100000} className="pb-4 pt-2">
+      <div className="pb-2">
         <Modal open={previewOpened} onClose={() => setPreviewOpened(false)}>
           <img
             src={preview.url}
@@ -173,10 +167,10 @@ const EditableFiles = (props: EditableFilesProps) => {
         </Modal>
 
         <div
-          className={`relative min-h-[44px]  rounded border border-solid transition-all after:absolute after:inset-0  ${
+          className={`relative min-h-[44px]  rounded border border-solid transition-all before:absolute before:inset-0  ${
             dragActive
-              ? "border-sky-600  after:bg-sky-600 after:bg-opacity-20"
-              : "border-transparent after:bg-opacity-0"
+              ? "border-sky-600  before:bg-sky-600 before:bg-opacity-20"
+              : "border-transparent before:bg-opacity-0"
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -200,7 +194,7 @@ const EditableFiles = (props: EditableFilesProps) => {
                   contextMenuContent={
                     !disabled && (
                       <>
-                        <RadixContextMenu.Item
+                        {/* <RadixContextMenu.Item
                           className="button flex-grow justify-start bg-stone-800 hover:bg-stone-600"
                           disabled={index === 0}
                         >
@@ -211,7 +205,7 @@ const EditableFiles = (props: EditableFilesProps) => {
                           disabled={index === files.length - 1}
                         >
                           <IconArrowDown /> Down
-                        </RadixContextMenu.Item>
+                        </RadixContextMenu.Item> */}
                         <RadixContextMenu.Item className="button flex-grow justify-start bg-stone-800 hover:bg-stone-600">
                           <IconTrashX /> Delete
                         </RadixContextMenu.Item>
@@ -254,7 +248,6 @@ const EditableFiles = (props: EditableFilesProps) => {
               transition-all
               hover:bg-white 
               hover:bg-opacity-20 
-              focus-visible:outline-sky-600
               disabled:pointer-events-none
               disabled:bg-stone-700
               dark:border-stone-600
@@ -271,7 +264,7 @@ const EditableFiles = (props: EditableFilesProps) => {
             <input
               id="file"
               type="file"
-              className="absolute inset-0 -z-10"
+              className="absolute inset-0 -z-10 opacity-0"
               onChange={handleChange}
               multiple
             />
