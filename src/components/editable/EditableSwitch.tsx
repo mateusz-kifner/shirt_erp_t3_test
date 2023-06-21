@@ -63,11 +63,7 @@ const EditableBool = (props: EditableBoolProps) => {
   };
 
   return (
-    <div
-      className="flex items-center"
-      ref={ref}
-      style={{ minHeight: "2em", marginBottom: "1em" }}
-    >
+    <div className="mb-[1rem] flex min-h-[2rem] items-center gap-2" ref={ref}>
       {!!leftSection && leftSection}
       <div>{label}</div>
       {active ? (
@@ -77,7 +73,7 @@ const EditableBool = (props: EditableBoolProps) => {
         />
       ) : (
         <div
-          className={`relative rounded-md px-px py-[0.5em] font-bold after:absolute after:bottom-0 after:left-[10%] after:w-[80%] after:shadow ${
+          className={`px relative rounded-md font-bold after:absolute after:bottom-0.5 after:left-0 after:h-px after:w-full after:shadow ${
             bool ? "after:shadow-green-700" : "after:shadow-red-700"
           }`}
         >

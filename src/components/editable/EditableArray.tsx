@@ -97,7 +97,7 @@ const EditableArray = (props: EditableArrayProps) => {
 
       <div className="flex min-h-[2.75rem] flex-col gap-2">
         <div className=" flex flex-col gap-2">
-          {items.length == 0 && "⸺"}
+          {/* {items.length == 0 && "⸺"} */}
           {items.map((val, index) => {
             return (
               <RadixContextMenu.Root key={uuid + index}>
