@@ -41,23 +41,11 @@ function Select(props: SelectProps) {
   return (
     <RadixSelect.Root {...moreProps}>
       <RadixSelect.Trigger
-        className="
-          inline-flex h-9 flex-grow animate-pop select-none items-center
-          justify-between gap-3 rounded-md 
-          border border-solid border-gray-400 bg-white stroke-gray-200 
-          px-2 py-0 text-center font-semibold 
-          text-stone-800 no-underline
-          outline-offset-4 transition-all hover:bg-black
-          hover:bg-opacity-20 focus-visible:outline-sky-600
-          active:hover:scale-95 active:hover:animate-none
-          active:focus:scale-95 
-          active:focus:animate-none
-          disabled:pointer-events-none
-          disabled:bg-stone-700
-          dark:border-stone-600
-          dark:bg-stone-800 
-          dark:text-gray-200  
-          dark:hover:bg-stone-600 
+        className=" button button-outline
+          h-9
+          flex-grow
+          justify-between
+          px-2 py-0
           "
       >
         <RadixSelect.Value placeholder="Select ..." />

@@ -215,7 +215,11 @@ const EditableFiles = (props: EditableFilesProps) => {
                 />
               ))
             : !uploading && (
-                <div className="flex h-24 items-center justify-center gap-2 rounded-t border-l border-r border-t border-solid border-gray-400 text-xl dark:border-stone-600">
+                <div
+                  className={`flex h-24 items-center justify-center gap-2 rounded-t border-l border-r border-t border-solid border-gray-400 dark:border-stone-600 ${
+                    dragActive ? "text-xl" : ""
+                  }`}
+                >
                   {dragActive ? (
                     <>
                       <IconUpload size={44} />
@@ -229,30 +233,14 @@ const EditableFiles = (props: EditableFilesProps) => {
           <div className="relative w-full">
             <label
               htmlFor="file"
-              className="inline-flex
-              h-10 w-full select-none
-              items-center 
-              justify-center 
-              gap-3
-              rounded-b 
-              border 
-              border-solid 
-              border-gray-400
-              stroke-gray-200 
-              px-4 
-              py-0
-              font-semibold 
-              text-gray-200  
-              no-underline
-              outline-offset-4 
-              transition-all
-              hover:bg-white 
-              hover:bg-opacity-20 
-              disabled:pointer-events-none
-              disabled:bg-stone-700
-              dark:border-stone-600
-              dark:hover:bg-black
-              dark:hover:bg-opacity-20"
+              className="
+              button 
+              button-outline
+              h-10 
+              w-full  
+              rounded-b
+              rounded-t-none
+              "
             >
               {uploading ? (
                 <IconLoader2 className="animate-spin" />

@@ -100,38 +100,25 @@ const FileListItem = (props: FileListItemProps) => {
               ? "?token=" + value?.token + "&download"
               : "?download"
           }`}
-          className="absolute
-        -right-12 
-        top-1/2
-        inline-flex
-        h-32
-        w-32
-        -translate-y-1/2
-        select-none
-        items-center
-        justify-center
-        gap-3 
-        rounded-full
-        border-2
-        border-solid
-        border-transparent
-        font-semibold
-        uppercase
-        text-stone-800
-        no-underline 
-        outline-none  
-        outline-offset-4 
-        transition-all
-        hover:bg-black 
-        hover:bg-opacity-30
-        focus-visible:border-sky-600 
-        active:border-blue-600
-        disabled:opacity-30
-        disabled:outline-none
-        disabled:hover:bg-transparent
-        dark:border-solid
-        dark:border-transparent
-       dark:text-stone-200 dark:outline-none dark:hover:bg-white dark:hover:bg-opacity-20 dark:focus-visible:border-sky-600 dark:active:border-blue-600 dark:disabled:opacity-30 dark:disabled:hover:bg-transparent "
+          className="action-button
+            absolute 
+            -right-12
+            top-1/2
+            h-32
+            w-32
+            -translate-y-1/2
+            rounded-full
+            bg-white
+            before:absolute
+            before:inset-0
+            before:-z-10
+            before:rounded-full
+            hover:bg-white
+            hover:before:bg-black
+            hover:before:bg-opacity-20
+            dark:bg-stone-800
+            dark:hover:bg-stone-800
+            "
         >
           <IconDownload size={26} />
           <div style={{ width: "2.4rem" }}></div>

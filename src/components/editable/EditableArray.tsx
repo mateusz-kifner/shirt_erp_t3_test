@@ -131,6 +131,7 @@ const EditableArray = (props: EditableArrayProps) => {
 
         {!disabled && (
           <Button
+            variant="outline"
             className=""
             onClick={
               () => handlers.append(null)

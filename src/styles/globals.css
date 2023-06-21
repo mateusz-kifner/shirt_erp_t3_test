@@ -30,15 +30,14 @@ html.dark,
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  scrollbar-width: auto;
   width: 10px;
   height: 10px;
 }
 
-::-webkit-scrollbar:hover {
+/* ::-webkit-scrollbar:hover {
   width: auto;
   height: auto;
-}
+} */
 
 body::-webkit-scrollbar {
   background-color: #e5e7eb;
@@ -61,27 +60,48 @@ body::-webkit-scrollbar {
   .button {
     @apply inline-flex
       h-10 
-      animate-pop 
       select-none 
       items-center 
       justify-center
       gap-3 rounded-md 
-      bg-blue-600
-      stroke-gray-200 
       px-4 py-0 
       font-semibold  
-      text-gray-200
       no-underline 
       outline-offset-4
-      transition-all  
-      hover:bg-blue-700 
+      transition-all 
+      duration-75 
       focus-visible:outline-sky-600 
-      active:hover:scale-95 
-      active:hover:animate-none 
-      active:focus:scale-95 
-      active:focus:animate-none 
       disabled:pointer-events-none 
       disabled:bg-stone-700;
+  }
+  /* active:hover:scale-95 
+      active:hover:animate-none 
+      active:focus:scale-95 
+      active:focus:animate-none  */
+  /* animate-pop  */
+
+  .button-primary {
+    @apply bg-blue-600
+      stroke-gray-200 
+      text-gray-200
+      hover:bg-blue-700
+      active:hover:translate-y-0.5
+      active:focus:translate-y-0.5;
+  }
+
+  .button-outline {
+    @apply border 
+    border-solid 
+    border-gray-400 
+    stroke-stone-600  
+    text-stone-600
+    hover:bg-black
+    hover:bg-opacity-15
+    dark:border-stone-600
+  dark:stroke-gray-200
+    dark:text-gray-200
+    dark:hover:bg-black  
+    dark:hover:bg-opacity-20;
   }
 
   .action-button-group > .action-button {
@@ -117,19 +137,19 @@ body::-webkit-scrollbar {
       focus-visible:border-sky-600
       active:border-blue-600
       active:hover:scale-95
-      active:hover:animate-none 
+      active:hover:animate-none
       active:focus:scale-95
-      active:focus:animate-none
+      active:focus:animate-none 
       disabled:animate-none
-      disabled:opacity-30 
-      disabled:outline-none  
+      disabled:opacity-30
+      disabled:outline-none
       disabled:hover:bg-transparent 
-      dark:border-solid
+      dark:border-solid  
       dark:border-transparent 
       dark:text-stone-200
       dark:outline-none 
       dark:hover:bg-white
-      dark:hover:bg-opacity-20
+      dark:hover:bg-opacity-20 
       dark:focus-visible:border-sky-600
       dark:active:border-blue-600
       dark:disabled:animate-none

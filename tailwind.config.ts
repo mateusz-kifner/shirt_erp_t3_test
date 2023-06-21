@@ -5,6 +5,10 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+        opacity: {
+          15: '.15',
+        }
+      ,
       animation: {
         pop: "pop  0.25s cubic-bezier(0.16, 1, 0.3, 1)",
         show: "show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
