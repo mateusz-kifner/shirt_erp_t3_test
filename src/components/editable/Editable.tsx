@@ -28,6 +28,7 @@ import apiListItems from "~/components/editable/apiListItems";
 import NotImplemented from "~/components/NotImplemented";
 import { useUserContext } from "~/context/userContext";
 import { makeDefaultListItem } from "../DefaultListItemWithValue";
+import EditableNumber from "./EditableNumber";
 import EditableShortText from "./EditableShortText";
 
 interface BaseTemplateType<TName, TValue = string> {
@@ -171,9 +172,13 @@ const editableFields: editableFields = {
     props: { style: { fontSize: "1.4em" } },
   },
   text: { component: EditableText, props: {} },
+  numberText: {
+    component: EditableShortText,
+    props: { leftSection: <IconNumbers size={18} /> },
+  },
   richtext: { component: EditableRichText, props: {} },
   number: {
-    component: EditableShortText,
+    component: EditableNumber,
     props: { leftSection: <IconNumbers size={18} /> },
   },
   money: {

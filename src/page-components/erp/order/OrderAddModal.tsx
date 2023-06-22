@@ -8,7 +8,7 @@ import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
 import EditableApiEntry from "~/components/editable/EditableApiEntry";
 import EditableText from "~/components/editable/EditableText";
-import { OrderType } from "~/schema/orderSchema";
+import { type OrderType } from "~/schema/orderSchema";
 import { api } from "~/utils/api";
 import OrderListItem from "./OrderListItem";
 
@@ -31,7 +31,7 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
       }, 400);
     },
     onError(error) {
-      setError("Klient o takiej nazwie istnieje.");
+      // setError("Klient o takiej nazwie istnieje.");
     },
   });
 

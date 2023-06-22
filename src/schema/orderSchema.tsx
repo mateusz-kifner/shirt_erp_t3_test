@@ -7,7 +7,7 @@ import { typeSpreadsheetSchema } from "./typeSpreadsheetSchema";
 
 export const orderSchema = z.object({
   id: z.number(),
-  name: z.string().max(255),
+  name: z.string().max(255).nullable().optional(),
   status: z.string().max(255).nullable().optional(),
   notes: z.string().nullable().optional(),
   price: z.string().max(255).nullable().optional(),
@@ -16,7 +16,7 @@ export const orderSchema = z.object({
   spreadsheets: z.array(typeSpreadsheetSchema).nullable().optional(),
   designs: z.array(typeDesignSchema).nullable().optional(),
   files: z.array(fileSchema).nullable().optional(),
-  workTime: z.number().max(16384).nullable().optional(),
+  workTime: z.number().nullable().optional(),
   client: clientSchema.nullable().optional(),
   address: addressSchema.nullable().optional(),
 });
