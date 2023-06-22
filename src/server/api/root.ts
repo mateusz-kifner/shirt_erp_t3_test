@@ -1,6 +1,6 @@
 import { clientRouter } from "~/server/api/routers/client";
 import { exampleRouter } from "~/server/api/routers/example";
-import { productRouter } from "~/server/api/routers/products";
+import { productRouter } from "~/server/api/routers/product";
 import { sessionRouter } from "~/server/api/routers/session";
 import { settingsRouter } from "~/server/api/routers/settings";
 import { createTRPCRouter } from "~/server/api/trpc";

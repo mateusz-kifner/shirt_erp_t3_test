@@ -1,6 +1,7 @@
 import { IconRefresh } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { useId, useState } from "react";
+import { useLoaded } from "~/hooks/useLoaded";
 import { api } from "~/utils/api";
 import ActionButton from "./basic/ActionButton";
 import Editable from "./editable/Editable";
@@ -31,6 +32,7 @@ const ApiEntryEditable = <EntryType,>({
       enabled: id !== null,
     }
   );
+  const isLoaded = useLoaded();
 
   // const { data, update, remove, refetch } = useStrapi<EntryType>(
   //   entryName,
@@ -46,6 +48,9 @@ const ApiEntryEditable = <EntryType,>({
   const router = useRouter();
 
   const apiUpdate = (key: string, val: any) => {
+    if (!isLoaded) return;
+    // @ts-ignore
+    update({ id: data?.id, [key]: val });
     console.log(key, val);
     /**/
   };

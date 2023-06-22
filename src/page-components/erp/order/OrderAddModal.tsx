@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
+import EditableText from "~/components/editable/EditableText";
+import { api } from "~/utils/api";
 
 interface OrderAddModalProps {
   opened: boolean;
@@ -13,23 +15,25 @@ interface OrderAddModalProps {
 
 const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
   const router = useRouter();
-  const [username, setUsername] = useState<string>("Klient");
+  const [orderName, setOrderName] = useState<string>("Klient");
   // const [template, setTemplate] = useState<Partial<OrderType> | null>(null);
   const [error, setError] = useState<string | null>(null);
-  // const { mutate: createOrder } = api.order.create.useMutation({
-  //   onSuccess(data) {
-  //     router.push(`/erp/order/${data.id}`).catch((e) => {
-  //       throw e;
-  //     });
-  //   },
-  //   onError(error) {
-  //     setError("Klient o takiej nazwie istnieje.");
-  //   },
-  // });
+  const { mutate: createOrder } = api.order.create.useMutation({
+    onSuccess(data) {
+      setTimeout(() => {
+        router.push(`/erp/order/${data.id}`).catch((e) => {
+          throw e;
+        });
+      }, 400);
+    },
+    onError(error) {
+      setError("Klient o takiej nazwie istnieje.");
+    },
+  });
 
   useEffect(() => {
     if (!opened) {
-      setUsername("Klient");
+      setOrderName("Zamówienie");
       // setTemplate(null);
       setError(null);
     }
@@ -50,18 +54,18 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
           value={template}
           withErase
           listProps={{ defaultSearch: "Szablon", filterKeys: ["username"] }}
-        />
-        <EditableText
-          label="Nazwa użytkownika"
-          onSubmit={setusername}
-          value={username}
-          required
         /> */}
+        <EditableText
+          label="Nazwa zamowienia"
+          onSubmit={(val) => setOrderName(val ?? "")}
+          value={orderName}
+          required
+        />
 
         <Button
           onClick={() => {
-            if (username.length == 0)
-              return setError("Musisz podać nie pustą nazwę użytkownika");
+            if (orderName.length == 0)
+              return setError("Musisz podać nie pustą nazwę zamówienia");
             // const new_order = {
             //   ...(template ? omit(template, "id") : {}),
             //   address: template?.address ? omit(template.address, "id") : null,
@@ -72,11 +76,11 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
             // add(new_order)
             //   .then((data) => onClose(data?.data?.id))
             //   .catch(() => setError("Klient o takiej nazwie istnieje."));
-            // createOrder({ username });
+            createOrder({ name: orderName });
           }}
         >
           <IconPlus />
-          Utwórz klienta
+          Utwórz zamówienie
         </Button>
         <div className="text-red-600">{error}</div>
       </div>

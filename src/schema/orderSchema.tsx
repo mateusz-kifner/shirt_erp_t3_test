@@ -13,12 +13,12 @@ export const orderSchema = z.object({
   price: z.string().max(255).nullable().optional(),
   isPricePaid: z.boolean().default(false),
   dateOfCompletion: z.date().nullable().optional(),
-  spreadsheets: z.array(typeSpreadsheetSchema),
-  designs: z.array(typeDesignSchema),
-  files: z.array(fileSchema),
+  spreadsheets: z.array(typeSpreadsheetSchema).nullable().optional(),
+  designs: z.array(typeDesignSchema).nullable().optional(),
+  files: z.array(fileSchema).nullable().optional(),
   workTime: z.number().max(16384).nullable().optional(),
-  client: clientSchema,
-  address: addressSchema,
+  client: clientSchema.nullable().optional(),
+  address: addressSchema.nullable().optional(),
 });
 
 export type OrderType = z.infer<typeof orderSchema>;

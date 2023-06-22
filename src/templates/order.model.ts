@@ -34,7 +34,7 @@ const order_template = {
     label: "Cena",
     type: "money",
 
-    initialValue: 0,
+    initialValue: "0",
   },
   isPricePaid: {
     label: "Cena zapłacona",
@@ -106,7 +106,7 @@ const order_template = {
     label: "Produkty",
     type: "array",
     arrayType: "apiEntry",
-    entryName: "products",
+    entryName: "product",
     // organizingHandle: "arrows",
     linkEntry: true,
     allowClear: true,
@@ -116,7 +116,7 @@ const order_template = {
     label: "Pracownicy",
     type: "array",
     arrayType: "apiEntry",
-    entryName: "users",
+    entryName: "user",
     allowClear: true,
   },
   workTime: {
