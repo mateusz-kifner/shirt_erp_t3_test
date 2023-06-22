@@ -48,8 +48,9 @@ export const orderRouter = createTRPCRouter({
         createData.spreadsheets = { create: { ...orderData.spreadsheets } };
       if (orderData.designs?.length && orderData.designs.length > 0)
         createData.designs = { create: { ...orderData.designs } };
-      if (orderData.client)
-        createData.client = { connect: { ...orderData.client } };
+      if (orderData?.client?.id) {
+        createData.client = { connect: { id: orderData.client.id } };
+      }
       if (orderData.address)
         createData.address = { create: { ...orderData.address } };
       console.log(createData);
@@ -62,56 +63,71 @@ export const orderRouter = createTRPCRouter({
   update: authenticatedProcedure
     .input(orderSchema.partial())
     .mutation(async ({ input: orderData }) => {
-      console.log(orderData);
-      const originalOrder = await prisma.order.findUnique({
-        where: { id: orderData.id },
-        include: includeAll,
+      const {
+        id: orderId,
+        spreadsheets,
+        designs,
+        files,
+        client,
+        address,
+        ...simpleOrderData
+      } = orderData;
+      // const originalOrder = await prisma.order.findUnique({
+      //   where: { id: orderId },
+      //   include: includeAll,
+      // });
+      const updateData: Prisma.OrderUpdateInput = { ...simpleOrderData };
+      if (client?.id) {
+        updateData.client = { connect: { id: client?.id } };
+      }
+
+      const updatedOrder = await prisma.order.update({
+        where: { id: orderId },
+        data: updateData,
       });
 
-      const inputKeys = Object.keys(orderData);
-      const innerKeys = Object.keys(includeAll);
+      // Update spreadsheets -- BAD EXAMPLE
+      // if (spreadsheets) {
+      //   await prisma.typeSpreadsheet.deleteMany({ where: { orderId } });
+      //   const spreadsheetData = spreadsheets.map((spreadsheet) => ({
+      //     ...spreadsheet,
+      //     orderId,
+      //   }));
+      //   await prisma.typeSpreadsheet.createMany({ data: spreadsheetData });
+      // }
 
-      const simpleKeys = inputKeys.filter((val) => !innerKeys.includes(val));
-      const advancedKeys = inputKeys.filter((val) => !simpleKeys.includes(val));
-      console.log(simpleKeys, advancedKeys);
-      // const updateData: Prisma.OrderUpdateInput = {
-      //   ...orderData,
-      //   address: {
-      //     upsert: {
-      //       create: { ...orderData.address },
-      //       update: { ...orderData.address },
-      //     },
-      //   },
-      //   client: { connect: orderData.client },
-      //   // designs: {
-      //   //   updateMany: {
+      // TODO: Make this work
+      // delete lost
+      // add new
+      // update existing
+      // if (spreadsheets) {
+      //   const originalSpreadsheetIds =
+      //     originalOrder?.spreadsheets.map((file) => file.id) ?? [];
+      //   const newSpreadsheetIds = spreadsheets.map((file) => file.id);
 
-      //   //     create: orderData.designs !== undefined ? orderData.designs : [],
-      //   //     update: orderData.designs !== undefined ? orderData.designs : [],
-      //   //   },
-      //   // },
-      //   // spreadsheets: {
-      //   //   upsert: {
-      //   //     create: { ...orderData.spreadsheets },
-      //   //     update: { ...orderData.spreadsheets },
-      //   //   },
-      //   // },
-      //   // files: {
-      //   //   upsert: {
-      //   //     create: { ...orderData.files },
-      //   //     update: { ...orderData.files },
-      //   //   },
-      //   // },
-      // };
+      //   console.log(originalSpreadsheetIds, newSpreadsheetIds);
+      // }
 
-      // const updatedClient = await prisma.order.update({
-      //   where: { id: orderData.id },
-      //   data: omit(
-      //     { ...orderData, address: { update: { ...orderData.address } } },
-      //     ["id"]
-      //   ),
-      // });
-      return originalOrder;
+      // Update address
+      if (address) {
+        await prisma.typeAddress.update({
+          where: { id: address.id },
+          data: address,
+        });
+      }
+
+      // Update files
+      if (files) {
+        const fileData = files.map((file) =>
+          prisma.file.update({
+            where: { id: file.id },
+            data: { ...file, Order: { connect: { id: orderId } } },
+          })
+        );
+        await Promise.all(fileData);
+      }
+
+      return { ...updatedOrder, files, spreadsheets, designs, client, address };
     }),
   search: createProcedureSearch("order"),
   searchWithPagination: createProcedureSearchWithPagination("order"),

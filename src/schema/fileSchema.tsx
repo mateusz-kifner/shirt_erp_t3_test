@@ -12,8 +12,8 @@ export const fileSchema = z.object({
   token: z.string().max(40).nullable().optional(),
   width: z.number().min(0).optional().nullable(),
   height: z.number().min(0).optional().nullable(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().or(z.string()),
+  updatedAt: z.date().or(z.string()),
   createdById: z.number().nullable().optional(),
   updatedById: z.number().nullable().optional(),
 });

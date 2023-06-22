@@ -91,7 +91,7 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItem>(
           flex
           select-none
           gap-2
-          rounded-sm
+          rounded
           px-2
           py-1
           data-[highlighted]:bg-black

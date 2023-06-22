@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const addressSchema = z
   .object({
+    id: z.number(),
     streetName: z.string().max(255).nullable().optional(),
     streetNumber: z.string().max(255).nullable().optional(),
     apartmentNumber: z.string().max(255).nullable().optional(),
