@@ -17,6 +17,8 @@ import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements
 
 type InputDateProps = EditableInput<string>;
 
+//todo : make this use dates instead
+
 const EditableDate = (props: InputDateProps) => {
   const {
     label,
@@ -52,7 +54,7 @@ const EditableDate = (props: InputDateProps) => {
   }, [focus]);
 
   useEffect(() => {
-    if (debouncedText.length === 0) {
+    if (debouncedText.length === 0 && value !== null) {
       setError(false);
       onSubmit?.(null);
       return;

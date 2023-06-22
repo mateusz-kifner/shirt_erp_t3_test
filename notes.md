@@ -1,7 +1,7 @@
 - fix ids in Editable elements label
 - move to radix
 - use twMerge
--
+- change date from string to date obj
 
 tested libs
 
