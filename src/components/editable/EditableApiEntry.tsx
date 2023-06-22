@@ -74,6 +74,7 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
         label={label}
         copyValue={apiEntry && copyValue ? copyValue : ""}
         required={required}
+        helpTooltip={helpTooltip}
       />
 
       <Modal open={open} onClose={() => setOpen(false)}>

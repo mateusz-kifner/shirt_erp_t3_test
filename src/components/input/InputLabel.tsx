@@ -1,10 +1,11 @@
 import { type LabelHTMLAttributes, type ReactNode } from "react";
 
 import { useClipboard } from "@mantine/hooks";
-import { IconCopy } from "@tabler/icons-react";
+import { IconCopy, IconQuestionMark } from "@tabler/icons-react";
 
 import { showNotification } from "~/lib/notifications";
 import ActionButton from "../basic/ActionButton";
+import SimpleTooltip from "../basic/SimpleTooltip";
 
 //  LabelHTMLAttributes {
 //   form?: string | undefined;
@@ -15,16 +16,19 @@ interface InputLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   label?: ReactNode;
   copyValue?: string;
   required?: boolean;
+  helpTooltip?: string;
 }
 
 function InputLabel(props: InputLabelProps) {
-  const { label, copyValue, required, ...moreProps } = props;
+  const { label, copyValue, required, helpTooltip, ...moreProps } = props;
   const clipboard = useClipboard();
   return label ? (
     <label
       className="
         text-sm
-        dark:text-stone-300"
+        dark:text-stone-300
+        
+        "
       {...moreProps}
     >
       <div className="flex h-8 items-center py-1">
@@ -45,6 +49,16 @@ function InputLabel(props: InputLabelProps) {
           >
             <IconCopy size={16} />
           </ActionButton>
+        )}
+        {helpTooltip && helpTooltip.length > 0 && (
+          <SimpleTooltip
+            tooltip={helpTooltip}
+            className="px-2"
+            classNameTooltip="w-80 whitespace-normal dark:whitespace-normal"
+            delay="delay-700"
+          >
+            <IconQuestionMark size={16} />
+          </SimpleTooltip>
         )}
       </div>
     </label>

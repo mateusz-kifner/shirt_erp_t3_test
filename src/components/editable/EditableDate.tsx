@@ -32,10 +32,9 @@ const EditableDate = (props: InputDateProps) => {
   const router = useRouter();
   const [focus, setFocus] = useState<boolean>(false);
   const dateFormat = router.locale === "pl" ? "DD.MM.YYYY" : "YYYY-MM-DD";
+  const dateFromValue = dayjs(value ?? initialValue ?? null);
   const [text, setText] = useState(
-    dayjs(value ?? initialValue ?? null)
-      .format("L")
-      .toString()
+    dateFromValue.isValid() ? dateFromValue.format("L").toString() : ""
   );
 
   const [debouncedText, cancel] = useDebouncedValue(text, 300);

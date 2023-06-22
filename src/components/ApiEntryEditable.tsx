@@ -101,7 +101,7 @@ const ApiEntryEditable = <EntryType,>({
       /> */}
       {id !== null && (
         <ActionButton
-          className="absolute right-0 top-0 rounded-full"
+          className="absolute right-1 top-[1.375rem] rounded-full border border-solid border-gray-400 bg-white dark:border-stone-600  dark:bg-stone-800"
           onClick={() => {
             refetch().catch(() => {
               /**/
