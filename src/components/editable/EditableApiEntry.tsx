@@ -77,7 +77,13 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
         helpTooltip={helpTooltip}
       />
 
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        contentProps={{
+          className: "w-[30rem] max-w-screen min-h-[50rem] max-h-screen",
+        }}
+      >
         <div className="h-8">
           {allowClear ? (
             <Button

@@ -166,24 +166,24 @@ model OrderArchive {
 }
 
 model Order {
-    id                Int          @id @default(autoincrement())
-    name              String?      @db.VarChar(255)
-    status            String?      @db.VarChar(255)
+    id                Int               @id @default(autoincrement())
+    name              String?           @db.VarChar(255)
+    status            String?           @db.VarChar(255)
     notes             String?
-    price             String?      @db.VarChar(255)
+    price             String?           @db.VarChar(255)
     isPricePaid       Boolean?
-    dateOfCompletion  DateTime?    @db.Date
-    tables            String?
-    designs           String?
+    dateOfCompletion  DateTime?         @db.Date
+    spreadsheets      TypeSpreadsheet[]
+    designs           TypeDesign[]
     emailMessagesText String?
     files             File[]
-    workTime          Decimal?     @db.Decimal(10, 2)
-    client            Client?      @relation(fields: [clientId], references: [id])
-    address           TypeAddress? @relation(fields: [addressId], references: [id])
+    workTime          Decimal?          @db.Decimal(10, 2)
+    client            Client?           @relation(fields: [clientId], references: [id])
+    address           TypeAddress?      @relation(fields: [addressId], references: [id])
     clientId          Int?
     addressId         Int?
-    createdAt         DateTime     @default(now())
-    updatedAt         DateTime     @updatedAt
+    createdAt         DateTime          @default(now())
+    updatedAt         DateTime          @updatedAt
     createdById       Int?
     updatedById       Int?
 }
@@ -267,4 +267,18 @@ model TypeProduct {
     size  String?  @db.VarChar(255)
     notes String?  @db.VarChar(255)
     ready Boolean?
+}
+
+model TypeSpreadsheet {
+    id     Int     @id @default(autoincrement())
+    name   String? @db.VarChar(255)
+    data   Json?   @default("[]")
+    orders Order[]
+}
+
+model TypeDesign {
+    id    Int     @id @default(autoincrement())
+    name  String? @db.VarChar(255)
+    data  Json?   @default("[]")
+    Order Order[]
 }

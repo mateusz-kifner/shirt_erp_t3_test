@@ -9,6 +9,7 @@ import {
 
 import { prisma } from "~/server/db";
 
+import { type Prisma } from "@prisma/client";
 import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
 
 const orderSchemaWithoutId = orderSchema.omit({ id: true });
@@ -22,14 +23,22 @@ export const orderRouter = createTRPCRouter({
     });
     return data;
   }),
-  // create: authenticatedProcedure
-  //   .input(orderSchemaWithoutId)
-  //   .mutation(async ({ input: orderData }) => {
-  //     const newOrder = await prisma.order.create({
-  //       data: { ...orderData, address: { create: { ...orderData.address } } },
-  //     });
-  //     return newOrder;
-  //   }),
+  create: authenticatedProcedure
+    .input(orderSchemaWithoutId)
+    .mutation(async ({ input: orderData }) => {
+      const createData: Prisma.OrderCreateInput = {
+        ...orderData,
+        address: { create: { ...orderData.address } },
+        client: { connect: orderData.client },
+        designs: { create: { ...orderData.designs } },
+        spreadsheets: { create: { ...orderData.spreadsheets } },
+        files: { create: { ...orderData.files } },
+      };
+      const newOrder = await prisma.order.create({
+        data: createData,
+      });
+      return newOrder;
+    }),
   deleteById: createProcedureDeleteById("order"),
   // update: authenticatedProcedure
   //   .input(orderSchema)
