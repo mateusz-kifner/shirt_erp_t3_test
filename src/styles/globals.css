@@ -100,8 +100,8 @@ body::-webkit-scrollbar {
     dark:border-stone-600
   dark:stroke-gray-200
     dark:text-gray-200
-    dark:hover:bg-black  
-    dark:hover:bg-opacity-20;
+    dark:hover:bg-white  
+    dark:hover:bg-opacity-10;
   }
 
   .action-button-group > .action-button {

@@ -27,31 +27,8 @@ export function DefaultListItem<T extends { id?: number | null }>({
 }: DefaultListItemProps<T>) {
   return (
     <button
-      className={`
-        border-1
-        inline-flex
-        h-14
-        flex-grow
-        select-none
-        items-center
-        justify-center
-        gap-3 
-        rounded-sm  
-        stroke-gray-200 
-        px-2 
-        py-0 
-        text-gray-200 
-        outline-offset-2
-        transition-all 
-        hover:bg-black
-        hover:bg-opacity-10 
-        focus-visible:outline-sky-600 
-        active:hover:scale-95
-        active:focus:scale-95
-        disabled:pointer-events-none 
-        disabled:bg-stone-700 
-        dark:hover:bg-white
-        dark:hover:bg-opacity-10 
+      className={`button button-outline h-14 flex-grow border-none px-2 rounded
+      py-0
         ${
           active
             ? "bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10"

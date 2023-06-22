@@ -3,10 +3,10 @@ import { type ComponentType } from "react";
 // List items imports
 import ClientListItem from "~/page-components/erp/client/ClientListItem";
 // import EmailMessageListItem from "~/page-components/erp/email-messages/EmailMessageListItem"
-// import OrderListItem from "~/page-components/erp/orders/OrderListItem"
 // import ProductListItem from "~/page-components/erp/products/ProductListItem"
 // import UserListItem from "~/page-components/erp/users/UserListItem"
 // import WorkstationListItem from "~/page-components/erp/workstations/WorkstationListItem"
+import OrderListItem from "~/page-components/erp/order/OrderListItem";
 
 import { truncString } from "~/utils/truncString";
 
@@ -38,16 +38,16 @@ const apiListItems = {
   //   copyProvider: (value: any) =>
   //     value?.username ? truncString(value.username, 40) : undefined,
   // },
-  // orders: {
-  //   ListItem: OrderListItem,
-  //   copyProvider: (value: any) =>
-  //     value?.name ? truncString(value.name, 40) : undefined,
-  // },
-  // "orders-archive": {
-  //   ListItem: OrderListItem,
-  //   copyProvider: (value: any) =>
-  //     value?.name ? truncString(value.name, 40) : undefined,
-  // },
+  orders: {
+    ListItem: OrderListItem,
+    copyProvider: (value: any) =>
+      value?.name ? truncString(value.name, 40) : undefined,
+  },
+  "orders-archive": {
+    ListItem: OrderListItem,
+    copyProvider: (value: any) =>
+      value?.name ? truncString(value.name, 40) : undefined,
+  },
   // workstations: {
   //   ListItem: WorkstationListItem,
   //   copyProvider: (value: any) =>
