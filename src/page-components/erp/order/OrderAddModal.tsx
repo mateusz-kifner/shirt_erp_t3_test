@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
+import { omit } from "lodash";
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
+import EditableApiEntry from "~/components/editable/EditableApiEntry";
 import EditableText from "~/components/editable/EditableText";
+import { OrderType } from "~/schema/orderSchema";
 import { api } from "~/utils/api";
+import OrderListItem from "./OrderListItem";
 
 interface OrderAddModalProps {
   opened: boolean;
@@ -16,7 +20,7 @@ interface OrderAddModalProps {
 const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
   const router = useRouter();
   const [orderName, setOrderName] = useState<string>("Klient");
-  // const [template, setTemplate] = useState<Partial<OrderType> | null>(null);
+  const [template, setTemplate] = useState<Partial<OrderType> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { mutate: createOrder } = api.order.create.useMutation({
     onSuccess(data) {
@@ -40,23 +44,28 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
   }, [opened]);
 
   return (
-    <Modal open={opened} onOpenChange={() => onClose()}>
-      <h3>Utwórz nowego klienta</h3>
-      <div className="g-2 flex flex-col">
-        {/* <EditableApiEntry
+    <Modal
+      open={opened}
+      onOpenChange={() => onClose()}
+      title={<h3 className="mb-4">Utwórz nowe zamówienie</h3>}
+    >
+      <div className="flex flex-col gap-2">
+        <EditableApiEntry
           label="Szablon"
-          entryName="orders"
+          entryName="order"
           Element={OrderListItem}
-          onSubmit={(template) => {
-            setTemplate(template);
-            // username === "Klient" && setusername(template.username)
-          }}
+          onSubmit={setTemplate}
           value={template}
           withErase
-          listProps={{ defaultSearch: "Szablon", filterKeys: ["username"] }}
-        /> */}
+          listProps={{
+            defaultSearch: "Szablon",
+            filterKeys: ["name"],
+            sortColumn: "name",
+            excludeKey: undefined,
+          }}
+        />
         <EditableText
-          label="Nazwa zamowienia"
+          label="Nazwa zamówienia"
           onSubmit={(val) => setOrderName(val ?? "")}
           value={orderName}
           required
@@ -66,18 +75,19 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
           onClick={() => {
             if (orderName.length == 0)
               return setError("Musisz podać nie pustą nazwę zamówienia");
-            // const new_order = {
-            //   ...(template ? omit(template, "id") : {}),
-            //   address: template?.address ? omit(template.address, "id") : null,
-            //   username: username,
-            //   orders: [],
-            //   "orders-archive": [],
-            // };
+            const newOrder = {
+              ...(template ? omit(template, "id") : {}),
+              address: template?.address ? omit(template.address, "id") : null,
+              name: orderName,
+              orders: [],
+              "orders-archive": [],
+            };
             // add(new_order)
             //   .then((data) => onClose(data?.data?.id))
             //   .catch(() => setError("Klient o takiej nazwie istnieje."));
-            createOrder({ name: orderName });
+            createOrder(newOrder);
           }}
+          className="mt-4"
         >
           <IconPlus />
           Utwórz zamówienie

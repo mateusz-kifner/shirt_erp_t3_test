@@ -13,7 +13,27 @@ import { type Prisma } from "@prisma/client";
 import { omit } from "lodash";
 import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
 
-const orderSchemaWithoutId = orderSchema.omit({ id: true });
+const orderSchemaWithoutId = orderSchema
+  .omit({ id: true, address: true })
+  .merge(
+    z.object({
+      address: z
+        .object({
+          streetName: z.string().max(255).nullable().optional(),
+          streetNumber: z.string().max(255).nullable().optional(),
+          apartmentNumber: z.string().max(255).nullable().optional(),
+          secondLine: z.string().max(255).nullable().optional(),
+          postCode: z.string().max(255).nullable().optional(),
+          city: z.string().max(255).nullable().optional(),
+          province: z.string().max(255).nullable().optional(),
+        })
+        .optional()
+        .nullable(),
+    })
+  );
+
+export type OrderTypeWithoutId = z.infer<typeof orderSchemaWithoutId>;
+
 const includeAll = {
   files: true,
   client: true,

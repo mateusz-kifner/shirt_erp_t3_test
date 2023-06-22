@@ -58,7 +58,7 @@ function Modal(props: ModalProps) {
         <RadixDialog.Overlay className="fixed left-0 top-0 z-[9998] h-screen w-screen bg-black  bg-opacity-40" />
         <RadixDialog.Content
           className={twMerge(
-            "fixed left-1/2 top-1/2  z-[9999] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-3 shadow  dark:bg-stone-800",
+            "fixed left-1/2 top-11  z-[9999] w-[48.75rem] -translate-x-1/2  rounded-xl bg-white p-3  shadow dark:bg-stone-800",
             contentProps?.className
           )}
           {...omit(contentProps, ["className"])}
