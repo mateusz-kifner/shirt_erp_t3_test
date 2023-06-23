@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { addressSchema } from "./addressSchema";
 import { clientSchema } from "./clientSchema";
+import { designSchema } from "./designSchema";
 import { fileSchema } from "./fileSchema";
-import { typeDesignSchema } from "./typeDesignSchema";
-import { typeSpreadsheetSchema } from "./typeSpreadsheetSchema";
+import { spreadsheetSchema } from "./spreadsheetSchema";
 
 export const orderSchema = z.object({
   id: z.number(),
@@ -13,8 +13,8 @@ export const orderSchema = z.object({
   price: z.string().max(255).nullable().optional(),
   isPricePaid: z.boolean().default(false),
   dateOfCompletion: z.date().nullable().optional(),
-  spreadsheets: z.array(typeSpreadsheetSchema).nullable().optional(),
-  designs: z.array(typeDesignSchema).nullable().optional(),
+  spreadsheets: z.array(spreadsheetSchema).nullable().optional(),
+  designs: z.array(designSchema).nullable().optional(),
   files: z.array(fileSchema).nullable().optional(),
   workTime: z.number().nullable().optional(),
   client: clientSchema.nullable().optional(),
