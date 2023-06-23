@@ -54,7 +54,7 @@ const EditableDate = (props: InputDateProps) => {
   }, [focus]);
 
   useEffect(() => {
-    if (debouncedText.length === 0 && value !== null) {
+    if (debouncedText.length === 0) {
       setError(false);
       onSubmit?.(null);
       return;
