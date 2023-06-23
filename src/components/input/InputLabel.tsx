@@ -53,7 +53,7 @@ function InputLabel(props: InputLabelProps) {
         {helpTooltip && helpTooltip.length > 0 && (
           <SimpleTooltip
             tooltip={helpTooltip}
-            className="px-2"
+            className="px-1"
             classNameTooltip="w-80 whitespace-normal dark:whitespace-normal"
             delay="delay-700"
           >
