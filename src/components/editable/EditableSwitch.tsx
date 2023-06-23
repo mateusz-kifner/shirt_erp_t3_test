@@ -59,6 +59,7 @@ const EditableBool = (props: EditableBoolProps) => {
   }, [bool]);
 
   const handleChange = (checked: boolean) => {
+    setDirty(true);
     onSubmit?.(checked);
   };
 

@@ -23,15 +23,20 @@ const ApiEntryEditable = <EntryType,>({
   disabled = false,
 }: ApiEntryEditableProps<EntryType>) => {
   const uuid = useId();
-  const { mutate: update } = api[entryName as "client"].update.useMutation();
-  const { mutate: deleteById } =
-    api[entryName as "client"].deleteById.useMutation();
   const { data, refetch } = api[entryName as "client"].getById.useQuery(
     id as number,
     {
       enabled: id !== null,
     }
   );
+  const { mutate: update } = api[entryName as "client"].update.useMutation({
+    onSuccess: () => {
+      refetch().catch((err) => console.log(err));
+    },
+  });
+  const { mutate: deleteById } =
+    api[entryName as "client"].deleteById.useMutation();
+
   const isLoaded = useLoaded();
 
   // const { data, update, remove, refetch } = useStrapi<EntryType>(
@@ -106,7 +111,7 @@ const ApiEntryEditable = <EntryType,>({
       /> */}
       {id !== null && (
         <ActionButton
-          className="  fixed -right-1 top-[5.5] h-11 w-11 -translate-x-4 rounded-full border border-solid  border-gray-400  bg-white  dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
+          className="fixed right-4 top-[5.5] h-11 w-11 rounded-full border border-solid  border-gray-400  bg-white  dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
           onClick={() => {
             refetch().catch(() => {
               /**/
