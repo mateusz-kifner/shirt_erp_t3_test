@@ -6,7 +6,8 @@ export const productSchema = z.object({
   category: z.string().max(255).nullable().optional(),
   description: z.string().nullable().optional(),
   iconId: z.number().nullable().optional(),
-  variants: z.string().nullable().optional(),
+  colors: z.string().array().nullable().optional(),
+  sizes: z.string().array().nullable().optional(),
 });
 
 export type ProductType = z.infer<typeof productSchema>;
