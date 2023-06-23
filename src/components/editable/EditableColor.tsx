@@ -81,9 +81,9 @@ const EditableColor = (props: EditableColorProps) => {
   } = props;
   const uuid = useId();
   const [colorText, setColorText] = useState<string | null>(
-    value !== undefined && value.length > 3
+    !!value && value.length > 3
       ? value
-      : initialValue !== undefined && initialValue.length > 3
+      : !!initialValue && initialValue.length > 3
       ? initialValue
       : ""
   );

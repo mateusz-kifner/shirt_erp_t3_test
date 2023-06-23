@@ -2,6 +2,7 @@
 - move to radix
 - use twMerge
 - change date from string to date obj
+- fix color picker
 
 tested libs
 
