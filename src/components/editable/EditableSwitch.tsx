@@ -68,10 +68,7 @@ const EditableBool = (props: EditableBoolProps) => {
       {!!leftSection && leftSection}
       <div>{label}</div>
       {active ? (
-        <Switch
-          value={value ? "true" : "false"}
-          onCheckedChange={handleChange}
-        />
+        <Switch checked={value} onCheckedChange={handleChange} />
       ) : (
         <div
           className={`px relative rounded-md font-bold after:absolute after:bottom-0.5 after:left-0 after:h-px after:w-full after:shadow ${
