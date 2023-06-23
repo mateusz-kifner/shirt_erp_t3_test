@@ -51,29 +51,8 @@ export function DefaultListItemWithValue<
 
   return (
     <button
-      className={`
-            border-1
-            inline-flex
-            h-14
-            flex-grow
-            select-none
-            items-center
-            justify-center
-            gap-3 
-            rounded-sm  
-            stroke-gray-200 
-            px-2 
-            py-0 
-            text-gray-200 
-            transition-all 
-            hover:bg-black  
-            hover:bg-opacity-20 
-            active:hover:scale-95 
-            active:focus:scale-95
-            disabled:pointer-events-none
-            disabled:bg-stone-700 
-            dark:hover:bg-white 
-            dark:hover:bg-opacity-10 
+      className={`button button-outline h-14 flex-grow rounded border-none px-2
+      py-0
             ${
               active
                 ? "bg-black bg-opacity-20 dark:bg-white dark:bg-opacity-10"

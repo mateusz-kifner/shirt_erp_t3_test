@@ -10,6 +10,7 @@ import OrderListItem from "~/page-components/erp/order/OrderListItem";
 
 import { truncString } from "~/utils/truncString";
 
+import ProductListItem from "~/page-components/erp/product/ProductListItem";
 import { type ClientType } from "~/schema/clientSchema";
 
 export type apiListItems = {
@@ -28,11 +29,11 @@ const apiListItems = {
         ? truncString(`${value.firstname ?? ""} ${value.lastname ?? ""}`, 40)
         : truncString(value?.username ? value.username : "", 40),
   },
-  // products: {
-  //   ListItem: ProductListItem,
-  //   copyProvider: (value: any) =>
-  //     value?.name ? truncString(value.name, 40) : undefined,
-  // },
+  products: {
+    ListItem: ProductListItem,
+    copyProvider: (value: any) =>
+      value?.name ? truncString(value.name, 40) : undefined,
+  },
   // users: {
   //   ListItem: UserListItem,
   //   copyProvider: (value: any) =>

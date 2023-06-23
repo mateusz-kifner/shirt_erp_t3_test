@@ -151,45 +151,6 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
               </Link>
             </div>
           )}
-          {apiEntry && withErase && (
-            <div></div>
-            // <Menu withArrow>
-            //   <Menu.Target>
-            //     <ActionIcon
-            //       tabIndex={-1}
-            //       style={{
-            //         position: "absolute",
-            //         top: "50%",
-            //         right: 8,
-            //         transform: "translate(0,-50%)",
-            //       }}
-            //     >
-            //       <IconDots size={14} />
-            //     </ActionIcon>
-            //   </Menu.Target>
-            //   <Menu.Dropdown>
-            //     <Menu.Item
-            //       color="red"
-            //       icon={<IconTrashX size={14} />}
-            //       onClick={() => setApiEntry(null)}
-            //     >
-            //       Delete
-            //     </Menu.Item>
-            //   </Menu.Dropdown>
-            // </Menu>
-            // <ActionIcon
-            //   style={{
-            //     position: "absolute",
-            //     top: "50%",
-            //     right: 8,
-            //     transform: "translate(0,-50%)",
-            //   }}
-            //   onClick={() => setApiEntry(null)}
-            //   radius="xl"
-            // >
-            //   <IconTrashX size={18} />
-            // </ActionIcon>
-          )}
         </div>
       ) : (
         <div className="text-red-500">
