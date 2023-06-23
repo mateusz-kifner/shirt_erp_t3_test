@@ -66,8 +66,6 @@ const EditableApiEntry = (props: EditableApiEntryProps) => {
     // eslint-disable-next-line
   }, [apiEntry]);
 
-  console.log(value);
-
   return (
     <div>
       <InputLabel

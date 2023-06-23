@@ -56,7 +56,7 @@ const ApiEntryEditable = <EntryType,>({
     if (!isLoaded) return;
     // @ts-ignore
     update({ id: data?.id, [key]: val });
-    console.log(key, val);
+    // console.log(key, val);
     /**/
   };
   //   setStatus("loading");

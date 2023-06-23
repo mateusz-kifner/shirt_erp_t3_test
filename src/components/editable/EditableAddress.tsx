@@ -111,8 +111,6 @@ const EditableAddress = (props: EditableAddressProps) => {
   };
 
   const valueString = toString();
-
-  console.log(value);
   return (
     <div>
       <InputLabel
