@@ -24,11 +24,12 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
   const [error, setError] = useState<string | null>(null);
   const { mutate: createOrder } = api.order.create.useMutation({
     onSuccess(data) {
-      setTimeout(() => {
-        router.push(`/erp/order/${data.id}`).catch((e) => {
-          throw e;
-        });
-      }, 400);
+      // setTimeout(() => {
+      //   router.push(`/erp/order/${data.id}`).catch((e) => {
+      //     throw e;
+      //   });
+      // }, 400);
+      onClose(data.id);
     },
     onError(error) {
       // setError("Klient o takiej nazwie istnieje.");
@@ -66,7 +67,9 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
         />
         <EditableText
           label="Nazwa zamówienia"
-          onSubmit={(val) => setOrderName(val ?? "")}
+          onSubmit={(val) => {
+            val && setOrderName(val);
+          }}
           value={orderName}
           required
         />
@@ -79,12 +82,7 @@ const OrderAddModal = ({ opened, onClose }: OrderAddModalProps) => {
               ...(template ? omit(template, "id") : {}),
               address: template?.address ? omit(template.address, "id") : null,
               name: orderName,
-              orders: [],
-              "orders-archive": [],
             };
-            // add(new_order)
-            //   .then((data) => onClose(data?.data?.id))
-            //   .catch(() => setError("Klient o takiej nazwie istnieje."));
             createOrder(newOrder);
           }}
           className="mt-4"

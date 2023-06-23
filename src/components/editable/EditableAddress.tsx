@@ -6,6 +6,7 @@ import { isEqual } from "lodash";
 import EditableEnum from "~/components/editable/EditableEnum";
 import EditableText from "~/components/editable/EditableText";
 
+import { TypeAddress } from "@prisma/client";
 import DisplayCellExpanding from "~/components/basic/DisplayCellExpanding";
 import { type AddressType } from "~/schema/addressSchema";
 import type EditableInput from "~/types/EditableInput";
@@ -49,19 +50,7 @@ const EditableAddress = (props: EditableAddressProps) => {
     rightSection,
   } = props;
   const [address, setAddress] = useState<AddressType>(
-    value
-      ? value
-      : initialValue
-      ? initialValue
-      : {
-          streetName: "",
-          streetNumber: "",
-          apartmentNumber: "",
-          secondLine: "",
-          city: "",
-          province: "",
-          postCode: "",
-        }
+    value ? value : initialValue ? initialValue : undefined
   );
   const [focus, setFocus] = useState<boolean>(false);
 
@@ -72,20 +61,9 @@ const EditableAddress = (props: EditableAddressProps) => {
   });
 
   const setAddressField = (key: string, val: string) => {
-    const new_address = { ...address, [key]: val };
-    const prevAddress = value
-      ? value
-      : initialValue
-      ? initialValue
-      : {
-          streetName: "",
-          streetNumber: "",
-          apartmentNumber: "",
-          secondLine: "",
-          city: "",
-          province: "",
-          postCode: "",
-        };
+    const new_address = { ...address, [key]: val } as TypeAddress;
+    const prevAddress = value ?? initialValue;
+
     if (!isEqual(prevAddress, new_address)) {
       onSubmit?.(new_address);
       setAddress(new_address);
@@ -134,6 +112,7 @@ const EditableAddress = (props: EditableAddressProps) => {
 
   const valueString = toString();
 
+  console.log(value);
   return (
     <div>
       <InputLabel

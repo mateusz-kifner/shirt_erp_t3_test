@@ -3,9 +3,14 @@ import { useEffect, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
+import { omit } from "lodash";
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
+import EditableApiEntry from "~/components/editable/EditableApiEntry";
+import EditableText from "~/components/editable/EditableText";
+import { type ProductType } from "~/schema/productSchema";
 import { api } from "~/utils/api";
+import ProductListItem from "./ProductListItem";
 
 interface ProductAddModalProps {
   opened: boolean;
@@ -15,13 +20,14 @@ interface ProductAddModalProps {
 const ProductAddModal = ({ opened, onClose }: ProductAddModalProps) => {
   const router = useRouter();
   const [productName, setProductName] = useState<string>("Produkt");
-  // const [template, setTemplate] = useState<Partial<ProductType> | null>(null);
+  const [template, setTemplate] = useState<Partial<ProductType> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { mutate: createProduct } = api.product.create.useMutation({
     onSuccess(data) {
-      router.push(`/erp/product/${data.id}`).catch((e) => {
-        throw e;
-      });
+      // router.push(`/erp/product/${data.id}`).catch((e) => {
+      //   throw e;
+      // });
+      onClose(data.id);
     },
     onError(error) {
       //setError("Produkt o takiej nazwie istnieje.");
@@ -37,44 +43,44 @@ const ProductAddModal = ({ opened, onClose }: ProductAddModalProps) => {
   }, [opened]);
 
   return (
-    <Modal open={opened} onOpenChange={() => onClose()}>
-      <h3>Utwórz nowego klienta</h3>
-      <div className="g-2 flex flex-col">
-        {/* <EditableApiEntry
+    <Modal
+      open={opened}
+      onOpenChange={() => onClose()}
+      title={<h3 className="mb-4">Utwórz nowy produkt</h3>}
+    >
+      <div className="flex flex-col gap-2">
+        <EditableApiEntry
           label="Szablon"
           entryName="products"
           Element={ProductListItem}
-          onSubmit={(template) => {
-            setTemplate(template);
-            // username === "Klient" && setusername(template.username)
-          }}
+          onSubmit={setTemplate}
           value={template}
           withErase
           listProps={{ defaultSearch: "Szablon", filterKeys: ["username"] }}
         />
         <EditableText
           label="Nazwa użytkownika"
-          onSubmit={setusername}
-          value={username}
+          onSubmit={(val) => {
+            val && setProductName(val);
+          }}
+          value={productName}
           required
-        /> */}
+        />
 
         <Button
           onClick={() => {
             if (productName.length == 0)
               return setError("Musisz podać nie pustą nazwę produktu");
-            // const new_product = {
-            //   ...(template ? omit(template, "id") : {}),
-            //   address: template?.address ? omit(template.address, "id") : null,
-            //   username: username,
-            //   orders: [],
-            //   "orders-archive": [],
-            // };
-            // add(new_product)
-            //   .then((data) => onClose(data?.data?.id))
-            //   .catch(() => setError("Klient o takiej nazwie istnieje."));
+            const new_product = {
+              ...(template ? omit(template, "id") : {}),
+              name: productName,
+              orders: [],
+              "orders-archive": [],
+            };
+
             createProduct({ name: productName });
           }}
+          className="mt-4"
         >
           <IconPlus />
           Utwórz produkt

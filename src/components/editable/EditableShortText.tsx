@@ -7,12 +7,12 @@ import preventLeave from "~/utils/preventLeave";
 import type EditableInput from "~/types/EditableInput";
 import DisplayCell from "../basic/DisplayCell";
 
-interface EditableTextProps extends EditableInput<string> {
+interface EditableShortTextProps extends EditableInput<string> {
   maxLength?: number;
   style?: CSSProperties;
 }
 
-const EditableText = (props: EditableTextProps) => {
+const EditableShortText = (props: EditableShortTextProps) => {
   const {
     label,
     value,
@@ -130,4 +130,4 @@ const EditableText = (props: EditableTextProps) => {
   );
 };
 
-export default EditableText;
+export default EditableShortText;

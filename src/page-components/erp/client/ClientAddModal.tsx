@@ -3,9 +3,14 @@ import { useEffect, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
+import { omit } from "lodash";
 import Button from "~/components/basic/Button";
 import Modal from "~/components/basic/Modal";
+import EditableApiEntry from "~/components/editable/EditableApiEntry";
+import EditableText from "~/components/editable/EditableText";
+import { type ClientType } from "~/schema/clientSchema";
 import { api } from "~/utils/api";
+import ClientListItem from "./ClientListItem";
 
 interface ClientAddModalProps {
   opened: boolean;
@@ -15,13 +20,14 @@ interface ClientAddModalProps {
 const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
   const router = useRouter();
   const [username, setUsername] = useState<string>("Klient");
-  // const [template, setTemplate] = useState<Partial<ClientType> | null>(null);
+  const [template, setTemplate] = useState<Partial<ClientType> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { mutate: createClient } = api.client.create.useMutation({
     onSuccess(data) {
-      router.push(`/erp/client/${data.id}`).catch((e) => {
-        throw e;
-      });
+      // router.push(`/erp/client/${data.id}`).catch((e) => {
+      //   throw e;
+      // });
+      onClose(data.id);
     },
     onError(error) {
       setError("Klient o takiej nazwie istnieje.");
@@ -37,44 +43,44 @@ const ClientAddModal = ({ opened, onClose }: ClientAddModalProps) => {
   }, [opened]);
 
   return (
-    <Modal open={opened} onOpenChange={() => onClose()}>
-      <h3>Utwórz nowego klienta</h3>
-      <div className="g-2 flex flex-col">
-        {/* <EditableApiEntry
+    <Modal
+      open={opened}
+      onOpenChange={() => onClose()}
+      title={<h3 className="mb-4">Utwórz nowego klienta</h3>}
+    >
+      <div className="flex flex-col gap-2">
+        <EditableApiEntry
           label="Szablon"
           entryName="clients"
           Element={ClientListItem}
-          onSubmit={(template) => {
-            setTemplate(template);
-            // username === "Klient" && setusername(template.username)
-          }}
+          onSubmit={setTemplate}
           value={template}
           withErase
           listProps={{ defaultSearch: "Szablon", filterKeys: ["username"] }}
         />
         <EditableText
           label="Nazwa użytkownika"
-          onSubmit={setusername}
+          onSubmit={(val) => {
+            val && setUsername(val);
+          }}
           value={username}
           required
-        /> */}
+        />
 
         <Button
           onClick={() => {
             if (username.length == 0)
               return setError("Musisz podać nie pustą nazwę użytkownika");
-            // const new_client = {
-            //   ...(template ? omit(template, "id") : {}),
-            //   address: template?.address ? omit(template.address, "id") : null,
-            //   username: username,
-            //   orders: [],
-            //   "orders-archive": [],
-            // };
-            // add(new_client)
-            //   .then((data) => onClose(data?.data?.id))
-            //   .catch(() => setError("Klient o takiej nazwie istnieje."));
-            createClient({ username });
+            const new_client = {
+              ...(template ? omit(template, "id") : {}),
+              address: template?.address ? omit(template.address, "id") : null,
+              username: username,
+              orders: [],
+              "orders-archive": [],
+            };
+            createClient(new_client);
           }}
+          className="mt-4"
         >
           <IconPlus />
           Utwórz klienta
