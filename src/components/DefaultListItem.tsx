@@ -27,13 +27,9 @@ export function DefaultListItem<T extends { id?: number | null }>({
 }: DefaultListItemProps<T>) {
   return (
     <button
-      className={`button button-outline h-14 flex-grow border-none px-2 rounded
+      className={`button button-outline h-14 flex-grow rounded border-none px-2
       py-0
-        ${
-          active
-            ? "bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10"
-            : ""
-        }`}
+        ${active ? "bg-gray-200 dark:bg-neutral-700" : ""}`}
       disabled={disabled}
       onClick={() => onChange?.(value)}
     >
