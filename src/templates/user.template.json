@@ -2,7 +2,14 @@
   "id": { "type": "id" },
 
   "username": {
-    "type": "title",
+    "label": "nazwa użytkownika",
+    "type": "text",
+    "disabled": true
+  },
+
+  "name": {
+    "label": "Nazwa wyświetlana",
+    "type": "text",
     "disabled": true
   },
 
@@ -12,27 +19,9 @@
     "disabled": true
   },
 
-  "provider": {
-    "label": "Auth",
-    "type": "text",
-    "disabled": true
-  },
-
-  "blocked": {
-    "label": "Zablokowany",
-    "type": "boolean",
-    "disabled": true
-  },
-
-  "confirmed": {
-    "label": "Potwierdzony",
-    "type": "boolean",
-    "disabled": true
-  },
-
-  "displayName": {
-    "label": "Nazwa wyświetlana",
-    "type": "text",
+  "emailVerified": {
+    "label": "Email zweryfikowano",
+    "type": "datetime",
     "disabled": true
   },
 
