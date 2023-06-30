@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 
-import Modal from "~/components/basic/Modal";
-import EditableApiEntry from "~/components/editable/EditableApiEntry";
-import EditableText from "~/components/editable/EditableText";
-import { type UserType } from "~/schema/userSchema";
-import { api } from "~/utils/api";
+import Modal from "@/components/basic/Modal";
+import EditableApiEntry from "@/components/editable/EditableApiEntry";
+import EditableText from "@/components/editable/EditableText";
+import { type UserType } from "@/schema/userSchema";
+import { api } from "@/utils/api";
 import UserListItem from "./UserListItem";
 
 interface UserAddModalProps {

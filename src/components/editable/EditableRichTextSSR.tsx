@@ -13,8 +13,9 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 
-import preventLeave from "~/utils/preventLeave";
+import preventLeave from "@/utils/preventLeave";
 
+import type EditableInput from "@/types/EditableInput";
 import * as RadixToolbar from "@radix-ui/react-toolbar";
 import {
   IconAlignCenter,
@@ -38,7 +39,6 @@ import {
   IconSuperscript,
   IconUnderline,
 } from "@tabler/icons-react";
-import type EditableInput from "~/types/EditableInput";
 import DisplayCellExpanding from "../basic/DisplayCellExpanding";
 import InputLabel from "../input/InputLabel";
 

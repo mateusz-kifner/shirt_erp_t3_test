@@ -1,3 +1,7 @@
+import { useAuthContext } from "@/context/authContext";
+import { env } from "@/env.mjs";
+import type EditableInput from "@/types/EditableInput";
+import { type FileType } from "@/types/FileType";
 import { useListState } from "@mantine/hooks";
 import { SVG } from "@svgdotjs/svg.js";
 import {
@@ -19,10 +23,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAuthContext } from "~/context/authContext";
-import { env } from "~/env.mjs";
-import type EditableInput from "~/types/EditableInput";
-import { type FileType } from "~/types/FileType";
 
 const colorPickerSwatches = [
   "#000e1c",

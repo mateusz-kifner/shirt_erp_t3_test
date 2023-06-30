@@ -1,3 +1,4 @@
+import { useUserContext } from "@/context/userContext";
 import { useElementSize } from "@mantine/hooks";
 import {
   IconBell,
@@ -6,7 +7,6 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { useUserContext } from "~/context/userContext";
 
 const Header = () => {
   const { ref, width: actionButtonsWidth } = useElementSize();
@@ -45,8 +45,8 @@ const Header = () => {
       ></div>
       <div className="flex justify-end gap-3" ref={ref}>
         <button
-          className="border-1 inline-flex h-9 w-9
-            animate-pop items-center justify-center 
+          className="border-1 animate-pop inline-flex h-9
+            w-9 items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
             hover:bg-stone-950
             active:hover:scale-95 active:hover:animate-none 
@@ -56,8 +56,8 @@ const Header = () => {
           <IconSearch className="stroke-gray-200" />
         </button>
         <button
-          className="border-1 inline-flex h-9 w-9
-            animate-pop items-center justify-center 
+          className="border-1 animate-pop inline-flex h-9
+            w-9 items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
             hover:bg-stone-950
             active:hover:scale-95 active:hover:animate-none 
@@ -68,8 +68,8 @@ const Header = () => {
           <IconMessage className="stroke-gray-200" />
         </button>
         <button
-          className="border-1 inline-flex h-9 w-9
-            animate-pop items-center justify-center 
+          className="border-1 animate-pop inline-flex h-9
+            w-9 items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
             hover:bg-stone-950
             active:hover:scale-95 active:hover:animate-none 
@@ -82,8 +82,8 @@ const Header = () => {
 
         <Link
           href={"/erp/settings"}
-          className="border-1 inline-flex h-9 w-9
-            animate-pop items-center justify-center 
+          className="border-1 animate-pop inline-flex h-9
+            w-9 items-center justify-center 
             rounded-full bg-stone-800 p-0 font-semibold uppercase no-underline transition-all
             hover:bg-stone-950
             active:hover:scale-95 active:hover:animate-none 

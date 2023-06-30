@@ -1,1 +1,1 @@
-export { default } from "~/page-components/erp/order/OrderPage";
+export { default } from "@/page-components/erp/order/OrderPage";

@@ -1,9 +1,9 @@
 import { capitalize } from "lodash";
 import { useRouter } from "next/router";
 
-import ApiList from "~/components/ApiList";
-import useTranslation from "~/hooks/useTranslation";
-import { type RouterNames } from "~/utils/api";
+import ApiList from "@/components/ApiList";
+import useTranslation from "@/hooks/useTranslation";
+import { type RouterNames } from "@/utils/api";
 import ClientListItem from "./ClientListItem";
 
 const entryName: RouterNames = "client";

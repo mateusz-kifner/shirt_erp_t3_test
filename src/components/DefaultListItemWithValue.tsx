@@ -1,5 +1,5 @@
-import { getRandomColorByNumber } from "~/utils/getRandomColor";
-import { truncString } from "~/utils/truncString";
+import { getRandomColorByNumber } from "@/utils/getRandomColor";
+import { truncString } from "@/utils/truncString";
 
 interface DefaultListItemWithValueProps<T> {
   onChange?: (item: T) => void;

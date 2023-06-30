@@ -1,5 +1,4 @@
-import React from "react";
-import { api } from "~/utils/api";
+import { api } from "@/utils/api";
 
 const Authenticated = () => {
   const { data, isError } = api.example.authenticated.useQuery();

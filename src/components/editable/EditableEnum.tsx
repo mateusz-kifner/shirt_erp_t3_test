@@ -1,7 +1,7 @@
-import InputLabel from "~/components/input/InputLabel";
+import InputLabel from "@/components/input/InputLabel";
 
+import type EditableInput from "@/types/EditableInput";
 import { type SelectProps as RadixSelectProps } from "@radix-ui/react-select";
-import type EditableInput from "~/types/EditableInput";
 import Select from "../basic/Select";
 
 // EditableInput<T> {

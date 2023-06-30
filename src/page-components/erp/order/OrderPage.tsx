@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 
-import template from "~/templates/order.model";
+import template from "@/templates/order.model";
 // import * as XLSX from "xlsx"
 // import ApiEntryEditable from "../../../components/api/ApiEntryEditable"
 // import Workspace from "../../../components/layout/Workspace"
@@ -11,13 +11,13 @@ import template from "~/templates/order.model";
 // import useStrapi from "../../../hooks/useStrapi"
 // import { OrderType } from "../../../types/OrderType"
 // import Editable from "../../../components/editable/Editable"
+import ApiEntryEditable from "@/components/ApiEntryEditable";
+import Workspace from "@/components/Workspace";
+import { getQueryAsIntOrNull } from "@/utils/query";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconList, IconMail, IconNotebook } from "@tabler/icons-react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import ApiEntryEditable from "~/components/ApiEntryEditable";
-import Workspace from "~/components/Workspace";
-import { getQueryAsIntOrNull } from "~/utils/query";
 import OrderAddModal from "./OrderAddModal";
 import OrderList from "./OrderList";
 // import { Button, Group, Menu, Stack, Text } from "@mantine/core"

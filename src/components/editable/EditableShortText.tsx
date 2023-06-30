@@ -1,10 +1,10 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 
-import InputLabel from "~/components/input/InputLabel";
-import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
-import preventLeave from "~/utils/preventLeave";
+import InputLabel from "@/components/input/InputLabel";
+import { handleBlurForInnerElements } from "@/utils/handleBlurForInnerElements";
+import preventLeave from "@/utils/preventLeave";
 
-import type EditableInput from "~/types/EditableInput";
+import type EditableInput from "@/types/EditableInput";
 import DisplayCell from "../basic/DisplayCell";
 
 interface EditableShortTextProps extends EditableInput<string> {

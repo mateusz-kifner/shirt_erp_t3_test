@@ -4,12 +4,12 @@ import { useElementSize } from "@mantine/hooks";
 import { type Icon as TablerIcon } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
-import ErrorBoundary from "~/components/ErrorBoundary";
-import MultiTabs from "~/components/MultiTabs";
-import { useUserContext } from "~/context/userContext";
-import useRQCache from "~/hooks/useRQCache";
-import useTranslation from "~/hooks/useTranslation";
-import { getQueryAsIntOrNull } from "~/utils/query";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import MultiTabs from "@/components/MultiTabs";
+import { useUserContext } from "@/context/userContext";
+import useRQCache from "@/hooks/useRQCache";
+import useTranslation from "@/hooks/useTranslation";
+import { getQueryAsIntOrNull } from "@/utils/query";
 
 // import MultiTabs from "./MultiTabs"
 

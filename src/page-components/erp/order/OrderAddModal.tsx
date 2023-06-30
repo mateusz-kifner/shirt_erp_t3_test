@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
+import Button from "@/components/basic/Button";
+import Modal from "@/components/basic/Modal";
+import EditableApiEntry from "@/components/editable/EditableApiEntry";
+import EditableText from "@/components/editable/EditableText";
+import { type OrderType } from "@/schema/orderSchema";
+import { api } from "@/utils/api";
 import { omit } from "lodash";
-import Button from "~/components/basic/Button";
-import Modal from "~/components/basic/Modal";
-import EditableApiEntry from "~/components/editable/EditableApiEntry";
-import EditableText from "~/components/editable/EditableText";
-import { type OrderType } from "~/schema/orderSchema";
-import { api } from "~/utils/api";
 import OrderListItem from "./OrderListItem";
 
 interface OrderAddModalProps {

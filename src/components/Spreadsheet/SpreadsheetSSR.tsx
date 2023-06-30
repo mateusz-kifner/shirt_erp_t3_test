@@ -25,7 +25,7 @@ import { UniversalMatrix, useSpreadSheetData } from "./useSpreadSheetData";
 
 import { getRandomColorByNumber } from "../../utils/getRandomColor";
 
-import useTranslation from "~/hooks/useTranslation";
+import useTranslation from "@/hooks/useTranslation";
 import type EditableInput from "../../types/EditableInput";
 import Button from "../basic/Button";
 import ScrollArea from "../basic/ScrollArea";

@@ -6,14 +6,14 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 
-import ActionButton from "~/components/basic/ActionButton";
-import DisplayCell from "~/components/basic/DisplayCell";
-import Popover from "~/components/basic/Popover";
-import InputLabel from "~/components/input/InputLabel";
+import ActionButton from "@/components/basic/ActionButton";
+import DisplayCell from "@/components/basic/DisplayCell";
+import Popover from "@/components/basic/Popover";
+import InputLabel from "@/components/input/InputLabel";
 
-import type EditableInput from "~/types/EditableInput";
-import { handleBlurForInnerElements } from "~/utils/handleBlurForInnerElements";
-import { handleFocusForInnerElements } from "~/utils/handleFocusForInnerElements";
+import type EditableInput from "@/types/EditableInput";
+import { handleBlurForInnerElements } from "@/utils/handleBlurForInnerElements";
+import { handleFocusForInnerElements } from "@/utils/handleFocusForInnerElements";
 
 type InputDateProps = EditableInput<string>;
 

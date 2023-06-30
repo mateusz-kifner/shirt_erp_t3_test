@@ -8,12 +8,12 @@ import {
 
 import { IconPlus, IconTrashX, IconUpload } from "@tabler/icons-react";
 
+import useTranslation from "@/hooks/useTranslation";
+import useUploadMutation from "@/hooks/useUploadMutation";
+import { type FileType } from "@/schema/fileSchema";
+import type EditableInput from "@/types/EditableInput";
 import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import { IconLoader2 } from "@tabler/icons-react";
-import useTranslation from "~/hooks/useTranslation";
-import useUploadMutation from "~/hooks/useUploadMutation";
-import { type FileType } from "~/schema/fileSchema";
-import type EditableInput from "~/types/EditableInput";
 import FileListItem from "../FileListItem";
 import Modal from "../basic/Modal";
 import InputLabel from "../input/InputLabel";

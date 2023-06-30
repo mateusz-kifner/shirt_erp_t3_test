@@ -8,11 +8,11 @@ import {
   IconSortDescending,
 } from "@tabler/icons-react";
 
-import List from "~/components/List";
-import ActionButton from "~/components/basic/ActionButton";
-import Pagination from "~/components/basic/Pagination";
-import useTranslation from "~/hooks/useTranslation";
-import { api } from "~/utils/api";
+import List from "@/components/List";
+import ActionButton from "@/components/basic/ActionButton";
+import Pagination from "@/components/basic/Pagination";
+import useTranslation from "@/hooks/useTranslation";
+import { api } from "@/utils/api";
 
 interface ApiListProps<T = any> {
   entryName: string;

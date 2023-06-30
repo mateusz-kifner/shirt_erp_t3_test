@@ -1,6 +1,6 @@
-import { DefaultListItem } from "~/components/DefaultListItem";
-import { type ProductType } from "~/schema/productSchema";
-import { truncString } from "~/utils/truncString";
+import { DefaultListItem } from "@/components/DefaultListItem";
+import { type ProductType } from "@/schema/productSchema";
+import { truncString } from "@/utils/truncString";
 
 interface ProductListItemProps {
   onChange?: (item: Partial<ProductType>) => void;

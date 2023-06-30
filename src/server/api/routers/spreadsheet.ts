@@ -1,15 +1,15 @@
 import { omit } from "lodash";
 
-import { spreadsheetSchema } from "~/schema/spreadsheetSchema";
+import { spreadsheetSchema } from "@/schema/spreadsheetSchema";
 import {
   createProcedureDeleteById,
   createProcedureGetAll,
   createProcedureGetById,
   createProcedureSearch,
   createProcedureSearchWithPagination,
-} from "~/server/api/procedures";
-import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
-import { prisma } from "~/server/db";
+} from "@/server/api/procedures";
+import { authenticatedProcedure, createTRPCRouter } from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 const spreadsheetSchemaWithoutId = spreadsheetSchema.omit({ id: true });
 

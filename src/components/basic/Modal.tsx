@@ -1,9 +1,9 @@
+import { useLoaded } from "@/hooks/useLoaded";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { IconX } from "@tabler/icons-react";
 import { omit } from "lodash";
 import { type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
-import { useLoaded } from "~/hooks/useLoaded";
 import ActionButton from "./ActionButton";
 
 // RadixDialog.DialogProps {

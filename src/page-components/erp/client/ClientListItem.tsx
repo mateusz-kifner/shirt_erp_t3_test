@@ -1,6 +1,6 @@
-import { DefaultListItem } from "~/components/DefaultListItem";
-import { type ClientType } from "~/schema/clientSchema";
-import { truncString } from "~/utils/truncString";
+import { DefaultListItem } from "@/components/DefaultListItem";
+import { type ClientType } from "@/schema/clientSchema";
+import { truncString } from "@/utils/truncString";
 
 interface ClientListItemProps {
   onChange?: (item: Partial<ClientType>) => void;

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { getRandomColorByNumber } from "~/utils/getRandomColor";
+import { getRandomColorByNumber } from "@/utils/getRandomColor";
 
 interface DefaultListItemProps<T> {
   onChange?: (item: T) => void;

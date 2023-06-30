@@ -1,5 +1,4 @@
-import React from "react";
-import { api } from "~/utils/api";
+import { api } from "@/utils/api";
 
 const Privileged = () => {
   const { data } = api.example.privileged.useQuery();

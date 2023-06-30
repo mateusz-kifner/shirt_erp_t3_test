@@ -3,9 +3,9 @@ import { useId } from "react";
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
 
-import { showNotification } from "~/lib/notifications";
+import { showNotification } from "@/lib/notifications";
 
-import type EditableInput from "~/types/EditableInput";
+import type EditableInput from "@/types/EditableInput";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface EditableJSONProps extends EditableInput<string> {}
@@ -26,7 +26,7 @@ const EditableJSON = ({ value, label }: EditableJSONProps) => {
             {label}{" "}
             {!!value && (
               <button
-                className="border-1 inline-flex animate-pop items-center justify-center
+                className="border-1 animate-pop inline-flex items-center justify-center
             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
           text-gray-200 no-underline transition-all  
           hover:bg-black hover:bg-opacity-30

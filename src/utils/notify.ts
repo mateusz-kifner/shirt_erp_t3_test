@@ -1,6 +1,6 @@
 import Logger from "js-logger";
 
-import { showNotification } from "~/lib/notifications";
+import { showNotification } from "@/lib/notifications";
 
 /**
  * Higher order function that logs status on execution

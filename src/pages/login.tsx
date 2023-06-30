@@ -3,10 +3,10 @@ import { useState, type FormEvent } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 
-import Modal from "~/components/basic/Modal";
-import useTranslation from "~/hooks/useTranslation";
-import { sessionOptions } from "~/lib/session";
-import { api } from "~/utils/api";
+import Modal from "@/components/basic/Modal";
+import useTranslation from "@/hooks/useTranslation";
+import { sessionOptions } from "@/lib/session";
+import { api } from "@/utils/api";
 
 export default function Login() {
   const router = useRouter();
@@ -122,10 +122,10 @@ export default function Login() {
               <input
                 className={`
             border-1
-              mt-8 
-              inline-flex
-              h-10
               animate-pop 
+              mt-8
+              inline-flex
+              h-10 
               select-none 
               items-center 
               justify-center 

@@ -3,7 +3,7 @@ import { type LabelHTMLAttributes, type ReactNode } from "react";
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy, IconQuestionMark } from "@tabler/icons-react";
 
-import { showNotification } from "~/lib/notifications";
+import { showNotification } from "@/lib/notifications";
 import ActionButton from "../basic/ActionButton";
 import SimpleTooltip from "../basic/SimpleTooltip";
 

@@ -9,10 +9,10 @@ import {
 import { IconCalendar, IconClock } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
-import DisplayCell from "~/components/basic/DisplayCell";
-import preventLeave from "~/utils/preventLeave";
+import DisplayCell from "@/components/basic/DisplayCell";
+import preventLeave from "@/utils/preventLeave";
 
-import type EditableInput from "~/types/EditableInput";
+import type EditableInput from "@/types/EditableInput";
 import InputLabel from "../input/InputLabel";
 
 // TODO: make it editable

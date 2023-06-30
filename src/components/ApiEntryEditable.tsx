@@ -1,8 +1,8 @@
+import { useLoaded } from "@/hooks/useLoaded";
+import { api } from "@/utils/api";
 import { IconRefresh } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { useId, useState } from "react";
-import { useLoaded } from "~/hooks/useLoaded";
-import { api } from "~/utils/api";
 import ActionButton from "./basic/ActionButton";
 import Editable from "./editable/Editable";
 // import ApiStatusIndicator from "./ApiStatusIndicator"

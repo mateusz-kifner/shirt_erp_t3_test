@@ -1,15 +1,15 @@
 import { omit } from "lodash";
 
-import { productSchema } from "~/schema/productSchema";
+import { productSchema } from "@/schema/productSchema";
 import {
   createProcedureDeleteById,
   createProcedureGetAll,
   createProcedureGetById,
   createProcedureSearch,
   createProcedureSearchWithPagination,
-} from "~/server/api/procedures";
-import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
-import { prisma } from "~/server/db";
+} from "@/server/api/procedures";
+import { authenticatedProcedure, createTRPCRouter } from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 const productSchemaWithoutId = productSchema.omit({ id: true });
 

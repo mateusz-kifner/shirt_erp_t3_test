@@ -1,7 +1,7 @@
 import { useId, type ButtonHTMLAttributes, type ComponentType } from "react";
 
+import type TablerIconType from "@/types/TablerIconType";
 import Link from "next/link";
-import type TablerIconType from "~/types/TablerIconType";
 
 interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;

@@ -4,12 +4,12 @@ import { useMediaQuery } from "@mantine/hooks";
 import { IconList, IconNotebook } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
-import ApiEntryEditable from "~/components/ApiEntryEditable";
-import Workspace from "~/components/Workspace";
-import UserAddModal from "~/page-components/erp/user/UserAddModal";
-import UsersList from "~/page-components/erp/user/UserList";
-import template from "~/templates/user.template.json";
-import { getQueryAsIntOrNull } from "~/utils/query";
+import ApiEntryEditable from "@/components/ApiEntryEditable";
+import Workspace from "@/components/Workspace";
+import UserAddModal from "@/page-components/erp/user/UserAddModal";
+import UsersList from "@/page-components/erp/user/UserList";
+import template from "@/templates/user.template.json";
+import { getQueryAsIntOrNull } from "@/utils/query";
 
 const entryName = "user";
 

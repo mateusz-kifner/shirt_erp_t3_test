@@ -1,4 +1,4 @@
-import { toHTTPErrorName } from "~/utils/HTTPError";
+import { toHTTPErrorName } from "@/utils/HTTPError";
 
 function ErrorPage({ statusCode }: { statusCode: number }) {
   return (

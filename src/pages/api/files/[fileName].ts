@@ -1,8 +1,8 @@
+import { prisma } from "@/server/db";
+import HTTPError from "@/utils/HTTPError";
 import { createReadStream } from "fs";
 import fs from "fs/promises";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "~/server/db";
-import HTTPError from "~/utils/HTTPError";
 
 export default async function Files(req: NextApiRequest, res: NextApiResponse) {
   try {

@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useClickOutside, useFocusReturn } from "@mantine/hooks";
 import { isEqual } from "lodash";
 
-import EditableEnum from "~/components/editable/EditableEnum";
-import EditableText from "~/components/editable/EditableText";
+import EditableEnum from "@/components/editable/EditableEnum";
+import EditableText from "@/components/editable/EditableText";
 
+import DisplayCellExpanding from "@/components/basic/DisplayCellExpanding";
+import { type AddressType } from "@/schema/addressSchema";
+import type EditableInput from "@/types/EditableInput";
 import { TypeAddress } from "@prisma/client";
-import DisplayCellExpanding from "~/components/basic/DisplayCellExpanding";
-import { type AddressType } from "~/schema/addressSchema";
-import type EditableInput from "~/types/EditableInput";
 import InputLabel from "../input/InputLabel";
 
 const provinces = [

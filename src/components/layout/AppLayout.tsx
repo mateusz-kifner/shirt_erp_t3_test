@@ -1,8 +1,8 @@
 import { useEffect, type PropsWithChildren } from "react";
 
-import Header from "~/components/layout/Header";
-import Navigation from "~/components/layout/Navigation";
-import { useUserContext } from "~/context/userContext";
+import Header from "@/components/layout/Header";
+import Navigation from "@/components/layout/Navigation";
+import { useUserContext } from "@/context/userContext";
 
 function Layout({ children }: PropsWithChildren) {
   const { navigationCollapsed } = useUserContext();

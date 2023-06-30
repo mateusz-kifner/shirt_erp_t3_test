@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
-import en from "~/locales/en.json";
-import pl from "~/locales/pl.json";
+import en from "@/locales/en.json";
+import pl from "@/locales/pl.json";
 
 function useTranslation() {
   const router = useRouter();

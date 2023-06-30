@@ -12,18 +12,18 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import SuperJSON from "superjson";
 
+import Button from "@/components/basic/Button";
+import Select from "@/components/basic/Select";
+import Editable from "@/components/editable/Editable";
+import { useUserContext } from "@/context/userContext";
+import { useLoaded } from "@/hooks/useLoaded";
+import useTranslation from "@/hooks/useTranslation";
+import { sessionOptions } from "@/lib/session";
+import { appRouter } from "@/server/api/root";
+import { prisma } from "@/server/db";
+import template from "@/templates/test.template";
+import { api } from "@/utils/api";
 import { useLocalStorage } from "@mantine/hooks";
-import Button from "~/components/basic/Button";
-import Select from "~/components/basic/Select";
-import Editable from "~/components/editable/Editable";
-import { useUserContext } from "~/context/userContext";
-import { useLoaded } from "~/hooks/useLoaded";
-import useTranslation from "~/hooks/useTranslation";
-import { sessionOptions } from "~/lib/session";
-import { appRouter } from "~/server/api/root";
-import { prisma } from "~/server/db";
-import template from "~/templates/test.template";
-import { api } from "~/utils/api";
 
 const testData = {
   name: "string",

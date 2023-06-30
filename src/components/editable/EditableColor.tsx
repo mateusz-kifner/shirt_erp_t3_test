@@ -9,13 +9,13 @@ import {
 
 import { useClickOutside } from "@mantine/hooks";
 
-import colorNames from "~/utils/color-names.json";
-import preventLeave from "~/utils/preventLeave";
+import colorNames from "@/utils/color-names.json";
+import preventLeave from "@/utils/preventLeave";
 
+import type EditableInput from "@/types/EditableInput";
+import equalHSV from "@/utils/equalHSV";
 import { IconColorPicker } from "@tabler/icons-react";
 import tinycolor, { ColorFormats } from "tinycolor2";
-import type EditableInput from "~/types/EditableInput";
-import equalHSV from "~/utils/equalHSV";
 import InputColor from "../ColorPicker/InputColor";
 import ActionButton from "../basic/ActionButton";
 import DisplayCell from "../basic/DisplayCell";

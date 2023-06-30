@@ -1,13 +1,13 @@
 import { omit } from "lodash";
 import { z } from "zod";
 
-import { userSchema } from "~/schema/userSchema";
+import { userSchema } from "@/schema/userSchema";
 import {
   authenticatedProcedure,
   createTRPCRouter,
   privilegedProcedure,
-} from "~/server/api/trpc";
-import { prisma } from "~/server/db";
+} from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 const userSchemaWithoutId = userSchema.omit({ id: true });
 

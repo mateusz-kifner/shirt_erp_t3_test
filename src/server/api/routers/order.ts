@@ -1,17 +1,17 @@
-import { z } from "zod";
-import { orderSchema } from "~/schema/orderSchema";
+import { orderSchema } from "@/schema/orderSchema";
 import {
   createProcedureDeleteById,
   createProcedureGetAll,
   createProcedureSearch,
   createProcedureSearchWithPagination,
-} from "~/server/api/procedures";
+} from "@/server/api/procedures";
+import { z } from "zod";
 
-import { prisma } from "~/server/db";
+import { prisma } from "@/server/db";
 
+import { authenticatedProcedure, createTRPCRouter } from "@/server/api/trpc";
 import { type Prisma } from "@prisma/client";
 import { omit } from "lodash";
-import { authenticatedProcedure, createTRPCRouter } from "~/server/api/trpc";
 
 const orderSchemaWithoutId = orderSchema
   .omit({ id: true, address: true })

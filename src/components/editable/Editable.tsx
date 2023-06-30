@@ -9,24 +9,24 @@ import {
 } from "@tabler/icons-react";
 
 // Editable imports
-import EditableAddress from "~/components/editable/EditableAddress";
-import EditableApiEntry from "~/components/editable/EditableApiEntry";
-import EditableApiEntryId from "~/components/editable/EditableApiEntryId";
-import EditableApiIconId from "~/components/editable/EditableApiIconId";
-import EditableArray from "~/components/editable/EditableArray";
-import EditableColor from "~/components/editable/EditableColor";
-import EditableDate from "~/components/editable/EditableDate";
-import EditableDateTime from "~/components/editable/EditableDateTime";
-import EditableEnum from "~/components/editable/EditableEnum";
-import EditableFiles from "~/components/editable/EditableFiles";
-import EditableJSON from "~/components/editable/EditableJSON";
-import EditableRichText from "~/components/editable/EditableRichText";
-import EditableSwitch from "~/components/editable/EditableSwitch";
-import EditableText from "~/components/editable/EditableText";
+import EditableAddress from "@/components/editable/EditableAddress";
+import EditableApiEntry from "@/components/editable/EditableApiEntry";
+import EditableApiEntryId from "@/components/editable/EditableApiEntryId";
+import EditableApiIconId from "@/components/editable/EditableApiIconId";
+import EditableArray from "@/components/editable/EditableArray";
+import EditableColor from "@/components/editable/EditableColor";
+import EditableDate from "@/components/editable/EditableDate";
+import EditableDateTime from "@/components/editable/EditableDateTime";
+import EditableEnum from "@/components/editable/EditableEnum";
+import EditableFiles from "@/components/editable/EditableFiles";
+import EditableJSON from "@/components/editable/EditableJSON";
+import EditableRichText from "@/components/editable/EditableRichText";
+import EditableSwitch from "@/components/editable/EditableSwitch";
+import EditableText from "@/components/editable/EditableText";
 
-import apiListItems from "~/components/editable/apiListItems";
-import NotImplemented from "~/components/NotImplemented";
-import { useUserContext } from "~/context/userContext";
+import apiListItems from "@/components/editable/apiListItems";
+import NotImplemented from "@/components/NotImplemented";
+import { useUserContext } from "@/context/userContext";
 import { makeDefaultListItem } from "../DefaultListItemWithValue";
 import EditableNumber from "./EditableNumber";
 import EditableShortText from "./EditableShortText";

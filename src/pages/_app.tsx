@@ -4,15 +4,15 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Logger from "js-logger";
 import Head from "next/head";
 
+import ErrorBoundary from "@/components/ErrorBoundary";
+import AppLayout from "@/components/layout/AppLayout";
+import { UserContextProvider } from "@/context/userContext";
+import { env } from "@/env.mjs";
+import { Notifications, showNotification } from "@/lib/notifications";
+import { api } from "@/utils/api";
 import { TooltipProvider as RadixTooltipProvider } from "@radix-ui/react-tooltip";
-import ErrorBoundary from "~/components/ErrorBoundary";
-import AppLayout from "~/components/layout/AppLayout";
-import { UserContextProvider } from "~/context/userContext";
-import { env } from "~/env.mjs";
-import { Notifications, showNotification } from "~/lib/notifications";
-import { api } from "~/utils/api";
 
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 
 // dayjs imports
 import dayjs from "dayjs";

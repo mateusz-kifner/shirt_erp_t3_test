@@ -1,11 +1,10 @@
-import React from "react";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 
-import { appRouter } from "~/server/api/root";
-import SuperJSON from "superjson";
+import { appRouter } from "@/server/api/root";
+import { prisma } from "@/server/db";
+import { api } from "@/utils/api";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { prisma } from "~/server/db";
-import { api } from "~/utils/api";
+import SuperJSON from "superjson";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   // session is null, so only public pages can be statically generated

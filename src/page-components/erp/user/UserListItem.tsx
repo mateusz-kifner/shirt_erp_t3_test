@@ -1,6 +1,6 @@
-import { DefaultListItem } from "~/components/DefaultListItem";
-import { type UserType } from "~/schema/userSchema";
-import { truncString } from "~/utils/truncString";
+import { DefaultListItem } from "@/components/DefaultListItem";
+import { type UserType } from "@/schema/userSchema";
+import { truncString } from "@/utils/truncString";
 
 interface UserListItemProps {
   onChange?: (item: Partial<UserType>) => void;
