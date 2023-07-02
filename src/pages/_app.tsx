@@ -21,6 +21,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { Toaster } from "@/components/ui/toaster";
+import { toast } from "@/hooks/useToast";
 import isToday from "dayjs/plugin/isToday";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -33,36 +34,37 @@ dayjs.extend(customParseFormat);
 // TODO: refactor logger
 
 Logger.setHandler(function (messages, context) {
+  console.log(messages);
   const savedValue = localStorage.getItem("user-data"); // TODO: log user id here
   console.log(messages[0]?.message ?? "Nieznany błąd", messages[0]);
   if (context.level === Logger.ERROR)
     if (context.level === Logger.WARN)
-      // showNotification({
-      //   title: "Błąd",
-      //   message:
-      //     messages[0]?.message ??
-      //     "Nieznany błąd: sprawdź szczegóły w logu serwera",
-      // });
-      if (typeof messages[0] === "string") {
-        // showNotification({
-        //   title: "Ostrzeżenie",
-        //   message:
-        //     messages[0]?.message ??
-        //     "Nieznany błąd: sprawdź szczegóły w logu serwera",
-        // });
-        // axios.post("/logs", {
-        //   message: messages[0],
-        //   type: context.level.name,
-        //   userId: savedValue && savedValue?.length > 0 ? savedValue : null,
-        // });
-      } else {
-        // axios.post("/logs", {
-        //   message: messages[0]?.message ? messages[0]?.message : "Nieznany błąd",
-        //   data: messages[0],
-        //   type: context.level.name,
-        //   userId: savedValue && savedValue?.length > 0 ? savedValue : null,
-        // });
-      }
+      toast({
+        title: "Błąd",
+        description:
+          messages[0]?.message ??
+          "Nieznany błąd: sprawdź szczegóły w logu serwera",
+      });
+  if (typeof messages[0] === "string") {
+    toast({
+      title: "Ostrzeżenie",
+      // description:
+      //   messages[0].message ??
+      //   "Nieznany błąd: sprawdź szczegóły w logu serwera",
+    });
+    // axios.post("/logs", {
+    //   message: messages[0],
+    //   type: context.level.name,
+    //   userId: savedValue && savedValue?.length > 0 ? savedValue : null,
+    // });
+  } else {
+    // axios.post("/logs", {
+    //   message: messages[0]?.message ? messages[0]?.message : "Nieznany błąd",
+    //   data: messages[0],
+    //   type: context.level.name,
+    //   userId: savedValue && savedValue?.length > 0 ? savedValue : null,
+    // });
+  }
 });
 
 Logger.setLevel(

@@ -17,6 +17,7 @@ import Select from "@/components/basic/Select";
 import Editable from "@/components/editable/Editable";
 import { useUserContext } from "@/context/userContext";
 import { useLoaded } from "@/hooks/useLoaded";
+import { toast } from "@/hooks/useToast";
 import useTranslation from "@/hooks/useTranslation";
 import { sessionOptions } from "@/lib/session";
 import { appRouter } from "@/server/api/root";
@@ -182,6 +183,16 @@ function Settings() {
                 leftSection={<IconBug />}
               >
                 Open Test Form
+              </Button>
+
+              <Button
+                onClick={() => {
+                  /**/
+                  toast({ title: "test" });
+                }}
+                leftSection={<IconBug />}
+              >
+                show info
               </Button>
             </>
           )}
