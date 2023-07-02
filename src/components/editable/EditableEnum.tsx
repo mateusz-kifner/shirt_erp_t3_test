@@ -1,5 +1,6 @@
 import InputLabel from "@/components/input/InputLabel";
 
+import useTranslation from "@/hooks/useTranslation";
 import type EditableInput from "@/types/EditableInput";
 import { type SelectProps as RadixSelectProps } from "@radix-ui/react-select";
 import Select from "../basic/Select";
@@ -46,22 +47,30 @@ const EditableEnum = ({
   required,
   collapse = false,
   ...moreProps
-}: EditableEnumProps) => (
-  <div className={`flex flex-grow  ${collapse ? "gap-3 pt-3" : "flex-col"}`}>
-    <InputLabel label={label} copyValue={value} required={required} />
+}: EditableEnumProps) => {
+  const t = useTranslation();
 
-    <Select
-      data={enum_data}
-      value={value}
-      onValueChange={(value) => {
-        onSubmit?.(value);
-        console.log(value);
-      }}
-      defaultValue={initialValue}
-      disabled={disabled}
-      {...moreProps}
-    />
-  </div>
-);
+  return (
+    <div className={`flex flex-grow  ${collapse ? "gap-3 pt-3" : "flex-col"}`}>
+      <InputLabel
+        label={label}
+        copyValue={t[value as keyof typeof t] as string}
+        required={required}
+      />
+
+      <Select
+        data={enum_data}
+        value={value}
+        onValueChange={(value) => {
+          onSubmit?.(value);
+          console.log(value);
+        }}
+        defaultValue={initialValue}
+        disabled={disabled}
+        {...moreProps}
+      />
+    </div>
+  );
+};
 
 export default EditableEnum;

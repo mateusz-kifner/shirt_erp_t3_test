@@ -3,7 +3,7 @@ import { useId } from "react";
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy } from "@tabler/icons-react";
 
-import { showNotification } from "@/lib/notifications";
+import { useToast } from "@/hooks/useToast";
 
 import type EditableInput from "@/types/EditableInput";
 
@@ -11,6 +11,7 @@ import type EditableInput from "@/types/EditableInput";
 interface EditableJSONProps extends EditableInput<string> {}
 
 const EditableJSON = ({ value, label }: EditableJSONProps) => {
+  const { toast } = useToast();
   const uuid = useId();
   const clipboard = useClipboard();
   return (
@@ -26,7 +27,7 @@ const EditableJSON = ({ value, label }: EditableJSONProps) => {
             {label}{" "}
             {!!value && (
               <button
-                className="border-1 animate-pop inline-flex items-center justify-center
+                className="border-1 inline-flex animate-pop items-center justify-center
             gap-3 rounded-md  stroke-gray-200 p-1 font-semibold uppercase
           text-gray-200 no-underline transition-all  
           hover:bg-black hover:bg-opacity-30
@@ -35,10 +36,9 @@ const EditableJSON = ({ value, label }: EditableJSONProps) => {
                 onClick={() => {
                   const valueAsJson = JSON.stringify(value, null, 2);
                   clipboard.copy(valueAsJson);
-                  showNotification({
+                  toast({
                     title: "Skopiowano do schowka",
-                    message: valueAsJson,
-                    icon: <IconCopy />,
+                    description: valueAsJson,
                   });
                 }}
                 tabIndex={-1}

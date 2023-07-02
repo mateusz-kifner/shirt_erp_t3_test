@@ -1,6 +1,6 @@
 import Logger from "js-logger";
 
-import { showNotification } from "@/lib/notifications";
+// import { showNotification } from "@/lib/notifications";
 
 /**
  * Higher order function that logs status on execution
@@ -18,10 +18,10 @@ const notify = (
       (status == "info" || status == "success") &&
       localStorage.getItem("user-debug") === "true"
     ) {
-      showNotification({
-        title: status,
-        message: msg,
-      });
+      // showNotification({
+      //   title: status,
+      //   message: msg,
+      // });
     }
     if (status == "success") status = "info";
     Logger[status]({ ...args, message: msg });

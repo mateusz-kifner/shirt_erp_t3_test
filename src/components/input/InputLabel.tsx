@@ -3,7 +3,7 @@ import { type LabelHTMLAttributes, type ReactNode } from "react";
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy, IconQuestionMark } from "@tabler/icons-react";
 
-import { showNotification } from "@/lib/notifications";
+import { useToast } from "@/hooks/useToast";
 import ActionButton from "../basic/ActionButton";
 import SimpleTooltip from "../basic/SimpleTooltip";
 
@@ -21,6 +21,7 @@ interface InputLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 function InputLabel(props: InputLabelProps) {
   const { label, copyValue, required, helpTooltip, ...moreProps } = props;
+  const { toast } = useToast();
   const clipboard = useClipboard();
   return label ? (
     <label
@@ -39,10 +40,9 @@ function InputLabel(props: InputLabelProps) {
             className="ml-1 h-5 w-5"
             onClick={() => {
               clipboard.copy(copyValue);
-              showNotification({
+              toast({
                 title: "Skopiowano do schowka",
-                message: copyValue,
-                icon: <IconCopy />,
+                description: copyValue,
               });
             }}
             tabIndex={-1}

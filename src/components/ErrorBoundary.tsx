@@ -1,7 +1,5 @@
 import React, { type ReactNode } from "react";
 
-import { showNotification } from "@/lib/notifications";
-
 interface Props {
   children: ReactNode;
   fallback: ReactNode;
@@ -20,10 +18,6 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    showNotification({
-      title: "BoundaryError" + error.name,
-      message: error.message,
-    });
     console.log(error, errorInfo);
   }
 
