@@ -21,6 +21,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
 
+import { Toaster } from "@/components/ui/toaster";
 import isToday from "dayjs/plugin/isToday";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -91,6 +92,7 @@ const App: AppType = ({ Component, pageProps }) => {
             <Component {...pageProps} />
           </ErrorBoundary>
         </AppLayout>
+        <Toaster />
         <ReactQueryDevtools initialIsOpen={false} />
       </RadixTooltipProvider>
     </UserContextProvider>
