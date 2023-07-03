@@ -5,7 +5,7 @@ import { handleBlurForInnerElements } from "@/utils/handleBlurForInnerElements";
 import preventLeave from "@/utils/preventLeave";
 
 import type EditableInput from "@/types/EditableInput";
-import DisplayCell from "../basic/DisplayCell";
+import DisplayCell from "../ui/DisplayCell";
 
 interface EditableShortTextProps extends EditableInput<string> {
   maxLength?: number;

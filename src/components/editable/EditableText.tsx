@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 
-import DisplayCellExpanding from "@/components/basic/DisplayCellExpanding";
 import InputLabel from "@/components/input/InputLabel";
+import DisplayCellExpanding from "@/components/ui/DisplayCellExpanding";
 import { handleBlurForInnerElements } from "@/utils/handleBlurForInnerElements";
 import preventLeave from "@/utils/preventLeave";
 

@@ -9,8 +9,8 @@ import {
 } from "@tabler/icons-react";
 
 import List from "@/components/List";
-import ActionButton from "@/components/basic/ActionButton";
-import Pagination from "@/components/basic/Pagination";
+import ActionButton from "@/components/ui/ActionButton";
+import Pagination from "@/components/ui/Pagination";
 import useTranslation from "@/hooks/useTranslation";
 import { api } from "@/utils/api";
 

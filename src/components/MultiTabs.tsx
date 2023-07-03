@@ -13,7 +13,7 @@ import { IconPinned } from "@tabler/icons-react";
 import { omit } from "lodash";
 
 import Portal from "@/components/Portal";
-import Tooltip from "@/components/basic/Tooltip";
+import Tooltip from "@/components/ui/Tooltip";
 import { useUserContext } from "@/context/userContext";
 import type TablerIconType from "@/types/TablerIconType";
 import { simpleColors } from "@/utils/getRandomColor";

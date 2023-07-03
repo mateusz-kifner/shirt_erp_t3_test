@@ -3,8 +3,8 @@ import { api } from "@/utils/api";
 import { IconRefresh } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { useId, useState } from "react";
-import ActionButton from "./basic/ActionButton";
 import Editable from "./editable/Editable";
+import ActionButton from "./ui/ActionButton";
 // import ApiStatusIndicator from "./ApiStatusIndicator"
 
 interface ApiEntryEditableProps<EntryType = any> {

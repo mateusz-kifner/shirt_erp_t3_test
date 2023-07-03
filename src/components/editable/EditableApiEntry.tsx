@@ -6,8 +6,8 @@ import { capitalize, isEqual } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import Button from "@/components/basic/Button";
-import Modal from "@/components/basic/Modal";
+import Button from "@/components/ui/Button";
+import Modal from "@/components/ui/Modal";
 import useTranslation from "@/hooks/useTranslation";
 
 import type EditableInput from "@/types/EditableInput";

@@ -39,8 +39,8 @@ import {
   IconSuperscript,
   IconUnderline,
 } from "@tabler/icons-react";
-import DisplayCellExpanding from "../basic/DisplayCellExpanding";
 import InputLabel from "../input/InputLabel";
+import DisplayCellExpanding from "../ui/DisplayCellExpanding";
 
 const controls: (
   | {

@@ -6,7 +6,7 @@ import { isEqual } from "lodash";
 import EditableEnum from "@/components/editable/EditableEnum";
 import EditableText from "@/components/editable/EditableText";
 
-import DisplayCellExpanding from "@/components/basic/DisplayCellExpanding";
+import DisplayCellExpanding from "@/components/ui/DisplayCellExpanding";
 import { type AddressType } from "@/schema/addressSchema";
 import type EditableInput from "@/types/EditableInput";
 import { TypeAddress } from "@prisma/client";

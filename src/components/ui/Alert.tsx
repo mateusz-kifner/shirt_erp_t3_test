@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 
-import Button from "@/components/basic/Button";
-import Separator from "@/components/basic/Separator";
+import Button from "@/components/ui/Button";
+import Separator from "@/components/ui/Separator";
 import useTranslation from "@/hooks/useTranslation";
 import * as RadixAlertDialog from "@radix-ui/react-alert-dialog";
 
@@ -40,8 +40,8 @@ const Alert = (props: AlertProps) => {
         <RadixAlertDialog.Trigger asChild>{trigger}</RadixAlertDialog.Trigger>
       )}
       <RadixAlertDialog.Portal>
-        <RadixAlertDialog.Overlay className="data-[state=open]:animate-show fixed left-0 top-0 h-screen w-screen bg-black bg-opacity-40" />
-        <RadixAlertDialog.Content className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] max-h-[85vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none dark:bg-stone-800">
+        <RadixAlertDialog.Overlay className="fixed left-0 top-0 h-screen w-screen bg-black bg-opacity-40 data-[state=open]:animate-show" />
+        <RadixAlertDialog.Content className="fixed left-[50%] top-[50%] max-h-[85vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow dark:bg-stone-800">
           {!!title && (
             <RadixAlertDialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
               {title}

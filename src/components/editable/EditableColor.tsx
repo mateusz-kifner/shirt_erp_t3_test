@@ -17,10 +17,10 @@ import equalHSV from "@/utils/equalHSV";
 import { IconColorPicker } from "@tabler/icons-react";
 import tinycolor, { ColorFormats } from "tinycolor2";
 import InputColor from "../ColorPicker/InputColor";
-import ActionButton from "../basic/ActionButton";
-import DisplayCell from "../basic/DisplayCell";
-import Popover from "../basic/Popover";
 import InputLabel from "../input/InputLabel";
+import ActionButton from "../ui/ActionButton";
+import DisplayCell from "../ui/DisplayCell";
+import Popover from "../ui/Popover";
 
 // Scroll in color palette will not work in modal due to radix bug (25.05.2023)
 

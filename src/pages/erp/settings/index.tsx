@@ -12,9 +12,9 @@ import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
 import SuperJSON from "superjson";
 
-import Button from "@/components/basic/Button";
-import Select from "@/components/basic/Select";
 import Editable from "@/components/editable/Editable";
+import Button from "@/components/ui/Button";
+import Select from "@/components/ui/Select";
 import { useUserContext } from "@/context/userContext";
 import { useLoaded } from "@/hooks/useLoaded";
 import { toast } from "@/hooks/useToast";

@@ -4,8 +4,8 @@ import * as RadixContextMenu from "@radix-ui/react-context-menu";
 import { IconDownload, IconEye } from "@tabler/icons-react";
 import Link from "next/link";
 import { type CSSProperties, type ReactNode } from "react";
-import ActionButton from "./basic/ActionButton";
-import Tooltip from "./basic/Tooltip";
+import ActionButton from "./ui/ActionButton";
+import Tooltip from "./ui/Tooltip";
 
 interface FileListItemProps {
   onChange?: (file: Partial<FileType>) => void;
@@ -45,7 +45,7 @@ const FileListItem = (props: FileListItemProps) => {
         style={style}
         className="relative flex items-center gap-2 overflow-hidden border-l border-r border-t border-solid border-gray-400 first:rounded-t last:rounded-b last:border-b dark:border-stone-600"
       >
-        <div className="child-hover:visible relative h-[100px] w-[100px] min-w-[100px]  overflow-hidden">
+        <div className="relative h-[100px] w-[100px] min-w-[100px] overflow-hidden  child-hover:visible">
           <img
             src={preview ?? "/assets/unknown_file.svg"}
             alt=""

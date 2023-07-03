@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import tinycolor2, { type ColorFormats } from "tinycolor2";
-import ActionButton from "../basic/ActionButton";
+import ActionButton from "../ui/ActionButton";
 import AlphaSlider from "./AlphaSlider";
 import ColorArea from "./ColorArea";
 import ColorSwatches from "./ColorSwatches";

@@ -2,8 +2,8 @@ import { useEffect, useId, useState } from "react";
 
 import { IconX } from "@tabler/icons-react";
 
-import Button from "@/components/basic/Button";
-import Modal from "@/components/basic/Modal";
+import Button from "@/components/ui/Button";
+import Modal from "@/components/ui/Modal";
 
 import type EditableInput from "@/types/EditableInput";
 

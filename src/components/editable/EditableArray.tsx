@@ -4,7 +4,7 @@ import { useListState } from "@mantine/hooks";
 import { IconPlus, IconTrashX } from "@tabler/icons-react";
 import { isEqual, omit } from "lodash";
 
-import Button from "@/components/basic/Button";
+import Button from "@/components/ui/Button";
 
 import type EditableInput from "@/types/EditableInput";
 import * as RadixContextMenu from "@radix-ui/react-context-menu";

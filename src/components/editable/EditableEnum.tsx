@@ -3,7 +3,7 @@ import InputLabel from "@/components/input/InputLabel";
 import useTranslation from "@/hooks/useTranslation";
 import type EditableInput from "@/types/EditableInput";
 import { type SelectProps as RadixSelectProps } from "@radix-ui/react-select";
-import Select from "../basic/Select";
+import Select from "../ui/Select";
 
 // EditableInput<T> {
 //   label?: string;

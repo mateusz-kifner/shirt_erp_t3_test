@@ -4,8 +4,8 @@ import { useClipboard } from "@mantine/hooks";
 import { IconCopy, IconQuestionMark } from "@tabler/icons-react";
 
 import { useToast } from "@/hooks/useToast";
-import ActionButton from "../basic/ActionButton";
-import SimpleTooltip from "../basic/SimpleTooltip";
+import ActionButton from "../ui/ActionButton";
+import SimpleTooltip from "../ui/SimpleTooltip";
 
 //  LabelHTMLAttributes {
 //   form?: string | undefined;

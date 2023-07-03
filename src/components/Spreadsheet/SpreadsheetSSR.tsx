@@ -27,9 +27,9 @@ import { getRandomColorByNumber } from "../../utils/getRandomColor";
 
 import useTranslation from "@/hooks/useTranslation";
 import type EditableInput from "../../types/EditableInput";
-import Button from "../basic/Button";
-import ScrollArea from "../basic/ScrollArea";
-import Tooltip from "../basic/Tooltip";
+import Button from "../ui/Button";
+import ScrollArea from "../ui/ScrollArea";
+import Tooltip from "../ui/Tooltip";
 
 interface EditableTableProps extends EditableInput<Matrix<any>> {
   metadataIcons?: ComponentType[];
