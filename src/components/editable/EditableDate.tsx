@@ -15,7 +15,7 @@ import type EditableInput from "@/types/EditableInput";
 import { handleBlurForInnerElements } from "@/utils/handleBlurForInnerElements";
 import { handleFocusForInnerElements } from "@/utils/handleFocusForInnerElements";
 
-type InputDateProps = EditableInput<string>;
+type InputDateProps = EditableInput<Date>;
 
 //todo : make this use dates instead
 
@@ -71,7 +71,7 @@ const EditableDate = (props: InputDateProps) => {
       dayjs(value).format("YYYY-MM-DD").toString()
     ) {
       setError(false);
-      onSubmit?.(newDate.format("YYYY-MM-DD").toString());
+      onSubmit?.(dayjs(newDate.format("YYYY-MM-DD").toString()).toDate());
     }
   }, [debouncedText]);
 
@@ -122,6 +122,7 @@ const EditableDate = (props: InputDateProps) => {
       >
         <input
           id={"inputDate_" + uuid}
+          name={"inputDate_" + uuid}
           ref={inputDateRef}
           value={text}
           onChange={(e) => {

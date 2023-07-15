@@ -219,6 +219,7 @@ const EditableColor = (props: EditableColorProps) => {
         <input
           type="text"
           autoCorrect="false"
+          name={"inputColor_" + uuid}
           spellCheck="false"
           id={"inputColor_" + uuid}
           value={colorText ?? ""}

@@ -98,6 +98,7 @@ const EditableShortText = (props: EditableShortTextProps) => {
       >
         <input
           id={"short_text_" + uuid}
+          name={"short_text_" + uuid}
           required={required}
           readOnly={disabled}
           ref={InputRef}

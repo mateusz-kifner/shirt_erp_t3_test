@@ -106,6 +106,7 @@ const EditableText = (props: EditableTextProps) => {
       >
         <textarea
           id={"textarea_" + uuid}
+          name={"textarea_" + uuid}
           required={required}
           readOnly={disabled}
           ref={textAreaRef}
